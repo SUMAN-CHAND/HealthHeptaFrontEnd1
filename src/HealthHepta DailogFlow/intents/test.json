@@ -1,0 +1,14 @@
+{
+  "id": "e21eeb4c-974e-43bb-82a5-b00c4a4221c0",
+  "name": "test",
+  "auto": true,
+  "contexts": [],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

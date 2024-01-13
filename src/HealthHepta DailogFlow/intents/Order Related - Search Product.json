@@ -1,0 +1,39 @@
+{
+  "id": "02b161fc-5e8f-4adf-94fa-641b8c658ec9",
+  "parentId": "e3af5f4e-329d-4077-84d0-61e91853e072",
+  "rootParentId": "1334df73-e95a-4c45-9c43-170a85bc3c6b",
+  "name": "Order Related - Search Product",
+  "auto": true,
+  "contexts": [
+    "DefaultWelcomeIntent-OrderRelated-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DefaultWelcomeIntent.DefaultWelcomeIntent-custom.DefaultWelcomeIntent-OrderRelated-custom",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Comming Soon..."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

@@ -1,0 +1,14 @@
+{
+  "id": "4184e321-8e58-4719-87eb-fe618b98ac7f",
+  "name": "webhookCustomPayload",
+  "auto": true,
+  "contexts": [],
+  "priority": 500000,
+  "webhookUsed": true,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

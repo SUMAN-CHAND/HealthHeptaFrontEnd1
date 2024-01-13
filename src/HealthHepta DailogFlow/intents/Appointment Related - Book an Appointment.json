@@ -1,0 +1,39 @@
+{
+  "id": "36ba0839-556f-4a30-bf69-42d9a9e6bd0d",
+  "parentId": "0e57c0b4-d9d7-4bf5-bc32-879211dafc73",
+  "rootParentId": "1334df73-e95a-4c45-9c43-170a85bc3c6b",
+  "name": "Appointment Related - Book an Appointment",
+  "auto": true,
+  "contexts": [
+    "DefaultWelcomeIntent-AppointmentRelated-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DefaultWelcomeIntent.DefaultWelcomeIntent-custom.DefaultWelcomeIntent-AppointmentRelated-custom",
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Comming Soon..."
+          ],
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

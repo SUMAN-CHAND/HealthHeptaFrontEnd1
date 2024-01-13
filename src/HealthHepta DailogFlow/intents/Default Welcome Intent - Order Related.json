@@ -1,0 +1,71 @@
+{
+  "id": "e3af5f4e-329d-4077-84d0-61e91853e072",
+  "parentId": "1334df73-e95a-4c45-9c43-170a85bc3c6b",
+  "rootParentId": "1334df73-e95a-4c45-9c43-170a85bc3c6b",
+  "name": "Default Welcome Intent - Order Related",
+  "auto": true,
+  "contexts": [
+    "DefaultWelcomeIntent-followup"
+  ],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "DefaultWelcomeIntent.DefaultWelcomeIntent-custom",
+      "affectedContexts": [
+        {
+          "name": "DefaultWelcomeIntent-OrderRelated-followup",
+          "lifespan": 2
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Choose a Service Below..."
+          ],
+          "condition": ""
+        },
+        {
+          "type": "4",
+          "title": "",
+          "payload": {
+            "richContent": [
+              [
+                {
+                  "options": [
+                    {
+                      "text": "Seaech Product"
+                    },
+                    {
+                      "text": "Make Order"
+                    },
+                    {
+                      "text": "Track Order"
+                    }
+                  ],
+                  "type": "chips"
+                }
+              ]
+            ]
+          },
+          "textToSpeech": "",
+          "lang": "en",
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

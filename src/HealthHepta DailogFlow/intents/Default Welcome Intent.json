@@ -1,0 +1,77 @@
+{
+  "id": "1334df73-e95a-4c45-9c43-170a85bc3c6b",
+  "name": "Default Welcome Intent",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "action": "input.welcome",
+      "affectedContexts": [
+        {
+          "name": "DefaultWelcomeIntent-followup",
+          "lifespan": 2
+        }
+      ],
+      "parameters": [],
+      "messages": [
+        {
+          "type": "0",
+          "title": "",
+          "textToSpeech": "",
+          "lang": "en",
+          "speech": [
+            "Hi! How are you doing?",
+            "Hello! How can I help you?",
+            "Good day! What can I do for you today?",
+            "Greetings! How can I assist?"
+          ],
+          "condition": ""
+        },
+        {
+          "type": "4",
+          "title": "",
+          "payload": {
+            "richContent": [
+              [
+                {
+                  "options": [
+                    {
+                      "text": "Appointment Related"
+                    },
+                    {
+                      "text": "Order Related"
+                    },
+                    {
+                      "text": "Seller"
+                    },
+                    {
+                      "text": "Others"
+                    }
+                  ],
+                  "type": "chips"
+                }
+              ]
+            ]
+          },
+          "textToSpeech": "",
+          "lang": "en",
+          "condition": ""
+        }
+      ],
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": [
+    {
+      "name": "WELCOME"
+    }
+  ],
+  "conditionalResponses": [],
+  "condition": "",
+  "conditionalFollowupEvents": []
+}

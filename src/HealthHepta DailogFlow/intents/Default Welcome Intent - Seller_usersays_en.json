@@ -1,0 +1,41 @@
+[
+  {
+    "id": "cb7518a4-3e1a-4b7f-8fb2-d6f0d22b1fae",
+    "data": [
+      {
+        "text": "Become a Seller",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "27675c08-d20f-48ba-8973-e3871229ad6e",
+    "data": [
+      {
+        "text": "Being a Seller",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  },
+  {
+    "id": "97598457-6dc9-4514-99a9-1a9a96714f31",
+    "data": [
+      {
+        "text": "Seller",
+        "userDefined": false
+      }
+    ],
+    "isTemplate": false,
+    "count": 0,
+    "lang": "en",
+    "updated": 0
+  }
+]

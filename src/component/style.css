@@ -1,0 +1,23 @@
+
+.btnonhover{
+    transition: all 0.2s;
+}
+.btnonhover:hover{
+    background-color: #6776ed;
+    color: #fff;
+}
+.navbar{
+    background-color: rgb(7, 219, 193);
+    display: flex;
+    justify-content: space-evenly;
+}
+.left{
+    justify-content: space-evenly;
+}
+.login-order{
+    display: flex;
+}
+
+.h2-t{
+    font-size: calc(1vw + 0.5rem) !important;
+} 

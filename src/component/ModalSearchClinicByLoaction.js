@@ -1,0 +1,56 @@
+import React from 'react'
+import clinic from '../img/modalclinicimg.png';
+import {
+  Link
+} from "react-router-dom";
+
+const customStyle = {
+  maxHeight: '60vh',
+  maxWidth: '85vw',
+  borderRadius: '5px',
+  overflow: 'hidden',
+  background: 'linear-gradient(rgba(250,0,0,-0.5),transparent)',
+  backgroundColor: 'rgb(41 116 132)'
+
+};
+
+export default function ModalSearchClinicByLoaction({ closeTheModal }) {
+  return (
+    <>
+      <div className="clinic container " style={customStyle}>
+        <button onClick={closeTheModal} style={{ marginLeft: '95%', borderRadius: '50%' }} className='my-2 btn btn-dark close-btn'>X</button>
+        <div className="clinic-search" style={{ display: 'flex' , justifyContent:'center',alignItems:'center'}}>
+          <div className="search-l">
+            <h2 className=' text-light' style={{textAlign:'center' }}>Search Clinics Near You</h2>
+            <p className=' text-light' style={{ textAlign:'center' }}>Search the best Clinics  in the city nearest to you.</p>
+            <div className="search-l" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem'}}>
+              <div className="dropdown  me-2 ">
+                <button className="btn btn-secondary dropdown-toggle  m-2 dropdown-toggle-modal" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ width: "23vw", color: "black", backgroundColor: "white" }}>
+                  Choose Location...
+                </button>
+                <ul className="dropdown-menu">
+                  <li><Link className="dropdown-item" >Kolkata</Link></li>
+                  <li><Link className="dropdown-item" >Baharampur</Link></li>
+                  <li><Link className="dropdown-item" >Other City</Link></li>
+                </ul>
+              </div>
+              <div>
+                <div className="mx-1 me-2  m-2" style={{ display: 'flex', justifyContent: 'start' }}>
+                  <input className="form-control  modal-serach" type="search" placeholder="Search pathological clinic, test" aria-label="Search" style={{ width: "25vw", borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                  <Link to='/clinic-test'>
+                    <button onClick={closeTheModal} type="button" className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                      </svg>
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          <img className='modal-img' style={{ height: '49vh', width: '33vw' ,marginBottom:'2vh' }} src={clinic} alt="" />
+        </div>
+      </div>
+    </>
+  )
+}
