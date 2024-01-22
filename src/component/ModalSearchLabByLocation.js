@@ -25,21 +25,21 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
   const [chooseDoctor, setChooseDoctor] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/`)
       .then(res => {
         setSelectLocation(res.data[2])
       })
   });
 
   useEffect(() => {
-    axios.get('http://localhost:8081/locations')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
       .then(res => {
         setLocation(res.data);
         // setChooseLocation(res.data)
       })
   })
   // useEffect(() => {
-  //   axios.get('http://localhost:8081/doctorsearch')
+  //   axios.get('http://${process.env.REACT_APP_HOST}:8081/doctorsearch')
   //     .then(res => {
   //       setDoctors(res.data);
   //       // setChooseLocation(res.data)
@@ -61,7 +61,7 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
     try {
       closeTheModal();
       console.log(values)
-      const response = await axios.post('http://localhost:8081/labsearch', values);
+      const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/labsearch`, values);
       if (response.data !== null) {
         navigate(`/lab-search-result`,
           {

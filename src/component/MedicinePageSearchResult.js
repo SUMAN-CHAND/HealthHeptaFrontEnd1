@@ -58,7 +58,7 @@ export default function MedicinePageSearchResult() {
   // if (stateData.product.length <= 0 && stateData.lab.length <= 0 && stateData.doctor.length <= 0) {
   //   param.selectLocation = "NO Result Match"
     useEffect(() => {
-      axios.get('http://localhost:8081/product').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
         setProductsNF(res.data[0])
         setImagesNF(res.data[1])
         setMadicineShop(res.data)
@@ -73,7 +73,7 @@ export default function MedicinePageSearchResult() {
 
       })
 
-      axios.get('http://localhost:8081/laboratory/lab_tests')
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/lab_tests`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -88,7 +88,7 @@ export default function MedicinePageSearchResult() {
           console.error(err);
         });
 
-      axios.get('http://localhost:8081/doctors').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctorsNF(res.data[0]);

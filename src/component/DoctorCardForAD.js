@@ -13,7 +13,7 @@ export default function DoctorCardForAD(props) {
                     <div className="doctor  container shadow" style={{ display: 'flex',backgroundColor:'#dffffb' }}>
 
                         <div className="deccription" style={{ display: 'flex' }} >
-                        <img src={`http://localhost:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxWidth:'6vw' }}  />
+                        <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxWidth:'6vw' }}  />
                             <div>
                                 <h5 className='fs-8'>{props.name} </h5>
                                 <h6 className='fs-9'>{props.specializes} </h6>

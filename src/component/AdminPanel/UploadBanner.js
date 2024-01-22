@@ -9,7 +9,7 @@ export default function UploadBanner() {
     const handleUpload =(e)=>{
         const formdata = new FormData();
         formdata.append('image',file);
-        axios.post('http://localhost:8081/upload',formdata)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/upload`,formdata)
         .then(res =>console.log(res))
         .catch(err => console.log(err))
     }

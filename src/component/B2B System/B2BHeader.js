@@ -28,7 +28,7 @@ export default function B2BHeader() {
     // const location = useLocation();
 
     useEffect(() => {
-        axios.get('http://localhost:8081/sub_admin/profile-details')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub_admin/profile-details`)
             .then(res => {
                 // console.log(res.data)
                 setnumOfItem(res.data[0]);
@@ -36,30 +36,30 @@ export default function B2BHeader() {
                 // console.log(loggedIn);
                 setUserLocation(res.data[2]);
             })
-    },[]);
+    }, []);
     useEffect(() => {
         if (userLocation !== 0 || userLocation !== undefined) {
             setSelectLocation(userLocation)
             // console.log(selectLocation)
         }
 
-    },[])
+    }, [])
     // useEffect(()=>{
-    //     axios.get('http://localhost:8081/admin')
+    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/admin')
     //     .then(res =>{
     //         setLoggedIn(res.data[0])
     //     })
     // });
 
     useEffect(() => {
-        axios.get('http://localhost:8081/locations')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
             .then(res => {
                 setLocation(res.data);
                 // setChooseLocation(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.get('http://localhost:8081/search')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/search`)
             .then(res => {
                 setProducts(res.data);
                 // setChooseLocation(res.data)
@@ -73,7 +73,7 @@ export default function B2BHeader() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/profile');
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
                 navigate('/')
@@ -101,11 +101,16 @@ export default function B2BHeader() {
     // const handleInput = (event) => {
     //     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     // }
+    const setValueTOFilter = async (name) =>{
+        setValues({
+            input: name
+        })
+    }
     const handleFilter = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         const searchword = event.target.value.toLowerCase();
         const newFilter = products.filter((value) => {
-            return value.product_name.toLowerCase().includes(searchword);
+            return value.name.toLowerCase().includes(searchword);
         });
         if (searchword === "") {
             setChooseProduct([]);
@@ -115,7 +120,7 @@ export default function B2BHeader() {
     };
     const searchMedicine = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/b2b/search', values);
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/b2b/search`, values);
             if (response.data !== null) {
                 navigate(`/b2b/medicines/${values.input}`,
                     {
@@ -125,6 +130,10 @@ export default function B2BHeader() {
                             location: selectLocation
                         }
                     })
+                    setValues({
+                        input:''
+                    });
+                    setChooseProduct([]);
                 //    console.log(response.data)
             } else {
                 // Handle logout failure
@@ -209,7 +218,7 @@ export default function B2BHeader() {
                         </div>
                         <div className="search  me-2 search-location" >
                             <div style={{ display: 'flex' }}>
-                                <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Medicine Etc" style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                                <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Medicine Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                                 <button type="button" onClick={searchMedicine} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -219,7 +228,7 @@ export default function B2BHeader() {
                             {chooseProduct.length !== 0 && (
                                 <div className="inputResult" onClick={handleClick}>
                                     {chooseProduct.map((product, index) => {
-                                        return <Link to={`/addtocart/${product.product_id}`} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.product_name}</p></Link>
+                                        return <p onClick={() => setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                     }
                                     )}
                                 </div>
@@ -227,7 +236,7 @@ export default function B2BHeader() {
                         </div>
 
                         <div className='login-order' style={{ alignItems: "center" }}>
-                        {/* <Link to='/b2b-home' style={{textDecoration:'none',marginBottom:'5px'}}><p className='btn btn-outline' style={{ display: 'flex', color: 'white',border:'2px solid white',fontWeight: '700' }}> For Dealer</p></Link> */}
+                            {/* <Link to='/b2b-home' style={{textDecoration:'none',marginBottom:'5px'}}><p className='btn btn-outline' style={{ display: 'flex', color: 'white',border:'2px solid white',fontWeight: '700' }}> For Dealer</p></Link> */}
                             <Link to='/b2b/cart' style={{ textDecoration: 'none' }} >
                                 <div className="cart " style={{ display: 'flex', justifyContent: 'start', marginLeft: "auto", textDecoration: 'none' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="5vh" fill="currentColor" className="bi bi-cart p-0 drop-dwon-profile" viewBox="0 0 16 16" >
@@ -245,14 +254,14 @@ export default function B2BHeader() {
                                             </svg>
                                         </span>
                                         <ul className="dropdown-menu">
-                                            <li><span onClick={handleClickProfile} className="dropdown-item" style={{cursor:'pointer'}}>Profile</span></li>
+                                            <li><span onClick={handleClickProfile} className="dropdown-item" style={{ cursor: 'pointer' }}>Profile</span></li>
                                             <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                         </ul>
                                     </div>
                                 </div>
                                 :
                                 <div>
-                                    <Link to='/login'>
+                                    <Link to='/sub-admin/login'>
                                         <div className="buttom mx-3 login-text">
                                             <p style={{ margin: '0px' }} className="btn btn-primary"> <p style={{ margin: '0px' }}>Login</p> </p>
                                         </div>
@@ -277,7 +286,7 @@ export default function B2BHeader() {
                         {chooseProduct.length !== 0 && (
                             <div className="inputResult" onClick={handleClick}>
                                 {chooseProduct.map((product, index) => {
-                                    return <Link to={`/addtocart/${product.product_id}`} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.product_name}</p></Link>
+                                    return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                 }
                                 )}
                             </div>

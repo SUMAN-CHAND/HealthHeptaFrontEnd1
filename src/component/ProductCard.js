@@ -18,7 +18,7 @@ export default function ProductCard(props) {
         <div className="container"  >
           <div className="card " style={{ alignItems: 'center' }} >
             {/* <div  style={{ width: '10vw' }} > */}
-              <img src={`http://localhost:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
+              <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
             {/* </div> */}
             <div className="card-body">
               <h5 className="card-title">{props.name}</h5>
@@ -27,7 +27,7 @@ export default function ProductCard(props) {
                 <p className="text-success" style={{ marginBottom: '1px' }}>Price:- ₹{discountPrice}</p>
                 <p >MRP:- <span style={{ textDecoration: 'line-through', Color: '#878787' }}>₹{props.price}</span></p>
               </div>
-              <p className="text-success card-body-product-discount" style={{ marginRight: '10px' }}>25% off</p>
+              <p className="text-success card-body-product-discount" style={{ marginRight: '10px' }}>{props.discount}% Off</p>
               <Link to={value} className="btn" style={{ fontSize: '0.9rem', backgroundColor: '#0cbea9' }}>View Detail</Link>
             </div>
           </div>

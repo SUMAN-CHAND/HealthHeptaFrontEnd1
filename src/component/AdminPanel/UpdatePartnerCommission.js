@@ -29,7 +29,7 @@ const commission_id = param.commission_id;
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://localhost:8081/superadmin/update-commission/${commission_id}`, values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/update-commission/${commission_id}`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Commission Added Successfully!!')

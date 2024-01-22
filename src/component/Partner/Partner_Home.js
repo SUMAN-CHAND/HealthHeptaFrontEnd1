@@ -86,7 +86,7 @@ export default function Partner_Home() {
     const [orders, setOrders] = useState([])
 
     const showOrders = () => {
-        axios.get('http://localhost:8081/partner/profile/order').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/profile/order`).then((res) => {
             if (res.data !== null) {
                 setOrders(res.data)
             } else {
@@ -104,7 +104,7 @@ export default function Partner_Home() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://localhost:8081/orders/${id}`)
+            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {
@@ -124,7 +124,7 @@ export default function Partner_Home() {
 
     }
     const showPartnerCommission = () => {
-        axios.get('http://localhost:8081/superadmin/partner-commissions')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner-commissions`)
             .then(response => {
                 // Handle response
                 setCommissions(response.data)
@@ -139,7 +139,7 @@ export default function Partner_Home() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8081/partner/home/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/home/profile`).then((response) => {
             if (response.data !== null) {
                 setUser(response.data[0]);
                 // setUserAddress(response.data[1]);
@@ -173,7 +173,7 @@ export default function Partner_Home() {
     // const [appoiments, setAppoiments] = useState([]);
 
     const ShowAppoiment = () => {
-        axios.get('http://localhost:8081/user/see-appoiment')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-appoiment`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -191,7 +191,7 @@ export default function Partner_Home() {
     const [labBookings, setLabBookings] = useState([]);
 
     const ShowLabBooking = () => {
-        axios.get('http://localhost:8081/user/see-lab-booking')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-lab-booking`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -212,7 +212,7 @@ export default function Partner_Home() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/profile');
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
             if (response.data.success) {
                 setLoggedIn(undefined);
                 navigate('/')
@@ -279,7 +279,7 @@ export default function Partner_Home() {
                           {images.map((img) => (
                             <div key={img.id}>
                               <img
-                                src={`http://localhost:8081/${img.path}`}
+                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                 alt={img.name}
 
                                 style={{ borderRadius: '50%', width: '8vw', height: '16vh', border: '5px solid cadetblue' }}

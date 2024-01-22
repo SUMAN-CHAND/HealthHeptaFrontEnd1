@@ -20,7 +20,7 @@ export default function AddCoupon() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/superadmin/generate-coupon', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/generate-coupon`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

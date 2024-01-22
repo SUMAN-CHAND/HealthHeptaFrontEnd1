@@ -35,7 +35,7 @@ function Dashboard() {
 
 
   useEffect(() =>  {
-    axios.get('http://localhost:8081/sub-admin/dashboard/details')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/dashboard/details`)
       .then(response => {
         // Handle response
         setUserCount(response.data[0]);

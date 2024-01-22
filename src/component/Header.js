@@ -6,10 +6,12 @@ import {
 import './style.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+require('dotenv').config();
 
 
 
 export default function Header() {
+    // console.log(`${process.env.REACT_APP_HOST}`)
     const navigate = useNavigate();
     //main for connecting backend with Session
     axios.defaults.withCredentials = true;
@@ -28,7 +30,7 @@ export default function Header() {
     // const location = useLocation();
 
     useEffect(() => {
-        axios.get('http://localhost:8081/profile-details')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile-details`)
             .then(res => {
                 if (res.data.length > 2) {
                     // console.log(res.data)
@@ -52,22 +54,23 @@ export default function Header() {
 
     })
     // useEffect(()=>{
-    //     axios.get('http://localhost:8081/admin')
+    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/admin')
     //     .then(res =>{
     //         setLoggedIn(res.data[0])
     //     })
     // });
 
     useEffect(() => {
-        axios.get('http://localhost:8081/locations')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
             .then(res => {
                 setLocation(res.data);
                 // setChooseLocation(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.get('http://localhost:8081/search')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
             .then(res => {
+                // console.log(res.data)
                 setProducts(res.data);
                 // setChooseLocation(res.data)
             })
@@ -82,7 +85,7 @@ export default function Header() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/profile');
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
             if (response.data.success) {
                 setLoggedIn(undefined);
                 navigate('/')
@@ -113,8 +116,9 @@ export default function Header() {
     const handleFilter = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         const searchword = event.target.value.toLowerCase();
+        // console.log(searchword)
         const newFilter = products.filter((value) => {
-            return value.product_name.toLowerCase().includes(searchword);
+            return value.name.toLowerCase().includes(searchword);
         });
         if (searchword === "") {
             setChooseProduct([]);
@@ -122,9 +126,14 @@ export default function Header() {
             setChooseProduct(newFilter);
         }
     };
+    const setValueTOFilter = async (name) =>{
+        setValues({
+            input: name
+        })
+    }
     const searchMedicne = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/search', values);
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/search`, values);
             if (response.data !== null) {
                 // console.log(response.data)
                 navigate(`/medicines/${values.input}`,
@@ -225,7 +234,7 @@ export default function Header() {
                         </div>
                         <div className="search  me-2 search-location" >
                             <div style={{ display: 'flex' }}>
-                                <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                                <input className="form-control" name='input'  onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                                 <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -235,7 +244,7 @@ export default function Header() {
                             {chooseProduct.length !== 0 && (
                                 <div className="inputResult" onClick={handleClick}>
                                     {chooseProduct.map((product, index) => {
-                                        return <Link to={`/addtocart/${product.product_id}`} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.product_name}</p></Link>
+                                        return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                     }
                                     )}
                                 </div>
@@ -243,7 +252,7 @@ export default function Header() {
                         </div>
 
                         <div className='login-order' style={{ alignItems: "center" }}>
-                            <Link to='/b2b-home' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Dealer</p></Link>
+                            <Link to='/b2b-home' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Dealer </p></Link>
                             <Link to='/cart' style={{ textDecoration: 'none' }} >
                                 <div className="cart " style={{ display: 'flex', justifyContent: 'start', marginLeft: "auto", textDecoration: 'none' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="5vh" fill="currentColor" className="bi bi-cart p-0 drop-dwon-profile" viewBox="0 0 16 16" >
@@ -303,7 +312,7 @@ export default function Header() {
                         {chooseProduct.length !== 0 && (
                             <div className="inputResult" onClick={handleClick}>
                                 {chooseProduct.map((product, index) => {
-                                    return <Link to={`/addtocart/${product.product_id}`} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.product_name}</p></Link>
+                                    return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                 }
                                 )}
                             </div>

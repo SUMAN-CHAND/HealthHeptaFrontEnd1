@@ -18,7 +18,7 @@ export default function ListOfDoctors() {
   const [imagess, setImagesss] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/doctors').then((res) => {
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
       // Handle response
       if (res.data !== null) {
         setDoctorsss(res.data[0]);

@@ -5,6 +5,9 @@ import { toast } from 'react-toastify';
 import UploadImage from '../UploadImage';
 import Dashboard from './Dashboard';
 import ReactWhatsapp from 'react-whatsapp';
+import { FaRegEdit } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 
 export default function Sub_Admin_Home_Page() {
   //main for connecting backend with Session
@@ -55,7 +58,7 @@ export default function Sub_Admin_Home_Page() {
 
   let flag = false;
   useEffect(() => {
-    axios.get('http://localhost:8081/sub-admin/home/profile').then((response) => {
+    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/profile').then((response) => {
       if (response.data !== null) {
         setUser(response.data[0]);
         setUserAddress(response.data[1]);
@@ -76,7 +79,7 @@ export default function Sub_Admin_Home_Page() {
   // }
 
   useEffect(() => {
-    axios.get('http://localhost:8081/sub-admin/product')
+    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/product')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -90,7 +93,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/sub-admin/own/orders')
+    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/own/orders')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -104,7 +107,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/sub-admin/orders')
+    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -124,7 +127,7 @@ export default function Sub_Admin_Home_Page() {
     backgroundColor: 'rgb(207 244 252)',
     display: 'flex',
     justifyContent: 'space-between',
-    textAlign:'left'
+    textAlign: 'left'
   }
 
 
@@ -133,7 +136,7 @@ export default function Sub_Admin_Home_Page() {
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
-      axios.delete(`http://localhost:8081/sub-admin/home/delete/${product_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/delete/${product_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Product Delete Successfully');
@@ -147,7 +150,7 @@ export default function Sub_Admin_Home_Page() {
     }
   }
   const updateStatus = (orderId) => {
-    axios.post(`http://localhost:8081/sub-admin/orders/accept/${orderId}`).then(response => {
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
         alert('Order Accepted');
       }
@@ -156,7 +159,7 @@ export default function Sub_Admin_Home_Page() {
     })
   }
   const showPayments = () => {
-    axios.get('http://localhost:8081/sub-admin/payments')
+    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/payments')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -172,10 +175,11 @@ export default function Sub_Admin_Home_Page() {
 
   const [ind_doctor_images, setInd_doctor_images] = useState([]);
   const [ind_laboratory_images, setInd_laboratory_images] = useState([]);
+  const [chooseProduct, setChooseProduct] = useState([])
 
   // const loadImages = () => {
   //   axios
-  //     .get('http://localhost:8081/images')
+  //     .get('http://${process.env.REACT_APP_HOST}:8081/images')
   //     .then((response) => {
   //       setInd_doctor_images(response.data);
   //       // console.log(images)
@@ -186,7 +190,7 @@ export default function Sub_Admin_Home_Page() {
   // };
 
   const ShowDoctor = () => {
-    axios.get('http://localhost:8081/sub-admin/see-doctor')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-doctor`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -202,7 +206,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }
   const ShowLaboratory = () => {
-    axios.get('http://localhost:8081/sub-admin/see-labtests')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-labtests`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -221,7 +225,7 @@ export default function Sub_Admin_Home_Page() {
   // console.log(  doctors)
   // console.log(ind_doctor_images)
   const ShowAppoiment = () => {
-    axios.get('http://localhost:8081/sub-admin/see-appoiment')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-appoiment`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -236,7 +240,7 @@ export default function Sub_Admin_Home_Page() {
   }
   const ShowLaboratoryTestBooking = () => {
     // console.log('ShowLaboratoryTestBooking')
-    axios.get('http://localhost:8081/sub-admin/see-lab-bookings')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-lab-bookings`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -281,7 +285,7 @@ export default function Sub_Admin_Home_Page() {
 
   const handleSubmit = (appoiment_id) => {
     // console.log(AppointmentStatus)
-    axios.post(`http://localhost:8081/sub-admin/reschedule/status/${appoiment_id}`, AppointmentStatus)
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/status/${appoiment_id}`, AppointmentStatus)
       .then(res => {
         if (res.data !== null) {
 
@@ -301,7 +305,7 @@ export default function Sub_Admin_Home_Page() {
 
   const handlelabSubmit = (appoiment_id) => {
     // console.log(AppointmentStatus)
-    axios.post(`http://localhost:8081/sub-admin/reschedule/lab/status/${appoiment_id}`, AppointmentStatus)
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/lab/status/${appoiment_id}`, AppointmentStatus)
       .then(res => {
         if (res.data !== null) {
 
@@ -321,7 +325,7 @@ export default function Sub_Admin_Home_Page() {
 
   const deleteOrder = (id) => {
     console.log('click')
-    axios.delete(`http://localhost:8081/sub-admin/delete/orders/${id}`)
+    axios.delete(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/delete/orders/${id}`)
       .then(response => {
         console.log(response)
         if (response.data === 'success') {
@@ -336,6 +340,23 @@ export default function Sub_Admin_Home_Page() {
         console.log(err)
       })
   }
+  const handleFilter = (event) => {
+    setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+    // console.log(searchword)
+    const newFilter = products.filter((value) => {
+      return value.product_name.toLowerCase().includes(searchword)
+    });
+    if (searchword === "") {
+      setChooseProduct([]);
+    } else {
+      // console.log(newFilter)
+      setChooseProduct(newFilter);
+    }
+  };
+  // const handleClick = event => {
+  //   setChooseProduct([]);
+  // };
 
   //TODO
 
@@ -425,7 +446,7 @@ export default function Sub_Admin_Home_Page() {
                           {images.map((img) => (
                             <div key={img.id}>
                               <img
-                                src={`http://localhost:8081/${img.path}`}
+                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                 alt={img.name}
 
                                 style={{ borderRadius: '50%', height: '16vh', border: '5px solid cadetblue' }}
@@ -470,7 +491,68 @@ export default function Sub_Admin_Home_Page() {
 
             <div className="tab-pane fade " id="list-products" role="tabpanel" aria-labelledby="list-products-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New</button></Link></span>
-              <div className="container text-dark " style={renDataStyle}>
+
+              <div className="search  me-2 search-location" >
+                <div style={{ display: 'flex',flexDirection:'column',textAlign:'left'}}>
+                  <p className='p-1 m-1'>Search Products here</p>
+                  <input className="form-control" name='input' onChange={handleFilter} placeholder="Search product name" value={values.input} style={{ fontSize: '0.9em', width:'95%',borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px',margin:'8px 12px 17px 12px' }} />
+                  {/* <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                    </svg>
+                  </button> */}
+                </div>
+                {chooseProduct.length !== 0 && (
+                  <div className="" >
+                    {/* {chooseProduct.map((sproduct, index) => {
+                      return */}
+                    <div className="container text-dark " style={renDataStyle}>
+                      <table className="table table-striped">
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">MRP</th>
+                            <th scope="col">Product Quantity</th>
+                            <th scope="col">Manufacturing Date</th>
+                            <th scope="col">Expiry Date</th>
+                            <th scope="col">Discount</th>
+                            <th scope="col">Drag/Otc</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody style={{ verticalAlign: 'middle' }}>
+                          {chooseProduct.map((product, index) => (
+                            <tr key={index}>
+                              <th scope="row">{product.product_id}</th>
+                              <td>img...</td>
+                              <td>{product.product_name}</td>
+                              <td>{product.description}</td>
+                              <td>{product.product_price}</td>
+                              <td>{product.product_quantity}</td>
+                              <td>{product.manufacturing}</td>
+                              <td>{product.expiry}</td>
+                              <td>{product.discount} %</td>
+                              <td>{product.DrugOrNot} </td>
+                              <td style={{display:'flex'}}>
+                                <Link to={`updateproduct/${product.product_id}`} >  <FaRegEdit  style={{ cursor: 'pointer',color:'blue',margin:'1px',height: '5vh', width: '2vw'}}/>
+                                </Link>
+                                <RiDeleteBin6Line onClick={() => deleteProduct(product.product_id)} style={{ cursor: 'pointer',color:'red',margin:'1px',height: '5vh', width: '2vw' }} />
+
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* // }
+                    // )} */}
+                  </div>
+                )}
+              </div>
+              {/* <div className="container text-dark " style={renDataStyle}>
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
@@ -505,7 +587,7 @@ export default function Sub_Admin_Home_Page() {
                     ))}
                   </tbody>
                 </table>
-              </div>
+              </div> */}
             </div>
             <div className="tab-pane fade " id="orders" role="tabpanel" aria-labelledby="list-orders-list">
               <h2 className='p-2'>|| Orders ||</h2>
@@ -596,7 +678,7 @@ export default function Sub_Admin_Home_Page() {
                               {parseInt(doctor.doctor_imageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -647,7 +729,7 @@ export default function Sub_Admin_Home_Page() {
                               {parseInt(doctor.doctor_imageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -696,7 +778,7 @@ export default function Sub_Admin_Home_Page() {
                               {parseInt(laboratory.test_imageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />

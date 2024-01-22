@@ -87,7 +87,7 @@ import UserProfileLabBooking from './component/UserProfileLabBooking';
 import UserProfileAppoiments from './component/UserProfileAppoiments';
 import UserProfileParticularLabTest from './component/UserProfileParticularLabTest';
 import UserProfileParticularAppoiment from './component/UserProfileParticularAppoiment';
-
+import ImageCompressor from './component/ImageCompressor';
 
 function App() {
   return (
@@ -134,6 +134,7 @@ function App() {
               <Route path='/reschedule/:appoiment_id' element={<><Header /><Header2 /><RescheduleAppoiment /></>} exact />
               <Route path='/reschedule/lab/:appoiment_id' element={<><Header /><Header2 /><RescheduleLabTest /></>} exact />
               <Route path='/particular-laboratory/:id' element={<><Header /><Header2 /><ParticularLaboratory /></>} exact />
+              <Route path='/img/compression' element={<><Header /><Header2 /><ImageCompressor /></>} exact />
             </Routes>
           </div>
           <Routes>

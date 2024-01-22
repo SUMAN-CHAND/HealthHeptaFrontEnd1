@@ -11,7 +11,7 @@ export default function ProductList() {
 
     useEffect(() => {
 
-        axios.get('http://localhost:8081/product').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
             setProducts(res.data);
         })
     }, [])

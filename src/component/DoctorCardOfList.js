@@ -12,7 +12,7 @@ export default function DoctorCardOfList(props) {
                     <div className="doctor  container shadow" style={{ display: 'flex', margin: '1rem',backgroundColor:'#dffffb',padding:'1rem' }}>
 
                         <div className="deccription" style={{ display: 'flex' }} >
-                        <img src={`http://localhost:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
+                        <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
                             <div>
                                 <p className='fs-5'>{props.name} </p>
                                 <p className='fs-8'>{

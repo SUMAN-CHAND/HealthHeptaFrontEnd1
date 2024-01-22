@@ -42,7 +42,7 @@ export default function LabCard(props) {
         <div className="container"  >
           <div className="card  ">
             {/* <img src={props.img} className="card-img-top" alt="..." /> */}
-            <img src={`http://localhost:8081/${props.img}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
+            <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.img}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
             <div className="card-body">
               <p className="card-title" style={{ fontWeight: '800' }}>{props.title}</p>
               <p className="card-text">{props.phone}</p>

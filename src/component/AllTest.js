@@ -31,7 +31,7 @@ export default function AllTest(props) {
   const [image, setImages] = useState([]);
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/laboratory/lab_tests')
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/lab_tests`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -48,7 +48,7 @@ export default function AllTest(props) {
     }, [])
   } else {
     useEffect(() => {
-      axios.get(`http://localhost:8081/madicine/medicineshops/${props.location}`)
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops/${props.location}`)
         .then(response => {
           // Handle response
           if (response.data !== null) {

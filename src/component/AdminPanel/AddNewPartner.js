@@ -50,7 +50,7 @@ export default function AddNewPartner() {
         event.preventDefault();
         console.log(values)
 
-            axios.post('http://localhost:8081/add-partner', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/add-partner`, values)
                 .then(res => {
                     // console.log(res)
                     if (res.data === null) {

@@ -17,7 +17,7 @@ export default function B2BProdCard(props) {
       <Link style={{ textDecoration: 'none' }}>
         <div className="container"  style={{textAlign:'center',maxWidth:'12vw'}} >
           <div className="card " >
-          <img src={`http://localhost:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
+          <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
             <div className="card-body">
               <h5 className="card-title">{props.name}</h5>
               <div style={{   }}>

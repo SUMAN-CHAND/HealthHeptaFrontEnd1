@@ -34,7 +34,7 @@ function B2BDashboard() {
 
 
   useEffect(() => {
-    axios.get('http://localhost:8081/super_admin/b2b/dashboard/details')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/super_admin/b2b/dashboard/details`)
       .then(response => {
         // Handle response
         setUserCount(response.data[0]);

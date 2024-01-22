@@ -31,11 +31,11 @@ export default function Doctor() {
 
   const [user, setUser] = useState({});
     useEffect(() => {
-        axios.get('http://localhost:8081/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
-    console.log(user.id)
+    // console.log(user.id)
     var user_id =  user.id;
   const [doctors, setDoctor] = useState([]);
   const [doctorsTimes, setDoctorTime] = useState([]);
@@ -46,7 +46,7 @@ export default function Doctor() {
   let doctor_id = param.id;
 
   useEffect(() => {
-    axios.get(`http://localhost:8081/doctorsearch/${param.id}`).then((res) => {
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${param.id}`).then((res) => {
 
       // Handle response
       if (res.data !== null) {
@@ -62,7 +62,7 @@ export default function Doctor() {
 
   }, [])
   useEffect(() => {
-    axios.get(`http://localhost:8081/doctor/${param.id}`).then((res) => {
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctor/${param.id}`).then((res) => {
 
       // Handle response
       if (res.data !== null) {
@@ -77,7 +77,7 @@ export default function Doctor() {
 
   }, [])
   const navigate = useNavigate();
-  console.log(doctors)
+  // console.log(doctors)
   // console.log(image[0].path)
 
   const BookDoctor = (appoint_date,appoint_time) => {
@@ -98,16 +98,16 @@ export default function Doctor() {
 
   return (
     <>
-      <div className="header" style={{ height: '7vh', backgroundColor: 'rgb(42 165 181)' }}>
-        {/* <h5 className='text-light ' style={{ display: 'flex', paddingTop: '1rem', marginLeft: '3rem' }}>DR. ABHIRUP BANDOPADHYAY</h5> */}
-      </div>
+      {/* <div className="header" style={{ height: '7vh', backgroundColor: 'rgb(42 165 181)' }}>
+        <h5 className='text-light ' style={{ display: 'flex', paddingTop: '1rem', marginLeft: '3rem' }}>{doctors[0].doc_name}</h5>
+      </div> */}
       <div className="row particular-doctor-page" style={{ margin: '0px', backgroundColor: 'rgb(193 193 206 / 36%)' }}>
         <div className="col-8 particular-doctor" >
           <div className="doctor container  shadow" style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px' }}>
             {doctors.map(doctor => (
               <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
                 {/* <img src={doctor3} alt="....img" style={{ height: '20vh', width: '10vw' }} /> */}
-                <img src={`http://localhost:8081/${image[0].path}`} className="card-img-top" alt="..." style={{  width: '25%' }}  />
+                <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{  width: '25%' }}  />
 
                 <div className="deccription" style={{ paddingTop: '7vh',width:'100%' ,display:'flex',flexDirection:"column" }}>
                   <h5>{doctor.doc_name}</h5>

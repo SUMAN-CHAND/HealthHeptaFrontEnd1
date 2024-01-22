@@ -53,7 +53,7 @@ export default function Partner_Complete_Profile() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/partner/complete_profile', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/partner/complete_profile`, values)
             .then(res => {
                 console.log(res)
                 if (res.status === 200 && res.data === null) {

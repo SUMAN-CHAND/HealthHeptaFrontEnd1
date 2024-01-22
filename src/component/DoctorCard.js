@@ -15,7 +15,7 @@ export default function Doctors(props) {
       <Link to={`/doctor/${props.id}`} style={{textDecoration: 'none'}}>
         <div className="container" >
           <div className="card">
-          <img src={`http://localhost:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
+          <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
             <div className="card-body">
               <h5 className="card-title" style={{fontSize:'1.1rem'}}>{props.name}</h5>
               <p className="card-text"  style={{fontSize:'0.9rem' , marginBottom:'2px'}}>{props.description}</p>

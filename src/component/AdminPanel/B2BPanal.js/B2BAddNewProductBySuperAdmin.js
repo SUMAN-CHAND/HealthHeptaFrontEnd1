@@ -41,7 +41,7 @@ export default function B2BAddNewProductBySuperAdmin() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/superadmin/b2b/addproduct', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/b2b/addproduct`, values)
             .then(res => {
                 console.log(res.data)
                 if (res.data.message === 'Product added successfully') {

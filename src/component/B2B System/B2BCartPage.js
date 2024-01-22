@@ -42,7 +42,7 @@ export default function B2BCartPage() {
     // })
 
     useEffect(() => {
-        axios.get('http://localhost:8081/b2b/cart').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/cart`).then((res) => {
      
             if (res.data !== null) {
                 console.log(res.data)
@@ -54,14 +54,14 @@ export default function B2BCartPage() {
         })
     }, [0])
     useEffect(() => {
-        axios.get('http://localhost:8081/b2b/cart/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/cart/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
     }, [0]);
    
     useEffect(() => {
-        axios.get('http://localhost:8081/cart/drug')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart/drug`)
           .then(response => {
             // Handle response
             if(response.data[0].no >0){
@@ -127,7 +127,7 @@ export default function B2BCartPage() {
         // })
         // setValue(Amount)
         console.log(value)
-        axios.post('http://localhost:8081/cart/get-coupons', value)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons`, value)
             .then(res => {
                 console.log(res.data)
                 if (res.data !== null) {

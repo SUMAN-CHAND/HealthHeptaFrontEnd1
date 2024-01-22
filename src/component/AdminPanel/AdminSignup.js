@@ -54,7 +54,7 @@ export default function AdminSignUp() {
 
         setErrors(validation(values, check));
         if (errors.name === "" && errors.phone === "" && errors.password === "" && errors.check === "") {
-            axios.post('http://localhost:8081/superadmin/signup', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/signup`, values)
                 .then(res => {
                     if (res.data === null) {
                         danger();

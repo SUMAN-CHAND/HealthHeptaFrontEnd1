@@ -31,7 +31,7 @@ export default function B2BHome() {
   const [ind_product_Images, setInd_product_Images] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/b2b/home')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/b2b/home`)
       .then(response => {
         // Handle response
         setProducts(response.data[0]);
@@ -50,7 +50,7 @@ export default function B2BHome() {
 
   
   const showCoupon = () => {
-    axios.get('http://localhost:8081/superadmin/coupon')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/coupon`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -68,7 +68,7 @@ export default function B2BHome() {
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
-      axios.delete(`http://localhost:8081/superadmin/delete/${product_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/${product_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Product Delete Successfully');
@@ -84,7 +84,7 @@ export default function B2BHome() {
   const deleteCoupon = (coupon_id) => {
     const response = window.confirm("Are you sure to delete the Coupon?");
     if (response) {
-      axios.delete(`http://localhost:8081/superadmin/delete/coupon/${coupon_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/coupon/${coupon_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Coupon Delete Successfully');
@@ -99,7 +99,7 @@ export default function B2BHome() {
   }
 
   const updateStatus = (orderId) => {
-    axios.post(`http://localhost:8081/superadmin/orders/accept/${orderId}`).then(response => {
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
         alert('Order Accepted');
       }
@@ -127,7 +127,7 @@ export default function B2BHome() {
 
   const updateDeliveryDate = (orderId) => {
     console.log('click')
-    axios.post(`http://localhost:8081/superadmin/orders/delivery/${orderId}`, values).then(response => {
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/delivery/${orderId}`, values).then(response => {
       if (response.data) {
         alert('Order Delivery Date Change');
       }
@@ -138,7 +138,7 @@ export default function B2BHome() {
   const updateSubAdminStatus = (subAdminId) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
-      axios.post(`http://localhost:8081/superadmin/subadmin/accept/${subAdminId}`).then(response => {
+      axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/subadmin/accept/${subAdminId}`).then(response => {
         if (response.data) {
           alert('Permission Garented');
         }
@@ -158,7 +158,7 @@ export default function B2BHome() {
 
   // const loadImages = () => {
   //   axios
-  //     .get('http://localhost:8081/images')
+  //     .get('http://${process.env.REACT_APP_HOST}:8081/images')
   //     .then((response) => {
   //       setImages(response.data);
   //       // console.log(images)
@@ -281,7 +281,7 @@ export default function B2BHome() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -323,7 +323,7 @@ export default function B2BHome() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -365,7 +365,7 @@ export default function B2BHome() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -407,7 +407,7 @@ export default function B2BHome() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />

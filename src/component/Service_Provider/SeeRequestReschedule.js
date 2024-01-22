@@ -25,7 +25,7 @@ export default function SeeRequestReschedule() {
 
     const navigate  = useNavigate();
 useEffect(() =>{
-    axios.get(`http://localhost:8081/sub-admin/reschedule/see/${appoiment_id}`)
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/see/${appoiment_id}`)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order
@@ -54,7 +54,7 @@ console.log(values)
         console.log(values)
  
             event.preventDefault();
-            axios.post(`http://localhost:8081/sub-admin/reschedule/see/${appoiment_id}`,values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/see/${appoiment_id}`,values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order

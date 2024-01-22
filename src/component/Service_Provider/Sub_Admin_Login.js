@@ -52,7 +52,7 @@ export default function Sub_Admin_Login() {
         event.preventDefault();
         setErrors(validation(values));
         if (errors.phone === "" && errors.password === "") {
-            const user = axios.post('http://localhost:8081/sub-admin/login', values)
+            const user = axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         danger();

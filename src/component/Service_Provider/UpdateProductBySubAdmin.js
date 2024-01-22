@@ -30,7 +30,7 @@ export default function UpdateProductBySubAdmin() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.patch('http://localhost:8081/sub-admin/home/updateproduct/:product_id', values)
+        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/updateproduct/:product_id`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

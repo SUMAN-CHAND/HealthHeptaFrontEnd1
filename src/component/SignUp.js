@@ -53,7 +53,7 @@ export default function SignUp() {
 
         setErrors(validation(values, check));
         if (errors.name === "" && errors.phone === "" && errors.password === "" && errors.check === "") {
-            axios.post('http://localhost:8081/signup', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/signup`, values)
                 .then(res => {
                     if (res.data !== null) {
                         success();

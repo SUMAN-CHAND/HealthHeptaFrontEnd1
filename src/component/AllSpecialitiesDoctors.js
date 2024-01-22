@@ -35,7 +35,7 @@ export default function AllSpecialitiesDoctors(props) {
   if (props.location === undefined) {
     // specializes-doctors
     useEffect(() => {
-      axios.get('http://localhost:8081/specializes-doctors').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/specializes-doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);

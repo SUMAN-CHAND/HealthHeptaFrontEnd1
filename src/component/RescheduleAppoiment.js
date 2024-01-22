@@ -27,7 +27,7 @@ export default function RescheduleAppoiment() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post(`http://localhost:8081/reschedule/${appoiment_id}`, values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/reschedule/${appoiment_id}`, values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order

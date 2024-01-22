@@ -11,7 +11,7 @@ export default function UserProfileAppoiments() {
 
 
     useEffect(() => {
-        axios.get('http://localhost:8081/user/see-appoiment')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-appoiment`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -32,7 +32,7 @@ export default function UserProfileAppoiments() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://localhost:8081/orders/${id}`)
+            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {
@@ -79,7 +79,7 @@ export default function UserProfileAppoiments() {
                                         {parseInt(lab.test_imageId) === img.id ?
                                             <>
                                                 <img
-                                                    src={`http://localhost:8081/${img.path}`}
+                                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                                     alt={img.name}
                                                     width="50" />
                                                 {setImageFound(false)}

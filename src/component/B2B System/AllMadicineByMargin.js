@@ -12,7 +12,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         console.log("Fetching data...");
-        axios.get('http://localhost:8081/b2b/product').then((res) => {
+        axios.get(  `http://${process.env.REACT_APP_HOST}:8081/b2b/product`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setProducts(res.data[0]);
@@ -26,7 +26,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get('http://localhost:8081/b2b/product/20%off').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/20%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setOffproducts(res.data[0]);
@@ -40,7 +40,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get('http://localhost:8081/b2b/product/50%off').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/50%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setOff50products(res.data[0]);
@@ -53,7 +53,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get('http://localhost:8081/b2b/product/newadded').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/newadded`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setNewAddedproducts(res.data[0]);

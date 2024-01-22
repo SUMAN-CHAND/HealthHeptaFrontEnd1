@@ -32,7 +32,7 @@ export default function AllDoctors(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/doctors').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
@@ -51,7 +51,7 @@ export default function AllDoctors(props) {
 
   //  else {
   //   useEffect(() => {
-  //     axios.get(`http://localhost:8081/product/${props.location}`).then((res) => {
+  //     axios.get(`http://${process.env.REACT_APP_HOST}:8081/product/${props.location}`).then((res) => {
 
   //       // Handle response
   //       if (res.data !== null) {

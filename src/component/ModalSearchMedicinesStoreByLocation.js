@@ -24,7 +24,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   const [chooseProduct, setChooseProduct] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/profile-details')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile-details`)
         .then(res => {
             setSelectLocation(res.data[2])
         })
@@ -32,14 +32,14 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
 // consol.log(selectLocation)
 
   useEffect(() => {
-    axios.get('http://localhost:8081/locations')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
       .then(res => {
         setLocation(res.data);
         // setChooseLocation(res.data)
       })
   })
   useEffect(() => {
-    axios.get('http://localhost:8081/search')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
       .then(res => {
         setProducts(res.data);
         // setChooseLocation(res.data)
@@ -65,7 +65,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   //   value = `/medicines`
   // }
   useEffect(() => {
-    axios.get('http://localhost:8081/search')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
       .then(res => {
         setProducts(res.data);
         // setChooseLocation(res.data)
@@ -93,7 +93,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   const searchMedicne = async () => {
     try {
       closeTheModal();
-      const response = await axios.post('http://localhost:8081/search', values);
+      const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/search`, values);
       if (response.data !== null) {
         navigate(`/medicines/${values.input}`,
           {

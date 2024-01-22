@@ -14,7 +14,7 @@ export default function ViewSubAdminProfile() {
     var user_id = param.user_id;
     // console.log(user_id)
     useEffect(() => {
-        axios.get(`http://localhost:8081/superadmin/orders/customer/${user_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/customer/${user_id}`)
             .then(res => {
                 if (res.data) {
                     setCustomer(res.data[0]);

@@ -26,7 +26,7 @@ export default function DoctorTimeTable() {
 
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get(`http://localhost:8081/sub-admin/home/timetable/doctor/${doctor_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/timetable/doctor/${doctor_id}`)
             .then(res => {
                 if (res.data !== null) {
                     // Notify admins and super admins about the new order

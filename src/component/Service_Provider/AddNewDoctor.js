@@ -104,11 +104,11 @@ export default function AddNewDoctor() {
 
 
             //    console.log(response.data)
-            axios.post('http://localhost:8081/sub-admin/add-doctor', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-doctor`, values)
                 .then(async (res) => {
                     if (res.data > 0) {
                         const insertId = res.data;
-                        axios.post('http://localhost:8081/sub-admin/add-doctor/time-table', [timeTable, insertId])
+                        axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-doctor/time-table`, [timeTable, insertId])
                             .then(async (response) => {
                                 console.log(response)
                                 if (response.data === 'success') {

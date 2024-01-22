@@ -16,7 +16,7 @@ export default function ViewOrderBySubAdminDemo() {
   // console.log(product_id)
   // console.log(product_id)
   useEffect(() => {
-    axios.get(`http://localhost:8081/sub-admin/orders/product/${product_id}`)
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/product/${product_id}`)
       .then(res => {
         if (res.data !== null) {
           setProduct(res.data[0]);
@@ -32,7 +32,7 @@ export default function ViewOrderBySubAdminDemo() {
   var user_id = param.user_id;
   // console.log(user_id)
   useEffect(() => {
-    axios.get(`http://localhost:8081/sub-admin/orders/customer/${user_id}`)
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/customer/${user_id}`)
       .then(res => {
         if (res.data) {
           setCustomer(res.data[0]);
@@ -47,7 +47,7 @@ export default function ViewOrderBySubAdminDemo() {
   var order_id = param.id;
   // console.log(product_id)
   useEffect(() => {
-    axios.get(`http://localhost:8081/sub-admin/orders/order/${order_id}`)
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data !== null) {
           setorderDetail(res.data[0])

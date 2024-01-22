@@ -41,7 +41,7 @@ export default function AddProduct() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/superadmin/addproduct', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/addproduct`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

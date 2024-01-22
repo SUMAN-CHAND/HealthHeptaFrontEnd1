@@ -28,7 +28,7 @@ export default function AdminHeader() {
     // const location = useLocation();
 
     useEffect(() => {
-        axios.get('http://localhost:8081/profile-details')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile-details`)
             .then(res => {
                 // console.log(res.data)
                 setnumOfItem(res.data[0]);
@@ -45,21 +45,21 @@ export default function AdminHeader() {
 
     })
     // useEffect(()=>{
-    //     axios.get('http://localhost:8081/admin')
+    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/admin')
     //     .then(res =>{
     //         setLoggedIn(res.data[0])
     //     })
     // });
 
     useEffect(() => {
-        axios.get('http://localhost:8081/locations')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
             .then(res => {
                 setLocation(res.data);
                 // setChooseLocation(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.get('http://localhost:8081/search')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
             .then(res => {
                 setProducts(res.data);
                 // setChooseLocation(res.data)
@@ -73,7 +73,7 @@ export default function AdminHeader() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/profile');
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
                 navigate('/')
@@ -115,7 +115,7 @@ export default function AdminHeader() {
     };
     const searchMedicne = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/search', values);
+            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/search`, values);
             if (response.data !== null) {
                 navigate(`/medicines/${values.input}`,
                     {

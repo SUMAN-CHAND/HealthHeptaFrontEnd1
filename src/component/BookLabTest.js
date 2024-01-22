@@ -16,7 +16,7 @@ export default function BookLabTest() {
 
     const [user, setUser] = useState({});
     useEffect(() => {
-        axios.get('http://localhost:8081/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
@@ -28,7 +28,7 @@ export default function BookLabTest() {
     const [clinic_id, setClinicId] = useState();
     const [total_amount, setTotal_amount] = useState();
     useEffect(() => {
-        axios.get(`http://localhost:8081/book/lab-test/${id}`).then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/book/lab-test/${id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {
@@ -85,7 +85,7 @@ export default function BookLabTest() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post('http://localhost:8081/labbook', [values, clinic_id, user_id, total_amount])
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/labbook`, [values, clinic_id, user_id, total_amount])
                 .then(res => {
                     if (res.data !== null) {
                         // console.log(values)
@@ -128,7 +128,7 @@ export default function BookLabTest() {
                 <div className=" col-7 doctor-appoiment-doctor-profile" style={{ backgroundColor: 'white', padding: '2rem', margin: '1rem', borderRadius: '5px' }}>
                     {LabTests.map(LabTest => (
                         <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={`http://localhost:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
+                            <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
                             <div className="deccription" style={{ paddingTop: '7vh', width: '100%' }}>
                                 <h5>{LabTest.Test_Name}</h5>
                                 <p>{LabTest.Test_Desc} </p>

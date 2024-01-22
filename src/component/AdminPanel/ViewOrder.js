@@ -15,7 +15,7 @@ export default function ViewOrder() {
     var order_id = param.order_id;
     // console.log(product_id)
     useEffect(() => {
-        axios.get(`http://localhost:8081/superadmin/orders/order/${order_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/order/${order_id}`)
             .then(res => {
                 if (res.data) {
                     setOrders(res.data[0]);

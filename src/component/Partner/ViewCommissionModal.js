@@ -31,7 +31,7 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
 
 
   useEffect(() => {
-    axios.get(`http://localhost:8081/partner/commission/${order_id}`)
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/commission/${order_id}`)
       .then(res => {
         // setSelectLocation(res.data[2])
         setCommissions(res.data[0]);
@@ -39,7 +39,7 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
       })
   }, []);
   useEffect(() => {
-     axios.get('http://localhost:8081/partner/profile/order').then((res) => {
+     axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/profile/order`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data)
             } else {

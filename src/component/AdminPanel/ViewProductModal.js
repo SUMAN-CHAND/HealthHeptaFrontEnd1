@@ -15,7 +15,7 @@ export default function ViewProductModal() {
     var product_id = param.product_id;
     // console.log(product_id)
     useEffect(() => {
-        axios.get(`http://localhost:8081/superadmin/orders/product/${product_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/product/${product_id}`)
             .then(res => {
                 if (res.data) {
                     setProduct(res.data[0]);

@@ -15,7 +15,7 @@ export default function AllMedicinesShops(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/madicine/medicineshops')
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -32,7 +32,7 @@ export default function AllMedicinesShops(props) {
     }, [])
   } else {
     useEffect(() => {
-      axios.get(`http://localhost:8081/madicine/medicineshops/${props.location}`)
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops/${props.location}`)
         .then(response => {
           // Handle response
           if (response.data !== null) {

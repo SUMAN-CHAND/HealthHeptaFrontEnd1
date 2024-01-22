@@ -30,7 +30,7 @@ export default function SpecialitiesDoctorsCard(props) {
     // searchDoctor(data);
     try {
       // console.log(data)
-      axios.post('http://localhost:8081/doctorspecializes', data)
+      axios.post(`http://${process.env.REACT_APP_HOST}:8081/doctorspecializes`, data)
         .then(res => {
           if (res.data !== null) {
             navigate(`/listofdoctor`,

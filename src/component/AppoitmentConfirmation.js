@@ -48,7 +48,7 @@ export default function AppoitmentConfirmation() {
     const [doctors, setDoctor] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/doctorsearch/${doctor_id}`).then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${doctor_id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {

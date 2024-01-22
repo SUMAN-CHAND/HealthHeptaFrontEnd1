@@ -16,7 +16,7 @@ export default function ParticularProductOfOrderStatus() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8081//order/${order_id}/product/${product_id}`).then((res)=>{
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081//order/${order_id}/product/${product_id}`).then((res)=>{
             setProducts(res.data);
         })
     }, [])

@@ -8,7 +8,7 @@ export default function LabTestCard(props) {
                 <span style={{ textDecoration: 'none' }}>
                     <div className="container" style={{textAlign:'center'}}>
                         <div className="card">
-                            <img src={`http://localhost:8081/${props.img}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }} />
+                            <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.img}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }} />
                             <div className="card-body">
                                 <h5 className="card-title">{props.title} </h5>
                                 <p className="card-title">{props.desc} </p>

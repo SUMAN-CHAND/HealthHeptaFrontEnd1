@@ -24,7 +24,7 @@ export default function ViewDocuments() {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/image/${image_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/image/${image_id}`)
             .then(res => {
                 // setSelectLocation(res.data[2])
                 setImages(res.data);
@@ -46,7 +46,7 @@ const ClosePage = () => {
                         {images.map((img) => (
                             <div key={img.id}>
                                 <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
 
                                     style={{     maxWidth: '85vw', border: '5px solid cadetblue' }}

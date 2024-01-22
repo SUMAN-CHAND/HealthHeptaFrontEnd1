@@ -35,7 +35,7 @@ export default function AddNewLaboratoryTest() {
 
 
             //    console.log(response.data)
-            axios.post('http://localhost:8081/sub-admin/add-new-laboratory-test', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-new-laboratory-test`, values)
                 .then(async (res) => {
                     if (res.data > 0) {
                     //    console.log(res.data)

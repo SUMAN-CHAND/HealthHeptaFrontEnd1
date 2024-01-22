@@ -12,7 +12,7 @@ export default function UserProfileParticularLabTest() {
     const [labTestImages, setLabTestImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/user/see-lab-booking/${test_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-lab-booking/${test_id}`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -39,7 +39,7 @@ export default function UserProfileParticularLabTest() {
                                 {parseInt(lab.test_imageId) === img.id ?
                                     <>
                                         <img
-                                            src={`http://localhost:8081/${img.path}`}
+                                            src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                             alt={img.name}
                                             style={{ width: '75%' }}
                                         />

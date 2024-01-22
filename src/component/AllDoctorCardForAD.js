@@ -32,7 +32,7 @@ export default function AllDoctorCardForAD(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/doctors').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
@@ -51,7 +51,7 @@ export default function AllDoctorCardForAD(props) {
 
   //  else {
   //   useEffect(() => {
-  //     axios.get(`http://localhost:8081/product/${props.location}`).then((res) => {
+  //     axios.get(`http://${process.env.REACT_APP_HOST}:8081/product/${props.location}`).then((res) => {
 
   //       // Handle response
   //       if (res.data !== null) {
@@ -72,7 +72,7 @@ export default function AllDoctorCardForAD(props) {
   return (
     <div>
       <div className="container" style={{ marginTop: '5vh' }}>
-        <h3 className='py-2'>|| Best Doctor Suggested For You ||</h3>
+        <h5 className='py-2'>|| Best Doctor Suggested For You ||</h5>
         {/* {doctors!== undefined ? <> */}
           {/* <Carousel responsive={responsive}> */}
             {doctors.map(doctor => (

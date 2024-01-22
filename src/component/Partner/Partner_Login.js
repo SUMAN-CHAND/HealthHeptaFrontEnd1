@@ -48,7 +48,7 @@ export default function Partner_Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrors(validation(values));
-            const user = axios.post('http://localhost:8081/partner/login', values)
+            const user = axios.post(`http://${process.env.REACT_APP_HOST}:8081/partner/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         console.log(res.data)

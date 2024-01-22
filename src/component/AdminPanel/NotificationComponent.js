@@ -5,7 +5,7 @@ const NotificationComponent = () => {
   const [notifications, setNotifications] = useState([]);
 
   // useEffect(() => {
-  //   const socket = io('http://localhost:8081/orders'); // Replace with your server URL
+  //   const socket = io('http://${process.env.REACT_APP_HOST}:8081/orders'); // Replace with your server URL
 
   //   // Listen for order notifications
   //   socket.on('orderNotification', (data) => {

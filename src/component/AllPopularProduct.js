@@ -29,10 +29,10 @@ export default function AllPopularProduct(props) {
   };
   const [products, setProducts] = useState([])
   const [image, setImages] = useState([])
-  console.log(props.location)
+  // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/product').then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setProducts(res.data[0])
@@ -49,7 +49,7 @@ export default function AllPopularProduct(props) {
 
   } else {
     useEffect(() => {
-      axios.get(`http://localhost:8081/product/${props.location}`).then((res) => {
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product/${props.location}`).then((res) => {
 
         // Handle response
         if (res.data !== null) {

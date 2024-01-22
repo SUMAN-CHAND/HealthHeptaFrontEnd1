@@ -49,7 +49,7 @@ export default function UserProfile() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8081/profile');
+            const response = await axios.post('http://${process.env.REACT_APP_HOST}:8081/profile');
             if (response.data.success) {
                 setLoggedIn(undefined);
                 navigate('/')
@@ -67,7 +67,7 @@ export default function UserProfile() {
     const [products, setProducts] = useState([]);
     const [ind_product_Images, setInd_product_Images] = useState([]);
     // useEffect(() => {
-    //     axios.get('http://localhost:8081/profile/order').then((res) => {
+    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/profile/order').then((res) => {
     //         if (res.data !== null) {
     //             setProducts(res.data)
     //         } else {
@@ -77,7 +77,7 @@ export default function UserProfile() {
     // }, [])
 
     const showOrders = () => {
-        axios.get('http://localhost:8081/profile/order').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile/order`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data[0]);
                 setInd_product_Images(res.data[1]);
@@ -90,7 +90,7 @@ export default function UserProfile() {
 
     let flag = false;
     useEffect(() => {
-        axios.get('http://localhost:8081/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
@@ -141,7 +141,7 @@ export default function UserProfile() {
     }
     const onPSubmit = (event) => {
         event.preventDefault();
-        axios.patch('http://localhost:8081/profile/phone', phoneno)
+        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/profile/phone`, phoneno)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -172,7 +172,7 @@ export default function UserProfile() {
     }
     const onASubmit = (event) => {
         event.preventDefault();
-        axios.patch('http://localhost:8081/profile/address', values)
+        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -191,7 +191,7 @@ export default function UserProfile() {
     }
     const onAPostSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8081/profile/address', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -212,7 +212,7 @@ export default function UserProfile() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://localhost:8081/orders/${id}`)
+            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {
@@ -236,7 +236,7 @@ export default function UserProfile() {
     const [labBookings, setLabBookings] = useState([]);
 
     const ShowAppoiment = () => {
-        axios.get('http://localhost:8081/user/see-appoiment')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-appoiment`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -250,7 +250,7 @@ export default function UserProfile() {
             });
     }
     const ShowLabBooking = () => {
-        axios.get('http://localhost:8081/user/see-lab-booking')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-lab-booking`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {

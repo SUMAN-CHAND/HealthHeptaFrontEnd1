@@ -29,7 +29,7 @@ export default function BookAppointment({ closeTheModal }) {
   const [chooseDoctor, setChooseDoctor] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/`)
       .then(res => {
 
         setSelectLocation(res.data[2])
@@ -37,14 +37,14 @@ export default function BookAppointment({ closeTheModal }) {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:8081/locations')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
       .then(res => {
         setLocation(res.data);
         // setChooseLocation(res.data)
       })
   })
   useEffect(() => {
-    axios.get('http://localhost:8081/doctorsearch')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch`)
       .then(res => {
         setDoctors(res.data);
         // setChooseLocation(res.data)
@@ -70,7 +70,7 @@ export default function BookAppointment({ closeTheModal }) {
   //   value = `/medicines`
   // }
   // useEffect(() => {
-  //   axios.get('http://localhost:8081/search')
+  //   axios.get('http://${process.env.REACT_APP_HOST}:8081/search')
   //     .then(res => {
   //       setProducts(res.data);
   //       // setChooseLocation(res.data)
@@ -100,7 +100,7 @@ export default function BookAppointment({ closeTheModal }) {
     try {
       closeTheModal();
       console.log(values)
-      const response = await axios.post('http://localhost:8081/doctorsearch', values);
+      const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch`, values);
       if (response.data !== null) {
         navigate(`/listofdoctor`,
           {

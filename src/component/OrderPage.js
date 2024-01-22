@@ -42,7 +42,7 @@ export default function OrderPage() {
     // })
 
     useEffect(() => {
-        axios.get('http://localhost:8081/cart').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data)
             } else {
@@ -52,14 +52,14 @@ export default function OrderPage() {
         })
     }, [])
     useEffect(() => {
-        axios.get('http://localhost:8081/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
     }, []);
    
     useEffect(() => {
-        axios.get('http://localhost:8081/cart/drug')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart/drug`)
           .then(response => {
             // Handle response
             if(response.data[0].no >0){
@@ -125,7 +125,7 @@ export default function OrderPage() {
     //     // })
     //     // setValue(Amount)
     //     console.log(value)
-    //     axios.post('http://localhost:8081/cart/get-coupons', value)
+    //     axios.post('http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons', value)
     //         .then(res => {
     //             console.log(res.data)
     //             if (res.data !== null) {

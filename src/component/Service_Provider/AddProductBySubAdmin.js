@@ -37,7 +37,7 @@ export default function AddProductBySubAdmin() {
     const handleSubmit = (event) => {
         console.log('click')
         event.preventDefault();
-        axios.post('http://localhost:8081/sub-admin/home/addproduct', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/addproduct`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

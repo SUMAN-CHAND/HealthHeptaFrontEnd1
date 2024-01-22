@@ -84,7 +84,7 @@ export default function OrderPaymentPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetch('http://localhost:8081/cart');
+            const result = await fetch(`http://${process.env.REACT_APP_HOST}:8081/cart`);
             const jsonResult = await result.json();
             setProducts(jsonResult);
 
@@ -92,7 +92,7 @@ export default function OrderPaymentPage() {
         fetchData();
     }, []);
     useEffect(() => {
-        axios.get('http://localhost:8081/profile').then((response) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
@@ -134,7 +134,7 @@ export default function OrderPaymentPage() {
     useEffect(() => {
 
         console.log(amount)
-        axios.post('http://localhost:8081/cart/get-coupons', amounts)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons`, amounts)
             .then(res => {
                 console.log(res.data)
                 if (res.data !== null) {
@@ -192,7 +192,7 @@ export default function OrderPaymentPage() {
 
     const applyCoupon = (event) => {
         console.log('click')
-        axios.post('http://localhost:8081/orders/coupon', couponValue)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/orders/coupon`, couponValue)
             .then(res => {
                 if (res.data !== null) {
                     success();
@@ -212,11 +212,11 @@ export default function OrderPaymentPage() {
     const total_DiscountAfterCouponApply = ((total_amount * couponDetails.discount_percentage) / 100);
     total_amountAfterCouponApply = (total_amount - ((total_amount * couponDetails.discount_percentage) / 100));
 
-    // const socket = io('http://localhost:8081/orders'); // Replace with your server URL
+    // const socket = io('http://${process.env.REACT_APP_HOST}:8081/orders'); // Replace with your server URL
     const handleSubmit = (event) => {
         // navigate('/');  
         event.preventDefault();
-        axios.post('http://localhost:8081/orders', values)
+        axios.post(`http://${process.env.REACT_APP_HOST}:8081/orders`, values)
             .then(res => {
                 if (res.data !== null) {
                     // Notify admins and super admins about the new order

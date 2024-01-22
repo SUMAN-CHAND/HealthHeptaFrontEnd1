@@ -11,7 +11,7 @@ export default function UserProfileOrder() {
 
     // const showOrders = () => {
     useEffect(() => {
-        axios.get('http://localhost:8081/profile/orders').then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile/orders`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data[0]);
                 setInd_product_Images(res.data[1]);
@@ -30,7 +30,7 @@ export default function UserProfileOrder() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://localhost:8081/orders/${id}`)
+            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {
@@ -74,7 +74,7 @@ export default function UserProfileOrder() {
                                     {parseInt(product.productImageId) === img.id ?
                                         <>
                                             <img
-                                                src={`http://localhost:8081/${img.path}`}
+                                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                                 alt={img.name}
                                                 width="50" />
                                         </>

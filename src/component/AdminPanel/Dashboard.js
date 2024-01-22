@@ -55,7 +55,7 @@ const Dashboard = () => {
   // console.log(purchaseCountWeek);
 
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/userno')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/userno`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -69,7 +69,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/userno/week')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/userno/week`)
       .then(response => {
         // Handle response
         // console.log(response.data)
@@ -89,7 +89,7 @@ const Dashboard = () => {
   // }
 
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/productno')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/productno`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -104,7 +104,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/lowstock')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/lowstock`)
       .then(response => {
         // Handle response 
         if (response.data !== undefined) {
@@ -119,7 +119,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/expirying_ptoduct')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/expirying_ptoduct`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -134,7 +134,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/expiry_product')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/expiry_product`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -149,7 +149,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/purchase_monthly')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/purchase_monthly`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -164,7 +164,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/purchase_yearly')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/purchase_yearly`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -179,7 +179,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/sales_monthly')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/sales_monthly`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -195,7 +195,7 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/product/sales_yearly')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product/sales_yearly`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -210,7 +210,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/ordersno')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/ordersno`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -224,7 +224,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/ordersno/week')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/ordersno/week`)
       .then(response => {
         // Handle response
         // console.log(response.data)
@@ -240,7 +240,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/serviceproviderno')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/serviceproviderno`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
@@ -255,7 +255,7 @@ const Dashboard = () => {
   }, [])
 
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/sales/week')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/sales/week`)
       .then(response => {
         // Handle response
         // console.log(response.data)
@@ -271,7 +271,7 @@ const Dashboard = () => {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/purchase/week')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/purchase/week`)
       .then(response => {
         // Handle response
         // console.log(response.data)

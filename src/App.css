@@ -225,7 +225,14 @@ table td button{
   font-size: 14px;
 }
 
-
+.product-details{
+  position: -webkit-sticky; /* Safari */
+  position: sticky !important;
+  top: 0 !important;
+}
+.particular-product{
+  height: 81vh !important;
+}
 
 
 
@@ -589,6 +596,7 @@ max-width: 25vw;
 
 .particular-product{
   flex-direction: column;
+  height: auto !important;
 }
 .product-details{
   width: 100vw !important;
@@ -608,7 +616,7 @@ max-width: 25vw;
 
 }
 .ProductCardForList{
-  width: 70vw !important;
+  width: 82vw !important;
 }
 .ProductCardForList img{
   width: 9vw !important;
@@ -768,6 +776,7 @@ display: none !important;
   justify-content: center;
   align-items: center;
   height: auto !important;
+  padding-bottom: 15vh !important;
 }
 .product-details .col-5{
   width: 100%;

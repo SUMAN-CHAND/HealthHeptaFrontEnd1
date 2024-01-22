@@ -21,6 +21,8 @@ export default function AdminHomePage() {
   const [partners, setPartner] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [coupons, setCoupons] = useState([]);
+  const [searchUser, setSearchUser] = useState([])
+  const [searchPatient, setSearchPatient] = useState([])
 
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ export default function AdminHomePage() {
 
   // useEffect(() => {
   const ShowProduct = () => {
-    axios.get('http://localhost:8081/superadmin/product')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -52,7 +54,7 @@ export default function AdminHomePage() {
   }
   // }, [])
   useEffect(() => {
-    axios.get('http://localhost:8081/superadmin/orders')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -66,13 +68,13 @@ export default function AdminHomePage() {
       });
   }, [])
   const showUser = () => {
-    axios.get('http://localhost:8081/superadmin/user')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/user`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
           setUser(response.data)
         }
-        // console.log(response.data);
+        console.log(user);
       })
       .catch(err => {
         // Handle errors
@@ -80,7 +82,7 @@ export default function AdminHomePage() {
       });
   }
   const showAppoiments = () => {
-    axios.get('http://localhost:8081/superadmin/appoiments')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/appoiments`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -94,7 +96,7 @@ export default function AdminHomePage() {
       });
   }
   const showLabbokking = () => {
-    axios.get('http://localhost:8081/superadmin/labbokking')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/labbokking`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -109,7 +111,7 @@ export default function AdminHomePage() {
   }
 
   const showPayments = () => {
-    axios.get('http://localhost:8081/superadmin/payments')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/payments`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -123,7 +125,7 @@ export default function AdminHomePage() {
       });
   }
   const showServiceProvider = () => {
-    axios.get('http://localhost:8081/superadmin/service-provider')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/service-provider`)
       .then(response => {
         // Handle response
         setSubAdmin(response.data)
@@ -135,7 +137,7 @@ export default function AdminHomePage() {
       });
   }
   const showPartner = () => {
-    axios.get('http://localhost:8081/superadmin/partner')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner`)
       .then(response => {
         // Handle response
         setPartner(response.data)
@@ -147,7 +149,7 @@ export default function AdminHomePage() {
       });
   }
   const showPartnerCommission = () => {
-    axios.get('http://localhost:8081/superadmin/partner-commissions')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner-commissions`)
       .then(response => {
         // Handle response
         setCommissions(response.data)
@@ -159,7 +161,7 @@ export default function AdminHomePage() {
       });
   }
   const showCoupon = () => {
-    axios.get('http://localhost:8081/superadmin/coupon')
+    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/coupon`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -177,7 +179,7 @@ export default function AdminHomePage() {
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
-      axios.delete(`http://localhost:8081/superadmin/delete/${product_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/${product_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Product Delete Successfully');
@@ -193,7 +195,7 @@ export default function AdminHomePage() {
   const DeleteCommission = (commission_id) => {
     const response = window.confirm("Are you sure to delete the Commission?");
     if (response) {
-      axios.delete(`http://localhost:8081/superadmin/delete/commission/${commission_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/commission/${commission_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Commission Delete Successfully');
@@ -209,7 +211,7 @@ export default function AdminHomePage() {
   const deleteCoupon = (coupon_id) => {
     const response = window.confirm("Are you sure to delete the Coupon?");
     if (response) {
-      axios.delete(`http://localhost:8081/superadmin/delete/coupon/${coupon_id}`)
+      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/coupon/${coupon_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Coupon Delete Successfully');
@@ -224,7 +226,7 @@ export default function AdminHomePage() {
   }
 
   const updateStatus = (orderId) => {
-    axios.post(`http://localhost:8081/superadmin/orders/accept/${orderId}`).then(response => {
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
         alert('Order Accepted');
       }
@@ -252,7 +254,7 @@ export default function AdminHomePage() {
 
   const updateDeliveryDate = (orderId) => {
     console.log('click')
-    axios.post(`http://localhost:8081/superadmin/orders/delivery/${orderId}`, values).then(response => {
+    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/delivery/${orderId}`, values).then(response => {
       if (response.data) {
         alert('Order Delivery Date Change');
       }
@@ -263,7 +265,7 @@ export default function AdminHomePage() {
   const updateSubAdminStatus = (subAdminId) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
-      axios.post(`http://localhost:8081/superadmin/subadmin/accept/${subAdminId}`).then(response => {
+      axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/subadmin/accept/${subAdminId}`).then(response => {
         if (response.data) {
           alert('Permission Garented');
         }
@@ -277,7 +279,7 @@ export default function AdminHomePage() {
   const updatePartnerStatus = (partner_id) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
-      axios.post(`http://localhost:8081/superadmin/partner/accept/${partner_id}`).then(response => {
+      axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner/accept/${partner_id}`).then(response => {
         if (response.data) {
           alert('Permission Garented');
         }
@@ -299,7 +301,7 @@ export default function AdminHomePage() {
 
   // const loadImages = () => {
   //   axios
-  //     .get('http://localhost:8081/images')
+  //     .get('http://${process.env.REACT_APP_HOST}:8081/images')
   //     .then((response) => {
   //       setImages(response.data);
   //       // console.log(images)
@@ -323,6 +325,39 @@ export default function AdminHomePage() {
   //   console.log(partnerType)
   //   // setRole(event.target.value)
   // }
+  const [searchValue, setSearchValue] = useState({
+    input: ''
+  })
+  const handleUserFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+
+    const filtered = user.filter((item) => {
+      const phoneNumber = item.phone.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchUser([]);
+    } else {
+      setSearchUser(filtered);
+    }
+  };
+  const handlePatientFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+
+    const filtered = appoiments.filter((item) => {
+      const phoneNumber = item.ph_number.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchPatient([]);
+    } else {
+      setSearchPatient(filtered);
+    }
+  };
 
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
@@ -332,13 +367,13 @@ export default function AdminHomePage() {
     // alignItems: 'center',
     paddingTop: '1vh',
     flexDirection: 'column',
-    overflowX:'auto'
+    overflowX: 'auto'
   }
   const dashboardStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
     height: '100%',
-    width:'100%',
+    width: '100%',
     // justifyContent: 'center',
     // alignItems: 'center',
     paddingTop: '1vh',
@@ -438,7 +473,7 @@ export default function AdminHomePage() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -480,7 +515,7 @@ export default function AdminHomePage() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -522,7 +557,7 @@ export default function AdminHomePage() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -564,7 +599,7 @@ export default function AdminHomePage() {
                               {parseInt(product.productImageId) === img.id ?
                                 <>
                                   <img
-                                    src={`http://localhost:8081/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
                                     width="50"
                                   />
@@ -667,36 +702,41 @@ export default function AdminHomePage() {
             </div>
             <div className="tab-pane fade text-light" id="appoiments" role="tabpanel" aria-labelledby="list-appoiments-list">
               <h2 className='p-2'>|| Appoiments ||</h2>
-              <div className="container text-dark " style={renDataStyle}>
-                <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Doctor Id</th>
-                      <th scope="col">User ID</th>
-                      <th scope="col">User Role</th>
-                      <th scope="col">Clinic ID</th>
-                      <th scope="col">Patient Name</th>
-                      <th scope="col">Patient Ph No</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Time</th>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Patient by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePatientFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchPatient.length !== 0 && (
+                <div className="container text-dark " style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Doctor Id</th>
+                        <th scope="col">User ID</th>
+                        <th scope="col">User Role</th>
+                        <th scope="col">Clinic ID</th>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Patient Ph No</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {appoiments.map((appoiment, index) => (
-                      <tr key={index}>
-                        <th scope="row">{appoiment.id}</th>
-                        <td>{appoiment.doctor_id}</td>
-                        <td>{appoiment.user_id}</td>
-                        <td>{appoiment.role}</td>
-                        <td>{appoiment.clinic_id}</td>
-                        <td>{appoiment.name}</td>
-                        <td>{appoiment.ph_number}</td>
-                        <td>{appoiment.appoint_date}</td>
-                        <td>{appoiment.appoint_time}</td>
-                        <td onClick={() => updateStatus(appoiment.id)} style={{ cursor: 'pointer', color: 'blue' }} >{appoiment.status}</td>
-                        {/* <td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchPatient.map((appoiment, index) => (
+                        <tr key={index}>
+                          <th scope="row">{appoiment.id}</th>
+                          <td>{appoiment.doctor_id}</td>
+                          <td>{appoiment.user_id}</td>
+                          <td>{appoiment.role}</td>
+                          <td>{appoiment.clinic_id}</td>
+                          <td>{appoiment.name}</td>
+                          <td>{appoiment.ph_number}</td>
+                          <td>{appoiment.appoint_date}</td>
+                          <td>{appoiment.appoint_time}</td>
+                          <td onClick={() => updateStatus(appoiment.id)} style={{ cursor: 'pointer', color: 'blue' }} >{appoiment.status}</td>
+                          {/* <td>
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             {order.expected_delivery_date}
                             <input
@@ -716,13 +756,14 @@ export default function AdminHomePage() {
                           <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                         </svg></div></Link></td> */}
 
-                        {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
+                          {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
 
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
             <div className="tab-pane fade text-light" id="labbokking" role="tabpanel" aria-labelledby="list-appoiments-list">
               <h2 className='p-2'>|| Lab Bokking ||</h2>
@@ -788,30 +829,36 @@ export default function AdminHomePage() {
             </div>
             <div className="tab-pane fade  text-light" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
               <h2 className='p-2'>|| Users ||</h2>
-              <div className="container text-dark" style={renDataStyle}>
-                <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Phone No</th>
-                      <th scope="col">Role</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {user.map((user, index) => (
-                      <tr key={index}>
-                        <th scope="row">{user.id}</th>
-                        <td>{user.name}</td>
-                        <td>{user.phone}</td>
-                        <td>{user.role}</td>
-                        <td> <div className="btn btn-danger">Delete</div> <div className="btn btn-warning">Update</div> </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search User by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleUserFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
+              {searchUser.length !== 0 && (
+                <div className="container text-dark" style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchUser.map((user, index) => (
+                        <tr key={index}>
+                          <th scope="row">{user.id}</th>
+                          <td>{user.name}</td>
+                          <td>{user.phone}</td>
+                          <td>{user.role}</td>
+                          <td> <div className="btn btn-danger">Delete</div> <div className="btn btn-warning">Update</div> </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
             <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
               <h2 className='p-2'>|| Payments ||</h2>

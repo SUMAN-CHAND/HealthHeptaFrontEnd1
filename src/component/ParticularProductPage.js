@@ -11,31 +11,59 @@ export default function ParticularProductPage() {
     const param = useParams();
     const product_id = param.product_id;
     const [products, setProducts] = useState([])
+    const [image, setImage] = useState([])
     const navigate = useNavigate();
+    const [ProductForLists, setProductForLists] = useState([])
+    const [imageLists, setImageLists] = useState([])
+
+    const [user, setUser] = useState({});
+    useEffect(() => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+            setUser(response.data[0]);
+        });
+    }, []);
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/addtocart/${product_id}`).then((res) => {
-            setProducts(res.data);
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}`).then((res) => {
+            setProducts(res.data[0]);
+            setImage(res.data[1]);
+
         })
     }, [])
+    useEffect(() => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+            setProductForLists(res.data[0]);
+            setImageLists(res.data[1]);
+
+        })
+    }, [])
+    // console.log(products)
+    // console.log(image)
 
     const haldelClick = () => {
-        axios.post(`http://localhost:8081/addtocart/${product_id}/${quantity}`)
-            .then(res => {
-                if (res.data !== null) {
-                    // success();
-                    navigate('/cart');
-                }
-                else if (res.data === null) {
-                    // danger();
-                }
+        console.log(user)
+        if (user.id !== undefined) {
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}/${quantity}`)
+                .then(res => {
+                    if (res.data !== null) {
+                        // success();
+                        navigate('/cart');
+                    }
+                    else if (res.data === null) {
+                        // danger();
+                    }
 
-            })
-            .catch(err => console.log(err));
+                })
+                .catch(err => console.log(err));
+        }
+        else {
+            alert('Please Log In !! ')
+            navigate('/login')
+        }
     }
     // const haldelOrderClick =()=>{
-    //     axios.post(`http://localhost:8081/addtocart/${product_id}`)
+    //     axios.post(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}`)
     //     .then(res => {
     //         console.log ('click')
     //         navigate('/cart');
@@ -57,11 +85,14 @@ export default function ParticularProductPage() {
     return (
         <div>
             <div className="product" style={{ overflowX: 'hidden' }}>
-                <div className="row particular-product" style={{ display: 'flex' }}>
-                    <div className='product-details col-7' style={{display:'flex'}}>
+                <div className="row particular-product" style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#8080804f', overflow: 'scroll' }}>
+                    <div className='product-details col-6' style={{ display: 'flex', backgroundColor: 'white', height: '81vh' }}>
                         <div className="col-5 mt-3 " style={{ marginLeft: '1vw' }}>
                             <div className="productimage ">
-                                <img src={product} alt="" style={{ width: '25vw', height: '35vh' }} />
+                                {image.map(img => (
+
+                                    <img src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`} alt="" style={{ width: '25vw', height: '35vh' }} />
+                                ))}
                             </div>
                         </div>
                         <div className="col-7  mt-4  ">
@@ -69,7 +100,7 @@ export default function ParticularProductPage() {
 
                                 <div key={product.id} className='productdetail p-2 ' style={{ borderRadius: '5px', height: '35vh' }}>
                                     <h2>{product.product_name}</h2>
-                                    <p>250g</p>
+                                    <p>{product.description}</p>
                                     <hr />
                                     <h5>₹ {product.product_price - ((product.product_price * product.discount) / 100)}</h5>
                                     <h5 style={{ textDecoration: 'line-through', Color: '#878787' }}>₹ {product.product_price}</h5>
@@ -86,8 +117,23 @@ export default function ParticularProductPage() {
                             ))}
                         </div>
                     </div>
-                    <div className="col-6 products" style={{ width: '40vw', marginTop: '2rem' }}>
+                    <div className="col-5 products" style={{ backgroundColor: 'white' }}>
+                        {ProductForLists.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+                            <div key={fproduct.product_id}>
+                                {imageLists.map((img) => (
+                                    <div key={img.id}>
+                                        {parseInt(fproduct.productImageId) === img.id ?
+                                            <>
+                                                <ProductCardForList imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                                            </>
+                                            : <></>}
 
+                                        {/* <p>{img.name}</p> */}
+                                    </div>
+                                ))}
+                            </div>
+                        ))}
+                        {/* <ProductCardForList />
                         <ProductCardForList />
                         <ProductCardForList />
                         <ProductCardForList />
@@ -95,8 +141,7 @@ export default function ParticularProductPage() {
                         <ProductCardForList />
                         <ProductCardForList />
                         <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
+                        <ProductCardForList /> */}
 
                     </div>
 

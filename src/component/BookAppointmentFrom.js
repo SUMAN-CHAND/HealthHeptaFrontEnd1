@@ -28,7 +28,7 @@ export default function BookAppointmentFrom() {
     const [image, setImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/doctorsearch/${doctor_id}`).then((res) => {
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${doctor_id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {
@@ -71,7 +71,7 @@ export default function BookAppointmentFrom() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post('http://localhost:8081/doctorbook', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/doctorbook`, values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order
@@ -134,7 +134,7 @@ export default function BookAppointmentFrom() {
 
     // const [user, setUser] = useState({});
     // useEffect(() => {
-    //     axios.get('http://localhost:8081/profile').then((response) => {
+    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/profile').then((response) => {
     //         setUser(response.data[0]);
     //     });
     // }, []);
@@ -146,7 +146,7 @@ export default function BookAppointmentFrom() {
 
                     {doctors.map(doctor => (
                         <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
-                            <img src={`http://localhost:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
+                            <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
                             <div className="deccription" style={{ paddingTop: '7vh', width: '100%' }}>
                                 <h5>{doctor.doc_name}</h5>
                                 <p>{doctor.doc_desc} </p>

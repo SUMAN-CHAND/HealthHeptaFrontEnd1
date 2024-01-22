@@ -56,7 +56,7 @@ export default function AdminLogin() {
         event.preventDefault();
         setErrors(validation(values));
         if (errors.phone === "" && errors.password === "") {
-            axios.post('http://localhost:8081/superadmin/login', values)
+            axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         alert('No data found')

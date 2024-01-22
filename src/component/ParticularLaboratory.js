@@ -19,7 +19,7 @@ export default function ParticularLaboratory() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:8081/particular-laboratory/${client_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/particular-laboratory/${client_id}`)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(res.data)
@@ -32,7 +32,7 @@ export default function ParticularLaboratory() {
 
     }, []);
     useEffect(() => {
-        axios.get(`http://localhost:8081/particular-laboratory/see-labtests/${client_id}`)
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/particular-laboratory/see-labtests/${client_id}`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -71,7 +71,7 @@ export default function ParticularLaboratory() {
                                                 <div className="col-13 m-1 p-1 mb-2 shadow " style={{ display: 'flex', backgroundColor: 'white', borderRadius: '5px' }}>
                                                     <div className="col-5  ">
                                                         <div className="clinicimage py-2">
-                                                            <img className='img-particular-clinic' src={`http://localhost:8081/${img.path}`} alt="" style={{ width: '15vw' }} />
+                                                            <img className='img-particular-clinic' src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`} alt="" style={{ width: '15vw' }} />
                                                         </div>
                                                     </div>
                                                     <div className="col-7  m-1 pb-1 pt-3 px-2  ">
@@ -117,7 +117,7 @@ export default function ParticularLaboratory() {
                                                                         <div className="doctor  container shadow" style={{ display: 'flex', margin: '1rem', backgroundColor: '#dffffb', padding: '1rem', width: '90%' }}>
 
                                                                             <div className="deccription" style={{ display: 'flex', justifyContent: 'space-around' }} >
-                                                                                <img src={`http://localhost:8081/${img.path}`} className="card-img-top" alt="..." style={{ maxWidth: '13vw' }} />
+                                                                                <img src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`} className="card-img-top" alt="..." style={{ maxWidth: '13vw' }} />
                                                                                 <div>
                                                                                     <h5 className='fs-5'>{laboratory.Test_Name} </h5>
                                                                                     <p className='fs-8'>{
@@ -165,7 +165,7 @@ export default function ParticularLaboratory() {
                                                     <>
                                                         <div>
                                                             <div className="m my-3" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                                <img src={`http://localhost:8081/${img.path}`} alt="" style={{ height: '10vh', width: '10vw' }} />
+                                                                <img src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`} alt="" style={{ height: '10vh', width: '10vw' }} />
                                                                 <span className='py-1' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                                     <h6>{clinic.name}</h6>
                                                                     <p>Location:- {clinic.landmark}</p>

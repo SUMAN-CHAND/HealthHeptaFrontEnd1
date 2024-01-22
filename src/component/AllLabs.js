@@ -36,7 +36,7 @@ export default function AllLabs(props) {
 
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get('http://localhost:8081/laboratory/laboratorys')
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/laboratorys`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -44,7 +44,7 @@ export default function AllLabs(props) {
             setImages(response.data[1])
 
           }
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(err => {
           // Handle errors
@@ -53,7 +53,7 @@ export default function AllLabs(props) {
     }, [])
   } else {
     useEffect(() => {
-      axios.get(`http://localhost:8081/madicine/medicineshops/${props.location}`)
+      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops/${props.location}`)
         .then(response => {
           // Handle response
           if (response.data !== null) {

@@ -56,7 +56,7 @@ export default function Login() {
         event.preventDefault();
         setErrors(validation(values));
         if (errors.phone === "" && errors.password === "") {
-            const user = axios.post('http://localhost:8081/login', values)
+            const user = axios.post(`http://${process.env.REACT_APP_HOST}:8081/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         danger();

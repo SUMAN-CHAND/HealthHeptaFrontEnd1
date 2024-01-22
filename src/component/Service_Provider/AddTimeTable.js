@@ -29,7 +29,7 @@ export default function AddTimeTable({ closeTheModal }) {
     const [chooseDoctor, setChooseDoctor] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8081/')
+        axios.get(`http://${process.env.REACT_APP_HOST}:8081/`)
             .then(res => {
 
                 setSelectLocation(res.data[2])
@@ -54,7 +54,7 @@ export default function AddTimeTable({ closeTheModal }) {
         try {
             closeTheModal();
             console.log(values)
-            // const response = await axios.post('http://localhost:8081/sub-admin/add-doctor/time-table', values);
+            // const response = await axios.post('http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-doctor/time-table', values);
             // if (response.data !== null) {
                 navigate(`/sub-admin/home/add-new-doctor`,
                     {
