@@ -5,6 +5,7 @@ import UploadImage from '../UploadImage';
 import Modal from 'react-modal';
 import { Link } from 'react-router-dom';
 import AddTimeTable from './AddTimeTable';
+import axiosClient from '../axiosClient';
 
 const customStyles = {
     content: {
@@ -21,7 +22,7 @@ let timeTable = [];
 
 export default function AddNewDoctor() {
     // Main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -104,11 +105,11 @@ export default function AddNewDoctor() {
 
 
             //    console.log(response.data)
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-doctor`, values)
+            axiosClient.post(`/sub-admin/add-doctor`, values)
                 .then(async (res) => {
                     if (res.data > 0) {
                         const insertId = res.data;
-                        axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-doctor/time-table`, [timeTable, insertId])
+                        axiosClient.post(`/sub-admin/add-doctor/time-table`, [timeTable, insertId])
                             .then(async (response) => {
                                 console.log(response)
                                 if (response.data === 'success') {

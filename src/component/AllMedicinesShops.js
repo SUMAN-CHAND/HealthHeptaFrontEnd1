@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import MedicineShopCard from './MedicineShopCard';
 import medicineshop from '../img/medicinesShop.webp';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function AllMedicinesShops(props) {
 
@@ -15,7 +16,7 @@ export default function AllMedicinesShops(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops`)
+      axiosClient.get(`/madicine/medicineshops`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -32,7 +33,7 @@ export default function AllMedicinesShops(props) {
     }, [])
   } else {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops/${props.location}`)
+      axiosClient.get(`/madicine/medicineshops/${props.location}`)
         .then(response => {
           // Handle response
           if (response.data !== null) {

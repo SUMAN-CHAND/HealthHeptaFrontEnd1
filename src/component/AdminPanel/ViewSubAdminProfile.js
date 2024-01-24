@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import productimg from '../../img/doctor2.webp'
 import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 export default function ViewSubAdminProfile() {
     const pStyle = {
         display: 'flex',
@@ -14,7 +15,7 @@ export default function ViewSubAdminProfile() {
     var user_id = param.user_id;
     // console.log(user_id)
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/customer/${user_id}`)
+        axiosClient.get(`/superadmin/orders/customer/${user_id}`)
             .then(res => {
                 if (res.data) {
                     setCustomer(res.data[0]);

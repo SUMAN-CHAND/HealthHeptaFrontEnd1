@@ -8,6 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import LabTestCard from './LabTestCard';
 import Doctors from './DoctorCard';
+import axiosClient from './axiosClient';
 
 
 
@@ -58,7 +59,7 @@ export default function MedicinePageSearchResult() {
   // if (stateData.product.length <= 0 && stateData.lab.length <= 0 && stateData.doctor.length <= 0) {
   //   param.selectLocation = "NO Result Match"
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+      axiosClient.get(`/product`).then((res) => {
         setProductsNF(res.data[0])
         setImagesNF(res.data[1])
         setMadicineShop(res.data)
@@ -73,7 +74,7 @@ export default function MedicinePageSearchResult() {
 
       })
 
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/lab_tests`)
+      axiosClient.get(`/laboratory/lab_tests`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -88,7 +89,7 @@ export default function MedicinePageSearchResult() {
           console.error(err);
         });
 
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
+      axiosClient.get(`/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctorsNF(res.data[0]);

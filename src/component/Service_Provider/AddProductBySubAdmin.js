@@ -2,10 +2,11 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
+import axiosClient from '../axiosClient';
 
 export default function AddProductBySubAdmin() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const [values, setValues] = useState({
         product_name: '',
         product_price: '',
@@ -37,7 +38,7 @@ export default function AddProductBySubAdmin() {
     const handleSubmit = (event) => {
         console.log('click')
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/addproduct`, values)
+        axiosClient.post(`/sub-admin/home/addproduct`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

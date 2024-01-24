@@ -3,6 +3,7 @@ import productimg from '../../img/doctor2.webp'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 export default function ViewSubAdminProducts() {
     const pStyle = {
         display: 'flex',
@@ -16,7 +17,7 @@ export default function ViewSubAdminProducts() {
     // console.log(user_id)
     useEffect(() => {
         console.log('click')
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/subadmin/products/${user_id}`)
+        axiosClient.get(`/superadmin/subadmin/products/${user_id}`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -30,7 +31,7 @@ export default function ViewSubAdminProducts() {
             });
     }, [])
     // useEffect(() => {
-    //     axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/customer/${user_id}`)
+    //     axiosClient.get(`/superadmin/orders/customer/${user_id}`)
     //         .then(res => {
     //             if (res.data) {
     //                 setCustomer(res.data[0]);
@@ -50,7 +51,7 @@ export default function ViewSubAdminProducts() {
     const deleteProduct = (product_id) => {
         const response = window.confirm("Are you sure to delete the Product?");
         if (response) {
-          axios.delete(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/delete/${product_id}`)
+          axiosClient.delete(`/sub-admin/home/delete/${product_id}`)
             .then(response => {
               if (response.data === 'success') {
                 alert('Product Delete Successfully');

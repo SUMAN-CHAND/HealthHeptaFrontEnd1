@@ -3,10 +3,11 @@ import product from '../img/medicalproduct.webp'
 import ProductCardForList from './ProductCardForList'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function ParticularProductPage() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const param = useParams();
     const product_id = param.product_id;
@@ -18,21 +19,21 @@ export default function ParticularProductPage() {
 
     const [user, setUser] = useState({});
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
 
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}`).then((res) => {
+        axiosClient.get(`/addtocart/${product_id}`).then((res) => {
             setProducts(res.data[0]);
             setImage(res.data[1]);
 
         })
     }, [])
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+        axiosClient.get(`/product`).then((res) => {
             setProductForLists(res.data[0]);
             setImageLists(res.data[1]);
 
@@ -44,7 +45,7 @@ export default function ParticularProductPage() {
     const haldelClick = () => {
         console.log(user)
         if (user.id !== undefined) {
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}/${quantity}`)
+            axiosClient.post(`/addtocart/${product_id}/${quantity}`)
                 .then(res => {
                     if (res.data !== null) {
                         // success();
@@ -63,7 +64,7 @@ export default function ParticularProductPage() {
         }
     }
     // const haldelOrderClick =()=>{
-    //     axios.post(`http://${process.env.REACT_APP_HOST}:8081/addtocart/${product_id}`)
+    //     axiosClient.post(`/addtocart/${product_id}`)
     //     .then(res => {
     //         console.log ('click')
     //         navigate('/cart');

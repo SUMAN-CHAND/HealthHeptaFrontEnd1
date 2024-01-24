@@ -88,6 +88,11 @@ import UserProfileAppoiments from './component/UserProfileAppoiments';
 import UserProfileParticularLabTest from './component/UserProfileParticularLabTest';
 import UserProfileParticularAppoiment from './component/UserProfileParticularAppoiment';
 import ImageCompressor from './component/ImageCompressor';
+import Delivery_Partner_Login from './component/Delivery_Partner/Delivery_Partner_Login';
+import Delivery_Partner_Complete_Profile from './component/Delivery_Partner/Delivery_Partner_Complete_Profile';
+import Delivery_Partner_SignUp from './component/Delivery_Partner/Delivery_Partner_SignUp';
+import Delivery_Partner_Home from './component/Delivery_Partner/Delivery_Partner_Home';
+import Delivery_Partner_Header from './component/Delivery_Partner/Delivery_Partner_Header';
 
 function App() {
   return (
@@ -177,6 +182,21 @@ function App() {
             <Route path='/partner/home/clinic' element={<><Header /><Header2 /><Partner_Home /></>} exact />
             <Route path='/partner/home/lab-booking/:id' element={<><Header /><Header2 /><UserProfileParticularLabTest /></>} exact />
             <Route path='/partner/home/appoiments/:id' element={<><Header /><Header2 /><UserProfileParticularAppoiment /></>} exact />
+
+
+          </Routes>
+          <Routes>
+            {/*Delivery Partner Routes */}
+            <Route path='/delivery-partner/login' element={<><Delivery_Partner_Header /><Delivery_Partner_Login /></>} exact />
+            <Route path='/delivery-partner/signup' element={<><Delivery_Partner_Header /><Delivery_Partner_SignUp /></>} exact />
+            <Route path='/delivery-partner/complete-profile' element={<><Delivery_Partner_Header /><Delivery_Partner_Complete_Profile /></>} exact />
+            <Route path='/delivery-partner/home' element={<><Delivery_Partner_Header /><Delivery_Partner_Home /></>} exact />
+            {/* <Route path='/partner/home/orders' element={<><Header /><Header2 /><UserProfileOrder /></>} exact />
+            <Route path='/partner/home/lab-booking' element={<><Header /><Header2 /><UserProfileLabBooking /></>} exact />
+            <Route path='/partner/home/appoiments' element={<><Header /><Header2 /><UserProfileAppoiments /></>} exact />
+            <Route path='/partner/home/clinic' element={<><Header /><Header2 /><Partner_Home /></>} exact />
+            <Route path='/partner/home/lab-booking/:id' element={<><Header /><Header2 /><UserProfileParticularLabTest /></>} exact />
+            <Route path='/partner/home/appoiments/:id' element={<><Header /><Header2 /><UserProfileParticularAppoiment /></>} exact /> */}
 
 
           </Routes>

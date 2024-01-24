@@ -1,10 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import axiosClient from '../axiosClient';
 
 export default function UpdateProduct() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const param = useParams();
     // console.log(param)
     // console.log(param.product_id)
@@ -30,7 +31,7 @@ export default function UpdateProduct() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/superadmin/updateproduct/:product_id`, values)
+        axiosClient.patch(`/superadmin/updateproduct/:product_id`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

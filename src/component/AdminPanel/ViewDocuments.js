@@ -3,6 +3,7 @@ import { useParams,useNavigate
 } from "react-router-dom";
 
 import axios from 'axios';
+import axiosClient from '../axiosClient';
 const customStyle = {
     // maxHeight: '60vh',
     // minHeight: '50vh',
@@ -24,7 +25,7 @@ export default function ViewDocuments() {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/image/${image_id}`)
+        axiosClient.get(`/image/${image_id}`)
             .then(res => {
                 // setSelectLocation(res.data[2])
                 setImages(res.data);
@@ -46,7 +47,7 @@ const ClosePage = () => {
                         {images.map((img) => (
                             <div key={img.id}>
                                 <img
-                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
+                                    src={`/${img.path}`}
                                     alt={img.name}
 
                                     style={{     maxWidth: '85vw', border: '5px solid cadetblue' }}

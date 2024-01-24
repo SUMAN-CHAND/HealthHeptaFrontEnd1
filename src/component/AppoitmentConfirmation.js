@@ -9,6 +9,7 @@ import ModalBookAppointment from './ModalBookAppointment';
 import ModalSearchLabByLocation from './ModalSearchLabByLocation';
 import ModalSearchClinicByLoaction from './ModalSearchClinicByLoaction';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 const customStyles = {
     content: {
@@ -48,7 +49,7 @@ export default function AppoitmentConfirmation() {
     const [doctors, setDoctor] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${doctor_id}`).then((res) => {
+        axiosClient.get(`/doctorsearch/${doctor_id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {

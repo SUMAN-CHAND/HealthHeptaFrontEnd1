@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import logo from '../img/logo.jpeg';
+import logo from '../../img/logo.jpeg';
 import {
     Link, useParams
 } from "react-router-dom";
-import './style.css'
+import '../style.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import axiosClient from './axiosClient';
+import axiosClient from '../axiosClient';
 require('dotenv').config();
 
 
 
-export default function Header() {
+export default function Delivery_Partner_Header() {
     // console.log(`${process.env.REACT_APP_HOST}`)
     const navigate = useNavigate();
     //main for connecting backend with Session
@@ -32,20 +32,14 @@ export default function Header() {
     // const location = useLocation();
 
     useEffect(() => {
-        axiosClient.get(`/profile-details`)
+        axiosClient.get(`/delivery_partner/profile-details`)
             .then(res => {
-                if (res.data.length > 2) {
-                    // console.log(res.data)
-                    setnumOfItem(res.data[0]);
-                    setLoggedIn(res.data[1]);
-                    // console.log(loggedIn);
-                    setUserLocation(res.data[2]);
-                }else{
-                    setnumOfItem(res.data[0]);
-                    setLoggedIn(res.data[1]);
-                    // console.log(loggedIn);
-                    // setUserLocation(res.data[2]);
+                if (res.data) {
+                    console.log(res.data)
+                    setLoggedIn(res.data[0]);
+                    console.log(loggedIn)
                 }
+
             })
     },);
     useEffect(() => {
@@ -81,16 +75,17 @@ export default function Header() {
     // console.log("object" + loggedIn)
     var login = false;
 
-    if (loggedIn !== undefined) {
-         login = true;
+    if (loggedIn.length >0) {
+        login = true;
     }
+    console.log(loggedIn)
 
     const handleLogout = async () => {
         try {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(undefined);
-                navigate('/')
+                navigate('/delivery-partner/login')
             } else {
                 // Handle logout failure
                 console.error(response.data.message);
@@ -128,7 +123,7 @@ export default function Header() {
             setChooseProduct(newFilter);
         }
     };
-    const setValueTOFilter = async (name) =>{
+    const setValueTOFilter = async (name) => {
         setValues({
             input: name
         })
@@ -150,10 +145,10 @@ export default function Header() {
                             location: selectLocation
                         }
                     })
-                    setValues({
-                        input:''
-                    });
-                    setChooseProduct([]);
+                setValues({
+                    input: ''
+                });
+                setChooseProduct([]);
 
                 //    console.log(response.data)
             } else {
@@ -236,7 +231,7 @@ export default function Header() {
                         </div>
                         <div className="search  me-2 search-location" >
                             <div style={{ display: 'flex' }}>
-                                <input className="form-control" name='input'  onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                                <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                                 <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -246,7 +241,7 @@ export default function Header() {
                             {chooseProduct.length !== 0 && (
                                 <div className="inputResult" onClick={handleClick}>
                                     {chooseProduct.map((product, index) => {
-                                        return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
+                                        return <p onClick={() => setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                     }
                                     )}
                                 </div>
@@ -271,25 +266,17 @@ export default function Header() {
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                                             </svg>
                                         </span>
-                                        {
-                                            loggedIn.role === 'customer' ? <> 
-                                                <ul className="dropdown-menu">
-                                                    <li><Link to='/profile' className="dropdown-item">Profile</Link></li>
-                                                    <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
-                                                </ul>
-                                            </> : <>
-                                                <ul className="dropdown-menu">
-                                                    <li><Link to='/partner/home' className="dropdown-item">Profile</Link></li>
-                                                    <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
-                                                </ul>
-                                            </>
-                                        } 
+
+                                        <ul className="dropdown-menu">
+                                            <li><Link to='/profile' className="dropdown-item">Profile</Link></li>
+                                            <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
+                                        </ul>
 
                                     </div>
                                 </div>
                                 :
                                 <div>
-                                    <Link to='/login'>
+                                    <Link to='/delivery-partner/login'>
                                         <div className="buttom mx-3 login-text">
                                             <p style={{ margin: '0px' }} className="btn btn-primary"> <p style={{ margin: '0px' }}>Login</p> </p>
                                         </div>
@@ -314,7 +301,7 @@ export default function Header() {
                         {chooseProduct.length !== 0 && (
                             <div className="inputResult" onClick={handleClick}>
                                 {chooseProduct.map((product, index) => {
-                                    return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
+                                    return <p onClick={() => setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                 }
                                 )}
                             </div>

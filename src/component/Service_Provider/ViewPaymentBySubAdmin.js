@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import productimg from '../../img/madicalProduct.avif'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 export default function ViewPaymentBySubAdmin() {
   const pStyle = {
     display: 'flex',
@@ -21,7 +22,7 @@ export default function ViewPaymentBySubAdmin() {
   // console.log(product_id)
   // console.log(product_id)
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/product/${product_id}`)
+    axiosClient.get(`/sub-admin/orders/product/${product_id}`)
       .then(res => {
         if (res.data) {
           setProduct(res.data[0]);
@@ -37,7 +38,7 @@ export default function ViewPaymentBySubAdmin() {
   var user_id = param.user_id;
   // console.log(user_id)
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/customer/${user_id}`)
+    axiosClient.get(`/sub-admin/orders/customer/${user_id}`)
       .then(res => {
         if (res.data) {
           setCustomer(res.data[0]);
@@ -52,7 +53,7 @@ export default function ViewPaymentBySubAdmin() {
   var order_id = param.order_id;
   // console.log(product_id)
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/order/${order_id}`)
+    axiosClient.get(`/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data) {
           setOrders(res.data[0]);

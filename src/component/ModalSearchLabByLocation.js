@@ -4,6 +4,7 @@ import {
   Link, useNavigate
 } from "react-router-dom";
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 const customStyle = {
   maxHeight: '60vh',
@@ -25,21 +26,21 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
   const [chooseDoctor, setChooseDoctor] = useState([])
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/`)
+    axiosClient.get(`/`)
       .then(res => {
         setSelectLocation(res.data[2])
       })
   });
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
+    axiosClient.get(`/locations`)
       .then(res => {
         setLocation(res.data);
         // setChooseLocation(res.data)
       })
   })
   // useEffect(() => {
-  //   axios.get('http://${process.env.REACT_APP_HOST}:8081/doctorsearch')
+  //   axiosClient.get('/doctorsearch')
   //     .then(res => {
   //       setDoctors(res.data);
   //       // setChooseLocation(res.data)
@@ -61,7 +62,7 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
     try {
       closeTheModal();
       console.log(values)
-      const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/labsearch`, values);
+      const response = await axiosClient.post(`/labsearch`, values);
       if (response.data !== null) {
         navigate(`/lab-search-result`,
           {

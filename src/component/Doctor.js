@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
+import axiosClient from './axiosClient';
 
 
 
@@ -31,7 +32,7 @@ export default function Doctor() {
 
   const [user, setUser] = useState({});
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
@@ -46,7 +47,7 @@ export default function Doctor() {
   let doctor_id = param.id;
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${param.id}`).then((res) => {
+    axiosClient.get(`/doctorsearch/${param.id}`).then((res) => {
 
       // Handle response
       if (res.data !== null) {
@@ -62,7 +63,7 @@ export default function Doctor() {
 
   }, [])
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctor/${param.id}`).then((res) => {
+    axiosClient.get(`/doctor/${param.id}`).then((res) => {
 
       // Handle response
       if (res.data !== null) {

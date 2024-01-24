@@ -6,13 +6,14 @@ import {
 import './style.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 
 
 
 export default function AdminHeader() {
     const navigate = useNavigate();
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const [numOfItem, setnumOfItem] = useState(0)
     const [loggedIn, setLoggedIn] = useState(0)
@@ -28,7 +29,7 @@ export default function AdminHeader() {
     // const location = useLocation();
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile-details`)
+        axiosClient.get(`/profile-details`)
             .then(res => {
                 // console.log(res.data)
                 setnumOfItem(res.data[0]);
@@ -45,21 +46,21 @@ export default function AdminHeader() {
 
     })
     // useEffect(()=>{
-    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/admin')
+    //     axiosClient.get('/admin')
     //     .then(res =>{
     //         setLoggedIn(res.data[0])
     //     })
     // });
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
+        axiosClient.get(`/locations`)
             .then(res => {
                 setLocation(res.data);
                 // setChooseLocation(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
+        axiosClient.get(`/search`)
             .then(res => {
                 setProducts(res.data);
                 // setChooseLocation(res.data)
@@ -73,7 +74,7 @@ export default function AdminHeader() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
+            const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
                 navigate('/')
@@ -115,7 +116,7 @@ export default function AdminHeader() {
     };
     const searchMedicne = async () => {
         try {
-            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/search`, values);
+            const response = await axiosClient.post(`/search`, values);
             if (response.data !== null) {
                 navigate(`/medicines/${values.input}`,
                     {

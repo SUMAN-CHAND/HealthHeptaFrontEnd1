@@ -2,10 +2,11 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
+import axiosClient from '../axiosClient';
 
 export default function Partner_Complete_Profile() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const location = useLocation();
     const state = location.state;
@@ -53,7 +54,7 @@ export default function Partner_Complete_Profile() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/partner/complete_profile`, values)
+        axiosClient.post(`/partner/complete_profile`, values)
             .then(res => {
                 console.log(res)
                 if (res.status === 200 && res.data === null) {

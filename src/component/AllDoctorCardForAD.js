@@ -4,10 +4,11 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import axios from 'axios';
 import DoctorCardForAD from './DoctorCardForAD';
+import axiosClient from './axiosClient';
 
 export default function AllDoctorCardForAD(props) {
   //main for connecting backend with Session
-  axios.defaults.withCredentials = true;
+  axiosClient.defaults.withCredentials = true;
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -32,7 +33,7 @@ export default function AllDoctorCardForAD(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
+      axiosClient.get(`/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
@@ -51,7 +52,7 @@ export default function AllDoctorCardForAD(props) {
 
   //  else {
   //   useEffect(() => {
-  //     axios.get(`http://${process.env.REACT_APP_HOST}:8081/product/${props.location}`).then((res) => {
+  //     axiosClient.get(`/product/${props.location}`).then((res) => {
 
   //       // Handle response
   //       if (res.data !== null) {

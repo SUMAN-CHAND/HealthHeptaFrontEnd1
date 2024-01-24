@@ -7,11 +7,12 @@ import Dashboard from './Dashboard';
 import ReactWhatsapp from 'react-whatsapp';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import axiosClient from '../axiosClient';
 
 
 export default function Sub_Admin_Home_Page() {
   //main for connecting backend with Session
-  axios.defaults.withCredentials = true;
+  axiosClient.defaults.withCredentials = true;
 
   const success = () => toast.success('Success', {
     position: "top-right",
@@ -58,7 +59,7 @@ export default function Sub_Admin_Home_Page() {
 
   let flag = false;
   useEffect(() => {
-    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/profile').then((response) => {
+    axiosClient.get('/sub-admin/home/profile').then((response) => {
       if (response.data !== null) {
         setUser(response.data[0]);
         setUserAddress(response.data[1]);
@@ -79,7 +80,7 @@ export default function Sub_Admin_Home_Page() {
   // }
 
   useEffect(() => {
-    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/product')
+    axiosClient.get('/sub-admin/product')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -93,7 +94,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/own/orders')
+    axiosClient.get('/sub-admin/own/orders')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -107,7 +108,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }, [])
   useEffect(() => {
-    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders')
+    axiosClient.get('/sub-admin/orders')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -136,7 +137,7 @@ export default function Sub_Admin_Home_Page() {
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
-      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/home/delete/${product_id}`)
+      axiosClient.delete(`/sub-admin/home/delete/${product_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Product Delete Successfully');
@@ -150,7 +151,7 @@ export default function Sub_Admin_Home_Page() {
     }
   }
   const updateStatus = (orderId) => {
-    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/orders/accept/${orderId}`).then(response => {
+    axiosClient.post(`/sub-admin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
         alert('Order Accepted');
       }
@@ -159,7 +160,7 @@ export default function Sub_Admin_Home_Page() {
     })
   }
   const showPayments = () => {
-    axios.get('http://${process.env.REACT_APP_HOST}:8081/sub-admin/payments')
+    axiosClient.get('/sub-admin/payments')
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -179,7 +180,7 @@ export default function Sub_Admin_Home_Page() {
 
   // const loadImages = () => {
   //   axios
-  //     .get('http://${process.env.REACT_APP_HOST}:8081/images')
+  //     .get('/images')
   //     .then((response) => {
   //       setInd_doctor_images(response.data);
   //       // console.log(images)
@@ -190,7 +191,7 @@ export default function Sub_Admin_Home_Page() {
   // };
 
   const ShowDoctor = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-doctor`)
+    axiosClient.get(`/sub-admin/see-doctor`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -206,7 +207,7 @@ export default function Sub_Admin_Home_Page() {
       });
   }
   const ShowLaboratory = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-labtests`)
+    axiosClient.get(`/sub-admin/see-labtests`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -225,7 +226,7 @@ export default function Sub_Admin_Home_Page() {
   // console.log(  doctors)
   // console.log(ind_doctor_images)
   const ShowAppoiment = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-appoiment`)
+    axiosClient.get(`/sub-admin/see-appoiment`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -240,7 +241,7 @@ export default function Sub_Admin_Home_Page() {
   }
   const ShowLaboratoryTestBooking = () => {
     // console.log('ShowLaboratoryTestBooking')
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/see-lab-bookings`)
+    axiosClient.get(`/sub-admin/see-lab-bookings`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -285,7 +286,7 @@ export default function Sub_Admin_Home_Page() {
 
   const handleSubmit = (appoiment_id) => {
     // console.log(AppointmentStatus)
-    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/status/${appoiment_id}`, AppointmentStatus)
+    axiosClient.post(`/sub-admin/reschedule/status/${appoiment_id}`, AppointmentStatus)
       .then(res => {
         if (res.data !== null) {
 
@@ -305,7 +306,7 @@ export default function Sub_Admin_Home_Page() {
 
   const handlelabSubmit = (appoiment_id) => {
     // console.log(AppointmentStatus)
-    axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/lab/status/${appoiment_id}`, AppointmentStatus)
+    axiosClient.post(`/sub-admin/reschedule/lab/status/${appoiment_id}`, AppointmentStatus)
       .then(res => {
         if (res.data !== null) {
 
@@ -325,7 +326,7 @@ export default function Sub_Admin_Home_Page() {
 
   const deleteOrder = (id) => {
     console.log('click')
-    axios.delete(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/delete/orders/${id}`)
+    axiosClient.delete(`/sub-admin/delete/orders/${id}`)
       .then(response => {
         console.log(response)
         if (response.data === 'success') {

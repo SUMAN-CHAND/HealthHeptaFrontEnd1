@@ -4,6 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import LabTestCard from './LabTestCard';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function AllTest(props) {
 
@@ -31,7 +32,7 @@ export default function AllTest(props) {
   const [image, setImages] = useState([]);
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/lab_tests`)
+      axiosClient.get(`/laboratory/lab_tests`)
         .then(response => {
           // Handle response
           if (response.data !== null) {
@@ -48,7 +49,7 @@ export default function AllTest(props) {
     }, [])
   } else {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/madicine/medicineshops/${props.location}`)
+      axiosClient.get(`/madicine/medicineshops/${props.location}`)
         .then(response => {
           // Handle response
           if (response.data !== null) {

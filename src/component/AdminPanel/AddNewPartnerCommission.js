@@ -1,10 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axiosClient from '../axiosClient';
 
 export default function AddNewPartnerCommission() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const [values, setValues] = useState({
         service_type: '',
         commision_type: '',
@@ -28,7 +29,7 @@ export default function AddNewPartnerCommission() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/add-commission`, values)
+        axiosClient.post(`/superadmin/add-commission`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Commission Added Successfully!!')

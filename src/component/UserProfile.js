@@ -11,12 +11,13 @@ import ReactWhatsapp from 'react-whatsapp';
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
+import axiosClient from './axiosClient';
 
 
 
 export default function UserProfile() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const success = () => toast.success('Success', {
         position: "top-right",
@@ -49,7 +50,7 @@ export default function UserProfile() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://${process.env.REACT_APP_HOST}:8081/profile');
+            const response = await axiosClient.post('/profile');
             if (response.data.success) {
                 setLoggedIn(undefined);
                 navigate('/')
@@ -67,7 +68,7 @@ export default function UserProfile() {
     const [products, setProducts] = useState([]);
     const [ind_product_Images, setInd_product_Images] = useState([]);
     // useEffect(() => {
-    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/profile/order').then((res) => {
+    //     axiosClient.get('/profile/order').then((res) => {
     //         if (res.data !== null) {
     //             setProducts(res.data)
     //         } else {
@@ -77,7 +78,7 @@ export default function UserProfile() {
     // }, [])
 
     const showOrders = () => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile/order`).then((res) => {
+        axiosClient.get(`/profile/order`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data[0]);
                 setInd_product_Images(res.data[1]);
@@ -90,7 +91,7 @@ export default function UserProfile() {
 
     let flag = false;
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
@@ -141,7 +142,7 @@ export default function UserProfile() {
     }
     const onPSubmit = (event) => {
         event.preventDefault();
-        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/profile/phone`, phoneno)
+        axiosClient.patch(`/profile/phone`, phoneno)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -172,7 +173,7 @@ export default function UserProfile() {
     }
     const onASubmit = (event) => {
         event.preventDefault();
-        axios.patch(`http://${process.env.REACT_APP_HOST}:8081/profile/address`, values)
+        axiosClient.patch(`/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -191,7 +192,7 @@ export default function UserProfile() {
     }
     const onAPostSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile/address`, values)
+        axiosClient.post(`/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(values)
@@ -212,7 +213,7 @@ export default function UserProfile() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
+            axiosClient.delete(`/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {
@@ -236,7 +237,7 @@ export default function UserProfile() {
     const [labBookings, setLabBookings] = useState([]);
 
     const ShowAppoiment = () => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-appoiment`)
+        axiosClient.get(`/user/see-appoiment`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -250,7 +251,7 @@ export default function UserProfile() {
             });
     }
     const ShowLabBooking = () => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-lab-booking`)
+        axiosClient.get(`/user/see-lab-booking`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {

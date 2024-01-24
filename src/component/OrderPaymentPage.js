@@ -6,6 +6,7 @@ import SuccfullyOrderplaceModal from './SuccfullyOrderplaceModal';
 import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import axiosClient from './axiosClient';
 
 
 const customStyles = {
@@ -35,7 +36,7 @@ const customStyles = {
 
 export default function OrderPaymentPage() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const success = () => toast.success('Order Placed', {
         position: "top-right",
@@ -84,7 +85,7 @@ export default function OrderPaymentPage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetch(`http://${process.env.REACT_APP_HOST}:8081/cart`);
+            const result = await fetch(`/cart`);
             const jsonResult = await result.json();
             setProducts(jsonResult);
 
@@ -92,7 +93,7 @@ export default function OrderPaymentPage() {
         fetchData();
     }, []);
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
@@ -134,7 +135,7 @@ export default function OrderPaymentPage() {
     useEffect(() => {
 
         console.log(amount)
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons`, amounts)
+        axiosClient.post(`/cart/get-coupons`, amounts)
             .then(res => {
                 console.log(res.data)
                 if (res.data !== null) {
@@ -192,7 +193,7 @@ export default function OrderPaymentPage() {
 
     const applyCoupon = (event) => {
         console.log('click')
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/orders/coupon`, couponValue)
+        axiosClient.post(`/orders/coupon`, couponValue)
             .then(res => {
                 if (res.data !== null) {
                     success();
@@ -212,11 +213,11 @@ export default function OrderPaymentPage() {
     const total_DiscountAfterCouponApply = ((total_amount * couponDetails.discount_percentage) / 100);
     total_amountAfterCouponApply = (total_amount - ((total_amount * couponDetails.discount_percentage) / 100));
 
-    // const socket = io('http://${process.env.REACT_APP_HOST}:8081/orders'); // Replace with your server URL
+    // const socket = io('/orders'); // Replace with your server URL
     const handleSubmit = (event) => {
         // navigate('/');  
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/orders`, values)
+        axiosClient.post(`/orders`, values)
             .then(res => {
                 if (res.data !== null) {
                     // Notify admins and super admins about the new order

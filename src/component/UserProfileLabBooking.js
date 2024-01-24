@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import logo from '../img/logo.jpeg';
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from 'react-router-dom';
+import axiosClient from './axiosClient';
 
 
 export default function UserProfileLabBooking() {
@@ -11,7 +12,7 @@ export default function UserProfileLabBooking() {
 
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-lab-booking`)
+        axiosClient.get(`/user/see-lab-booking`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {
@@ -32,7 +33,7 @@ export default function UserProfileLabBooking() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
+            axiosClient.delete(`/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {

@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import Dashboard from '../Service_Provider/Dashboard.js';
-import ViewCommissionModal from './ViewCommissionModal.js';
 import Modal from 'react-modal';
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
-import axiosClient from '../axiosClient.js';
+import axiosClient from '../axiosClient';
 
 
-export default function Partner_Home() {
+export default function Delivery_Partner_Home() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
 
@@ -140,10 +138,13 @@ export default function Partner_Home() {
 
 
     useEffect(() => {
-        axiosClient.get(`/partner/home/profile`).then((response) => {
+        axiosClient.get(`/delivery_partner/home/profile`).then((response,err) => {
             if (response.data !== null) {
                 setUser(response.data[0]);
                 // setUserAddress(response.data[1]);
+
+            }else{
+                console.error(err);
 
             }
         });
@@ -173,20 +174,7 @@ export default function Partner_Home() {
 
     // const [appoiments, setAppoiments] = useState([]);
 
-    const ShowAppoiment = () => {
-        axiosClient.get(`/user/see-appoiment`)
-            .then(response => {
-                // Handle response
-                if (response.data !== null) {
-                    setAppoiments(response.data);
-                }
-                // console.log(response.data);
-            })
-            .catch(err => {
-                // Handle errors
-                console.error(err);
-            });
-    }
+    
     // console.log(appoiments)
 
     const [labBookings, setLabBookings] = useState([]);
@@ -253,13 +241,10 @@ export default function Partner_Home() {
                         <hr />
                         <div className="list-group shadow" id="list-tab" role="tablist">
                             {/* <Link to="#summary" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Summary</Link> */}
-                            <Link to="#profile" className="list-group-item list-group-item-action active list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
-                            <Link to="/" className="list-group-item list-group-item-action list-group-item-info">Shop Now</Link>
-                            <Link to="#appoiment" onClick={ShowAppoiment} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Appoiment</Link>
-                            <Link to="#orders" onClick={showOrders} className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Your Orders</Link>
+                            <Link to="#orders" onClick={showOrders} className="list-group-item active list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Orders</Link>
                             <Link to="#lab" onClick={ShowLabBooking} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Lab Tests</Link>
-                            <Link to="#clinicbook" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Clinic Books</Link>
                             <Link to="#commission-service-wise" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-commission-service-wise-list" data-bs-toggle="list" role="tab" aria-controls="list-commission-service-wise">Commission Service Wise</Link>
+                            <Link to="#profile" className="list-group-item list-group-item-action  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
                         </div>
                     </div>
                 </div>
@@ -269,7 +254,7 @@ export default function Partner_Home() {
                             <h2 className='p-2 text-dark'></h2>
                             <Dashboard />
                         </div> */}
-                        <div className="tab-pane fade show active text-light" id="profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div className="tab-pane fade show text-light" id="profile" role="tabpanel" aria-labelledby="list-profile-list">
                             <h2 className='p-2 text-dark' > || Profile ||</h2>
                             <div className="container text-dark " style={renDataStyle}>
                                 <div className='profile-details' style={{ minWidth: '95%', marginBottom: '2vh' }}>
@@ -314,7 +299,7 @@ export default function Partner_Home() {
                             </div>
                         </div>
 
-                        <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
+                        {/* <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
                             <h2 className='p-2'>|| Payments ||</h2>
                             <div className="container text-dark" style={renDataStyle}>
                                 <table className="table table-striped">
@@ -344,47 +329,9 @@ export default function Partner_Home() {
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div className="tab-pane fade" id="appoiment" role="tabpanel" aria-labelledby="list-payments-list">
-                            <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Appoiments ||</h2> <Link to='/ '><button className='btn btn-primary mx-3 my-2' >Book New Appoiment</button></Link></span>
-                            <div className="container text-dark" style={renDataStyle}>
-                                <table className="table table-striped">
-                                    <thead className='thead-dark'>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Patient Name</th>
-                                            <th scope="col">Patient Phone no:</th>
-                                            <th scope="col">appoint_date</th>
-                                            <th scope="col">appoint_time</th>
-                                            <th scope="col">Doctor Name</th>
-                                            <th scope="col">Clinic</th>
-                                            <th scope="col">Clinic Description</th>
-                                            <th scope="col">Appoiment Status</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {appoiments.map((appoiment, index) => (
-                                            <tr key={index}>
-                                                <th scope="row">{appoiment.id}</th>
-                                                <td>{appoiment.name}</td>
-                                                <td>{appoiment.ph_number}</td>
-                                                <td>{appoiment.appoint_date}</td>
-                                                <td>{appoiment.appoint_time}</td>
-                                                <td>{appoiment.doc_name}</td>
-                                                <td>{appoiment.clinic}</td>
-                                                <td>{appoiment.clinic_desc}</td>
-                                                <td>{appoiment.AppointmentStatus}</td>
-                                                <td> <Link to={`/reschedule/${appoiment.id}`}><button className="btn btn-info m-1">Reschedule</button></Link>
-
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-Medicine-list">
+                        </div> */}
+                        
+                        <div className="tab-pane active fade text-light" id="orders" role="tabpanel" aria-labelledby="list-Medicine-list">
                             <h2 className='p-2 text-dark'> Your Orders</h2>
                             <div className="container text-dark" style={renDataStyle}>
                                 {flag ?
@@ -424,7 +371,7 @@ export default function Partner_Home() {
                                                                     style={customStyles}
                                                                     contentLabel="Example Modal"
                                                                 >
-                                                                    <ViewCommissionModal closeTheModal={closeModal} data={order.id} product_ids={order.product_id} />
+                                                                    {/* <ViewCommissionModal closeTheModal={closeModal} data={order.id} product_ids={order.product_id} /> */}
 
                                                                 </Modal>
                                                             </td>
@@ -487,7 +434,7 @@ export default function Partner_Home() {
                                                     <td> <Link to={`/reschedule/${labBooking.id}`}><button className="btn btn-info m-1">Reschedule</button></Link>
 
                                                         <Link className=" btn btn-info mx-2" aria-current="page" onClick={openModal} >View Commission</Link>
-                                                        <Modal
+                                                        {/* <Modal
                                                             isOpen={modalIsOpen}
                                                             onAfterOpen={afterOpenModal}
                                                             onRequestClose={closeModal}
@@ -496,7 +443,8 @@ export default function Partner_Home() {
                                                         >
                                                             <ViewCommissionModal closeTheModal={closeModal} data={labBooking.id} product_ids={labBooking.Test_id} />
 
-                                                        </Modal></td>
+                                                        </Modal> */}
+                                                        </td>
                                                 </tr>
                                             ))}
                                         </> : <>

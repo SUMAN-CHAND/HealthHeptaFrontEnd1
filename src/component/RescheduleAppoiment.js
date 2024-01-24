@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import axiosClient from './axiosClient';
 
 export default function RescheduleAppoiment() {
 
@@ -27,7 +28,7 @@ export default function RescheduleAppoiment() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/reschedule/${appoiment_id}`, values)
+            axiosClient.post(`/reschedule/${appoiment_id}`, values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order

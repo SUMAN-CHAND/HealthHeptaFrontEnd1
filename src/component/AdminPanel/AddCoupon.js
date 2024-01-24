@@ -1,10 +1,11 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axiosClient from '../axiosClient';
 
 export default function AddCoupon() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const [values, setValues] = useState({
         length:'',
         discount_percentage:'',
@@ -20,7 +21,7 @@ export default function AddCoupon() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/generate-coupon`, values)
+        axiosClient.post(`/superadmin/generate-coupon`, values)
             .then(res => {
                 if (res.data === 'success') {
                     alert('Product Added Successfully!!')

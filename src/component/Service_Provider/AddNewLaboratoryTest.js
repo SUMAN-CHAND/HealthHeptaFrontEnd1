@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, {useState } from 'react';
 import {useNavigate } from 'react-router-dom';
 import UploadImage from '../UploadImage';
+import axiosClient from '../axiosClient';
 
 
 export default function AddNewLaboratoryTest() {
     // Main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
  
    
     const [values, setValues] = useState({
@@ -35,7 +36,7 @@ export default function AddNewLaboratoryTest() {
 
 
             //    console.log(response.data)
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/add-new-laboratory-test`, values)
+            axiosClient.post(`/sub-admin/add-new-laboratory-test`, values)
                 .then(async (res) => {
                     if (res.data > 0) {
                     //    console.log(res.data)

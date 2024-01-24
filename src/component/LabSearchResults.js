@@ -4,6 +4,7 @@ import Doctors from './DoctorCard';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Carousel from 'react-multi-carousel';
+import axiosClient from './axiosClient';
 
 export default function LabSearchResults() {
     const responsive = {
@@ -40,7 +41,7 @@ export default function LabSearchResults() {
     const [imagess, setImagesss] = useState([])
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/laboratory/lab_tests`)
+        axiosClient.get(`/laboratory/lab_tests`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {

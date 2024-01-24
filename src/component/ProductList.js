@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function ProductList() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const [products, setProducts] = useState([])
 
 
     useEffect(() => {
 
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+        axiosClient.get(`/product`).then((res) => {
             setProducts(res.data);
         })
     }, [])

@@ -7,10 +7,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axiosClient from './axiosClient';
 
 export default function Login() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     // const [loggedIn, setLoggedIn] = useState(true);
     // loggedIn
     const success = () => toast.success('Login Successfull', {
@@ -56,7 +57,7 @@ export default function Login() {
         event.preventDefault();
         setErrors(validation(values));
         if (errors.phone === "" && errors.password === "") {
-            const user = axios.post(`http://${process.env.REACT_APP_HOST}:8081/login`, values)
+            const user = axiosClient.post(`/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         danger();

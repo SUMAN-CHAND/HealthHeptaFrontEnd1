@@ -5,10 +5,11 @@ import NotificationComponent from './NotificationComponent';
 import Dashboard from './Dashboard';
 import './Style.css';
 import UploadBanner from './UploadBanner';
+import axiosClient from '../axiosClient';
 
 export default function AdminHomePage() {
   //main for connecting backend with Session
-  axios.defaults.withCredentials = true;
+  axiosClient.defaults.withCredentials = true;
 
 
   const [products, setProducts] = useState([]);
@@ -37,7 +38,7 @@ export default function AdminHomePage() {
 
   // useEffect(() => {
   const ShowProduct = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/product`)
+    axiosClient.get(`/superadmin/product`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -54,7 +55,7 @@ export default function AdminHomePage() {
   }
   // }, [])
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders`)
+    axiosClient.get(`/superadmin/orders`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -68,7 +69,7 @@ export default function AdminHomePage() {
       });
   }, [])
   const showUser = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/user`)
+    axiosClient.get(`/superadmin/user`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -82,7 +83,7 @@ export default function AdminHomePage() {
       });
   }
   const showAppoiments = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/appoiments`)
+    axiosClient.get(`/superadmin/appoiments`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -96,7 +97,7 @@ export default function AdminHomePage() {
       });
   }
   const showLabbokking = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/labbokking`)
+    axiosClient.get(`/superadmin/labbokking`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -111,7 +112,7 @@ export default function AdminHomePage() {
   }
 
   const showPayments = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/payments`)
+    axiosClient.get(`/superadmin/payments`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -125,7 +126,7 @@ export default function AdminHomePage() {
       });
   }
   const showServiceProvider = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/service-provider`)
+    axiosClient.get(`/superadmin/service-provider`)
       .then(response => {
         // Handle response
         setSubAdmin(response.data)
@@ -137,7 +138,7 @@ export default function AdminHomePage() {
       });
   }
   const showPartner = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner`)
+    axiosClient.get(`/superadmin/partner`)
       .then(response => {
         // Handle response
         setPartner(response.data)
@@ -149,7 +150,7 @@ export default function AdminHomePage() {
       });
   }
   const showPartnerCommission = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner-commissions`)
+    axiosClient.get(`/superadmin/partner-commissions`)
       .then(response => {
         // Handle response
         setCommissions(response.data)
@@ -161,7 +162,7 @@ export default function AdminHomePage() {
       });
   }
   const showCoupon = () => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/superadmin/coupon`)
+    axiosClient.get(`/superadmin/coupon`)
       .then(response => {
         // Handle response
         if (response.data !== null) {
@@ -179,7 +180,7 @@ export default function AdminHomePage() {
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
-      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/${product_id}`)
+      axiosClient.delete(`/superadmin/delete/${product_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Product Delete Successfully');
@@ -195,7 +196,7 @@ export default function AdminHomePage() {
   const DeleteCommission = (commission_id) => {
     const response = window.confirm("Are you sure to delete the Commission?");
     if (response) {
-      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/commission/${commission_id}`)
+      axiosClient.delete(`/superadmin/delete/commission/${commission_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Commission Delete Successfully');
@@ -211,7 +212,7 @@ export default function AdminHomePage() {
   const deleteCoupon = (coupon_id) => {
     const response = window.confirm("Are you sure to delete the Coupon?");
     if (response) {
-      axios.delete(`http://${process.env.REACT_APP_HOST}:8081/superadmin/delete/coupon/${coupon_id}`)
+      axiosClient.delete(`/superadmin/delete/coupon/${coupon_id}`)
         .then(response => {
           if (response.data === 'success') {
             alert('Coupon Delete Successfully');
@@ -226,7 +227,7 @@ export default function AdminHomePage() {
   }
 
   const updateStatus = (orderId) => {
-    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/accept/${orderId}`).then(response => {
+    axiosClient.post(`/superadmin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
         alert('Order Accepted');
       }
@@ -254,7 +255,7 @@ export default function AdminHomePage() {
 
   const updateDeliveryDate = (orderId) => {
     console.log('click')
-    axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/orders/delivery/${orderId}`, values).then(response => {
+    axiosClient.post(`/superadmin/orders/delivery/${orderId}`, values).then(response => {
       if (response.data) {
         alert('Order Delivery Date Change');
       }
@@ -265,7 +266,7 @@ export default function AdminHomePage() {
   const updateSubAdminStatus = (subAdminId) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
-      axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/subadmin/accept/${subAdminId}`).then(response => {
+      axiosClient.post(`/superadmin/subadmin/accept/${subAdminId}`).then(response => {
         if (response.data) {
           alert('Permission Garented');
         }
@@ -279,7 +280,7 @@ export default function AdminHomePage() {
   const updatePartnerStatus = (partner_id) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
-      axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/partner/accept/${partner_id}`).then(response => {
+      axiosClient.post(`/superadmin/partner/accept/${partner_id}`).then(response => {
         if (response.data) {
           alert('Permission Garented');
         }
@@ -300,8 +301,8 @@ export default function AdminHomePage() {
   // const [images, setImages] = useState([]);
 
   // const loadImages = () => {
-  //   axios
-  //     .get('http://${process.env.REACT_APP_HOST}:8081/images')
+  //   axiosClient
+  //     .get('/images')
   //     .then((response) => {
   //       setImages(response.data);
   //       // console.log(images)

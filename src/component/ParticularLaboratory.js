@@ -4,6 +4,7 @@ import DoctorCardOfList from './DoctorCardOfList';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import axiosClient from './axiosClient.js';
 
 export default function ParticularLaboratory() {
     const param = useParams();
@@ -19,7 +20,7 @@ export default function ParticularLaboratory() {
 
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/particular-laboratory/${client_id}`)
+        axiosClient.get(`/particular-laboratory/${client_id}`)
             .then(res => {
                 if (res.data !== null) {
                     // console.log(res.data)
@@ -32,7 +33,7 @@ export default function ParticularLaboratory() {
 
     }, []);
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/particular-laboratory/see-labtests/${client_id}`)
+        axiosClient.get(`/particular-laboratory/see-labtests/${client_id}`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {

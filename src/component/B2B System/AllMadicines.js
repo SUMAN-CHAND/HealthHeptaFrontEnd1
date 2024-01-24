@@ -1,18 +1,19 @@
 import React, { useState,useEffect } from 'react';
 import AllMadicineCard from './AllMadicineCard';
 import axios from 'axios';
+import axiosClient from '../axiosClient';
 
 export default function AllMadicines() {
 
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const [products, setProducts] = useState([])
     const [image, setImages] = useState([])
 
     useEffect(() => {
         // console.log("Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product`).then((res) => {
+        axiosClient.get(`/b2b/product`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setProducts(res.data[0]);
@@ -25,7 +26,7 @@ export default function AllMadicines() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/newadded`).then((res) => {
+        axiosClient.get(`/b2b/product/newadded`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setNewAddedproducts(res.data[0]);
@@ -38,7 +39,7 @@ export default function AllMadicines() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/20%off`).then((res) => {
+        axiosClient.get(`/b2b/product/20%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setOffproducts(res.data[0]);
@@ -51,7 +52,7 @@ export default function AllMadicines() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/bestoffer`).then((res) => {
+        axiosClient.get(`/b2b/product/bestoffer`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setBestofferProduct(res.data[0]);

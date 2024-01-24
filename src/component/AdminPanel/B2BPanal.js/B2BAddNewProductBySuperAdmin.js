@@ -2,10 +2,11 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UploadImage from '../../UploadImage';
+import axiosClient from '../../axiosClient';
 
 export default function B2BAddNewProductBySuperAdmin() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const [values, setValues] = useState({
         product_name: '',
         product_price: '',
@@ -41,7 +42,7 @@ export default function B2BAddNewProductBySuperAdmin() {
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/superadmin/b2b/addproduct`, values)
+        axiosClient.post(`/superadmin/b2b/addproduct`, values)
             .then(res => {
                 console.log(res.data)
                 if (res.data.message === 'Product added successfully') {

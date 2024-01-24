@@ -9,11 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import ChooseRoleModal from './ChooseRoleModal';
+import axiosClient from '../axiosClient';
 
 
 export default function Sub_Admin_Login() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     // const [loggedIn, setLoggedIn] = useState(true);
     // loggedIn
     const success = () => toast.success('Login Successfull', {
@@ -52,7 +53,7 @@ export default function Sub_Admin_Login() {
         event.preventDefault();
         setErrors(validation(values));
         if (errors.phone === "" && errors.password === "") {
-            const user = axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/login`, values)
+            const user = axiosClient.post(`/sub-admin/login`, values)
                 .then(res => {
                     if (res.data === null) {
                         danger();

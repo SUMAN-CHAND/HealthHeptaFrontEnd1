@@ -6,13 +6,14 @@ import {
 import '../style.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 
 
 
 export default function B2BHeader() {
     const navigate = useNavigate();
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const [numOfItem, setnumOfItem] = useState(0)
     const [loggedIn, setLoggedIn] = useState(0)
@@ -28,7 +29,7 @@ export default function B2BHeader() {
     // const location = useLocation();
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub_admin/profile-details`)
+        axiosClient.get(`/sub_admin/profile-details`)
             .then(res => {
                 // console.log(res.data)
                 setnumOfItem(res.data[0]);
@@ -45,21 +46,21 @@ export default function B2BHeader() {
 
     }, [])
     // useEffect(()=>{
-    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/admin')
+    //     axiosClient.get('/admin')
     //     .then(res =>{
     //         setLoggedIn(res.data[0])
     //     })
     // });
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
+        axiosClient.get(`/locations`)
             .then(res => {
                 setLocation(res.data);
                 // setChooseLocation(res.data)
             })
     }, [])
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/search`)
+        axiosClient.get(`/b2b/search`)
             .then(res => {
                 setProducts(res.data);
                 // setChooseLocation(res.data)
@@ -73,7 +74,7 @@ export default function B2BHeader() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/profile`);
+            const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
                 navigate('/')
@@ -120,7 +121,7 @@ export default function B2BHeader() {
     };
     const searchMedicine = async () => {
         try {
-            const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/b2b/search`, values);
+            const response = await axiosClient.post(`/b2b/search`, values);
             if (response.data !== null) {
                 navigate(`/b2b/medicines/${values.input}`,
                     {

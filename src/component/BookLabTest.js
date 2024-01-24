@@ -5,10 +5,11 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
+import axiosClient from './axiosClient';
 
 export default function BookLabTest() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     const param = useParams();
     const id = param.id;
     // console.log(param)
@@ -16,7 +17,7 @@ export default function BookLabTest() {
 
     const [user, setUser] = useState({});
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
@@ -28,7 +29,7 @@ export default function BookLabTest() {
     const [clinic_id, setClinicId] = useState();
     const [total_amount, setTotal_amount] = useState();
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/book/lab-test/${id}`).then((res) => {
+        axiosClient.get(`/book/lab-test/${id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {
@@ -85,7 +86,7 @@ export default function BookLabTest() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/labbook`, [values, clinic_id, user_id, total_amount])
+            axiosClient.post(`/labbook`, [values, clinic_id, user_id, total_amount])
                 .then(res => {
                     if (res.data !== null) {
                         // console.log(values)

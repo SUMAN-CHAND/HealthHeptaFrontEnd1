@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import logo from '../img/logo.jpeg';
 import { IoIosArrowForward } from "react-icons/io";
+import axiosClient from './axiosClient';
 
 
 export default function UserProfileOrder() {
@@ -11,7 +12,7 @@ export default function UserProfileOrder() {
 
     // const showOrders = () => {
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile/orders`).then((res) => {
+        axiosClient.get(`/profile/orders`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data[0]);
                 setInd_product_Images(res.data[1]);
@@ -30,7 +31,7 @@ export default function UserProfileOrder() {
         // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
-            axios.delete(`http://${process.env.REACT_APP_HOST}:8081/orders/${id}`)
+            axiosClient.delete(`/orders/${id}`)
                 .then(response => {
                     console.log(response)
                     if (response.data === 'success') {

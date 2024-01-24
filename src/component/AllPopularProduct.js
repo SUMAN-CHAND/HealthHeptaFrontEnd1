@@ -4,10 +4,11 @@ import Carousel from 'react-multi-carousel';
 // import { Carousel } from "react-bootstrap";
 import ProductCard from './ProductCard'
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function AllPopularProduct(props) {
   //main for connecting backend with Session
-  axios.defaults.withCredentials = true;
+  axiosClient.defaults.withCredentials = true;
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -32,7 +33,7 @@ export default function AllPopularProduct(props) {
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+      axiosClient.get(`/product`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setProducts(res.data[0])
@@ -49,7 +50,7 @@ export default function AllPopularProduct(props) {
 
   } else {
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/product/${props.location}`).then((res) => {
+      axiosClient.get(`/product/${props.location}`).then((res) => {
 
         // Handle response
         if (res.data !== null) {

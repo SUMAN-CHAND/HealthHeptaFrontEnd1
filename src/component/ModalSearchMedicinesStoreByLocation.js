@@ -4,6 +4,7 @@ import {
   Link, useNavigate
 } from "react-router-dom";
 import axios from 'axios';
+import axiosClient from './axiosClient';
 const customStyle = {
   maxHeight: '60vh',
   maxWidth: '85vw',
@@ -24,7 +25,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   const [chooseProduct, setChooseProduct] = useState([])
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile-details`)
+    axiosClient.get(`/profile-details`)
         .then(res => {
             setSelectLocation(res.data[2])
         })
@@ -32,14 +33,14 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
 // consol.log(selectLocation)
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/locations`)
+    axiosClient.get(`/locations`)
       .then(res => {
         setLocation(res.data);
         // setChooseLocation(res.data)
       })
   })
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
+    axiosClient.get(`/search`)
       .then(res => {
         setProducts(res.data);
         // setChooseLocation(res.data)
@@ -65,7 +66,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   //   value = `/medicines`
   // }
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/search`)
+    axiosClient.get(`/search`)
       .then(res => {
         setProducts(res.data);
         // setChooseLocation(res.data)
@@ -93,7 +94,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   const searchMedicne = async () => {
     try {
       closeTheModal();
-      const response = await axios.post(`http://${process.env.REACT_APP_HOST}:8081/search`, values);
+      const response = await axiosClient.post(`/search`, values);
       if (response.data !== null) {
         navigate(`/medicines/${values.input}`,
           {

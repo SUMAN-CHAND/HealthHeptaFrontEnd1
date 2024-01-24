@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import SpecialitiesDoctorsCard from './SpecialitiesDoctorsCard';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function AllSpecialitiesDoctors(props) {
 
@@ -35,7 +36,7 @@ export default function AllSpecialitiesDoctors(props) {
   if (props.location === undefined) {
     // specializes-doctors
     useEffect(() => {
-      axios.get(`http://${process.env.REACT_APP_HOST}:8081/specializes-doctors`).then((res) => {
+      axiosClient.get(`/specializes-doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);

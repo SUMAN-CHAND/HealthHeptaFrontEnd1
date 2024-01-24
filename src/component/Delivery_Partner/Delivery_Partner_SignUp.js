@@ -3,11 +3,11 @@ import img from '../../img/loginpageimg.jpg'
 import '../style.css';
 import validation from '../SignUpValidation';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 // import 'react-toastify/dist/ReactToastify.css';
-export default function AdminSignUp() {
+export default function Delivery_Partner_SignUp() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
     // const [role,setRole] = useState('')
@@ -31,17 +31,14 @@ export default function AdminSignUp() {
         progress: undefined,
         theme: "light",
     });
-//    const handleChange=(e)=>{
-//     setRole(e.target.value)
-//    }
-
 
     const [values, setValues] = useState({
         name: '',
-        phone: '',
+        ph_num: '',
         password: '',
-        role: ''
+
     })
+
     const [check, setCheck] = useState(false);
     // console.log(check)
     const navigate = useNavigate();
@@ -52,68 +49,91 @@ export default function AdminSignUp() {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
+        console.log(values)
+        
+        axiosClient.post(`/add-delivery-partner`, values)
+            .then(res => {
+                console.log(res)
+                if (res.status=== 400) {
+                    alert(res.statusText)
+                }else if(res.status === 500){
+                    alert(res.statusText)
+                
+                }else if(res.status === 409){
+                    alert("Phone number is Already Exists!!")
+                }
+                else if (res.data !== null) {
+                    // console.log(res.data)
+                    success();
+                    navigate('/delivery-partner/complete-profile',{
+                        state: {
+                            data: res.data,
+                            value : values
+                        }
+                    });
+                }
+                else {
+                    danger();
+                }
+            })
+            .catch(err => 
+                danger()
+                // console.log(err)
+                
+                );
 
-        setErrors(validation(values, check));
-        if (errors.name === "" && errors.phone === "" && errors.password === "" && errors.check === "") {
-            axiosClient.post(`/superadmin/signup`, values)
-                .then(res => {
-                    if (res.data === null) {
-                        danger();
-                    }
-                    else if (res.data !== null) {
-                        success();
-                        navigate('/superadmin/login');
-                    }
-                    else {
-                        danger();
-                    }
-                })
-                .catch(err => console.log(err));
-        }
+
     }
     return (
+
+
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
+
             <div className="img  login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />
             </div>
+
             <div className='bg-white m-3 pt-3 pl-2 rounded w-30 shadow' style={{ height: '110%' }}>
                 <form action='submit' onSubmit={handleSubmit}>
                     <h5>Join <span className='text-info'>Healthhepta</span></h5>
+                    <hr style={{ border: '3px solid black' }} />
+                    <h5>Registration From <span className='text-info'></span></h5>
+
+
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <p style={{ marginLeft: '10px' }}>Select Your Role :</p>
-                        <select
-                            onChange={handleInput} name='role'
-                            style={{ width: '80%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
-                            <option value="select">Select</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <label className='p-1' htmlFor="name">Full Name : </label><br></br>
-                        <input className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Full Name'
+                        <label className='p-1' htmlFor="name">Full Name <span className='text-danger'>*</span> : </label><br></br>
+                        <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Full Name'
                             name='name' onChange={handleInput} /><br />
                         {errors.name && <span className='text-danger'>{errors.name}</span>}
                     </div>
-                    <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <label className='p-1' htmlFor="phonenumber">Phone Number : </label>
-                        <input className='m-2  p-1' type="phonenumber" style={{ width: '90%' }} placeholder='Enter Phone Number'
-                            name='phone' onChange={handleInput} /><br />
-                        {errors.phone && <span className='text-danger'>{errors.phone}</span>}
+                    <div className='p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                        <label className='p-2' htmlFor="phonenumber">Phone Number : </label><br></br>
+                        <input
+                            className='m-2 p-1'
+                            onChange={handleInput}
+                            name='ph_num'
+                            id="phone"
+                            type="tel"
+                            required
+                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
+                        <span className="validity"></span>
+                        <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
                     <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <label className='p-1' htmlFor="password">Create Password : </label>
-                        <input className='m-2  p-1' type="password" style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} />
+                        <label className='p-1' htmlFor="password">Create Password<span className='text-danger'>*</span> : </label>
+                        <input required className='m-2  p-1' type="password" style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} /> <br />
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
+
                     <div className="form-check ">
-                        <input className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} onChange={() => { setCheck(true) }} />
+                        <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} onChange={() => { setCheck(true) }} />
                         <label className="form-check-label" htmlFor="flexCheckChecked">
                             <p>You are agree to our <span className='text-primary'>terms & policies</span> </p>
                             {errors.check && <span className='text-danger'>{errors.check}</span>}
                         </label>
                     </div>
                     {/* <Link to='/login'> */}
-                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white',cursor:'pointer' }}>Sign Up</button>
+                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Sign Up</button>
                     {/* </Link> */}
                 </form>
             </div>

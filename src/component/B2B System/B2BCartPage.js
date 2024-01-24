@@ -6,10 +6,12 @@ import PopularProductCard from '../PopularProductCard'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import axios from 'axios';
+import axiosClient from '../axiosClient';
+
 
 export default function B2BCartPage() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const responsive = {
         superLargeDesktop: {
@@ -42,7 +44,7 @@ export default function B2BCartPage() {
     // })
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/cart`).then((res) => {
+        axiosClient.get(`/b2b/cart`).then((res) => {
      
             if (res.data !== null) {
                 console.log(res.data)
@@ -54,14 +56,14 @@ export default function B2BCartPage() {
         })
     }, [0])
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/cart/profile`).then((response) => {
+        axiosClient.get(`/b2b/cart/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
     }, [0]);
    
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart/drug`)
+        axiosClient.get(`/cart/drug`)
           .then(response => {
             // Handle response
             if(response.data[0].no >0){
@@ -127,7 +129,7 @@ export default function B2BCartPage() {
         // })
         // setValue(Amount)
         console.log(value)
-        axios.post(`http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons`, value)
+        axiosClient.post(`/cart/get-coupons`, value)
             .then(res => {
                 console.log(res.data)
                 if (res.data !== null) {

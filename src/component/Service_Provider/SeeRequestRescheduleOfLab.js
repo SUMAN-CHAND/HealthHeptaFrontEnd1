@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 
 export default function SeeRequestRescheduleOfLab() {
 
@@ -25,7 +26,7 @@ export default function SeeRequestRescheduleOfLab() {
 
     const navigate  = useNavigate();
 useEffect(() =>{
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/lab/see/${appoiment_id}`)
+    axiosClient.get(`/sub-admin/reschedule/lab/see/${appoiment_id}`)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order
@@ -54,7 +55,7 @@ console.log(values)
         console.log(values)
  
             event.preventDefault();
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/reschedule/lab/see/${appoiment_id}`,values)
+            axiosClient.post(`/sub-admin/reschedule/lab/see/${appoiment_id}`,values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order

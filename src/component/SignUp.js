@@ -5,10 +5,11 @@ import validation from './SignUpValidation';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import axiosClient from './axiosClient';
 // import 'react-toastify/dist/ReactToastify.css';
 export default function SignUp() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
@@ -53,7 +54,7 @@ export default function SignUp() {
 
         setErrors(validation(values, check));
         if (errors.name === "" && errors.phone === "" && errors.password === "" && errors.check === "") {
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/signup`, values)
+            axiosClient.post(`/signup`, values)
                 .then(res => {
                     if (res.data !== null) {
                         success();

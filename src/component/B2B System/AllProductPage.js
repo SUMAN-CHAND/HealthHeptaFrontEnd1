@@ -4,6 +4,7 @@ import axios from 'axios';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import B2BProdCard from './B2BProdCard';
+import axiosClient from '../axiosClient';
 
 
 export default function AllProductPage() {
@@ -40,7 +41,7 @@ export default function AllProductPage() {
     if (stateData.data === undefined) {
         param.selectLocation = "NO Result Match"
         useEffect(() => {
-            axios.get(`http://${process.env.REACT_APP_HOST}:8081/product`).then((res) => {
+            axiosClient.get(`/product`).then((res) => {
                 setProducts(res.data[0])
                 setImages(res.data[1])
                 setMadicineShop(res.data)

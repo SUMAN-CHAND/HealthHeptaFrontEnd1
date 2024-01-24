@@ -5,10 +5,11 @@ import validation from '../SignUpValidation';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import axiosClient from '../axiosClient';
 // import 'react-toastify/dist/ReactToastify.css';
 export default function AddNewPartner() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
     // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
@@ -50,7 +51,7 @@ export default function AddNewPartner() {
         event.preventDefault();
         console.log(values)
 
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/add-partner`, values)
+            axiosClient.post(`/add-partner`, values)
                 .then(res => {
                     // console.log(res)
                     if (res.data === null) {

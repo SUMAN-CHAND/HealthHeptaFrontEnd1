@@ -6,10 +6,11 @@ import PopularProductCard from './PopularProductCard'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function OrderPage() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials = true;
+    axiosClient.defaults.withCredentials = true;
 
     const responsive = {
         superLargeDesktop: {
@@ -42,7 +43,7 @@ export default function OrderPage() {
     // })
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart`).then((res) => {
+        axiosClient.get(`/cart`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data)
             } else {
@@ -52,14 +53,14 @@ export default function OrderPage() {
         })
     }, [])
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/profile`).then((response) => {
+        axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
             setUserAddress(response.data[1])
         });
     }, []);
    
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/cart/drug`)
+        axiosClient.get(`/cart/drug`)
           .then(response => {
             // Handle response
             if(response.data[0].no >0){
@@ -125,7 +126,7 @@ export default function OrderPage() {
     //     // })
     //     // setValue(Amount)
     //     console.log(value)
-    //     axios.post('http://${process.env.REACT_APP_HOST}:8081/cart/get-coupons', value)
+    //     axiosClient.post('/cart/get-coupons', value)
     //         .then(res => {
     //             console.log(res.data)
     //             if (res.data !== null) {

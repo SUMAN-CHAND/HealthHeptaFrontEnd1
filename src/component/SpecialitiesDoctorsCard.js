@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 const customStyles = {
   content: {
@@ -30,7 +31,7 @@ export default function SpecialitiesDoctorsCard(props) {
     // searchDoctor(data);
     try {
       // console.log(data)
-      axios.post(`http://${process.env.REACT_APP_HOST}:8081/doctorspecializes`, data)
+      axiosClient.post(`/doctorspecializes`, data)
         .then(res => {
           if (res.data !== null) {
             navigate(`/listofdoctor`,

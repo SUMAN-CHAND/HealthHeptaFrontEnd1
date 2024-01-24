@@ -3,6 +3,7 @@ import product from '../img/medicalproduct.webp'
 import ProductCardForList from './ProductCardForList'
 import {  useParams } from 'react-router-dom'
 import axios from 'axios';
+import axiosClient from './axiosClient';
 
 export default function ParticularProductOfOrderStatus() {
     //main for connecting backend with Session
@@ -16,7 +17,7 @@ export default function ParticularProductOfOrderStatus() {
 
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081//order/${order_id}/product/${product_id}`).then((res)=>{
+        axiosClient.get(`/order/${order_id}/product/${product_id}`).then((res)=>{
             setProducts(res.data);
         })
     }, [])

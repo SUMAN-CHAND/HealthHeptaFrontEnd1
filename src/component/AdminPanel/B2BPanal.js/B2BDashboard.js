@@ -5,6 +5,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
   from 'recharts';
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import axiosClient from '../../axiosClient';
 
 function B2BDashboard() {
   const [userCount, setUserCount] = useState();
@@ -34,7 +35,7 @@ function B2BDashboard() {
 
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/super_admin/b2b/dashboard/details`)
+    axiosClient.get(`/super_admin/b2b/dashboard/details`)
       .then(response => {
         // Handle response
         setUserCount(response.data[0]);

@@ -3,6 +3,7 @@ import {
   Link, useNavigate
 } from "react-router-dom";
 import axios from 'axios';
+import axiosClient from '../axiosClient';
 const customStyle = {
   maxHeight: '60vh',
   minHeight: '50vh',
@@ -31,7 +32,7 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
 
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/commission/${order_id}`)
+    axiosClient.get(`/partner/commission/${order_id}`)
       .then(res => {
         // setSelectLocation(res.data[2])
         setCommissions(res.data[0]);
@@ -39,7 +40,7 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
       })
   }, []);
   useEffect(() => {
-     axios.get(`http://${process.env.REACT_APP_HOST}:8081/partner/profile/order`).then((res) => {
+     axiosClient.get(`/partner/profile/order`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data)
             } else {

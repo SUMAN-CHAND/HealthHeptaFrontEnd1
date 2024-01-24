@@ -5,6 +5,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Resp
   from 'recharts';
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import axiosClient from '../axiosClient';
 
 function Dashboard() {
   const [userCount, setUserCount] = useState();
@@ -35,7 +36,7 @@ function Dashboard() {
 
 
   useEffect(() =>  {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/sub-admin/dashboard/details`)
+    axiosClient.get(`/sub-admin/dashboard/details`)
       .then(response => {
         // Handle response
         setUserCount(response.data[0]);

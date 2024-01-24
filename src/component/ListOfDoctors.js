@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import AllDoctors from './AllDoctors';
 import Doctors from './DoctorCard';
+import axiosClient from './axiosClient';
 
 export default function ListOfDoctors() {
 
@@ -18,7 +19,7 @@ export default function ListOfDoctors() {
   const [imagess, setImagesss] = useState([])
 
   useEffect(() => {
-    axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctors`).then((res) => {
+    axiosClient.get(`/doctors`).then((res) => {
       // Handle response
       if (res.data !== null) {
         setDoctorsss(res.data[0]);

@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
+import axiosClient from './axiosClient';
 
 export default function BookAppointmentFrom() {
 
@@ -28,7 +29,7 @@ export default function BookAppointmentFrom() {
     const [image, setImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/doctorsearch/${doctor_id}`).then((res) => {
+        axiosClient.get(`/doctorsearch/${doctor_id}`).then((res) => {
 
             // Handle response
             if (res.data !== null) {
@@ -71,7 +72,7 @@ export default function BookAppointmentFrom() {
 
             // navigate('/');  
             event.preventDefault();
-            axios.post(`http://${process.env.REACT_APP_HOST}:8081/doctorbook`, values)
+            axiosClient.post(`/doctorbook`, values)
                 .then(res => {
                     if (res.data !== null) {
                         // Notify admins and super admins about the new order
@@ -109,7 +110,7 @@ export default function BookAppointmentFrom() {
     // const [time, setTime] = useState('');
 
     // useEffect(() => {
-    //     axios.get('/doctors')
+    //     axiosClient.get('/doctors')
     //         .then(response => setDoctors(response.data));
     // }, []);
 
@@ -120,13 +121,13 @@ export default function BookAppointmentFrom() {
     // const handleSubmit = async (event) => {
     //     event.preventDefault();
 
-    //     await axios.post('/appointments', values);
+    //     await axiosClient.post('/appointments', values);
 
     //     alert('Appointment booked successfully.');
     // };
 
     // const handleJoinVideoCall = (appointmentId) => {
-    //     axios.get(`/appointments/${appointmentId}/join`)
+    //     axiosClient.get(`/appointments/${appointmentId}/join`)
     //         .then(response => {
     //             window.location.href = response.data.videoCallUrl;
     //         });
@@ -134,7 +135,7 @@ export default function BookAppointmentFrom() {
 
     // const [user, setUser] = useState({});
     // useEffect(() => {
-    //     axios.get('http://${process.env.REACT_APP_HOST}:8081/profile').then((response) => {
+    //     axiosClient.get('/profile').then((response) => {
     //         setUser(response.data[0]);
     //     });
     // }, []);

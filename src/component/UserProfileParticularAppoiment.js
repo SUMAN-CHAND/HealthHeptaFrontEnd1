@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import axiosClient from './axiosClient';
 
 export default function UserProfileParticularAppoiment() {
     const param = useParams();
@@ -12,7 +13,7 @@ export default function UserProfileParticularAppoiment() {
     const [labTestImages, setLabTestImages] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/user/see-appoiment/${appoiment_id}`)
+        axiosClient.get(`/user/see-appoiment/${appoiment_id}`)
             .then(response => {
                 // Handle response
                 if (response.data !== null) {

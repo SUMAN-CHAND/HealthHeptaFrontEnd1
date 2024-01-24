@@ -3,6 +3,7 @@ import AllMadicineCard from './AllMadicineCard'
 import AllB2BBanner from './AllB2BBanner'
 import OfferDeals from './OfferDeals'
 import axios from 'axios'
+import axiosClient from '../axiosClient'
 
 export default function AllMadicineByMargin() {
 
@@ -12,7 +13,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         console.log("Fetching data...");
-        axios.get(  `http://${process.env.REACT_APP_HOST}:8081/b2b/product`).then((res) => {
+        axiosClient.get(  `/b2b/product`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setProducts(res.data[0]);
@@ -26,7 +27,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/20%off`).then((res) => {
+        axios.get(`/b2b/product/20%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setOffproducts(res.data[0]);
@@ -40,7 +41,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/50%off`).then((res) => {
+        axiosClient.get(`/b2b/product/50%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setOff50products(res.data[0]);
@@ -53,7 +54,7 @@ export default function AllMadicineByMargin() {
 
     useEffect(() => {
         // console.log("newAddedimage Fetching data...");
-        axios.get(`http://${process.env.REACT_APP_HOST}:8081/b2b/product/newadded`).then((res) => {
+        axiosClient.get(`/b2b/product/newadded`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
                 setNewAddedproducts(res.data[0]);
