@@ -35,9 +35,9 @@ export default function Delivery_Partner_Header() {
         axiosClient.get(`/delivery_partner/profile-details`)
             .then(res => {
                 if (res.data) {
-                    console.log(res.data)
+                    // console.log(res.data)
                     setLoggedIn(res.data[0]);
-                    console.log(loggedIn)
+                    // console.log(loggedIn)
                 }
 
             })
@@ -75,10 +75,11 @@ export default function Delivery_Partner_Header() {
     // console.log("object" + loggedIn)
     var login = false;
 
-    if (loggedIn.length >0) {
+    if (loggedIn.id!==undefined) {
         login = true;
     }
-    console.log(loggedIn)
+    // console.log(loggedIn)
+    // console.log(login)
 
     const handleLogout = async () => {
         try {
