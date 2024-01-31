@@ -73,6 +73,7 @@ export default function Delivery_Partner_Home() {
     const [userAddress, setUserAddress] = useState({});
     const location = useLocation();
     const [commissions, setCommissions] = useState([]);
+    const [ownCommissions, setOwnCommissions] = useState([]);
 
     // console.log(location)
     // if (location.state === null) {
@@ -84,46 +85,54 @@ export default function Delivery_Partner_Home() {
 
     const [orders, setOrders] = useState([])
 
-    const showOrders = () => {
-        axiosClient.get(`/partner/profile/order`).then((res) => {
-            if (res.data !== null) {
-                setOrders(res.data)
-            } else {
-                console.log('Product not present')
-            }
-        })
-    }
+    useEffect(() => {
+        axiosClient.get(`/deleviry_partner/assigned/orders`)
+            .then(res => {
+                if (res.data !== null) {
+                    setOrders(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
-    const numOfProduct = orders.length;
-    if (numOfProduct > 0) {
-        flag = true;
-    }
+    }, [])
+    // console.log(orders)
+    // console.log(orders)
+    // let numOfProduct;
+    // // if (orders) {
+    // // }
+    // numOfProduct = orders.length;
+    // if (numOfProduct > 0) {
+    //     flag = true;
+    // }
+    // console.log(orders)
+    // console.log(flag)
+    // const deleteOrder = (id) => {
+    //     // console.log('click')
+    //     const response = window.confirm("Are you sure to Cancle the Order?");
+    //     if (response) {
+    //         axiosClient.delete(`/orders/${id}`)
+    //             .then(response => {
+    //                 console.log(response)
+    //                 if (response.data === 'success') {
+    //                     alert('Order Delete Successfully');
+    //                 }
+    //                 else if (response.data === null) {
+    //                     console.log(response.data)
+    //                     alert('Order cannot be canceled at this time');
+    //                 }
+    //             })
+    //             .catch(err => {
+    //                 console.log(err)
+    //             })
+    //     } else {
+    //         alert('No Order Cancled')
+    //     }
 
-    const deleteOrder = (id) => {
-        // console.log('click')
-        const response = window.confirm("Are you sure to Cancle the Order?");
-        if (response) {
-            axiosClient.delete(`/orders/${id}`)
-                .then(response => {
-                    console.log(response)
-                    if (response.data === 'success') {
-                        alert('Order Delete Successfully');
-                    }
-                    else if (response.data === null) {
-                        console.log(response.data)
-                        alert('Order cannot be canceled at this time');
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        } else {
-            alert('No Order Cancled')
-        }
-
-    }
+    // }
     const showPartnerCommission = () => {
-        axiosClient.get(`/superadmin/partner-commissions`)
+        axiosClient.get(`/superadmin/delivery-partner-commissions`)
             .then(response => {
                 // Handle response
                 setCommissions(response.data)
@@ -134,16 +143,28 @@ export default function Delivery_Partner_Home() {
                 console.error(err);
             });
     }
+    const showYourCommission = () => {
+        axiosClient.get(`/superadmin/own/delivery-partner-commissions`)
+            .then(response => {
+                // Handle response
+                setOwnCommissions(response.data)
+                console.log(response.data);
+            })
+            .catch(err => {
+                // Handle errors
+                console.error(err);
+            });
+    }
 
 
 
     useEffect(() => {
-        axiosClient.get(`/delivery_partner/home/profile`).then((response,err) => {
+        axiosClient.get(`/delivery_partner/home/profile`).then((response, err) => {
             if (response.data !== null) {
                 setUser(response.data[0]);
                 // setUserAddress(response.data[1]);
 
-            }else{
+            } else {
                 console.error(err);
 
             }
@@ -174,25 +195,25 @@ export default function Delivery_Partner_Home() {
 
     // const [appoiments, setAppoiments] = useState([]);
 
-    
+
     // console.log(appoiments)
 
     const [labBookings, setLabBookings] = useState([]);
 
-    const ShowLabBooking = () => {
-        axiosClient.get(`/user/see-lab-booking`)
-            .then(response => {
-                // Handle response
-                if (response.data !== null) {
-                    setLabBookings(response.data[0]);
-                }
-                // console.log(response.data);
-            })
-            .catch(err => {
-                // Handle errors
-                console.error(err);
-            });
-    }
+    // const ShowLabBooking = () => {
+    //     axiosClient.get(`/user/see-lab-booking`)
+    //         .then(response => {
+    //             // Handle response
+    //             if (response.data !== null) {
+    //                 setLabBookings(response.data[0]);
+    //             }
+    //             // console.log(response.data);
+    //         })
+    //         .catch(err => {
+    //             // Handle errors
+    //             console.error(err);
+    //         });
+    // }
 
     // console.log(labBookings)
 
@@ -213,6 +234,37 @@ export default function Delivery_Partner_Home() {
             console.error('An error occurred:', error);
         }
     };
+    const updateStatus = (orderId) => {
+        const response = window.confirm("Are you sure to Accept the Order?");
+        if(response){
+            axiosClient.post(`/delivery_partner/orders/accept/${orderId}`).then(response => {
+                if (response.data) {
+                    alert('Order Accepted');
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }else{
+            alert('Order Not Accepted');
+        }
+        
+    }
+    const updateToCompleteStatus = (orderId) => {
+        const response = window.confirm("Are you sure that Order is Delivered?");
+        if (response) {
+            axiosClient.post(`/delivery_partner/orders/complete/${orderId}`).then(response => {
+                if (response.data) {
+                    alert('Order Copeleted');
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        } else {
+            alert('Order Not Copeleted');
+        }
+    }
+
+
 
     //TODO
 
@@ -241,10 +293,11 @@ export default function Delivery_Partner_Home() {
                         <hr />
                         <div className="list-group shadow" id="list-tab" role="tablist">
                             {/* <Link to="#summary" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Summary</Link> */}
-                            <Link to="#orders" onClick={showOrders} className="list-group-item active list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Orders</Link>
-                            <Link to="#lab" onClick={ShowLabBooking} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Lab Tests</Link>
-                            <Link to="#commission-service-wise" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-commission-service-wise-list" data-bs-toggle="list" role="tab" aria-controls="list-commission-service-wise">Commission Service Wise</Link>
+                            <Link to="#orders" className="list-group-item active list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Orders</Link>
+                            {/* <Link to="#lab" onClick={ShowLabBooking} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Lab Tests</Link> */}
+                            <Link to="#your-commission" onClick={showYourCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-commission-service-wise-list" data-bs-toggle="list" role="tab" aria-controls="list-commission-service-wise">Your Commission</Link>
                             <Link to="#profile" className="list-group-item list-group-item-action  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
+                            <Link to="#commission-service-wise" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-commission-service-wise-list" data-bs-toggle="list" role="tab" aria-controls="list-commission-service-wise">Commission Service Wise</Link>
                         </div>
                     </div>
                 </div>
@@ -330,50 +383,47 @@ export default function Delivery_Partner_Home() {
                                 </table>
                             </div>
                         </div> */}
-                        
-                        <div className="tab-pane active fade text-light" id="orders" role="tabpanel" aria-labelledby="list-Medicine-list">
-                            <h2 className='p-2 text-dark'> Your Orders</h2>
+
+                        <div className="tab-pane active fade text-light" id="orders" role="tabpanel" style={{ opacity: '1' }} aria-labelledby="list-Medicine-list">
+                            <h2 className='p-2 text-dark'> Orders</h2>
                             <div className="container text-dark" style={renDataStyle}>
-                                {flag ?
+                                {orders.length > 0 ?
                                     <div >
-                                        <h2 className='p-2'>|| Orders ||</h2>
+                                        {/* <h2 className='p-2'>|| Orders ||</h2> */}
                                         <div className="container text-dark " style={renDataStyle}>
                                             <table className="table table-striped">
                                                 <thead className='thead-dark'>
                                                     <tr>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Product Name</th>
-                                                        <th scope="col">Product Price</th>
+                                                        <th scope="col">Order Total Amount</th>
                                                         <th scope="col">Product Quantity</th>
-                                                        <th scope="col">Discount</th>
+                                                        <th scope="col">Payment Status</th>
+                                                        <th scope="col">Payment Type</th>
                                                         <th scope="col">Expected Delivery Date</th>
-
+                                                        <th scope="col">See Customer</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {orders.map((order, index) => (
+                                                    {orders.filter(orderf => orderf.status.toLowerCase() !== 'completed').map((order, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{order.id}</th>
                                                             {/* <td>{product.product_id}</td> */}
                                                             <td>{order.product_name}</td>
                                                             <td>{order.total_amount}</td>
                                                             <td>{order.quantity}</td>
-                                                            <td>{order.discount}</td>
+                                                            <td>{order.payment_status}</td>
+                                                            <td>{order.payment_type}</td>
                                                             <td>{order.expected_delivery_date}</td>
-                                                            <td> <button className='btn btn-danger' onClick={() => deleteOrder(order.id)}>Cancle</button>
-                                                                {/* <Link to='/'><button className='btn btn-info' >View Commission</button></Link> */}
-                                                                <Link className=" btn btn-info mx-2" aria-current="page" onClick={openModal} >View Commission</Link>
-                                                                <Modal
-                                                                    isOpen={modalIsOpen}
-                                                                    onAfterOpen={afterOpenModal}
-                                                                    onRequestClose={closeModal}
-                                                                    style={customStyles}
-                                                                    contentLabel="Example Modal"
-                                                                >
-                                                                    {/* <ViewCommissionModal closeTheModal={closeModal} data={order.id} product_ids={order.product_id} /> */}
+                                                            <td><button className='btn btn-info'> See User</button></td>
+                                                            <td> {order.status === 'Delivery Persion Accepted' ? <>
+                                                                <button onClick={() => updateToCompleteStatus(order.id)} className='btn btn-warning'>Complete The Order</button>
 
-                                                                </Modal>
+                                                            </> : <>
+                                                                <button onClick={() => updateStatus(order.id)} className='btn btn-warning'>Accept</button>
+                                                            </>
+                                                            }
                                                             </td>
                                                         </tr>
                                                     ))}
@@ -383,7 +433,7 @@ export default function Delivery_Partner_Home() {
                                     </div>
 
                                     :
-                                    <p>no record found!!</p>
+                                    <p>No Delivery Assigned!!</p>
                                 }
                             </div>
                         </div>
@@ -444,7 +494,7 @@ export default function Delivery_Partner_Home() {
                                                             <ViewCommissionModal closeTheModal={closeModal} data={labBooking.id} product_ids={labBooking.Test_id} />
 
                                                         </Modal> */}
-                                                        </td>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </> : <>
@@ -476,6 +526,39 @@ export default function Delivery_Partner_Home() {
                                                     <td>{commission.service_type}</td>
                                                     <td>{commission.commision_type}</td>
                                                     <td>{commission.commision}</td>
+
+                                                </tr>
+                                            ))}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div className="tab-pane fade text-light" id="your-commission" role="tabpanel" aria-labelledby="list-your-commission-list">
+                            <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Your Commission ||</h2></span>
+                            <div className="container text-dark" style={renDataStyle}>
+                                <div id='partner-commission'>
+                                    <table className="table table-striped">
+                                        <thead className='thead-dark'>
+                                            <tr>
+                                                <th scope="col"> Id</th>
+                                                <th scope="col">Service Type</th>
+                                                <th scope="col">Commission Type</th>
+                                                <th scope="col">Commission</th>
+                                                <th scope="col">Order Id</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {ownCommissions.map((commission, index) => (
+                                                <tr key={index}>
+                                                    <th scope="row">{commission.id}</th>
+                                                    <td>{commission.service_type}</td>
+                                                    <td>{commission.commision_type}</td>
+                                                    <td>{commission.commision}</td>
+                                                    <td>{commission.order_id}</td>
 
                                                 </tr>
                                             ))}
@@ -520,7 +603,7 @@ export default function Delivery_Partner_Home() {
                             <Link to={`appoiments`}><button type="button" className="btn btn-outline-info m-2 p-2" style={{ width: '32vw', height: '7vh', cursor: 'pointer' }}>Appoiments</button></Link>
                             <Link to={`clinic`}> <button type="button" className="btn btn-outline-info m-2 p-2" style={{ width: '32vw', height: '7vh', cursor: 'pointer' }}>Clinic</button></Link>
                         </div>
-                            <Link to={`/`}><button type="button" className="btn btn-info m-2 p-2" style={{ width: '90%', height: '7vh', cursor: 'pointer' }}>Shop Now</button></Link>
+                        <Link to={`/`}><button type="button" className="btn btn-info m-2 p-2" style={{ width: '90%', height: '7vh', cursor: 'pointer' }}>Shop Now</button></Link>
                     </div>
                 </div>
                 <div className="gap" style={{ width: '100%', height: '1vh', backgroundColor: '#80808070' }}>

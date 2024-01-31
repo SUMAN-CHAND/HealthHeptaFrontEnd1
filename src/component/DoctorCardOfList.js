@@ -31,7 +31,8 @@ export default function DoctorCardOfList(props) {
                                 <h5>{props.clinic}</h5>
                                 <p>{props.clinic_desc}
                                 </p>
-                                <Link to={`/doctor/${props.id}`} className="btn" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>
+                                <Link to={`/doctor/${props.id}`} className="btn m-1 text-light" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: 'blue' }}>View Details</Link>
+                                <Link to={`/doctor/${props.id}`} className="btn m-1" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>
                             </div>
                         </div>
                     </div>

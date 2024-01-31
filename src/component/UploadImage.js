@@ -147,7 +147,7 @@ export default function UploadImage({ onImageUpload }) {
         {images.map((img) => (
           <div key={img.id}>
             <img
-              src={`/${img.path}`}
+              src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
               alt={img.name}
               width="50"
             />

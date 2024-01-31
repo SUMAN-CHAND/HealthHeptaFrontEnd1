@@ -119,6 +119,7 @@ export default function ParticularProductPage() {
                         </div>
                     </div>
                     <div className="col-5 products" style={{ backgroundColor: 'white' }}>
+                        <h5 className='m-2 p-2'>Suggected Medicine</h5>
                         {ProductForLists.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
                             <div key={fproduct.product_id}>
                                 {imageLists.map((img) => (

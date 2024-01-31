@@ -15,7 +15,7 @@ export default function DoctorCardForAD(props) {
                         <div className="deccription" style={{ display: 'flex' }} >
                         <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxWidth:'6vw' }}  />
                             <div>
-                                <h5 className='fs-8'>{props.name} </h5>
+                                <h6 className='fs-8'>{props.name} </h6>
                                 <h6 className='fs-9'>{props.specializes} </h6>
                                 <p className='fs-10'>{
                                     props.desc
@@ -30,7 +30,7 @@ export default function DoctorCardForAD(props) {
                                 </div>
                             </div>
                             <div className="container doctor-c-d" style={{ height: '20vh' }}>
-                                <h5>{props.clinics}</h5>
+                                <h6>{props.clinics}</h6>
                                 <p>{props.clinic_descs}
                                 </p>
                                 <Link to={`/doctor/${props.id}`} className="btn" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>

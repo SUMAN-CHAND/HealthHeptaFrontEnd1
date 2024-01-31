@@ -56,7 +56,7 @@ export default function Delivery_Partner_Complete_Profile() {
         event.preventDefault();
         axiosClient.post(`/delivery-partner/complete_profile`, values)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.status === 200 && res.data === "") {
                     alert('Sign up  Successfully!!')
                     navigate('/delivery-partner/login');

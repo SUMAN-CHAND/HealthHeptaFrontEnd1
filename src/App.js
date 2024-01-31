@@ -93,6 +93,11 @@ import Delivery_Partner_Complete_Profile from './component/Delivery_Partner/Deli
 import Delivery_Partner_SignUp from './component/Delivery_Partner/Delivery_Partner_SignUp';
 import Delivery_Partner_Home from './component/Delivery_Partner/Delivery_Partner_Home';
 import Delivery_Partner_Header from './component/Delivery_Partner/Delivery_Partner_Header';
+import OrderAction from './component/AdminPanel/OrderAction';
+import AddNewDeliveryPartnerCommission from './component/AdminPanel/AddNewDeliveryPartnerCommission';
+import UpdateDeliveryPartnerCommission from './component/AdminPanel/UpdateDeliveryPartnerCommission';
+import AddNewDeliveryPartner from './component/AdminPanel/AddNewDeliveryPartner';
+import MyMap from './component/Map/MyMap';
 
 function App() {
   return (
@@ -140,6 +145,7 @@ function App() {
               <Route path='/reschedule/lab/:appoiment_id' element={<><Header /><Header2 /><RescheduleLabTest /></>} exact />
               <Route path='/particular-laboratory/:id' element={<><Header /><Header2 /><ParticularLaboratory /></>} exact />
               <Route path='/img/compression' element={<><Header /><Header2 /><ImageCompressor /></>} exact />
+              {/* <Route path='/map' element={<><Header /><Header2 /><MyMap /></>} exact /> */}
             </Routes>
           </div>
           <Routes>
@@ -150,12 +156,16 @@ function App() {
             <Route path='/superadmin/addproduct' Component={AddProduct} exact />
             <Route path='/superadmin/addnew/service-provider' Component={AddNewServiceProvider} exact />
             <Route path='/superadmin/addnew/partner' Component={AddNewPartner} exact />
+            <Route path='/superadmin/addnew/delivery-partner' Component={AddNewDeliveryPartner} exact />
             <Route path='/superadmin/complete-profile' Component={CompelteProfileFrom} exact />
             <Route path='/superadmin/addnew/partner-commission' Component={AddNewPartnerCommission} exact />
+            <Route path='/superadmin/addnew/delivery-partner-commission' Component={AddNewDeliveryPartnerCommission} exact />
             <Route path='/superadmin/update-commission/:commission_id' Component={UpdatePartnerCommission} exact />
+            <Route path='/superadmin/delivery/update-commission/:commission_id' Component={UpdateDeliveryPartnerCommission} exact />
             <Route path='/superadmin/updateproduct/:product_id' Component={UpdateProduct} exact />
             {/* <Route path='/superadmin/orders/product/:product_id' Component={ViewProductModal} exact /> */}
             <Route path='/superadmin/orders/:id/:user_id/:product_id' Component={ViewOrderBySubAdminDemo} exact />
+            <Route path='/superadmin/orders/action/:id/:user_id/:product_id' Component={OrderAction} exact />
             <Route path='/superadmin/orders/order/:order_id' Component={ViewOrder} exact />
             <Route path='/superadmin/orders/customer/:user_id' Component={ViewUser} exact />
             <Route path='/superadmin/signup' Component={AdminSignUp} exact />

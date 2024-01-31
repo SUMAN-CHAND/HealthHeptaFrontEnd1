@@ -14,7 +14,7 @@ export default function Partner_Complete_Profile() {
     const data = location.state.data
     const value = location.state.value
     // console.log(data.insertId)
-    console.log(value)
+    // console.log(value)
 
 
 
@@ -56,7 +56,7 @@ export default function Partner_Complete_Profile() {
         event.preventDefault();
         axiosClient.post(`/partner/complete_profile`, values)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.status === 200 && res.data === null) {
                     alert('Sign up  Successfully!!')
                     navigate('/partner/login');

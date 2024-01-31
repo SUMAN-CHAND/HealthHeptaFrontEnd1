@@ -21,8 +21,7 @@ export default function ProductCardForList(props) {
           <p className="text-success m-2" style={{ marginRight: '10px' }}>Price:- ₹{discountPrice}</p>
           <p className=" m-2" style={{ textDecoration: 'line-through', Color: '#878787' }}>₹{props.price}</p>
           <p className="text-success m-2" style={{ marginRight: '10px', }}>{props.discount}% Off</p>
-          <Link to={value} className="btn" style={{ fontSize: '0.9rem', backgroundColor: '#0cbea9' }}> <p>
-            View Detail</p></Link>
+          <Link to={value} className="btn" style={{ fontSize: '0.9rem', backgroundColor: '#0cbea9' }}>View Detail</Link>
         </span>
       </div>
     </div>

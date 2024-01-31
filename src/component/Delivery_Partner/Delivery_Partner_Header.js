@@ -269,7 +269,7 @@ export default function Delivery_Partner_Header() {
                                         </span>
 
                                         <ul className="dropdown-menu">
-                                            <li><Link to='/profile' className="dropdown-item">Profile</Link></li>
+                                            <li><Link to='/delivery-partner/home' className="dropdown-item">Profile</Link></li>
                                             <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                         </ul>
 

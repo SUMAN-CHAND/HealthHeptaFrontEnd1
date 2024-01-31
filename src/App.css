@@ -3,6 +3,7 @@
 } */
 .App {
   text-align: center;
+  background-color: #fff;
 }
 .card {
   transition: all 0.6s;

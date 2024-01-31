@@ -73,7 +73,7 @@ export default function AllDoctorCardForAD(props) {
   return (
     <div>
       <div className="container" style={{ marginTop: '5vh' }}>
-        <h5 className='py-2'>|| Best Doctor Suggested For You ||</h5>
+        <h5 className='py-2'>|| Suggested Best Doctor For You ||</h5>
         {/* {doctors!== undefined ? <> */}
           {/* <Carousel responsive={responsive}> */}
             {doctors.map(doctor => (

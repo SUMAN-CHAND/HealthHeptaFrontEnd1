@@ -47,7 +47,7 @@ const ClosePage = () => {
                         {images.map((img) => (
                             <div key={img.id}>
                                 <img
-                                    src={`/${img.path}`}
+                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
                                     alt={img.name}
 
                                     style={{     maxWidth: '85vw', border: '5px solid cadetblue' }}

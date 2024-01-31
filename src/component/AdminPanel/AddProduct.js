@@ -21,6 +21,8 @@ export default function AddProduct() {
         typeOfMedicine: '',
         sgst: '',
         cgst: '',
+        moleculesName:'',
+        manufacturing_Company_Name:'',
         productImageId: null,
     })
 
@@ -80,8 +82,8 @@ export default function AddProduct() {
                                 name='product_name' onChange={handleInput} /><br />
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            <label className='p-1' htmlFor="product_dec">Product Description : </label><br></br>
-                            <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product Description'
+                            <label className='p-1' htmlFor="product_dec">Product Description <span style={{fontSize:'9px',color:'red'}}>(Product Name ,Brand Name, Moluqule name ,what is product do?)</span> : </label><br></br>
+                            <input required className='m-2 p-1' type="text-area" style={{ width: '90%' }} placeholder='Enter Product Description'
                                 name='description' onChange={handleInput} /><br />
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
@@ -98,6 +100,16 @@ export default function AddProduct() {
                             <label className='p-1' htmlFor="product_category">Product Category : </label>
                             <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product Category'
                                 name='category' onChange={handleInput} /><br />
+                        </div>
+                        <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            <label className='p-1' htmlFor="moleculesName">Molecules Name : </label>
+                            <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product molecules name'
+                                name='moleculesName' onChange={handleInput} /><br />
+                        </div>
+                        <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            <label className='p-1' htmlFor="manufacturing_Company_Name">Manufacturing Company Name : </label>
+                            <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product Manufacturing Company Name'
+                                name='manufacturing_Company_Name' onChange={handleInput} /><br />
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="product_manufacturing_date ">Manufacturing Date  : </label>

@@ -265,6 +265,41 @@ export default function UserProfile() {
             });
     }
     // console.log(appoiments)
+    //to get user address
+    // console.log(`${process.env.REACT_APP_GEOLOCATION_API_KEY}`)
+    // console.log(`${process.env.REACT_APP_GEOLOCATION_API_ENDPOINT}`)
+    // console.log(`${process.env.REACT_APP_HOST}`)
+    const getUserCurrentAddress = async (latitude, longitude) => {
+        // console.log(latitude,longitude)
+        let query = `${latitude},${longitude}`;
+        // let apiUrl = `${process.env.REACT_APP_GEOLOCATION_API_ENDPOINT}?q=${query}&key=${process.env.REACT_APP_GEOLOCATION_API_KEY}`;
+        let apiUrl = `${process.env.REACT_APP_GEOLOCATION_API_ENDPOINT}?latlng=${query}&key=${process.env.REACT_APP_GEOLOCATION_API_KEY}`;
+        // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=
+        console.log(apiUrl)
+        try {
+            const res = await fetch(apiUrl);
+            const data = await res.json();
+            console.log(data)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    };
+
+    const getUserLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                console.log(position)
+                const { latitude, longitude } = position.coords;
+                getUserCurrentAddress(latitude, longitude);
+
+            }, (error) => {
+                console.log(error.message);
+            })
+
+        }
+    }
+
     return (
         <>
             <div>
@@ -306,7 +341,7 @@ export default function UserProfile() {
                                         }
                                     </li>
                                     <li className="list-group-item " style={listStyle}>
-                                        {userAddress ? <>
+                                        {/* {userAddress ? <>
                                             {address ?
                                                 <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                     <form onSubmit={onASubmit} style={{ width: '75%', borderRadius: '5px' }} className='shadow p-2 m-2'>
@@ -379,7 +414,8 @@ export default function UserProfile() {
                                                     </>
                                                 }
                                             </>
-                                        }
+                                        } */}
+                                        <button className="btn btn-primary" onClick={getUserLocation}>Add Current Location</button>
                                     </li>
                                 </ul>
 

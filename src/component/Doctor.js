@@ -161,7 +161,7 @@ export default function Doctor() {
           </div>
         </div>
         <div className="col-4 my-4 shadow list-of-doctor" style={{ backgroundColor: 'white', width: '30vw' }}>
-          <h2>Suggested Doctors For You</h2>
+          {/* <h2>Suggested Doctors For You</h2> */}
           <div>
             <AllDoctorCardForAD/>
           </div>

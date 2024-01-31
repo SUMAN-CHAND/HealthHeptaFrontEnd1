@@ -1,5 +1,5 @@
 import React from 'react';
-import banner from '../img/banner.jpg';
+// import banner from '../img/banner.jpg';
 import {
     Link
 } from "react-router-dom";
@@ -30,7 +30,7 @@ const fontStyle={
     fontSize:'calc(1.8vw + 0.5rem)'
 }
 
-export default function Banner() {
+export default function Banner({imgPath,imgName}) {
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -53,11 +53,10 @@ export default function Banner() {
                     <div className="col baner-text" style={bannnerTextStyle}>
                         <div className=' p-2' >
                             <h1  className='Heading' style={fontStyle} >Online Doctor Booking</h1>
-                            <p>when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                                distribution of letters, as opposed to</p>
+                            <p>schedule Doctor appointment online 24/7 even after hours.</p>
                         </div>
                         <div className="btn">
-                            <Link className="list-group-item list-group-item-action" aria-current="true"><button type="button" className="btn btn-info book-btn py-3" onClick={openModal}><p>BOOK AN APPOINTMENT</p></button></Link>
+                            <Link className="list-group-item list-group-item-action" aria-current="true"><button type="button" className="btn btn-info book-btn py-3" onClick={openModal}><p>Find Doctor Near You</p></button></Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}
@@ -84,7 +83,7 @@ export default function Banner() {
                         </div>
                     </div>
                     <div className="col banner-img" style={{ maxHeight: '65vh', maxWidth: '35vw' }}>
-                        <img src={banner} alt="Banner" className='text-center my-3 banner-img' style={{ maxHeight: '60vh', maxWidth: '35vw' }} />
+                        <img src={imgPath} alt="Banner" className='text-center my-3 banner-img' style={{ maxHeight: '60vh', maxWidth: '35vw' }} />
                     </div>
                 </div>
             </div>
