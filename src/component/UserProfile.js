@@ -78,7 +78,7 @@ export default function UserProfile() {
     // }, [])
 
     const showOrders = () => {
-        axiosClient.get(`/profile/order`).then((res) => {
+        axiosClient.get(`/profile/orders`).then((res) => {
             if (res.data !== null) {
                 setProducts(res.data[0]);
                 setInd_product_Images(res.data[1]);

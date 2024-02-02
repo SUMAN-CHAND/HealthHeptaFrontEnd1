@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import SuccfullyOrderplaceModal from './SuccfullyOrderplaceModal';
 // import io from 'socket.io-client';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosClient from './axiosClient';
 
@@ -60,7 +60,7 @@ export default function OrderPaymentPage() {
     });
 
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [modalIsOpen, setIsOpen] = useState(false);
 
     function openModal() {
@@ -116,7 +116,8 @@ export default function OrderPaymentPage() {
     var totalNumofitem = stateData.totalNumofitem;
     var amount = stateData.amount
     var totalGst = stateData.totalGst
-    console.log(amount)
+    var prescriptionId = stateData.prescriptionId
+    // console.log(amount)
     // const totalNumofitem = products.length;
     // let totalPriceArray = products.map((product => {
     //     return ((product.product_price - ((product.product_price * product.discount) / 100)) * product.quantity);
@@ -157,7 +158,8 @@ export default function OrderPaymentPage() {
 
     const [values, setValues] = useState({
         payment_type: '',
-        total_amount: ''
+        total_amount: '',
+        prescriptionId:''
     })
     // setValues('');
     // setValues({
@@ -178,7 +180,8 @@ export default function OrderPaymentPage() {
     const handleInput = (e) => {
         setValues({
             payment_type: e.target.value,
-            total_amount: pay_amount
+            total_amount: pay_amount,
+            prescriptionId:prescriptionId
         })
     }
 
@@ -223,8 +226,15 @@ export default function OrderPaymentPage() {
                     // Notify admins and super admins about the new order
                     // socket.emit('newOrder', 'New order placed!');
                     success();
+                    console.log(res.data)
                     openModal();
-                    // navigate('/');
+                    // navigate('/order/bill',
+                    // {
+                    //     state: {
+                    //         orderId: res.data[0],
+                    //         productIds: res.data[1]
+                    //     }
+                    // });
                 }
                 else if (res.data === null) {
                     danger();

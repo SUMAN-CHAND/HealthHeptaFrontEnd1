@@ -16,6 +16,9 @@ import { CiMedicalCross } from "react-icons/ci";
 import { BiTestTube } from "react-icons/bi";
 import { LiaClinicMedicalSolid } from "react-icons/lia";
 import { BiSolidOffer } from "react-icons/bi";
+import { IoMedkitOutline } from 'react-icons/io5';
+import ModalPharmacySearch from './ModalPharmacySearch';
+
 
 
 
@@ -89,6 +92,22 @@ export default function Header2() {
                         >
 
                             <SearchMedicinesStoreByLocation closeTheModal={closeModal} />
+                        </Modal>
+                    </div>
+                    <div className="nav-item text-white Header2-search">
+                        <img src={medicinesImage} alt="" />
+                        <Link className="nav-link active text-white h2-t  " style={fontStyle} aria-current="page" onClick={openModal}>
+                            <IoMedkitOutline  className='mx-1' />
+                            Pharmacy </Link>
+                        <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+
+                            <ModalPharmacySearch closeTheModal={closeModal} />
                         </Modal>
                     </div>
                     <div className="nav-item text-white mx-1 Header2-search ">

@@ -111,6 +111,45 @@ export default function AllPopularProduct(props) {
         {/* <div><PopularProductCard/> </div> */}
       </div>
       <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
+        <h3 className='py-'>|| Otc Products ||</h3>
+
+        <Carousel responsive={responsive}>
+          {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
+            <div key={fproduct.product_id}>
+              {image.map((img) => (
+                <div key={img.id}>
+                  {parseInt(fproduct.productImageId) === img.id ?
+                    <>
+                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                    </>
+                    : <></>}
+
+                  {/* <p>{img.name}</p> */}
+                </div>
+              ))}
+            </div>
+          ))}
+        </Carousel>
+        <p style={{ margin: '5px' }}></p>
+        {/* <Carousel responsive={responsive}>
+          {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
+            <div key={fproduct.product_id}>
+              {image.map((img) => (
+                <div key={img.id}>
+                  {parseInt(fproduct.productImageId) === img.id ?
+                    <>
+                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                    </>
+                    : <></>}
+
+                </div>
+              ))}
+            </div>
+          ))}
+        </Carousel> */}
+        {/* <div><PopularProductCard/> </div> */}
+      </div>
+      <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
         <h5 className='py-3'>|| Allopathy Products ||</h5>
 
         <Carousel responsive={responsive}>

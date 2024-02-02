@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import baby from '../img/babyproduct.webp';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import CategoriesCard from './CategoriesCard';
+import axiosClient from './axiosClient';
 export default function AllCategoy() {
   const responsive = {
     superLargeDesktop: {
@@ -23,7 +24,23 @@ export default function AllCategoy() {
       items: 2
     }
   };
-  
+  const [catagorys, setCatagorys] = useState([])
+
+  useEffect(() => {
+    axiosClient.get(`/catagorys`).then((res) => {
+      // Handle response
+      if (res.data !== null) {
+        setCatagorys(res.data)
+        // setImages(res.data[1])
+      }
+      // console.log(response.data);
+    })
+      .catch(err => {
+        // Handle errors
+        console.error(err);
+      });
+
+  }, [])
       
   return (
     <div>
@@ -31,19 +48,21 @@ export default function AllCategoy() {
         <h3 className='py-2'>||Browse Medicines by Category||</h3>
             
             <Carousel responsive={responsive}>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                <div><CategoriesCard  img={baby} title="Baby Product" location="Kolkata" btntext="Shop Now"/> </div>
-                
+            {catagorys.map(catagory => (
+            <div >
+              {/* {image.map((img) => (
+                <div key={img.id}>
+                  {parseInt(fproduct.productImageId) === img.id ?
+                    <> */}
+                      {/* <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} /> */}
+                      <CategoriesCard  img={baby} title={catagory.category} btntext="Shop Now"/> 
+                    {/* </>
+                    : <></>}
+
+                </div>
+              ))} */}
+            </div>
+          ))}
             </Carousel>
         </div>
 

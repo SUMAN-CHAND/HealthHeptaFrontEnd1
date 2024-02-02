@@ -7,6 +7,8 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import axios from 'axios';
 import axiosClient from './axiosClient';
+import ProductCard from './ProductCard';
+import UploadPrescription from './UploadPrescription';
 
 export default function OrderPage() {
     //main for connecting backend with Session
@@ -15,19 +17,19 @@ export default function OrderPage() {
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
+            breakpoint: { max: 4000, min: 1150 },
             items: 7
         },
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: { max: 1150, min: 700 },
             items: 5
         },
         tablet: {
-            breakpoint: { max: 1024, min: 464 },
+            breakpoint: { max: 700, min: 450 },
             items: 3
         },
         mobile: {
-            breakpoint: { max: 464, min: 0 },
+            breakpoint: { max: 450, min: 0 },
             items: 2
         }
     };
@@ -36,6 +38,11 @@ export default function OrderPage() {
     const [isDrug, setIsDrug] = useState(false)
     const [user, setUser] = useState({});
     const [userAddress, setUserAddress] = useState({});
+    const [prescriptionUploaded, setPrescriptionUploaded] = useState(false);
+    const [values, setValues] = useState({
+        prescriptionId: null,
+    })
+
 
     // const [value, setValue] = useState({
     //     totalActusalPrice: 0,
@@ -58,22 +65,22 @@ export default function OrderPage() {
             setUserAddress(response.data[1])
         });
     }, []);
-   
+
     useEffect(() => {
         axiosClient.get(`/cart/drug`)
-          .then(response => {
-            // Handle response
-            if(response.data[0].no >0){
-                setIsDrug(true)
-            }
-           
-          })
-          .catch(err => {
-            // Handle errors
-            console.error(err);
-          });
-      }, [])
-//    console.log(products)
+            .then(response => {
+                // Handle response
+                if (response.data[0].no > 0) {
+                    setIsDrug(true)
+                }
+
+            })
+            .catch(err => {
+                // Handle errors
+                console.error(err);
+            });
+    }, [])
+    //    console.log(products)
     let totalPrice = 0;
     let totalActusalPrice = 0;
     let TotalCgst = 0;
@@ -111,14 +118,14 @@ export default function OrderPage() {
     }
     // console.log(TotalCgst)
     // console.log(TotalSgst)
-    let totalGst  = TotalCgst+TotalSgst;
-    console.log(totalGst)
-    const [coupon ,setCoupon] = useState();
+    let totalGst = TotalCgst + TotalSgst;
+    // console.log(totalGst)
+    const [coupon, setCoupon] = useState();
     const navigate = useNavigate();
     const Amount = totalActusalPrice - totalPrice + totalGst;
-    console.log(Amount)
-    const[value ,setValue] = useState({
-        amount:Amount
+    // console.log(Amount)
+    const [value, setValue] = useState({
+        amount: Amount
     });
     // useEffect(() => {
     //     // setValue({
@@ -134,31 +141,109 @@ export default function OrderPage() {
     //             }else{
     //                 setCoupon('No Coupon Applicable')
     //             }
-                
+
     //         })
     //         .catch(err => console.log(err));
 
     // }, [])
+    const handleImageUpload = (imageId) => {
+        setValues({ ...values, prescriptionId: imageId });
+        setPrescriptionUploaded(true)
+    };
+    console.log(prescriptionUploaded)
+    let PlaceOrderHandle = (e) => {
 
-    const PlaceOrderHandle = (e) => {
-        
-       
-        navigate('/orders',
-            {
-                state: {
-                    totalActusalPrice: totalActusalPrice,
-                    totalPrice: totalPrice,
-                    totalNumofitem: totalNumofitem,
-                    totalGst:totalGst,
-                    amount:Amount
-                }
-            })
+        if (isDrug) {
+            console.log(prescriptionUploaded)
+            if (prescriptionUploaded) {
+
+                navigate('/orders',
+                    {
+                        state: {
+                            totalActusalPrice: totalActusalPrice,
+                            totalPrice: totalPrice,
+                            totalNumofitem: totalNumofitem,
+                            totalGst: totalGst,
+                            amount: Amount,
+                            prescriptionId: values.prescriptionId
+                        }
+                    })
+
+            }
+            else {
+                alert("You have to add your Prescription Upload!!");
+            }
+        } else {
+            navigate('/orders',
+                {
+                    state: {
+                        totalActusalPrice: totalActusalPrice,
+                        totalPrice: totalPrice,
+                        totalNumofitem: totalNumofitem,
+                        totalGst: totalGst,
+                        amount: Amount
+                    }
+                })
+
+        }
     }
 
     // setValue({
     //     totalActusalPrice: totalActusalPrice,
     //     totalPrice: totalPrice
     // })
+    const [suggestedProducts, setSuggestedProducts] = useState([]);
+    const [suggestedAllProducts, setSuggestedAllProducts] = useState([]);
+    const [suggestedAllProductsImg, setSuggestedAllProductsImages] = useState([]);
+    const [suggestedProductsimage, setSuggestedProductsImages] = useState([])
+
+
+    try {
+        // if (user.City === undefined) {
+        useEffect(() => {
+            axiosClient.get(`/product/suggestedProducts`).then((res) => {
+                // Handle response
+                if (res.data !== null) {
+                    setSuggestedProducts(res.data[0])
+                    setSuggestedProductsImages(res.data[1])
+                }
+                // console.log(res.data);
+            })
+                .catch(err => {
+                    // Handle errors
+                    console.error(err);
+                });
+
+        }, [])
+
+        // } else {
+        useEffect(() => {
+            axiosClient.get(`/product`).then((res) => {
+
+                // Handle response
+                if (res.data !== null) {
+                    setSuggestedAllProducts(res.data[0]);
+                    setSuggestedAllProductsImages(res.data[1])
+
+                }
+                // console.log(res.data);
+            })
+                .catch(err => {
+                    // Handle errors
+                    console.error(err);
+                });
+
+        }, [])
+        // }
+    } catch (error) {
+        console.log(error)
+    }
+
+
+
+
+
+
 
     const delivaryCharge = 25;
     return (
@@ -184,18 +269,20 @@ export default function OrderPage() {
                                     <div key={index}>
                                         <CartItemCard product_name={product.product_name} product_price={product.product_price} product_id={product.product_id} discount={product.discount} quantity={product.quantity} />
                                     </div>
-                                    
+
                                 ))}
                             </div>
-                            
-                        {isDrug?
-                        <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
-                            <h5>Add Your Prescription </h5>
-                           <div className="btn shadow  m-2" style={{border:'2px solid #e2e2e2'}}><input type="file" name="prescription" id="prescription" /></div> 
-                        </div>
-                            :
-                            ''
-                        }
+
+                            {isDrug ?
+                                <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
+                                    <h5>Add Your Prescription </h5>
+                                    <div className="btn shadow  m-2" style={{ border: '2px solid #e2e2e2' }}>
+                                        <UploadPrescription onImageUpload={handleImageUpload} />
+                                    </div>
+                                </div>
+                                :
+                                ''
+                            }
 
                         </div>
                         <div className="col-4 m-4 order-detail" >
@@ -227,9 +314,9 @@ export default function OrderPage() {
                                     <p className='mx-5'>Total Amount  </p>
                                     <p className='mx-5 text-success'>₹{totalActusalPrice - totalPrice + delivaryCharge + totalGst}</p>
                                 </div>
-                               
 
-                                <> <button onClick={() => PlaceOrderHandle()} className='btn my-2' style={{ backgroundColor: 'orange' }}>Place Order</button></>
+
+                                <> <button onClick={(e) => PlaceOrderHandle(e)} className='btn my-2' style={{ backgroundColor: 'orange' }}>Place Order</button></>
 
                             </div>
                         </div>
@@ -237,32 +324,43 @@ export default function OrderPage() {
                 </div>
                 <div className=' container m-2 p-2 more-product' style={{ backgroundColor: '#fff' }}>
                     <h5>|| Add More Peoduct ||</h5>
-                    <Carousel responsive={responsive}>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                        <div><PopularProductCard /> </div>
-                    </Carousel>
+                    {suggestedProducts ? <>
+                        <Carousel responsive={responsive}>
+                            {suggestedProducts.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+                                <div key={fproduct.product_id}>
+                                    {suggestedProductsimage.map((img) => (
+                                        <div key={img.id}>
+                                            {parseInt(fproduct.productImageId) === img.id ?
+                                                <>
+                                                    <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                                                </>
+                                                : <></>}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </Carousel>
+
+                    </> : <>
+                        <Carousel responsive={responsive}>
+                            {suggestedAllProducts.map(fproduct => (
+                                <div key={fproduct.product_id}>
+                                    {suggestedAllProductsImg.map((img) => (
+                                        <div key={img.id}>
+                                            {parseInt(fproduct.productImageId) === img.id ?
+                                                <>
+                                                    <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                                                </>
+                                                : <></>}
+
+                                            {/* <p>{img.name}</p> */}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </Carousel>
+                    </>}
+
                 </div>
             </div>
 

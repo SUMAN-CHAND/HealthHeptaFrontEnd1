@@ -6,7 +6,7 @@
   background-color: #fff;
 }
 .card {
-  transition: all 0.6s;
+  transition: ease-in-out 0.6s ;
   align-items: center;
 }
 .card .cart-body {

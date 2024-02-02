@@ -93,25 +93,35 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
   };
   const searchMedicne = async () => {
     try {
-      closeTheModal();
-      const response = await axiosClient.post(`/search`, values);
-      if (response.data !== null) {
-        navigate(`/medicines/${values.input}`,
-          {
-            state: {
-              data: response.data,
-              location : selectLocation
-            }
-          })
-        //    console.log(response.data)
-      } else {
-        // Handle logout failure
-        console.error(response.data.message);
-      }
+        const response = await axiosClient.post(`/search`, values);
+        if (response.data !== null) {
+            // console.log(response.data)
+            navigate(`/medicines/${values.input}`,
+                {
+                    state: {
+                        product: response.data[0],
+                        image: response.data[1],
+                        lab: response.data[2],
+                        labImage: response.data[3],
+                        doctor: response.data[4],
+                        doctorImage: response.data[5],
+                        location: selectLocation
+                    }
+                })
+                setValues({
+                    input:''
+                });
+                setChooseProduct([]);
+
+            //    console.log(response.data)
+        } else {
+            // Handle logout failure
+            console.error(response.data.message);
+        }
     } catch (error) {
-      console.error('An error occurred:', error);
+        console.error('An error occurred:', error);
     }
-  }
+}
   const handleClick = event => {
     setChooseProduct([]);
   };

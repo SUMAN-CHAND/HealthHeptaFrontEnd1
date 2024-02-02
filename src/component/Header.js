@@ -110,7 +110,8 @@ export default function Header() {
     //     setChooseLocation(locations.filter(f => f.name.toLowerCase().includes(event.target.value.toLowerCase())))
     // }
     const [values, setValues] = useState({
-        input: ''
+        input: '',
+        from:'header'
     })
     // const handleInput = (event) => {
     //     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
@@ -130,7 +131,8 @@ export default function Header() {
     };
     const setValueTOFilter = async (name) =>{
         setValues({
-            input: name
+            input: name,
+            
         })
     }
     const searchMedicne = async () => {

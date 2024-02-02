@@ -37,7 +37,7 @@ export default function AllServices() {
       <div className="container">
         <h3 className='py-2'>|| Affordable Healthcare Services For You ||</h3>
         {/* <div className="container servicess" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
-          <Carousel responsive={responsive}>
+          <Carousel responsive={responsive} style={{height:'53vh'}}>
             {/* <div className='servicess-sm' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
               <div><CardService img={doctor} title="Visit a Doctor" text="Search the best doctors, specialities, clinic & hospital nearest to you." btnText="Find Doctor Near You" component={BookAppointment} /></div>
               <div><CardService img={medicines} title="Medicines" text="No need to stand in Pharma line,Skip pharmacy queue.Just click here." btnText="Order Your Medicines" component={SearchMedicinesStoreByLocation} /></div>
