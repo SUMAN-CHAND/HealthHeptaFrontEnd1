@@ -128,7 +128,7 @@ function App() {
               <Route path='/addtocart/:product_id' element={<><Header /><Header2 /><ParticularProductPage /></>} exact />
               <Route path='/cart' element={<><Header /><Header2 /><OrderPage /></>} exact />
               <Route path='/orders' element={<><Header /><Header2 /><OrderPaymentPage /></>} exact />
-              {/* <Route path='/order/bill' element={<><Header /><Header2 /><OrderBill /></>} exact /> */}
+              <Route path='/order/bill' element={<><Header /><Header2 /><OrderBill /></>} exact />
               <Route path='/lab-test' element={<><Header /><Header2 /><LabTestMainPage /></>} exact />
               <Route path='/login' element={<><Header /><Header2 /><Login /></>} exact />
               <Route path='/signup' element={<><Header /><Header2 /><SignUp /></>} exact />

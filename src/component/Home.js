@@ -19,7 +19,7 @@ export default function Home() {
     <div>
       {/* <h1>{location.state.loggedIn}</h1> */}
       <AllBanners />
-      {/* <B2COffersCard/> */}
+      <B2COffersCard/>
       <OurService />
       <MainMedicinePage />
       

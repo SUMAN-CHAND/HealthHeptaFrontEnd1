@@ -98,9 +98,11 @@ export default function UserProfile() {
     }, []);
 
     // console.log(user)
+    let numOfProduct;
+if(products){
+     numOfProduct = products.length;
+}
 
-
-    const numOfProduct = products.length;
     if (numOfProduct > 0) {
         flag = true;
     }

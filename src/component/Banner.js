@@ -1,5 +1,5 @@
 import React from 'react';
-// import banner from '../img/banner.jpg';
+import banner from '../img/banner.jpg';
 import {
     Link
 } from "react-router-dom";
@@ -84,7 +84,7 @@ export default function Banner({imgPath,imgName}) {
                         </div>
                     </div>
                     <div className="col banner-img" style={{ maxHeight: '40vh', maxWidth: '35vw' }}>
-                        <img src={imgPath} alt="Banner" className='text-center my-3 banner-img' style={{ maxHeight: '40vh', maxWidth: '35vw' }} />
+                        <img src={banner} alt="Banner" className='text-center my-3 banner-img' style={{ maxHeight: '40vh', maxWidth: '35vw' }} />
                     </div>
                 </div>
             </div>

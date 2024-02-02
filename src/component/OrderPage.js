@@ -35,6 +35,7 @@ export default function OrderPage() {
     };
 
     const [products, setProducts] = useState([])
+    const [productsImage, setProductsImage] = useState([])
     const [isDrug, setIsDrug] = useState(false)
     const [user, setUser] = useState({});
     const [userAddress, setUserAddress] = useState({});
@@ -52,13 +53,15 @@ export default function OrderPage() {
     useEffect(() => {
         axiosClient.get(`/cart`).then((res) => {
             if (res.data !== null) {
-                setProducts(res.data)
+                setProducts(res.data[0])
+                setProductsImage(res.data[1])
             } else {
                 console.log("no product present")
             }
 
         })
     }, [])
+    // console.log(products)
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
@@ -85,7 +88,11 @@ export default function OrderPage() {
     let totalActusalPrice = 0;
     let TotalCgst = 0;
     let TotalSgst = 0;
-    const totalNumofitem = products.length;
+    let totalNumofitem;
+    if (products) {
+        totalNumofitem = products.length;
+
+    }
     if (totalNumofitem > 0) {
         let totalPriceArray = products.map((product => {
             return ((((product.product_price * product.discount) / 100)) * product.quantity);
@@ -265,12 +272,28 @@ export default function OrderPage() {
                                 <button className='btn btn-primary'>Change</button>
                             </div>
                             <div className="cart-item container m-2 p-2" style={{ backgroundColor: '#fff' }}>
-                                {products.map((product, index) => (
-                                    <div key={index}>
-                                        <CartItemCard product_name={product.product_name} product_price={product.product_price} product_id={product.product_id} discount={product.discount} quantity={product.quantity} />
-                                    </div>
+                                {products !== undefined ? <>
+                                    {products.map(product => (
+                                        <div key={product.product_id}>
+                                            {productsImage.map((img) => (
+                                                <div key={img.id}>
+                                                    {parseInt(product.productImageId) === img.id ?
+                                                        <>
+                                                            <CartItemCard imgpath={img.path} product_name={product.product_name} description={product.description} product_price={product.product_price} product_id={product.product_id} discount={product.discount} quantity={product.quantity} />
 
-                                ))}
+                                                        </>
+                                                        : <></>}
+
+                                                    {/* <p>{img.name}</p> */}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </> : <>
+                                    <p>No Product in Cart</p>
+                                </>}
+
+
                             </div>
 
                             {isDrug ?

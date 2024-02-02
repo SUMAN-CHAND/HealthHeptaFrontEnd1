@@ -29,27 +29,23 @@ export default function AllBanners() {
                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 </div> */}
                 <div className="carousel-inner">
-                    {images.map((img) => (
+                    {/* {images.map((img) => (
                         <div key={img.id} className='px-2 mx-2'>
-                            {/* <img
-                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                alt={img.name}
-                                width="250"
-                            /> */}
+                        
                             <div className="carousel-item active" data-bs-interval="5000">
                                 <Banner imgPath={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`} imgName={img.name} />
                             </div>
                         </div>
-                    ))}
-                    {/* <div className="carousel-item active" data-bs-interval="5000">
+                    ))} */}
+                    <div className="carousel-item active" data-bs-interval="5000">
                         <Banner />
-                    </div> */}
-                    {/* <div className="carousel-item" data-bs-interval="2000">
+                    </div>
+                    <div className="carousel-item" data-bs-interval="2000">
                         <Banner />
                     </div>
                     <div className="carousel-item" data-bs-interval="">
                         <Banner />
-                    </div> */}
+                    </div>
                 </div>
                 <button className="carousel-control-prev" style={{ width: '5vw', color: 'black' }} type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
                     {/* <span className="carousel-control-prev-icon" aria-hidden="true" style={{ color: 'black' }}></span> */}
