@@ -5,6 +5,7 @@ import labimg from '../img/lab.webp';
 import axios from 'axios';
 import LabCard from './LabCard';
 import axiosClient from './axiosClient';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function AllLabs(props) {
 
@@ -30,9 +31,11 @@ export default function AllLabs(props) {
     }
   };
 
-  
+
   const [labs, setLabs] = useState([])
   const [image, setImages] = useState([]);
+  let [loading, setLoading] = useState(false);
+
 
 
   if (props.location === undefined) {
@@ -43,6 +46,8 @@ export default function AllLabs(props) {
           if (response.data !== null) {
             setLabs(response.data[0]);
             setImages(response.data[1])
+            setLoading(true);
+
 
           }
           // console.log(response.data);
@@ -60,6 +65,7 @@ export default function AllLabs(props) {
           if (response.data !== null) {
             setLabs(response.data)
             setImages(response.data[1])
+            setLoading(true);
 
           }
           // console.log(response.data);
@@ -70,32 +76,34 @@ export default function AllLabs(props) {
         });
     }, [])
   }
-  
+
   return (
     <div>
-        <div className="container"style={{marginTop:'3vh'}}>
-        <h3 className='py-3'>||Best Pathological Laboratory In Your Location ||</h3>
-        <Carousel responsive={responsive}>
-          
-          {labs.map(lab => (
-          <div key={lab.id}>
-            {image.map((img) => (
-              <div key={img.id}>
-                {parseInt(lab.SubAdminImageId) === img.id ?
-                  <>
-                    <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.landmark} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
-                    {/* < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
+      <div className="container" style={{ marginTop: '1vh' }}>
+        <h3 className='py-1'>||Best Pathological Laboratory In Your Location ||</h3>
+        {loading ?
+          <Carousel responsive={responsive} className='allLabsCarousel'>
 
-                  </>
-                  : <>
-                  </>}
+            {labs.map(lab => (
+              <div key={lab.id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(lab.SubAdminImageId) === img.id ?
+                      <>
+                        <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.landmark} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
+                        {/* < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
 
+                      </>
+                      : <>
+                      </>}
+
+                  </div>
+                ))}
               </div>
             ))}
-          </div>
-        ))}
-        </Carousel>
-        </div>
+          </Carousel>
+          : <ClipLoader color="blue" />}
+      </div>
     </div>
   )
 }

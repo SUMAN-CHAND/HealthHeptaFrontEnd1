@@ -89,7 +89,7 @@ export default function LabSearchResults() {
 
 
                         <p className='py-2 text-warning'> No Lab found of your search result </p>
-                        <p className='py-2'> Here is some suggested Doctors </p>
+                        <p className='py-2'> Here is some suggested Lab tests </p>
 
                         <div className='listof-doctors' style={{ margin: '3rem', width: '60vw' }}>
 

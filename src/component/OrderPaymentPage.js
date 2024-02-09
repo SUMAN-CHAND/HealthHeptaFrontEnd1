@@ -226,15 +226,15 @@ export default function OrderPaymentPage() {
                     // Notify admins and super admins about the new order
                     // socket.emit('newOrder', 'New order placed!');
                     success();
-                    console.log(res.data)
-                    openModal();
-                    // navigate('/order/bill',
-                    // {
-                    //     state: {
-                    //         orderId: res.data[0],
-                    //         productIds: res.data[1]
-                    //     }
-                    // });
+                    // console.log(res.data)
+                    // openModal();
+                    navigate('/order/bill',
+                    {
+                        state: {
+                            orderId: res.data[0],
+                            productIds: res.data[1]
+                        }
+                    });
                 }
                 else if (res.data === null) {
                     danger();
@@ -306,7 +306,7 @@ export default function OrderPaymentPage() {
                                 </div>
 
                                 <button type='submit' onClick={handleSubmit} className='btn btn-success mx-5'>Place Order</button>
-                                <Modal
+                                {/* <Modal
                                     isOpen={modalIsOpen}
                                     onAfterOpen={afterOpenModal}
                                     onRequestClose={closeModal}
@@ -314,7 +314,7 @@ export default function OrderPaymentPage() {
                                     contentLabel="Example Modal"
                                 >
                                     <SuccfullyOrderplaceModal closeTheModal={closeModal} TotalAmount={discount} />
-                                </Modal>
+                                </Modal> */}
                                 <button type='restart' className='btn btn-warning'>Clear</button>
                             </div>
 

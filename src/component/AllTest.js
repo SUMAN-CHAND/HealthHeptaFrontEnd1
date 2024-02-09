@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import LabTestCard from './LabTestCard';
 import axios from 'axios';
 import axiosClient from './axiosClient';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function AllTest(props) {
 
@@ -30,6 +31,8 @@ export default function AllTest(props) {
 
   const [labTests, setLabTests] = useState([]);
   const [image, setImages] = useState([]);
+  let [loading, setLoading] = useState(false);
+
   if (props.location === undefined) {
     useEffect(() => {
       axiosClient.get(`/laboratory/lab_tests`)
@@ -38,6 +41,7 @@ export default function AllTest(props) {
           if (response.data !== null) {
             setLabTests(response.data[0]);
             setImages(response.data[1])
+            setLoading(true);
 
           }
           // console.log(response.data);
@@ -55,6 +59,8 @@ export default function AllTest(props) {
           if (response.data !== null) {
             setLabTests(response.data)
             setImages(response.data[1])
+            setLoading(true);
+
 
           }
           // console.log(response.data);
@@ -69,9 +75,10 @@ export default function AllTest(props) {
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '3vh' }}>
-        <h3 className='py-3'>||Browse All Type Of Tests||</h3>
-        <Carousel responsive={responsive}>
+      <div className="container" style={{ marginTop: '1vh' }}>
+        <h3 className='py-1'>||Browse All Type Of Tests||</h3>
+        {loading ?
+        <Carousel responsive={responsive} className='allLabTestCarousel'>
           {labTests.map(labTest => (
             <div key={labTest.Test_id}>
               {image.map((img) => (
@@ -88,6 +95,7 @@ export default function AllTest(props) {
             </div>
           ))}
         </Carousel>
+        : <ClipLoader color="blue" />}
       </div>
 
     </div>

@@ -83,7 +83,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
     const newFilter = products.filter((value) => {
-      return value.product_name.toLowerCase().includes(searchword);
+      return value.name.toLowerCase().includes(searchword);
     });
     if (searchword === "") {
       setChooseProduct([]);
@@ -92,6 +92,7 @@ export default function SearchMedicinesStoreByLocation({ closeTheModal }) {
     }
   };
   const searchMedicne = async () => {
+    closeTheModal();
     try {
         const response = await axiosClient.post(`/search`, values);
         if (response.data !== null) {

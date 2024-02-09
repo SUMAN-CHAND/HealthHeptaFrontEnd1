@@ -65,9 +65,9 @@ export default function SpecialitiesDoctorsCard(props) {
           <div className="card">
             <img src={doctor3} className="card-img-top" alt="..." />
             <div className="card-body">
-              <h6 className="card-title">{props.specializes}</h6>
+              <h6 className="card-title" style={{ fontSize: '0.9rem' }} >{props.specializes}</h6>
               {/* <p className="card-text">{props.location}</p> */}
-              <button className="btn btn-primary" style={{ fontSize: '0.9rem' }} onClick={(event) => searchDoctor()}> <p>View Doctor's</p> </button>
+              <button className="btn btn-primary" style={{ fontSize: '0.7rem' }} onClick={(event) => searchDoctor()}> View Doctor's </button>
 
             </div>
           </div>

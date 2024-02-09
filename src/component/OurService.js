@@ -8,7 +8,7 @@ import AllTest from './AllTest';
 export default function OurService() {
     return (
         <div>
-            <div className="service" style={{ height: '100%', width: '100%', backgroundColor: '#99d9d9', paddingBottom: '5vh' }}>
+            <div className="service" style={{ height: '100%', width: '100%', backgroundColor: '#99d9d9', paddingBottom: '2vh' , paddingTop: '2vh' }}>
                 <AllServices />
                 <AllSpecialitiesDoctors />
                 <AllDoctors />

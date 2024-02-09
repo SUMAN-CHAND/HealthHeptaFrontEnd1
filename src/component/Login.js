@@ -52,6 +52,8 @@ export default function Login() {
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
+    const redirectUrl = sessionStorage.getItem('redirectUrl');
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -65,9 +67,23 @@ export default function Login() {
                     else if (res.data[0] !== null) {
                         // localStorage.setItem('user-info', JSON.stringify(user));
                         // setLoggedIn(true)      
-                        console.log(res.data)         
-                        success();
-                        navigate('/', { state: { loggedIn: res.data[1] } });
+                        console.log(res.data[0])  
+                        if (redirectUrl) {
+                            
+                            sessionStorage.setItem("user_id", res.data[0].id);
+                            sessionStorage.setItem("LogedIn", res.data[1]);
+
+                            navigate(redirectUrl);
+                            sessionStorage.removeItem('redirectUrl');
+                        }
+                        else {
+                            success();
+                            navigate('/', { state: { loggedIn: res.data[1] } });
+                            sessionStorage.setItem("user_id", res.data[0].id);
+                            sessionStorage.setItem("LogedIn", res.data[1]);
+
+                        }
+
 
                     }
                 })

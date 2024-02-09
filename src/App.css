@@ -19,7 +19,24 @@
 .card:hover{
   transform: scale(1.15);
 }
+h1{
+  color:#000 !important;
+}
+h2{
+  color:#000 !important;
+}
+h5{
+  color:#000 !important;
+}
+h3{
+  color:#000 !important;
+}
+h6{
+  color:#000 !important;
+}
+
 p{
+
   font-size: calc(0.5vw + 0.5rem) !important;
   margin-bottom: 1px !important;
 }
@@ -234,8 +251,34 @@ table td button{
 .particular-product{
   height: 81vh !important;
 }
+.ourserviceCarousel{
+  height: 53vh;
+}
+.allSpecialitiesDoctorsCarousel{
+  height: 27vh;
+}
+.allDoctorsCarousel{
+  height: 39vh;
+}
+.allLabsCarousel{
+  height: 35vh;
+}
+.allLabTestCarousel{
+  height: 49vh;
+}
+.allMedicinesShopsCarousel{
+  height: 34vh;
+}
+.allCategoryCarousel{
+  height: 35vh;
+}
+.productCarousel{
+  height: 45vh;
+}
 
-
+.allProductOfAMedicineShopCard{
+  width: 70% !important;
+}
 
 @media screen and (max-width: 1050px) {
   .profile-full-class{
@@ -352,6 +395,10 @@ table td button{
   }
   .partner-profile-full-class{
     display: none !important;
+  }
+  
+  .allProductOfAMedicineShopCard{
+    width: 100% !important;
   }
 }
 

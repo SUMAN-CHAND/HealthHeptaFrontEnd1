@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import SpecialitiesDoctorsCard from './SpecialitiesDoctorsCard';
 import axios from 'axios';
 import axiosClient from './axiosClient';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function AllSpecialitiesDoctors(props) {
 
@@ -32,6 +33,8 @@ export default function AllSpecialitiesDoctors(props) {
 
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
+  let [loading, setLoading] = useState(false);
+
   // console.log(props.location)
   if (props.location === undefined) {
     // specializes-doctors
@@ -40,6 +43,7 @@ export default function AllSpecialitiesDoctors(props) {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
+          setLoading(true);
           // setImages(res.data[1]);
         }
         // console.log(response.data);
@@ -57,18 +61,19 @@ export default function AllSpecialitiesDoctors(props) {
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '5vh' }}>
-        <h3 className='py-2'>|| Find doctors in top specialities ||</h3>
+      <div className="container" style={{ marginTop: '1vh' }}>
+        <h3 className='py-1'>|| Find doctors in top specialities ||</h3>
+        {loading ?
+          <Carousel responsive={responsive} className='allSpecialitiesDoctorsCarousel'>
+            {doctors.map((doctor, index) => (
+              <div key={index}>
 
-        <Carousel responsive={responsive}>
-          {doctors.map(doctor => (
-            <div key={doctor.id}>
+                <SpecialitiesDoctorsCard specializes={doctor.specializes} />
 
-              <SpecialitiesDoctorsCard specializes={doctor.specializes}  />
-
-            </div>
-          ))}
-        </Carousel>
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
       </div>
     </div>
   )

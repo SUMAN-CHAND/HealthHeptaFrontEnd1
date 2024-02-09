@@ -65,7 +65,7 @@ export default function Sub_Admin_Login() {
                         // localStorage.setItem('user-info', JSON.stringify(user));
                         // setLoggedIn(true)               
                         success();
-                        navigate('/sub-admin/home', { state: { loggedIn: res.data[1] } });
+                        navigate('/b2b-home', { state: { loggedIn: res.data[1] } });
 
                     }
                 })

@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 import axiosClient from './axiosClient';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function AllDoctors(props) {
   //main for connecting backend with Session
@@ -30,6 +31,8 @@ export default function AllDoctors(props) {
   };
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
+  let [loading, setLoading] = useState(false);
+
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
@@ -38,6 +41,8 @@ export default function AllDoctors(props) {
         if (res.data !== null) {
           setDoctors(res.data[0]);
           setImages(res.data[1]);
+          setLoading(true);
+
         }
         // console.log(response.data);
       })
@@ -72,10 +77,11 @@ export default function AllDoctors(props) {
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '5vh' }}>
-        <h3 className='py-2'>|| Meet our Doctors ||</h3>
+      <div className="container" style={{ marginTop: '1vh' }}>
+        <h3 className='py-1'>|| Meet our Doctors ||</h3>
         {/* {doctors!== undefined ? <> */}
-          <Carousel responsive={responsive}>
+        {loading ?
+          <Carousel responsive={responsive} className='allDoctorsCarousel'>
             {doctors.map(doctor => (
               <div key={doctor.id}>
                 {image.map((img) => (
@@ -92,16 +98,18 @@ export default function AllDoctors(props) {
               </div>
             ))}
           </Carousel>
+          : <ClipLoader color="blue" />}
         {/* </> : <>
 
         </>} */}
 
 
       </div>
-      <div className="container" style={{ marginTop: '5vh' }}>
-        <h3 className='py-2'>||Online Doctor Counselling ||</h3>
+      <div className="container" style={{ marginTop: '1vh' }}>
+        <h3 className='py-1'>||Online Doctor Counselling ||</h3>
         {/* {doctors!== undefined ? <> */}
-          <Carousel responsive={responsive}>
+        {loading ?
+          <Carousel responsive={responsive} className='allDoctorsCarousel'>
             {doctors.filter(doctor => doctor.type_of_visite.toLowerCase() === 'online').map(doctor => (
               <div key={doctor.id}>
                 {image.map((img) => (
@@ -118,6 +126,7 @@ export default function AllDoctors(props) {
               </div>
             ))}
           </Carousel>
+          : <ClipLoader color="blue" />}
         {/* </> : <>
 
         </>} */}

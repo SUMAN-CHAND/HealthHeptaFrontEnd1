@@ -35,6 +35,7 @@ export default function MedicineShopCard(props) {
     document.body.style.overflow = 'unset';
     setIsOpen(false);
   }
+  const id = props.id;
   return (
 
     <div className=" "  >
@@ -47,8 +48,8 @@ export default function MedicineShopCard(props) {
               <p className="card-title" style={{ fontWeight: '800' }}>{props.title}</p>
               <p className="card-text">{props.phone}</p>
               <p className="card-text">{props.location}</p>
-              <Link className="btn btn-primary" style={{ fontSize: '0.9rem' }} onClick={openModal}>{props.btntext}</Link>
-              <Modal
+              <Link to={`/medicineshop/products/${id}`} className="btn btn-primary" style={{ fontSize: '0.7rem' }} >{props.btntext}</Link>
+              {/* <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
@@ -56,7 +57,7 @@ export default function MedicineShopCard(props) {
                 contentLabel="Example Modal"
               >
                 <UploadPrescription closeTheModal={closeModal} />
-              </Modal>
+              </Modal> */}
             </div>
           </div>
         </div>

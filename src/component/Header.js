@@ -62,6 +62,7 @@ export default function Header() {
     //     })
     // });
 
+    // console.log(document.cookie);
     useEffect(() => {
         axiosClient.get(`/locations`)
             .then(res => {
@@ -90,6 +91,8 @@ export default function Header() {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(undefined);
+                sessionStorage.removeItem('LogedIn');
+                sessionStorage.removeItem('user_id');
                 navigate('/')
             } else {
                 // Handle logout failure
@@ -149,6 +152,8 @@ export default function Header() {
                             labImage: response.data[3],
                             doctor: response.data[4],
                             doctorImage: response.data[5],
+                            medicineShop: response.data[6],
+                            medicineShopImage: response.data[7],
                             location: selectLocation
                         }
                     })
@@ -229,7 +234,7 @@ export default function Header() {
                     <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'space-evenly' }} >
                         <div className="dropdown me-2 dropdown-location "  >
                             <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
-                                <option selected >choose your location..</option>
+                                <option defaultValue={'choose your location..'} >choose your location..</option>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.name}>{location.name}</option>
                                 )
@@ -257,7 +262,7 @@ export default function Header() {
                         </div>
 
                         <div className='login-order' style={{ alignItems: "center" }}>
-                            <Link to='/b2b-home' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Business </p></Link>
+                            <Link to='/sub-admin/login' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Business </p></Link>
                             <Link to='/cart' style={{ textDecoration: 'none' }} >
                                 <div className="cart " style={{ display: 'flex', justifyContent: 'start', marginLeft: "auto", textDecoration: 'none' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="5vh" fill="currentColor" className="bi bi-cart p-0 drop-dwon-profile" viewBox="0 0 16 16" >

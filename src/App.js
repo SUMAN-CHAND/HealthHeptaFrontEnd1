@@ -99,6 +99,9 @@ import UpdateDeliveryPartnerCommission from './component/AdminPanel/UpdateDelive
 import AddNewDeliveryPartner from './component/AdminPanel/AddNewDeliveryPartner';
 import MyMap from './component/Map/MyMap';
 import OrderBill from './component/OrderBill';
+import MedicineShopSearchResult from './component/MedicineShopSearchResult';
+import AllProductOfAMedicineShop from './component/AllProductOfAMedicineShop';
+import OfferProductPage from './component/OfferProductPage';
 
 function App() {
   return (
@@ -122,7 +125,9 @@ function App() {
               <Route path='/lab-search-result' element={<><Header /><Header2 /><LabSearchResults /></>} exact />
               <Route path='/appoitment-from' element={<><Header /><Header2 /><BookAppointmentFrom /></>} exact />
               <Route path='/medicines' element={<><Header /><Header2 /><MainMedicinePage /></>} exact />
+              <Route path='/medicine/offer/:id/%off' element={<><Header /><Header2 /><OfferProductPage /></>} exact />
               <Route path='/medicines/:selectLocation' element={<><Header /><Header2 /><MedicinePageSearchResult /></>} exact />
+              <Route path='/medicineshop/search' element={<><Header /><Header2 /><MedicineShopSearchResult /></>} exact />
               <Route path='/medicines/:location' element={<><Header /><Header2 /><MainMedicinePage /></>} exact />
               <Route path='/product' element={<><Header /><Header2 /><ProductList /></>} exact />
               <Route path='/addtocart/:product_id' element={<><Header /><Header2 /><ParticularProductPage /></>} exact />
@@ -147,6 +152,7 @@ function App() {
               <Route path='/reschedule/lab/:appoiment_id' element={<><Header /><Header2 /><RescheduleLabTest /></>} exact />
               <Route path='/particular-laboratory/:id' element={<><Header /><Header2 /><ParticularLaboratory /></>} exact />
               <Route path='/img/compression' element={<><Header /><Header2 /><ImageCompressor /></>} exact />
+              <Route path='/medicineshop/products/:id' element={<><Header /><Header2 /><AllProductOfAMedicineShop /></>} exact />
               {/* <Route path='/map' element={<><Header /><Header2 /><MyMap /></>} exact /> */}
             </Routes>
           </div>

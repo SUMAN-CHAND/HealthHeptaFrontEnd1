@@ -25,12 +25,6 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
   // const [doctors, setDoctors] = useState([])
   const [chooseDoctor, setChooseDoctor] = useState([])
 
-  useEffect(() => {
-    axiosClient.get(`/`)
-      .then(res => {
-        setSelectLocation(res.data[2])
-      })
-  });
 
   useEffect(() => {
     axiosClient.get(`/locations`)

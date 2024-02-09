@@ -7,7 +7,7 @@ import {
 
 export default function DoctorCardForAD(props) {
     return (
-        <div className='doctor-c-l' style={{padding:'2vw'}}>
+        <div className='doctor-c-l' style={{padding:'5px'}}>
             <div className="row">
                 <div className="col-12" >
                     <div className="doctor  container shadow" style={{ display: 'flex',backgroundColor:'#dffffb' }}>
@@ -33,7 +33,7 @@ export default function DoctorCardForAD(props) {
                                 <h6>{props.clinics}</h6>
                                 <p>{props.clinic_descs}
                                 </p>
-                                <Link to={`/doctor/${props.id}`} className="btn" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>
+                                <Link to={`/doctor/${props.id}`} className="btn" style={{ fontSize: '0.7rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>
                             </div>
                         </div>
                     </div>

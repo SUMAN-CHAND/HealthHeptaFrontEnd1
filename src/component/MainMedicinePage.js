@@ -24,7 +24,7 @@ export default function MainMedicinePage() {
 //   }
 //   console.log(stateData.location)
     return (
-        <div className='main-medicine-page' style={{backgroundColor:'#99d9d9', paddingBottom:'2vh',marginTop:'-3vh'}}>
+        <div className='main-medicine-page' style={{backgroundColor:'#99d9d9', paddingBottom:'2vh'}}>
         
             {/* <AllMedicineBanner  /> */}
             {/* <AllMedicinesShops location = {location}/>

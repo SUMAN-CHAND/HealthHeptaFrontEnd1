@@ -200,9 +200,9 @@ export default function OrderPage() {
     //     totalPrice: totalPrice
     // })
     const [suggestedProducts, setSuggestedProducts] = useState([]);
+    const [suggestedProductsimage, setSuggestedProductsImages] = useState([]);
     const [suggestedAllProducts, setSuggestedAllProducts] = useState([]);
     const [suggestedAllProductsImg, setSuggestedAllProductsImages] = useState([]);
-    const [suggestedProductsimage, setSuggestedProductsImages] = useState([])
 
 
     try {

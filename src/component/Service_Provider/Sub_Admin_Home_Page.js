@@ -736,16 +736,15 @@ export default function Sub_Admin_Home_Page() {
                                   />
                                 </>
                                 : <></>}
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}</td>
                           <td>{doctor.doc_name}</td>
                           <td>{doctor.doc_desc}</td>
                           <td>{doctor.clinic}</td>
                           <td>{doctor.clinic_desc}</td>
-                          <td>{doctor.day_of_week}</td>
-                          <td>{doctor.start_time}</td>
-                          <td>{doctor.end_time}</td>
+                          <td>{doctor.weekly_day}</td>
+                          <td>{doctor.starting_time}</td>
+                          <td>{doctor.ending_time}</td>
                           {/* <td> <Link to={`/sub-admin/payment/${payment.order_id}/${payment.user_id}/${payment.product_id}`}><button className="btn btn-info m-1">View</button></Link></td> */}
                         </tr>
                       ))}

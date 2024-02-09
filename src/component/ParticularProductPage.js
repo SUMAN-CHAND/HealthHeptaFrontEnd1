@@ -41,10 +41,12 @@ export default function ParticularProductPage() {
     }, [])
     // console.log(products)
     // console.log(image)
+    const LogedIn = sessionStorage.getItem('LogedIn');
+    const userId = sessionStorage.getItem('user_id');
 
     const haldelClick = () => {
-        console.log(user)
-        if (user.id !== undefined) {
+        // console.log(user)
+        if (LogedIn) {
             axiosClient.post(`/addtocart/${product_id}/${quantity}`)
                 .then(res => {
                     if (res.data !== null) {
@@ -59,8 +61,14 @@ export default function ParticularProductPage() {
                 .catch(err => console.log(err));
         }
         else {
-            alert('Please Log In !! ')
-            navigate('/login')
+            // alert('Please Log In !! ')
+            // navigate('/login')
+
+            const redirectUrl = `/addtocart/${product_id}/`;
+            sessionStorage.setItem('redirectUrl', redirectUrl);
+            //  query parameters: navigate('/login?redirect=/cart');
+            navigate('/login');
+
         }
     }
     // const haldelOrderClick =()=>{

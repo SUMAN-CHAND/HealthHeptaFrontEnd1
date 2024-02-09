@@ -1,23 +1,54 @@
 import React from 'react'
 import product2 from '../img/medicalproduct.webp'
+import axiosClient from './axiosClient';
 
 
 export default function CartItemCard(props) {
+    const product_id = props.product_id;
+    const removeProductFormCart = (id) => {
+        // console.log('click')
+        const response = window.confirm("Are you sure to remove the Product from cart ?");
+        if (response) {
+            axiosClient.delete(`/remove/cart/product/${id}`)
+                .then(response => {
+                    console.log(response)
+                    if (response.data === 'success') {
+                        alert('Product Remove Successfully');
+                    }
+                    else if (response.data === null) {
+                        console.log(response.data)
+                        alert('Product not Removed at this time');
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        } else {
+            alert('No Product Remove!!')
+        }
+
+    }
     return (
         <div>
             <div className="m my-3" style={{ display: 'flex' }}>
-            <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..."  style={{ height: '5vh', width: '5vw' }}  />
-                
-                <span className='py-1' style={{ display: 'flex' }}>
-                    <p className='m-2'>{props.product_name}</p>
-                    <p className='m-2'>{props.description}</p>
+                <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ height: '5vh', width: '5vw' }} />
 
-                    <p className="text-success m-2" style={{ marginRight: '10px' }}>₹{(props.product_price-((props.product_price * props.discount)/100))}</p>
-                    <p className=" m-2" style={{ textDecoration: 'line-through', Color: '#878787' }}>₹{props.product_price}</p>
-                    <p className="text-primary m-2" style={{ marginRight: '10px' }}>Qty {props.quantity}</p>
-                    <p className="text-success m-2" style={{ marginRight: '10px', }}>{props.discount} % off</p>
-                    <p className="text-success m-2" style={{ marginRight: '10px', }}> Expected Delivery Date :- {props.expected_delivery_date} </p>
-                </span>
+                <div className='py-1' style={{ display: 'flex',justifyContent:'space-between', width:'95%' }}>
+                    <div style={{display:'flex'}}>
+                        <p className='m-2'>{props.product_name}</p>
+                        <p className='m-2'>{props.description}</p>
+
+                        <p className="text-success m-2" style={{ marginRight: '10px' }}>₹{(props.product_price - ((props.product_price * props.discount) / 100))}</p>
+                        <p className=" m-2" style={{ textDecoration: 'line-through', Color: '#878787' }}>₹{props.product_price}</p>
+                        <p className="text-primary m-2" style={{ marginRight: '10px' }}>Qty {props.quantity}</p>
+                        <p className="text-success m-2" style={{ marginRight: '10px', }}>{props.discount} % off</p>
+                    </div>
+                    {/* <p className="text-success m-2" style={{ marginRight: '10px', }}> Expected Delivery Date :- {props.expected_delivery_date} </p> */}
+                    <div className="icons">
+                        <button className='btn btn-danger' onClick={() => removeProductFormCart(product_id)}>Remove</button>
+                        {/* <IoIosArrowForward /> */}
+                    </div>
+                </div>
             </div>
         </div>
     )

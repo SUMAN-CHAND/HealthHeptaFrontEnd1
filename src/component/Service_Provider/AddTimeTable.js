@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import {
     Link, useNavigate
 } from "react-router-dom";
-import axios from 'axios';
 import axiosClient from '../axiosClient';
 
 const customStyle = {
@@ -52,26 +51,32 @@ export default function AddTimeTable({ closeTheModal }) {
     }
 
     const saveTimeTable = async () => {
-        try {
-            closeTheModal();
-            console.log(values)
-            // const response = await axiosClient.post('/sub-admin/add-doctor/time-table', values);
-            // if (response.data !== null) {
+        if (values.start_time[0] === values.end_time[0]) {
+            alert("Opening Time and Closeing Time Can not be same!!!");
+        } else {
+
+            try {
+                closeTheModal();
+                console.log(values)
+                // const response = await axiosClient.post('/sub-admin/add-doctor/time-table', values);
+                // if (response.data !== null) {
                 navigate(`/sub-admin/home/add-new-doctor`,
                     {
                         state: {
-                            day_of_week:values.day_of_week[0],
-                            start_time:values.start_time[0],
-                            end_time:values.end_time[0]
+                            day_of_week: values.day_of_week[0],
+                            start_time: values.start_time[0],
+                            end_time: values.end_time[0]
                         }
                     })
                 //    console.log(response.data)
-            // } else {
-            //     // Handle logout failure
-            //     console.error(response.data.message);
-            // }
-        } catch (error) {
-            console.error('An error occurred:', error);
+                // } else {
+                //     // Handle logout failure
+                //     console.error(response.data.message);
+                // }
+            } catch (error) {
+                console.error('An error occurred:', error);
+            }
+
         }
     }
     const handleClick = event => {

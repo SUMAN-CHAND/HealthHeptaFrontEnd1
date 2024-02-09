@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import ProductCard from './ProductCard'
 import axios from 'axios';
 import axiosClient from './axiosClient';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function AllPopularProduct(props) {
   //main for connecting backend with Session
@@ -30,6 +31,8 @@ export default function AllPopularProduct(props) {
   };
   const [products, setProducts] = useState([])
   const [image, setImages] = useState([])
+  let [loading, setLoading] = useState(false);
+
   // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
@@ -38,6 +41,8 @@ export default function AllPopularProduct(props) {
         if (res.data !== null) {
           setProducts(res.data[0])
           setImages(res.data[1])
+          setLoading(true);
+
         }
         // console.log(response.data);
       })
@@ -55,6 +60,8 @@ export default function AllPopularProduct(props) {
         // Handle response
         if (res.data !== null) {
           setProducts(res.data)
+          setLoading(true);
+
         }
         // console.log(response.data);
       })
@@ -70,66 +77,70 @@ export default function AllPopularProduct(props) {
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
-        <h3 className='py-'>|| Popular Products ||</h3>
+      <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
+        <h3 className='py-1'>|| Popular Products ||</h3>
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
-
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         <p style={{ margin: '5px' }}></p>
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         {/* <div><PopularProductCard/> </div> */}
       </div>
-      <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
-        <h3 className='py-'>|| Otc Products ||</h3>
+      <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
+        <h3 className='py-1'>|| Otc Products ||</h3>
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
-
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         <p style={{ margin: '5px' }}></p>
         {/* <Carousel responsive={responsive}>
           {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
@@ -149,84 +160,90 @@ export default function AllPopularProduct(props) {
         </Carousel> */}
         {/* <div><PopularProductCard/> </div> */}
       </div>
-      <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
-        <h5 className='py-3'>|| Allopathy Products ||</h5>
+      <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
+        <h5 className='py-1'>|| Allopathy Products ||</h5>
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
-
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         <p style={{ margin: '5px' }}></p>
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         {/* <div><PopularProductCard/> </div> */}
       </div>
-      <div className="container" style={{ marginTop: '3vh', marginBottom: '5vh' }}>
-        <h5 className='py-3'>|| Homeopathy Products ||</h5>
+      <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
+        <h5 className='py-1'>|| Homeopathy Products ||</h5>
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
-
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         <p style={{ margin: '5px' }}></p>
-        <Carousel responsive={responsive}>
-          {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
+        {loading ?
+          <Carousel responsive={responsive} className='productCarousel'>
+            {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
+              <div key={fproduct.product_id}>
+                {image.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(fproduct.productImageId) === img.id ?
+                      <>
+                        <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                      </>
+                      : <></>}
 
-                  {/* <p>{img.name}</p> */}
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel>
+                    {/* <p>{img.name}</p> */}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </Carousel>
+          : <ClipLoader color="blue" />}
         {/* <div><PopularProductCard/> </div> */}
       </div>
     </div>

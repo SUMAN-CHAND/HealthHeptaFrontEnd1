@@ -36,7 +36,7 @@ export default function MedicinePageSearchResult() {
 
   const location = useLocation();
   let stateData = location.state
-  console.log(stateData)
+  // console.log(stateData)
 
   const [products, setProducts] = useState([])
   const [image, setImages] = useState([])
@@ -47,6 +47,7 @@ export default function MedicinePageSearchResult() {
   const [doctorsNF, setDoctorsNF] = useState([])
   const [doctorImageNF, setDoctorImageNF] = useState([])
   const [madicineShops, setMadicineShop] = useState([])
+  const [madicineShopsImage, setMadicineShopImage] = useState([])
   const [dataFound, setDataFound] = useState(false)
 
 
@@ -58,51 +59,51 @@ export default function MedicinePageSearchResult() {
 
   // if (stateData.product.length <= 0 && stateData.lab.length <= 0 && stateData.doctor.length <= 0) {
   //   param.selectLocation = "NO Result Match"
-    useEffect(() => {
-      axiosClient.get(`/product`).then((res) => {
-        setProductsNF(res.data[0])
-        setImagesNF(res.data[1])
-        setMadicineShop(res.data)
+  useEffect(() => {
+    axiosClient.get(`/product`).then((res) => {
+      setProductsNF(res.data[0])
+      setImagesNF(res.data[1])
+      // setMadicineShop(res.data)
 
-        // // Filter out duplicate values
-        // console.log(madicineShops)
-        // const uniqueMedicineShops = [...new Set(madicineShops)];
+      // // Filter out duplicate values
+      // console.log(madicineShops)
+      // const uniqueMedicineShops = [...new Set(madicineShops)];
 
-        // // Update state with unique numbers
-        // setMadicineShop(uniqueMedicineShops);
-        // console.log(madicineShops)
+      // // Update state with unique numbers
+      // setMadicineShop(uniqueMedicineShops);
+      // console.log(madicineShops)
 
-      })
+    })
 
-      axiosClient.get(`/laboratory/lab_tests`)
-        .then(response => {
-          // Handle response
-          if (response.data !== null) {
-            setLabTestsNF(response.data[0]);
-            setLabImagesNF(response.data[1])
-
-          }
-          // console.log(response.data);
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
-
-      axiosClient.get(`/doctors`).then((res) => {
+    axiosClient.get(`/laboratory/lab_tests`)
+      .then(response => {
         // Handle response
-        if (res.data !== null) {
-          setDoctorsNF(res.data[0]);
-          setDoctorImageNF(res.data[1]);
+        if (response.data !== null) {
+          setLabTestsNF(response.data[0]);
+          setLabImagesNF(response.data[1])
+
         }
         // console.log(response.data);
       })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
+      .catch(err => {
+        // Handle errors
+        console.error(err);
+      });
 
-    }, [])
+    axiosClient.get(`/doctors`).then((res) => {
+      // Handle response
+      if (res.data !== null) {
+        setDoctorsNF(res.data[0]);
+        setDoctorImageNF(res.data[1]);
+      }
+      // console.log(response.data);
+    })
+      .catch(err => {
+        // Handle errors
+        console.error(err);
+      });
+
+  }, [])
 
   // }
   //  else {
@@ -113,7 +114,8 @@ export default function MedicinePageSearchResult() {
     setLabImages(stateData.labImage)
     setDoctors(stateData.doctor)
     setDoctorImages(stateData.doctorImage)
-    setMadicineShop(stateData.product)
+    setMadicineShop(stateData.medicineShop)
+    setMadicineShopImage(stateData.medicineShopImage);
     setDataFound(true)
   }, [])
   // }
@@ -134,8 +136,8 @@ export default function MedicinePageSearchResult() {
   // console.log(products)
   // functions();
   return (
-    <div style={{ backgroundColor: '#80808024',minHeight:'100vh' }}>
-      <div className="row m-2" style={{ justifyContent: 'center',minHeight:"95vh" }}>
+    <div style={{ backgroundColor: '#80808024', minHeight: '100vh' }}>
+      <div className="row m-2" style={{ justifyContent: 'center', minHeight: "95vh" }}>
         <div className="col-2 m-2 shadow filter" style={{ backgroundColor: 'white' }}>
           <span className='p-2' style={{ fontWeight: '800' }}>Filter</span>
           <hr />
@@ -361,7 +363,7 @@ export default function MedicinePageSearchResult() {
 
           </>
           }
-          {doctors.length > 0 ? <>
+          {doctors ? <>
             <span> <h5>Doctors :</h5> </span>
 
             <Carousel responsive={responsive}>
@@ -372,6 +374,30 @@ export default function MedicinePageSearchResult() {
                       {parseInt(doctor.doctor_imageId) === img.id ?
                         <>
                           <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
+                        </>
+                        : <>
+                        </>}
+
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Carousel>
+          </> : <>
+
+          </>
+          }
+          {madicineShops ? <>
+            <span> <h5>Medicine Shops :</h5> </span>
+
+            <Carousel responsive={responsive}>
+              {madicineShops.map(madical => (
+                <div key={madical.id}>
+                  {madicineShopsImage.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(madical.SubAdminImageId) === img.id ?
+                        <>
+                          <MedicineShopCard id={madical.id} img={img.path} title={madical.name} phone={madical.phone} location={madical.City} btntext="View Products" />
                         </>
                         : <>
                         </>}

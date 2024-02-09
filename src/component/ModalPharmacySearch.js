@@ -66,7 +66,7 @@ useEffect(() => {
   //   value = `/medicines`
   // }
   useEffect(() => {
-    axiosClient.get(`/search`)
+    axiosClient.get(`/madicine/medicineshops`)
       .then(res => {
         setProducts(res.data);
         // setChooseLocation(res.data)
@@ -83,7 +83,7 @@ useEffect(() => {
     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
     const newFilter = products.filter((value) => {
-      return value.product_name.toLowerCase().includes(searchword);
+      return value.name.toLowerCase().includes(searchword);
     });
     if (searchword === "") {
       setChooseProduct([]);
@@ -93,20 +93,20 @@ useEffect(() => {
   };
   const searchMedicne = async () => {
     try {
-        const response = await axiosClient.post(`/search`, values);
-        if (response.data !== null) {
+        // const response = await axiosClient.post(`/medicineshop/search`, values);
+        // if (response.data !== null) {
             // console.log(response.data)
-            navigate(`/medicines/${values.input}`,
+            navigate(`/medicineshop/search/${values.input}`,
                 {
-                    state: {
-                        product: response.data[0],
-                        image: response.data[1],
-                        lab: response.data[2],
-                        labImage: response.data[3],
-                        doctor: response.data[4],
-                        doctorImage: response.data[5],
-                        location: selectLocation
-                    }
+                    // state: {
+                    //     product: response.data[0],
+                    //     image: response.data[1],
+                    //     lab: response.data[2],
+                    //     labImage: response.data[3],
+                    //     doctor: response.data[4],
+                    //     doctorImage: response.data[5],
+                    //     location: selectLocation
+                    // }
                 })
                 setValues({
                     input:''
@@ -114,10 +114,10 @@ useEffect(() => {
                 setChooseProduct([]);
 
             //    console.log(response.data)
-        } else {
-            // Handle logout failure
-            console.error(response.data.message);
-        }
+    //     } else {
+    //         // Handle logout failure
+    //         console.error(response.data.message);
+    //     }
     } catch (error) {
         console.error('An error occurred:', error);
     }
@@ -132,7 +132,7 @@ useEffect(() => {
         <button onClick={closeTheModal} style={{ marginLeft: '95%', borderRadius: '50%' }} className='my-2 btn btn-dark close-btn'>X</button>
         <div className="searchMedicines" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <div className="search-m">
-            <h2 className=' text-light' style={{ textAlign: 'center' }}>Search Medicines Shop Near You</h2>
+            <h2 className=' text-light' style={{ textAlign: 'center' }}>Search Pharmacy  Shop Near You</h2>
             <p className=' text-light' style={{ textAlign: 'center' }}>Search the best medicines, clinic & medicine shop the city nearest to you.</p>
             <div className="search-m search-m-in-modal" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem' }}>
               <div className="dropdown me-2 dropdown-location-modal-m dropdown-toggle-modal"  >

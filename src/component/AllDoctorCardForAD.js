@@ -31,13 +31,52 @@ export default function AllDoctorCardForAD(props) {
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   // console.log(props.location)
-  if (props.location === undefined) {
+  // if (props.location === undefined) {
+  // useEffect(() => {
+  //   axiosClient.get(`/doctors`).then((res) => {
+  //     // Handle response
+  //     if (res.data !== null) {
+  //       setDoctors(res.data[0]);
+  //       setImages(res.data[1]);
+  //     }
+  //     // console.log(response.data);
+  //   })
+  //     .catch(err => {
+  //       // Handle errors
+  //       console.error(err);
+  //     });
+
+  // }, [])
+
+  // }
+  const [suggestedDoctors, setSuggestedDoctors] = useState([]);
+  const [suggestedDoctorsImage, setSuggestedDoctorsImage] = useState([]);
+  try {
+    // if (user.City === undefined) {
+    useEffect(() => {
+      axiosClient.get(`/doctors/suggestedDoctors`).then((res) => {
+        // Handle response
+        if (res.data !== null) {
+          setSuggestedDoctors(res.data[0])
+          setSuggestedDoctorsImage(res.data[1])
+        }
+        // console.log(res.data);
+      })
+        .catch(err => {
+          // Handle errors
+          console.error(err);
+        });
+
+    }, [])
+
+    // } else {
     useEffect(() => {
       axiosClient.get(`/doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
           setImages(res.data[1]);
+          console.log(doctors)
         }
         // console.log(response.data);
       })
@@ -47,8 +86,12 @@ export default function AllDoctorCardForAD(props) {
         });
 
     }, [])
-
+    // }
+  } catch (error) {
+    console.log(error)
   }
+
+
 
   //  else {
   //   useEffect(() => {
@@ -74,7 +117,25 @@ export default function AllDoctorCardForAD(props) {
     <div>
       <div className="container" style={{ marginTop: '5vh' }}>
         <h5 className='py-2'>|| Suggested Best Doctor For You ||</h5>
-        {/* {doctors!== undefined ? <> */}
+        {suggestedDoctors ? <>
+          {/* <Carousel responsive={responsive}> */}
+            {suggestedDoctors.map(doctor => (
+              <div key={doctor.product_id}>
+                {suggestedDoctorsImage.map((img) => (
+                  <div key={img.id}>
+                    {parseInt(doctor.doctor_imageId) === img.id ?
+                      <>
+                        {/* <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} /> */}
+                        <DoctorCardForAD imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clinics={doctor.clinic} id={doctor.id} clinic_descs={doctor.clinic_desc} specializes={doctor.specializes} />
+                      </>
+                      : <></>}
+                  </div>
+                ))}
+              </div>
+            ))}
+          {/* </Carousel> */}
+
+        </> : <>
           {/* <Carousel responsive={responsive}> */}
             {doctors.map(doctor => (
               <div key={doctor.id}>
@@ -92,6 +153,25 @@ export default function AllDoctorCardForAD(props) {
               </div>
             ))}
           {/* </Carousel> */}
+        </>}
+        {/* {doctors!== undefined ? <> */}
+        {/* <Carousel responsive={responsive}> */}
+        {/* {doctors.map(doctor => (
+          <div key={doctor.id}>
+            {image.map((img) => (
+              <div key={img.id}>
+                {parseInt(doctor.doctor_imageId) === img.id ?
+                  <>
+                    <DoctorCardForAD imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clinics={doctor.clinic} id={doctor.id} clinic_descs={doctor.clinic_desc} specializes={doctor.specializes} />
+                  </>
+                  : <>
+                  </>}
+
+              </div>
+            ))}
+          </div>
+        ))} */}
+        {/* </Carousel> */}
         {/* </> : <>
 
         </>} */}

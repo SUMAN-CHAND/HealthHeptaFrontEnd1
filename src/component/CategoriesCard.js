@@ -27,6 +27,8 @@ export default function CategoriesCard(props) {
                         labImage: response.data[3],
                         doctor: response.data[4],
                         doctorImage: response.data[5],
+                        medicineShop: response.data[6],
+                        medicineShopImage: response.data[7],
                         location: selectLocation
                     }
                 })

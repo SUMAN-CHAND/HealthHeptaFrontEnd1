@@ -29,13 +29,13 @@ export default function BookAppointment({ closeTheModal }) {
   const [doctors, setDoctors] = useState([])
   const [chooseDoctor, setChooseDoctor] = useState([])
 
-  useEffect(() => {
-    axiosClient.get(`/`)
-      .then(res => {
+  // useEffect(() => {
+  //   axiosClient.get(`/`)
+  //     .then(res => {
 
-        setSelectLocation(res.data[2])
-      })
-  });
+  //       setSelectLocation(res.data[2])
+  //     })
+  // });
 
   useEffect(() => {
     axiosClient.get(`/locations`)
@@ -44,13 +44,13 @@ export default function BookAppointment({ closeTheModal }) {
         // setChooseLocation(res.data)
       })
   })
-  useEffect(() => {
-    axiosClient.get(`/doctorsearch`)
-      .then(res => {
-        setDoctors(res.data);
-        // setChooseLocation(res.data)
-      })
-  }, [])
+  // useEffect(() => {
+  //   axiosClient.get(`/doctorsearch`)
+  //     .then(res => {
+  //       setDoctors(res.data);
+  //       // setChooseLocation(res.data)
+  //     })
+  // }, [])
 
 
   // const handleFilter = (event) => {
