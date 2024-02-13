@@ -5,6 +5,7 @@ import lab from '../img/lab.webp';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import B2CParticularOfferCard from './B2CParticularOfferCard';
+import { Helmet } from 'react-helmet';
 
 
 
@@ -32,19 +33,25 @@ export default function B2COffersCard() {
     const firstCardOffer = 10;
 
     return (
-        <div className='' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div className="container "  >
-                <Carousel responsive={responsive} style={{ height: '25vh' }}>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                    <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{textDecoration:'none'}}> <B2CParticularOfferCard /></Link></div>
-                </Carousel>
-            </div>
+        <>
+            <Helmet>
+                <title>healthhepta.com</title>
+                <meta name="description" content=" Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+            </Helmet>
+            <div className='' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="container "  >
+                    <Carousel responsive={responsive} style={{ height: '25vh' }}>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                        <div><Link to={`/medicine/offer/${firstCardOffer}/%off`} style={{ textDecoration: 'none' }}> <B2CParticularOfferCard /></Link></div>
+                    </Carousel>
+                </div>
 
-        </div>
+            </div>
+        </>
     )
 }
 

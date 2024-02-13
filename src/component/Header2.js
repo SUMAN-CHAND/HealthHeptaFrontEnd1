@@ -141,7 +141,7 @@ export default function Header2() {
                             <ModalSearchClinicByLoaction closeTheModal={closeModal} />
                         </Modal>
                     </div>
-                    <div className="nav-item2 text-white mx-1 Header2-search " style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
+                    <div className="nav-item2 text-white mx-1 Header2-search offers-header2" style={{ display: 'flex', justifyContent: 'start', alignItems: 'center' }}>
                         <img src={medicinesImage} alt="" />
                         <Link className="nav-link active text-white h2-t " style={fontStyle} aria-current="page" onClick={openModal}>
                             <BiSolidOffer className='mx-1' />

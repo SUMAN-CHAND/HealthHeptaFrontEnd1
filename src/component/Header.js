@@ -7,6 +7,7 @@ import './style.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from './axiosClient';
+import { Helmet } from 'react-helmet';
 require('dotenv').config();
 
 
@@ -40,7 +41,7 @@ export default function Header() {
                     setLoggedIn(res.data[1]);
                     // console.log(loggedIn);
                     setUserLocation(res.data[2]);
-                }else{
+                } else {
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
                     // console.log(loggedIn);
@@ -83,7 +84,7 @@ export default function Header() {
     var login = false;
 
     if (loggedIn !== undefined) {
-         login = true;
+        login = true;
     }
 
     const handleLogout = async () => {
@@ -114,7 +115,7 @@ export default function Header() {
     // }
     const [values, setValues] = useState({
         input: '',
-        from:'header'
+        from: 'header'
     })
     // const handleInput = (event) => {
     //     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
@@ -132,10 +133,10 @@ export default function Header() {
             setChooseProduct(newFilter);
         }
     };
-    const setValueTOFilter = async (name) =>{
+    const setValueTOFilter = async (name) => {
         setValues({
             input: name,
-            
+
         })
     }
     const searchMedicne = async () => {
@@ -157,10 +158,10 @@ export default function Header() {
                             location: selectLocation
                         }
                     })
-                    setValues({
-                        input:''
-                    });
-                    setChooseProduct([]);
+                setValues({
+                    input: ''
+                });
+                setChooseProduct([]);
 
                 //    console.log(response.data)
             } else {
@@ -176,6 +177,10 @@ export default function Header() {
     };
     return (
         <>
+            <Helmet>
+                <title>healthhepta.com</title>
+                <meta name="description" content=" Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+            </Helmet>
             {active ? <>
                 <div className="HamburgerMenu" style={{ width: '50vw' }}>
                     <h5>Hi User</h5>
@@ -244,7 +249,7 @@ export default function Header() {
                         </div>
                         <div className="search  me-2 search-location" >
                             <div style={{ display: 'flex' }}>
-                                <input className="form-control" name='input'  onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                                <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                                 <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -254,7 +259,7 @@ export default function Header() {
                             {chooseProduct.length !== 0 && (
                                 <div className="inputResult" onClick={handleClick}>
                                     {chooseProduct.map((product, index) => {
-                                        return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
+                                        return <p onClick={() => setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                     }
                                     )}
                                 </div>
@@ -262,7 +267,7 @@ export default function Header() {
                         </div>
 
                         <div className='login-order' style={{ alignItems: "center" }}>
-                            <Link to='/sub-admin/login' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Business </p></Link>
+                            <Link to='/sub-admin/login' style={{ textDecoration: 'none', marginBottom: '5px' }}><p className='btn btn-outline for-dealer-btn business-btn-text' style={{ display: 'flex', color: 'blue', border: '2px solid blue', fontWeight: '700' }}> For Business </p></Link>
                             <Link to='/cart' style={{ textDecoration: 'none' }} >
                                 <div className="cart " style={{ display: 'flex', justifyContent: 'start', marginLeft: "auto", textDecoration: 'none' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="5vh" fill="currentColor" className="bi bi-cart p-0 drop-dwon-profile" viewBox="0 0 16 16" >
@@ -280,7 +285,7 @@ export default function Header() {
                                             </svg>
                                         </span>
                                         {
-                                            loggedIn.role === 'customer' ? <> 
+                                            loggedIn.role === 'customer' ? <>
                                                 <ul className="dropdown-menu">
                                                     <li><Link to='/profile' className="dropdown-item">Profile</Link></li>
                                                     <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
@@ -291,15 +296,15 @@ export default function Header() {
                                                     <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                                 </ul>
                                             </>
-                                        } 
+                                        }
 
                                     </div>
                                 </div>
                                 :
                                 <div>
                                     <Link to='/login'>
-                                        <div className="buttom mx-3 login-text">
-                                            <p style={{ margin: '0px' }} className="btn btn-primary"> <p style={{ margin: '0px' }}>Login</p> </p>
+                                        <div className="buttom login-text">
+                                            <p style={{ margin: '0px' }} className="btn btn-primary login-btn-text"> <p style={{ margin: '0px' }}>Login</p> </p>
                                         </div>
                                     </Link>
                                 </div>
@@ -322,7 +327,7 @@ export default function Header() {
                         {chooseProduct.length !== 0 && (
                             <div className="inputResult" onClick={handleClick}>
                                 {chooseProduct.map((product, index) => {
-                                    return <p onClick={()=> setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
+                                    return <p onClick={() => setValueTOFilter(product.name)} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{product.name}</p></p>
                                 }
                                 )}
                             </div>

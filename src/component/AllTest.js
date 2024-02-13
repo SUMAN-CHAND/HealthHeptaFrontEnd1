@@ -6,6 +6,7 @@ import LabTestCard from './LabTestCard';
 import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { Helmet } from 'react-helmet';
 
 export default function AllTest(props) {
 
@@ -74,30 +75,36 @@ export default function AllTest(props) {
 
 
   return (
-    <div>
-      <div className="container" style={{ marginTop: '1vh' }}>
-        <h3 className='py-1'>||Browse All Type Of Tests||</h3>
-        {loading ?
-        <Carousel responsive={responsive} className='allLabTestCarousel'>
-          {labTests.map(labTest => (
-            <div key={labTest.Test_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(labTest.test_imageId) === img.id ?
-                    <>
-                      <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} price={labTest.Price} btntext="Book Now" /> </div>
-                    </>
-                    : <>
-                    </>}
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container" style={{ marginTop: '1vh' }}>
+          <h3 className='py-1'>||Browse All Type Of Tests||</h3>
+          {loading ?
+            <Carousel responsive={responsive} className='allLabTestCarousel'>
+              {labTests.map(labTest => (
+                <div key={labTest.Test_id}>
+                  {image.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(labTest.test_imageId) === img.id ?
+                        <>
+                          <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} price={labTest.Price} btntext="Book Now" /> </div>
+                        </>
+                        : <>
+                        </>}
 
+                    </div>
+                  ))}
                 </div>
               ))}
-            </div>
-          ))}
-        </Carousel>
-        : <ClipLoader color="blue" />}
-      </div>
+            </Carousel>
+            : <ClipLoader color="blue" />}
+        </div>
 
-    </div>
+      </div>
+    </>
   )
 }

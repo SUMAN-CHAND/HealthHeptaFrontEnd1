@@ -279,7 +279,12 @@ table td button{
 .allProductOfAMedicineShopCard{
   width: 70% !important;
 }
-
+/* .particular-doctor-page{
+  height: 100vh !important;
+} */
+.doctor-profile_img{
+  width: 45% !important;
+}
 @media screen and (max-width: 1050px) {
   .profile-full-class{
     justify-content: center;
@@ -400,6 +405,9 @@ table td button{
   .allProductOfAMedicineShopCard{
     width: 100% !important;
   }
+  .navbar-expand-md{
+    justify-content: space-between;
+  }
 }
 
 
@@ -462,6 +470,7 @@ table td button{
   .login-text p{
     font-size:calc(1vw + 0.5rem) !important; 
   }
+  
   .navbar-brand h5{
     font-size:calc(2vw + 0.5rem) !important;
     margin-top: 10px; 
@@ -660,11 +669,14 @@ max-width: 25vw;
 .products{
   width: auto !important;
   /* align-self: center; */
-  margin-left: 8vw;
-
+  padding-left: 2vw;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
 }
 .ProductCardForList{
-  width: 82vw !important;
+  width: 95vw !important;
 }
 .ProductCardForList img{
   width: 9vw !important;
@@ -708,10 +720,17 @@ display: none !important;
   }
   .doctor-appoiment-from{
     width: 95% !important;
-    margin: 2rem 0 !important;
+    margin: 2rem 2rem !important;
+
   }
   .deccription img{
     max-width: 23vw !important;
+  }
+  .doctor_deccription{
+    width: 40vw !important;
+  }
+  .doctor-profile_img{
+      width: 60% !important;
   }
   .quick-offers{
     flex-direction: column !important;
@@ -719,9 +738,15 @@ display: none !important;
   .offer-deals{
     margin: 5px 0px !important;
   }
+  .card-service{
+      height: auto !important;
+  }
 }
 
 @media screen and (max-width: 550px) {
+  .login-text {
+    margin: 8px !important;
+  }
 
   .for-dealer-btn{
     width: 19vw !important;
@@ -873,13 +898,24 @@ display: none !important;
   .deccription img{
     max-width: 50vw !important;
   }
+  .doctor_deccription{
+    width: 80vw !important;
+  }
 }
 
 @media screen and (max-width: 450px) {
 
-  /* .logo-text{
-    display: none !important;
-  } */
+  
+  .navbar-brand h5{
+    font-size:calc(1vw + 0.5rem) !important;
+    margin-top: 10px; 
+  }
+  .login-btn-text{
+    padding: 6px !important;
+  }
+  .business-btn-text{
+    padding: 6px 2px !important;
+  }
   
   .search-location-under{
     width: 80vw !important;
@@ -915,6 +951,9 @@ display: none !important;
     margin: 0 0rem !important;
   }
   .Appointment-confirm .h-line{
+    display: none !important;
+  }
+  .offers-header2{
     display: none !important;
   }
 }

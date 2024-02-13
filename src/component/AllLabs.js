@@ -6,6 +6,7 @@ import axios from 'axios';
 import LabCard from './LabCard';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { Helmet } from 'react-helmet';
 
 export default function AllLabs(props) {
 
@@ -78,32 +79,38 @@ export default function AllLabs(props) {
   }
 
   return (
-    <div>
-      <div className="container" style={{ marginTop: '1vh' }}>
-        <h3 className='py-1'>||Best Pathological Laboratory In Your Location ||</h3>
-        {loading ?
-          <Carousel responsive={responsive} className='allLabsCarousel'>
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container" style={{ marginTop: '1vh' }}>
+          <h3 className='py-1'>||Best Pathological Laboratory In Your Location ||</h3>
+          {loading ?
+            <Carousel responsive={responsive} className='allLabsCarousel'>
 
-            {labs.map(lab => (
-              <div key={lab.id}>
-                {image.map((img) => (
-                  <div key={img.id}>
-                    {parseInt(lab.SubAdminImageId) === img.id ?
-                      <>
-                        <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.landmark} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
-                        {/* < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
+              {labs.map(lab => (
+                <div key={lab.id}>
+                  {image.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(lab.SubAdminImageId) === img.id ?
+                        <>
+                          <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.landmark} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
+                          {/* < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
 
-                      </>
-                      : <>
-                      </>}
+                        </>
+                        : <>
+                        </>}
 
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Carousel>
-          : <ClipLoader color="blue" />}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Carousel>
+            : <ClipLoader color="blue" />}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

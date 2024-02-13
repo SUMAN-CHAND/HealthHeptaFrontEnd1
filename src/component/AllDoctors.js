@@ -6,6 +6,7 @@ import axios from 'axios';
 import ProductCard from './ProductCard';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { Helmet } from 'react-helmet';
 
 export default function AllDoctors(props) {
   //main for connecting backend with Session
@@ -76,63 +77,69 @@ export default function AllDoctors(props) {
 
 
   return (
-    <div>
-      <div className="container" style={{ marginTop: '1vh' }}>
-        <h3 className='py-1'>|| Meet our Doctors ||</h3>
-        {/* {doctors!== undefined ? <> */}
-        {loading ?
-          <Carousel responsive={responsive} className='allDoctorsCarousel'>
-            {doctors.map(doctor => (
-              <div key={doctor.id}>
-                {image.map((img) => (
-                  <div key={img.id}>
-                    {parseInt(doctor.doctor_imageId) === img.id ?
-                      <>
-                        <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
-                      </>
-                      : <>
-                      </>}
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container" style={{ marginTop: '1vh' }}>
+          <h3 className='py-1'>|| Meet our Doctors ||</h3>
+          {/* {doctors!== undefined ? <> */}
+          {loading ?
+            <Carousel responsive={responsive} className='allDoctorsCarousel'>
+              {doctors.map(doctor => (
+                <div key={doctor.id}>
+                  {image.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(doctor.doctor_imageId) === img.id ?
+                        <>
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
+                        </>
+                        : <>
+                        </>}
 
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Carousel>
-          : <ClipLoader color="blue" />}
-        {/* </> : <>
-
-        </>} */}
-
-
-      </div>
-      <div className="container" style={{ marginTop: '1vh' }}>
-        <h3 className='py-1'>||Online Doctor Counselling ||</h3>
-        {/* {doctors!== undefined ? <> */}
-        {loading ?
-          <Carousel responsive={responsive} className='allDoctorsCarousel'>
-            {doctors.filter(doctor => doctor.type_of_visite.toLowerCase() === 'online').map(doctor => (
-              <div key={doctor.id}>
-                {image.map((img) => (
-                  <div key={img.id}>
-                    {parseInt(doctor.doctor_imageId) === img.id ?
-                      <>
-                        <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
-                      </>
-                      : <>
-                      </>}
-
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Carousel>
-          : <ClipLoader color="blue" />}
-        {/* </> : <>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Carousel>
+            : <ClipLoader color="blue" />}
+          {/* </> : <>
 
         </>} */}
 
 
+        </div>
+        <div className="container" style={{ marginTop: '1vh' }}>
+          <h3 className='py-1'>||Online Doctor Counselling ||</h3>
+          {/* {doctors!== undefined ? <> */}
+          {loading ?
+            <Carousel responsive={responsive} className='allDoctorsCarousel'>
+              {doctors.filter(doctor => doctor.type_of_visite.toLowerCase() === 'online').map(doctor => (
+                <div key={doctor.id}>
+                  {image.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(doctor.doctor_imageId) === img.id ?
+                        <>
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
+                        </>
+                        : <>
+                        </>}
+
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Carousel>
+            : <ClipLoader color="blue" />}
+          {/* </> : <>
+
+        </>} */}
+
+
+        </div>
       </div>
-    </div>
+    </>
   )
 }

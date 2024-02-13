@@ -312,28 +312,28 @@ export default function OrderPage() {
                             <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                 <h4>PRICE DETAILS</h4>
                                 <hr />
-                                <div className="price" style={{ display: 'flex' }}>
+                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
 
                                     <p className='mx-5'>Price ({totalNumofitem} items)</p>
                                     <p className='mx-5'>₹ {totalActusalPrice}</p>
 
 
                                 </div>
-                                <div className="discount" style={{ display: 'flex' }}>
+                                <div className="discount" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
                                     <p className='mx-5'>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
                                     <p className=' text-success mx-5' > -₹{totalPrice}</p>
                                 </div>
-                                <div className="discount" style={{ display: 'flex' }}>
+                                <div className="discount" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
                                     <p className='mx-5'>GST(sgst+cgst)</p>
                                     <p className=' text-success mx-5' >₹{totalGst}</p>
                                 </div>
-                                <div className="price" style={{ display: 'flex' }}>
+                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
                                     <p className='mx-5'>Delivery Charges </p>
                                     <p className='mx-5 text-success'>₹{delivaryCharge}</p>
                                 </div>
 
                                 <hr />
-                                <div className="price" style={{ display: 'flex' }}>
+                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
                                     <p className='mx-5'>Total Amount  </p>
                                     <p className='mx-5 text-success'>₹{totalActusalPrice - totalPrice + delivaryCharge + totalGst}</p>
                                 </div>

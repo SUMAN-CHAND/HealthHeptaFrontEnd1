@@ -94,38 +94,6 @@ export default function Doctor() {
   // console.log(doctors)
   // console.log(image[0].path)
 
-  function calculateDatesForWeek(selectedWeek) {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-
-    // Adjust date to the first day of the selected week
-    const firstDayOfWeek = new Date(currentDate);
-    firstDayOfWeek.setDate(1);
-    firstDayOfWeek.setMonth(currentMonth);
-    firstDayOfWeek.setDate(firstDayOfWeek.getDate() + (selectedWeek - 1) * 7);
-
-    // Calculate the last day of the selected week
-    const lastDayOfWeek = new Date(firstDayOfWeek);
-    lastDayOfWeek.setDate(lastDayOfWeek.getDate() + 6);
-
-    return {
-      startDate: firstDayOfWeek,
-      endDate: lastDayOfWeek
-    };
-  }
-
-  const [selectedWeek, setSelectedWeek] = useState(1);
-  const [selectedDates, setSelectedDates] = useState(null);
-
-  useEffect(() => {
-    const calculateAndSetDates = () => {
-      const calculatedDates = calculateDatesForWeek(selectedWeek);
-      setSelectedDates(calculatedDates);
-    };
-
-    calculateAndSetDates(); // Initial calculation
-  }, [selectedWeek]);
-
 
   const BookDoctor = (appoint_date, appoint_time) => {
     
@@ -154,7 +122,7 @@ export default function Doctor() {
           setDoctorTimeTable(res.data[2]);
           // setSelectedWeek(res.data[2].weekly_day);
           // setImage(res.data[1]);
-          // console.log(res.data)
+          console.log(res.data[2])
         }
       })
       .catch(err => {
@@ -162,6 +130,40 @@ export default function Doctor() {
       })
 
   }, [])
+  
+
+//   const calculateDates = (selectedDay) => {
+//   const currentDate = new Date();
+//   const currentMonth = currentDate.getMonth();
+//   const currentYear = currentDate.getFullYear();
+
+//   const selectedDayIndex = daysOfWeek.indexOf(selectedDay);
+
+//   const dates = [];
+
+//   for (let i = 0; i < 4; i++) { // Get dates for the next 4 weeks
+//     let date = new Date(currentYear, currentMonth, 1); // Start from the 1st day of the current month
+
+//     while (date.getDay() !== selectedDayIndex) { // Find the selected day of the week
+//       date.setDate(date.getDate() + 1); // Move to the next day
+//     }
+
+//     // If the selected day is before today, move to the next occurrence in the next month
+//     if (date < currentDate) {
+//       date = new Date(currentYear, currentMonth + 1, 1);
+//       while (date.getDay() !== selectedDayIndex) {
+//         date.setDate(date.getDate() + 1);
+//       }
+//     }
+
+//     dates.push(date.toDateString()); // Store the date as a string
+
+//     // Move to the next occurrence in the next week
+//     date.setDate(date.getDate() + 7);
+//   }
+
+//   return dates;
+// };
 
 
   return (
@@ -169,7 +171,7 @@ export default function Doctor() {
       {/* <div className="header" style={{ height: '7vh', backgroundColor: 'rgb(42 165 181)' }}>
         <h5 className='text-light ' style={{ display: 'flex', paddingTop: '1rem', marginLeft: '3rem' }}>{doctors[0].doc_name}</h5>
       </div> */}
-      <div className="row particular-doctor-page" style={{ margin: '0px', backgroundColor: 'rgb(193 193 206 / 36%)', overflow: 'scroll', height: '100vh' }}>
+      <div className="row particular-doctor-page" style={{ margin: '0px', backgroundColor: 'rgb(193 193 206 / 36%)', overflow: 'scroll' }}>
         <div className="col-8 particular-doctor" style={{ position: 'sticky', top: '0' }} >
           <div className="doctor container  shadow" style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }}>
             {doctors.map(doctor => (

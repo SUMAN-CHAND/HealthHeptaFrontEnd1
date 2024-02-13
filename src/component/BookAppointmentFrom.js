@@ -185,14 +185,14 @@ export default function BookAppointmentFrom() {
 
     return (
         <div style={{ backgroundColor: 'rgb(193 193 206 / 36%)' }}>
-            <div className="row doctor-appoiment" style={{ display: 'flex', padding: '2rem' }}>
+            <div className="row doctor-appoiment" style={{ display: 'flex',width:'100%' }}>
                 {loading ? 
                 <div style={{height:'60vh',display:'flex',justifyContent:'center',alignItems:'center'}}>
 
                     <ClipLoader color="blue" /> 
                 </div>
                 : <>
-                    <div className=" col-7 doctor-appoiment-doctor-profile" style={{ backgroundColor: 'white', padding: '2rem', margin: '1rem', borderRadius: '5px' }}>
+                    <div className=" col-7 doctor-appoiment-doctor-profile" style={{ backgroundColor: 'white', padding: '1rem', margin: '1rem', borderRadius: '5px' }}>
 
                         {/* {doctors.map(doctor => (
                         <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
@@ -218,22 +218,22 @@ export default function BookAppointmentFrom() {
 
 
 
-                        <div className='docter-ad shadow' style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }} >
+                        <div className='docter-ad shadow' style={{ margin: '1rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }} >
 
                             <>
                                 <div className="container " style={customStyle}>
                                     {/* <button onClick={closeTheModal} style={{ marginLeft: '95%', borderRadius: '50%' }} className='my-2 btn btn-dark close-btn'>X</button> */}
                                     <div className="" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-                                        <div>
+                                        
                                             {doctorDetails.map((doctor, index) => (
-                                                <div className="doctor-profile" style={{ display: 'flex' }}>
-                                                    <div style={{ width: '45%' }}>
+                                                <div className="doctor-profile" style={{ display: 'flex',alignItems:'center',justifyContent:'center' }}>
+                                                    <div className='doctor-profile_img'>
                                                         <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '75%' }} />
                                                     </div>
                                                     <div className='' style={{ width: "1px", backgroundColor: 'grey' }}>
                                                     </div>
-                                                    <div className="deccription" style={{ margin: '0 2vw', padding: '0 2vw', display: 'flex', flexDirection: "column", alignItems: 'self-start' }}>
+                                                    <div className="deccription doctor_deccription" style={{ margin: '0 2vw', padding: '0 2vw', display: 'flex', flexDirection: "column", alignItems: 'self-start' }}>
                                                         <h5>Doctor Name :- {doctor.doc_name}</h5>
                                                         <p>Doctor Description :- {doctor.doc_desc} </p>
                                                         <p className=''>Location :- {doctor.location}</p>
@@ -267,7 +267,7 @@ export default function BookAppointmentFrom() {
 
                                                 </div>
                                             ))}
-                                        </div>
+                                        
                                     </div>
                                 </div >
                             </>
@@ -276,7 +276,7 @@ export default function BookAppointmentFrom() {
 
 
                     </div>
-                    <div className=' col-4 from doctor-appoiment-from' style={{ backgroundColor: 'white', padding: '2rem 0', borderRadius: '5px' }} >
+                    <div className=' col-4 from doctor-appoiment-from' style={{ backgroundColor: 'white',margin:'1rem', padding: '2rem 0', borderRadius: '5px' }} >
                         <h2 className='text-primary'>||Book here||</h2>
                         <br />
                         <form action='submit' onSubmit={handleSubmit}>

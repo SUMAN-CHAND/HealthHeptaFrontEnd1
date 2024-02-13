@@ -132,7 +132,7 @@ export default function BookAppointment({ closeTheModal }) {
           <div className="search-d">
             <h2 className=' text-light' style={{ textAlign: 'center' }}>Search Doctor, Book an Appointment</h2>
             <p className=' text-light' style={{ textAlign: 'center', marginRight: '1rem' }}>Search the best doctors, clinic & hospital the city nearest to you.</p>
-            <div className="search-d" style={{ display: 'flex', marginTop: '15%', justifyContent: 'center' }}>
+            <div className="search-d" style={{ display: 'flex', marginTop: '15%', justifyContent: 'center',alignItems:'center' }}>
               <div className="dropdown  me-2 " style={{ marginLeft: '5vw' }}>
               <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
                   {locations.map((location, index) => (

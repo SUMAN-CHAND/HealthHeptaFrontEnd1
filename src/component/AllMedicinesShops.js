@@ -6,6 +6,7 @@ import medicineshop from '../img/medicinesShop.webp';
 import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { Helmet } from 'react-helmet';
 
 export default function AllMedicinesShops(props) {
 
@@ -73,34 +74,40 @@ export default function AllMedicinesShops(props) {
   };
 
   return (
-    <div>
-      <div className="container" >
-        <h3 className='py-1'>||Best Medicines Seller In Your Location ||</h3>
-        {loading ?
-          <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
-            {/* {madicalPage.map(madical => (
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content=" Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container" >
+          <h3 className='py-1'>||Best Medicines Seller In Your Location ||</h3>
+          {loading ?
+            <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
+              {/* {madicalPage.map(madical => (
             <div key={madical.id} >
               <MedicineShopCard img={medicineshop} title={madical.name} phone={madical.phone} location={madical.City} btntext="Order Now" />
             </div>
           ))} */}
-            {madicalPage.map(madical => (
-              <div key={madical.id}>
-                {image.map((img) => (
-                  <div key={img.id}>
-                    {parseInt(madical.SubAdminImageId) === img.id ?
-                      <>
-                        <MedicineShopCard id={madical.id} img={img.path} title={madical.name} phone={madical.phone} location={madical.City} btntext="View Products" />
-                      </>
-                      : <>
-                      </>}
+              {madicalPage.map(madical => (
+                <div key={madical.id}>
+                  {image.map((img) => (
+                    <div key={img.id}>
+                      {parseInt(madical.SubAdminImageId) === img.id ?
+                        <>
+                          <MedicineShopCard id={madical.id} img={img.path} title={madical.name} phone={madical.phone} location={madical.City} btntext="View Products" />
+                        </>
+                        : <>
+                        </>}
 
-                  </div>
-                ))}
-              </div>
-            ))}
-          </Carousel>
-          : <ClipLoader color="blue" />}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </Carousel>
+            : <ClipLoader color="blue" />}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

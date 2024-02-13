@@ -3,6 +3,7 @@ import {
     Link
 } from "react-router-dom";
 import Modal from 'react-modal';
+import { Helmet } from 'react-helmet';
 
 
 const customStyles = {
@@ -19,7 +20,7 @@ const customStyles = {
 
 const cardStyles = {
     maxWidth: "18vw",
-    height:'45vh',
+    height: '45vh',
     // backgroundColor :'white'
 };
 
@@ -46,27 +47,33 @@ export default function CardService(props) {
         justifyContent: 'space-between'
     }
     return (
-        <div>
-            <div className="container ">
-                <div className="card card-service shadow" style={cardStyles}>
-                    <img src={props.img} style={{ height: '25vh' }} className="card-img-top " alt="..." />
-                    <h5 className="card-title mt-1">{props.title}</h5>
-                    <div className="card-body pt-1" style={cardText}>
-                        <p className="card-text">{props.text}</p>
+        <>
+            <Helmet>
+                <title>healthhepta.com</title>
+                <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+            </Helmet>
+            <div>
+                <div className="container ">
+                    <div className="card card-service shadow" style={cardStyles}>
+                        <img src={props.img} style={{ height: '25vh' }} className="card-img-top " alt="..." />
+                        <h5 className="card-title mt-1">{props.title}</h5>
+                        <div className="card-body pt-1" style={cardText}>
+                            <p className="card-text">{props.text}</p>
 
-                        <Link className="btn btn-primary btn-text" onClick={openModal}><p>{props.btnText}</p></Link>
-                        <Modal
-                            isOpen={modalIsOpen}
-                            onAfterOpen={afterOpenModal}
-                            onRequestClose={closeModal}
-                            style={customStyles}
-                            contentLabel="Example Modal"
-                        >
-                            <props.component closeTheModal={closeModal} />
-                        </Modal>
+                            <Link className="btn btn-primary btn-text" onClick={openModal}><p>{props.btnText}</p></Link>
+                            <Modal
+                                isOpen={modalIsOpen}
+                                onAfterOpen={afterOpenModal}
+                                onRequestClose={closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal"
+                            >
+                                <props.component closeTheModal={closeModal} />
+                            </Modal>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

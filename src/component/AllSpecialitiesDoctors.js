@@ -5,6 +5,7 @@ import SpecialitiesDoctorsCard from './SpecialitiesDoctorsCard';
 import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from "react-spinners/ClipLoader";
+import { Helmet } from 'react-helmet';
 
 export default function AllSpecialitiesDoctors(props) {
 
@@ -60,21 +61,27 @@ export default function AllSpecialitiesDoctors(props) {
 
 
   return (
-    <div>
-      <div className="container" style={{ marginTop: '1vh' }}>
-        <h3 className='py-1'>|| Find doctors in top specialities ||</h3>
-        {loading ?
-          <Carousel responsive={responsive} className='allSpecialitiesDoctorsCarousel'>
-            {doctors.map((doctor, index) => (
-              <div key={index}>
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container" style={{ marginTop: '1vh' }}>
+          <h3 className='py-1'>|| Find doctors in top specialities ||</h3>
+          {loading ?
+            <Carousel responsive={responsive} className='allSpecialitiesDoctorsCarousel'>
+              {doctors.map((doctor, index) => (
+                <div key={index}>
 
-                <SpecialitiesDoctorsCard specializes={doctor.specializes} />
+                  <SpecialitiesDoctorsCard specializes={doctor.specializes} />
 
-              </div>
-            ))}
-          </Carousel>
-          : <ClipLoader color="blue" />}
+                </div>
+              ))}
+            </Carousel>
+            : <ClipLoader color="blue" />}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

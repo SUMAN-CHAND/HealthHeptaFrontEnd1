@@ -5,6 +5,7 @@ import Carousel from 'react-multi-carousel';
 import CategoriesCard from './CategoriesCard';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
+import { Helmet } from 'react-helmet';
 export default function AllCategoy() {
   const responsive = {
     superLargeDesktop: {
@@ -48,6 +49,11 @@ export default function AllCategoy() {
   }, [])
 
   return (
+    <>
+    <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content=" Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
     <div>
       <div className="container" style={{ marginTop: '1vh' }}>
         <h3 className='py-1' key={1}>||Browse Medicines by Category||</h3>
@@ -73,5 +79,6 @@ export default function AllCategoy() {
       </div>
 
     </div>
+    </>
   )
 }

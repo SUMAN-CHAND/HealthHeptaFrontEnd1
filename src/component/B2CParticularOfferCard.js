@@ -9,7 +9,6 @@ function B2CParticularOfferCard() {
         width: '100px'
     }
     const b2cOfferCard = {
-        width: '8vw',
         border: '0'
     }
   return (

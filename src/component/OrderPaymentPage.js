@@ -159,7 +159,7 @@ export default function OrderPaymentPage() {
     const [values, setValues] = useState({
         payment_type: '',
         total_amount: '',
-        prescriptionId:''
+        prescriptionId: ''
     })
     // setValues('');
     // setValues({
@@ -167,7 +167,7 @@ export default function OrderPaymentPage() {
     // })
     let total_amountAfterCouponApply = 0;
     const total_amount = (totalActusalPrice - discount + delivaryCharge + totalGst);
-    let pay_amount 
+    let pay_amount
     if (total_amountAfterCouponApply !== 0) {
         pay_amount = total_amountAfterCouponApply;
     } else {
@@ -181,7 +181,7 @@ export default function OrderPaymentPage() {
         setValues({
             payment_type: e.target.value,
             total_amount: pay_amount,
-            prescriptionId:prescriptionId
+            prescriptionId: prescriptionId
         })
     }
 
@@ -229,12 +229,12 @@ export default function OrderPaymentPage() {
                     // console.log(res.data)
                     // openModal();
                     navigate('/order/bill',
-                    {
-                        state: {
-                            orderId: res.data[0],
-                            productIds: res.data[1]
-                        }
-                    });
+                        {
+                            state: {
+                                orderId: res.data[0],
+                                productIds: res.data[1]
+                            }
+                        });
                 }
                 else if (res.data === null) {
                     danger();
@@ -250,7 +250,7 @@ export default function OrderPaymentPage() {
         <div style={{ backgroundColor: '#8a858521' }}>
             <div className="container orders-payment" >
                 <div className="row ">
-                    <div className='order_payment_page' style={{ display: 'flex' , alignItems:'center' }}>
+                    <div className='order_payment_page' style={{ display: 'flex', alignItems: 'center' }}>
                         <div className="col-8 m-4 order-payment" >
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
                                 <><div
@@ -262,7 +262,7 @@ export default function OrderPaymentPage() {
                                     <p>Mobile No :- {user.phone} </p>
                                 </>
 
-                                <button className='btn btn-primary'>Change</button>
+                                <button className='btn btn-primary'><p>Change</p></button>
                             </div>
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
                                 <><div
@@ -274,7 +274,7 @@ export default function OrderPaymentPage() {
                                     <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
                                 </>
 
-                                <button className='btn btn-primary'>Change</button>
+                                <button className='btn btn-primary'><p>Change</p></button>
                             </div>
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
                                 <><div
@@ -286,7 +286,7 @@ export default function OrderPaymentPage() {
 
                                 </>
 
-                                <Link to='/cart'> <button className='btn btn-primary'>View</button></Link>
+                                <Link to='/cart'> <button className='btn btn-primary'><p>View</p></button></Link>
                             </div>
                             <div className=" container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                 <div
@@ -297,16 +297,16 @@ export default function OrderPaymentPage() {
                                         <select
                                             required
                                             onChange={handleInput} name='payment_type'
-                                            style={{ width: '125%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
+                                            style={{ width: '100%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
                                             <option value="select">Select</option>
                                             <option value="cod">Cash On Delevary</option>
                                             <option value="cod">online Bankng</option>
                                         </select>
                                     </div>
                                 </div>
-
-                                <button type='submit' onClick={handleSubmit} className='btn btn-success mx-5'>Place Order</button>
-                                {/* <Modal
+                                <div className='mt-2' style={{display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
+                                    <button type='submit' onClick={handleSubmit} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
+                                    {/* <Modal
                                     isOpen={modalIsOpen}
                                     onAfterOpen={afterOpenModal}
                                     onRequestClose={closeModal}
@@ -315,7 +315,8 @@ export default function OrderPaymentPage() {
                                 >
                                     <SuccfullyOrderplaceModal closeTheModal={closeModal} TotalAmount={discount} />
                                 </Modal> */}
-                                <button type='restart' className='btn btn-warning'>Clear</button>
+                                    <button type='restart' className='btn btn-warning'><p className='text-light'>Clear</p></button>
+                                </div>
                             </div>
 
                             {couponAvailable ? <>
@@ -338,32 +339,32 @@ export default function OrderPaymentPage() {
                         </div>
                         <div className="col-4 m-4 order-detail" >
                             <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
-                                <h4>PRICE DETAILS</h4>
+                                <h5>PRICE DETAILS</h5>
                                 <hr />
-                                <div className="price" style={{ display: 'flex' }}>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
 
-                                    <p className='mx-5'>Price ({totalNumofitem} items)</p>
-                                    <p className='mx-5'>₹ {totalActusalPrice}</p>
+                                    <p className=''>Price ({totalNumofitem} items)</p>
+                                    <p className=''>₹ {totalActusalPrice}</p>
 
 
                                 </div>
-                                <div className="discount" style={{ display: 'flex' }}>
-                                    <p className='mx-5'>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
-                                    <p className=' text-success mx-5' > -₹{discount}</p>
+                                <div className="discount" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <p className=''>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
+                                    <p className=' text-success' > -₹{discount}</p>
                                 </div>
-                                <div className="discount" style={{ display: 'flex' }}>
-                                    <p className='mx-5'>GST(sgst+cgst)</p>
-                                    <p className=' text-success mx-5' >₹{totalGst}</p>
+                                <div className="discount" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <p className=''>GST(sgst+cgst)</p>
+                                    <p className=' text-success' >₹{totalGst}</p>
                                 </div>
-                                <div className="price" style={{ display: 'flex' }}>
-                                    <p className='mx-5'>Delivery Charges </p>
-                                    <p className='mx-5 text-success'>₹{delivaryCharge}</p>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <p className=''>Delivery Charges </p>
+                                    <p className=' text-success'>₹{delivaryCharge}</p>
                                 </div>
 
                                 <hr />
-                                <div className="price" style={{ display: 'flex' }}>
-                                    <p className='mx-5'>Total Amount  </p>
-                                    <p className='mx-5 text-success'>₹{total_amount}</p>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <p className=''>Total Amount  </p>
+                                    <p className='text-success'>₹{total_amount}</p>
                                 </div>
                                 <section>
 
@@ -389,10 +390,10 @@ export default function OrderPaymentPage() {
                                 </section>
                                 <div className='coupon'>
                                     <input type="text" onChange={handleCouponInput} name='coupon' className='m-4' style={{ width: '60%', paddingLeft: '5px' }} placeholder='Enter Coupon Code' />
-                                    <button className='btn' onClick={applyCoupon} style={{ backgroundColor: '#07dbc1' }}>Apply</button>
+                                    <button className='btn' onClick={applyCoupon} style={{ backgroundColor: '#07dbc1' }}> <p>Apply</p></button>
                                 </div>
 
-                                <Link ><button type='submit' onClick={handleSubmit} className='btn my-2' style={{ backgroundColor: 'orange' }}>Place Order</button></Link>
+                                <Link ><button type='submit' onClick={handleSubmit} className='btn my-2' style={{ backgroundColor: 'orange' }}> <p>Place Order</p> </button></Link>
 
                             </div>
                         </div>

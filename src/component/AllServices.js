@@ -10,6 +10,7 @@ import ModalSearchLabByLoaction from './ModalSearchLabByLocation';
 import ModalSearchClinicByLoaction from './ModalSearchClinicByLoaction';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
+import { Helmet } from 'react-helmet';
 
 export default function AllServices() {
   const responsive = {
@@ -33,22 +34,28 @@ export default function AllServices() {
   };
 
   return (
-    <div>
-      <div className="container">
-        <h3 className=''>|| Affordable Healthcare Services For You ||</h3>
-        {/* <div className="container servicess" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
-          <Carousel className='ourserviceCarousel' responsive={responsive} style={{height:'53vh'}}>
+    <>
+      <Helmet>
+        <title>healthhepta.com</title>
+        <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      </Helmet>
+      <div>
+        <div className="container">
+          <h3 className=''>|| Affordable Healthcare Services For You ||</h3>
+          {/* <div className="container servicess" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
+          <Carousel className='ourserviceCarousel' responsive={responsive} style={{ height: '53vh' }}>
             {/* <div className='servicess-sm' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
-              <div><CardService img={doctor} title="Visit a Doctor" text="Search the best doctors, specialities, clinic & hospital nearest to you." btnText="Find Doctor Near You" component={BookAppointment} /></div>
-              <div><CardService img={medicines} title="Medicines" text="No need to stand in Pharma line,Skip pharmacy queue.Just click here." btnText="Order Your Medicines" component={SearchMedicinesStoreByLocation} /></div>
+            <div><CardService img={doctor} title="Visit a Doctor" text="Search the best doctors, specialities, clinic & hospital nearest to you." btnText="Find Doctor Near You" component={BookAppointment} /></div>
+            <div><CardService img={medicines} title="Medicines" text="No need to stand in Pharma line,Skip pharmacy queue.Just click here." btnText="Order Your Medicines" component={SearchMedicinesStoreByLocation} /></div>
             {/* </div> */}
             {/* <div className='servicess-sm' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
             <div><CardService img={lab} title="Lab Tests" text="Book your lab test with our healthcare platfrom." btnText="Book Your Lab Test" component={ModalSearchLabByLoaction} /></div>
             <div><CardService img={clinic} title="Clinic" text="Book your near by clinic and save your time." btnText="Find Your Clinic" component={ModalSearchClinicByLoaction} /></div>
             {/* </div> */}
           </Carousel>
-        {/* </div> */}
+          {/* </div> */}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
