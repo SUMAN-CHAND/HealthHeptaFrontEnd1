@@ -405,8 +405,9 @@ table td button{
   .allProductOfAMedicineShopCard{
     width: 100% !important;
   }
+  
   .navbar-expand-md{
-    justify-content: space-between;
+    justify-content: space-between !important;
   }
 }
 

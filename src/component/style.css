@@ -9,7 +9,6 @@
 .navbar{
     background-color: rgb(7, 219, 193);
     display: flex;
-    justify-content: space-evenly;
 }
 .left{
     justify-content: space-evenly;
