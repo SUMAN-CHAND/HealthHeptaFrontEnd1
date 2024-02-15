@@ -6,6 +6,7 @@ import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
 import axiosClient from './axiosClient';
 import ViewDoctorDetailsModal from './ViewDoctorDetailsModal';
+import DateSelectionComponent from './DateSelectionComponent';
 
 const customStyle = {
   maxWidth: '85vw',
@@ -203,6 +204,7 @@ export default function Doctor() {
                 {doctorsTimes.map(doctorsTime => (
                   <div className='m-1 text-primary fs-5' onClick={() => BookDoctor(doctorsTime.weekly_day, doctorsTime.starting_time)}><p className='btn btn-outline-primary '>{doctorsTime.weekly_day}</p></div>
                 ))}
+                <DateSelectionComponent/>
                 {/* {selectedDates && (
                   <div>
                     <p>Selected Week: {selectedWeek}</p>

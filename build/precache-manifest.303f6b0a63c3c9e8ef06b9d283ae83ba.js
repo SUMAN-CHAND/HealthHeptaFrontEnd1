@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "b45d2a10573586a873c1",
+    "revision": "043650839f5ead436da9",
     "url": "/static/css/main.c9241f90.chunk.css"
   },
   {
-    "revision": "b45d2a10573586a873c1",
-    "url": "/static/js/main.b45d2a10.chunk.js"
+    "revision": "043650839f5ead436da9",
+    "url": "/static/js/main.04365083.chunk.js"
   },
   {
     "revision": "22b8d043ea14ba5b7100",
@@ -32,12 +32,12 @@ self.__precacheManifest = [
     "url": "/static/media/modalclinicimg.7ffd23fa.png"
   },
   {
-    "revision": "17629a5dfe0d3c3946cf401e1895f091",
-    "url": "/static/media/revicons.17629a5d.ttf"
-  },
-  {
     "revision": "04eb8fc57f27498e5ae37523e3bfb2c7",
     "url": "/static/media/revicons.04eb8fc5.woff"
+  },
+  {
+    "revision": "17629a5dfe0d3c3946cf401e1895f091",
+    "url": "/static/media/revicons.17629a5d.ttf"
   },
   {
     "revision": "2feb69ccb596730c72920c6ba3e37ef8",
@@ -112,7 +112,7 @@ self.__precacheManifest = [
     "url": "/static/media/babyproduct.185ecb7e.webp"
   },
   {
-    "revision": "855dac6d5ff4314c228394e3ae6cf0bf",
+    "revision": "ffce277b24c39bf82fd88d5fd96b4e00",
     "url": "/index.html"
   }
 ];

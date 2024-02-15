@@ -177,7 +177,7 @@ export default function B2BHeader() {
             <div className='Header' >
                 <nav className="navbar navbar-expand-md">
                     <div className="right">
-                        <Link className="navbar-brand" to='/b2b-home' style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
+                        <Link className="navbar-brand" style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
                             <img src={logo} alt="Logo" className="d-inline-block align-text-top logo-image" width="50vw" height="50vh" style={{ borderRadius: "50%" }} />
                             <div className="container-fluid line-header" onClick={() => setActive(!active)} >
                                 {active ? <>
