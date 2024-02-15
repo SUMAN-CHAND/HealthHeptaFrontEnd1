@@ -19,7 +19,7 @@ export default function Home() {
   return (<>
     <Helmet>
       <title>healthhepta.com</title>
-      <meta name="description" content=" Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
+      <meta name="description" content="Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
     </Helmet>
     <div>
       {/* <h1>{location.state.loggedIn}</h1> */}

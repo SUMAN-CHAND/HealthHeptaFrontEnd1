@@ -63,9 +63,10 @@ export default function Login() {
             const user = axiosClient.post(`/login`, values)
                 .then(res => {
                     if (res.data === null) {
+                        console.log(res.data )
                         danger();
                     }
-                    else if (res.data[0] !== null) {
+                    else if (res.data[0] !== null || res.data[0] !== undefined ) {
                         // localStorage.setItem('user-info', JSON.stringify(user));
                         // setLoggedIn(true)      
                         console.log(res.data[0])
@@ -84,11 +85,13 @@ export default function Login() {
                             sessionStorage.setItem("LogedIn", res.data[1]);
 
                         }
-
-
                     }
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    console.log(err)
+                    console.error("Error occurred during login request:", err);
+                    danger(); // Display error message for network/server errors
+           });
             console.log(user)
         }
     }

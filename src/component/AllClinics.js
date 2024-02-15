@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import clinic from '../img/modalclinicimg.png';
 import ClinicCard from './ClinicCard';
+import { useLocation } from 'react-router-dom';
 
 export default function AllClinics() {
     
@@ -25,6 +26,10 @@ export default function AllClinics() {
       items: 2
     }
   };
+
+  const location = useLocation();
+  const statedata = location.state;
+  console.log(statedata) 
   
   return (
     <div>

@@ -134,7 +134,7 @@ export default function BookAppointment({ closeTheModal }) {
             <p className=' text-light' style={{ textAlign: 'center', marginRight: '1rem' }}>Search the best doctors, clinic & hospital the city nearest to you.</p>
             <div className="search-d" style={{ display: 'flex', marginTop: '15%', justifyContent: 'center',alignItems:'center' }}>
               <div className="dropdown  me-2 " style={{ marginLeft: '5vw' }}>
-              <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
+              <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary dropdown-location-modal-m" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
                   {locations.map((location, index) => (
                     <option key={index} value={location.name}>{location.name}</option>
                   )
@@ -156,7 +156,9 @@ export default function BookAppointment({ closeTheModal }) {
               <div>
                 <div className=" m-2 me-2" style={{ display: 'flex', justifyContent: 'start' }}>
                   {/* <input className="form-control" name='input' onClick={handleInput}  placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} /> */}
-                  <input className="form-control" name='input' onChange={handleInput} placeholder="Search Medicine Etc" style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                  {/* <input className="form-control" name='input' onChange={handleInput} placeholder="Search Medicine Etc" style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} /> */}
+                  <input className="form-control search-location-modal-m" name='input' onChange={handleInput} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{ width: '22vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+
                   {/* <Link to='/listofdoctor'> */}
                   <button onClick={searchMedicne} type="button" className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">

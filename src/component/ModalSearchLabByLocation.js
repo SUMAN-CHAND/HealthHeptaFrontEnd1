@@ -88,7 +88,7 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
             <p className=' text-light' style={{ textAlign: 'center' }}>Search the best pathological lab, test in the city nearest to you.</p>
             <div className="search-l" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem',alignItems:'center' }}>
               <div className="dropdown  me-2 ">
-                <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
+                <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary dropdown-location-modal-m" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
                   {locations.map((location, index) => (
                     <option key={index} value={location.name}>{location.name}</option>
                   )
