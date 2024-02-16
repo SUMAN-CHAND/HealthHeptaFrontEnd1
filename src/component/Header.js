@@ -36,7 +36,7 @@ export default function Header() {
         axiosClient.get(`/profile-details`)
             .then(res => {
                 if (res.data.length > 2) {
-                    // console.log(res.data)
+                    console.log(res.data)
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
                     // console.log(loggedIn);
