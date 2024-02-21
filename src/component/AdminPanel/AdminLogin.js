@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosClient from '../axiosClient';
+import usePasswordToggle from '../usePasswordToggle';
 
 export default function AdminLogin() {
     //main for connecting backend with Session
@@ -79,6 +80,8 @@ export default function AdminLogin() {
             // console.log(user)
         }
     }
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+
     return (
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
 
@@ -102,18 +105,20 @@ export default function AdminLogin() {
                         <span className="validity"></span>
                         <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
-                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' ,position:'relative'}} >
                         <label className='p-2' htmlFor="password">Password : </label>
-                        <input className='m-2  p-1' type="password" style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
+                        <input className='m-2  p-1' type={PasswordInputType}  style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
                         <br />
+                        <span className="password-toogle-icon">{ToggleIcon}</span>
+
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
                     <button type='submit' className='btn' style={{ width: '90%', color: 'white', backgroundColor: '#6775ec' }}>Log In</button>
-                    <p >You are agree to our <span className='text-primary'>terms & policies</span> </p>
-                    <p className='px-2'>Do not have any account please  <span className='text-primary'>create an Account</span> </p>
-                    <Link to='/superadmin/signup'>
+                    <p style={{paddingBottom:'2vh'}}>You are agree to our <span className='text-primary'>terms & policies</span> </p>
+                    {/* <p className='px-2'>Do not have any account please  <span className='text-primary'>create an Account</span> </p> */}
+                    {/* <Link to='/superadmin/signup'>
                         <button className='  btn-default border p-2 mb-3 btnonhover' style={{ borderRadius: '5px', width: '90%' }}>Create Account</button>
-                    </Link>
+                    </Link> */}
                 </form>
             </div>
             <ToastContainer />

@@ -57,7 +57,7 @@ export default function AddTimeTable({ closeTheModal }) {
 
             try {
                 closeTheModal();
-                console.log(values)
+                // console.log(values)
                 // const response = await axiosClient.post('/sub-admin/add-doctor/time-table', values);
                 // if (response.data !== null) {
                 navigate(`/sub-admin/home/add-new-doctor`,

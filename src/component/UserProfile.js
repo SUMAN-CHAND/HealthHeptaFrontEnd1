@@ -12,6 +12,10 @@ import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import axiosClient from './axiosClient';
+import Modal from 'react-modal';
+import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
+import AddNewAddressOfUser from './AddNewAddressOfUser';
+
 
 
 
@@ -42,6 +46,51 @@ export default function UserProfile() {
     // const location = useLocation();
     // const propsData = location.state;
     // // console.log(propsData);
+
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.body.style.overflow = 'unset';
+        setIsOpen(false);
+    }
+    const [modalIsOpenAdd, setIsOpenAdd] = React.useState(false);
+
+    function openModalAdd() {
+        setIsOpenAdd(true);
+    }
+
+    function afterOpenModalAdd() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModalAdd() {
+        document.body.style.overflow = 'unset';
+        setIsOpenAdd(false);
+    }
+
+
+    const customStyles = {
+        content: {
+            overflowY: 'hidden',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: '100'
+        },
+    };
+
     const navigate = useNavigate();
 
     const [user, setUser] = useState({});
@@ -99,9 +148,9 @@ export default function UserProfile() {
 
     // console.log(user)
     let numOfProduct;
-if(products){
-     numOfProduct = products.length;
-}
+    if (products) {
+        numOfProduct = products.length;
+    }
 
     if (numOfProduct > 0) {
         flag = true;
@@ -417,7 +466,37 @@ if(products){
                                                 }
                                             </>
                                         } */}
-                                        <button className="btn btn-primary" onClick={getUserLocation}>Add Current Location</button>
+                                        {/* <button className="btn btn-primary" onClick={getUserLocation}>Add Current Location</button> */}
+                                        <div>
+                                            <p>Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
+                                        </div>
+                                        <div>
+
+                                            <button className='btn btn-primary' onClick={openModal}>Change Address</button>
+                                            <Modal
+                                                isOpen={modalIsOpen}
+                                                onAfterOpen={afterOpenModal}
+                                                onRequestClose={closeModal}
+                                                style={customStyles}
+                                                contentLabel="Example Modal"
+                                            >
+                                                <ChoosePrimaryAddressByUser closeTheModal={closeModal} />
+                                            </Modal>
+                                        </div>
+                                       
+                                        <div>
+
+                                            <button className='btn btn-warning' onClick={openModalAdd}>Add New Address</button>
+                                            <Modal
+                                                isOpen={modalIsOpenAdd}
+                                                onAfterOpen={afterOpenModalAdd}
+                                                onRequestClose={closeModalAdd}
+                                                style={customStyles}
+                                                contentLabel="Example Modal"
+                                            >
+                                                <AddNewAddressOfUser closeTheModal={closeModalAdd} />
+                                            </Modal>
+                                        </div>
                                     </li>
                                 </ul>
 

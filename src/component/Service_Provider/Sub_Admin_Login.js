@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
 import ChooseRoleModal from './ChooseRoleModal';
 import axiosClient from '../axiosClient';
+import usePasswordToggle from '../usePasswordToggle';
 
 
 export default function Sub_Admin_Login() {
@@ -101,6 +102,7 @@ export default function Sub_Admin_Login() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);
     }
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
     return (
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
@@ -125,10 +127,11 @@ export default function Sub_Admin_Login() {
                         <span className="validity"></span>
                         <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
-                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700',position:'relative' }} >
                         <label className='p-2' htmlFor="password">Password : </label>
-                        <input className='m-2  p-1' type="password" style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
+                        <input className='m-2  p-1' type={PasswordInputType}  style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
                         <br />
+                        <span className="password-toogle-icon">{ToggleIcon}</span>
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
                     <button type='submit' className='btn' style={{ width: '90%', color: 'white', backgroundColor: '#6775ec' }}>Log In</button>

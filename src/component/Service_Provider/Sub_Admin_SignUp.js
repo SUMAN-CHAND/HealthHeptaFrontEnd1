@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
+import usePasswordToggle from '../usePasswordToggle';
 // import 'react-toastify/dist/ReactToastify.css';
 export default function Sub_Admin_SignUp() {
     //main for connecting backend with Session
@@ -83,6 +84,9 @@ export default function Sub_Admin_SignUp() {
                 .catch(err => console.log(err));
         }
     }
+
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+
     return (
 
 
@@ -118,9 +122,12 @@ export default function Sub_Admin_SignUp() {
                         <span className="validity"></span>
                         <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
-                    <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700',position:'relative' }} >
                         <label className='p-1' htmlFor="password">Create Password : </label>
-                        <input required className='m-2  p-1' type="password" style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} /> <br />
+                        <input required className='m-2  p-1' type={PasswordInputType}  style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} /> <br />
+                       <br />
+                       <span className="password-toogle-icon-signup">{ToggleIcon}</span>
+
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
                    

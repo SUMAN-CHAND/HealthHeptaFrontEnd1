@@ -20,7 +20,7 @@ export default function CompelteProfileFrom() {
 
 
     const [values, setValues] = useState({
-        subadmin_id : data.insertId,
+        subadmin_id: data.insertId,
         fullname: value.name,
         phone: value.phone,
         landmark: '',
@@ -57,22 +57,26 @@ export default function CompelteProfileFrom() {
         // setRole(event.target.value)
     }
     const navigate = useNavigate();
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        axiosClient.post(`/sub_admin/complete_profile`, values)
-            .then(res => {
-                if (res.data === 'success') {
-                    alert('Sign up  Successfully!!')
-                    navigate('/sub-admin/login');
-                }
-                else if (res.data === null) {
-                    alert('Error')
-                }
-                else {
-                    alert('Error')
-                }
-            })
-            .catch(err => console.log(err));
+    const handleSubmit = async (event) => {
+        if (values.OpeningTime[0] === values.CloseingTime[0]) {
+            alert("Opening Time and Closeing Time Can not be same!!!");
+        } else {
+            event.preventDefault();
+            axiosClient.post(`/sub_admin/complete_profile`, values)
+                .then(res => {
+                    if (res.data === 'success') {
+                        alert('Sign up  Successfully!!')
+                        navigate('/sub-admin/login');
+                    }
+                    else if (res.data === null) {
+                        alert('Error')
+                    }
+                    else {
+                        alert('Error')
+                    }
+                })
+                .catch(err => console.log(err));
+        }
     }
 
     const dateStyle = {
@@ -117,7 +121,7 @@ export default function CompelteProfileFrom() {
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="role">Role<span className='text-danger'>*</span> : </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Your Role'
-                                    name='role' onChange={handleInput} value={value.role[0].toUpperCase()} /><br />
+                                    name='role' onChange={handleInput} value={value.role.toUpperCase()} /><br />
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -144,7 +148,7 @@ export default function CompelteProfileFrom() {
                                     name='CloseingTime' onChange={handleInput} /><br />
                             </div>
                         </div>
-                        
+
                         <div style={{ textAlign: 'left' }}>
                             <h5 className='m-2 p-3'>Add Parmanent Address :- </h5>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -179,7 +183,7 @@ export default function CompelteProfileFrom() {
                                 </div>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="pin">Pin Code : </label><br></br>
-                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  Pin code'
+                                    <input required className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter  Pin code'
                                         name='pin' onChange={handleInput} /><br />
                                 </div>
                             </div>
@@ -199,7 +203,7 @@ export default function CompelteProfileFrom() {
                         </div>
 
                         <div className="form-check ">
-                            <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }}  />
+                            <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} />
                             <label className="form-check-label" htmlFor="flexCheckChecked">
                                 <p>Please confirm the data are  <span className='text-warning'>right</span> </p>
 

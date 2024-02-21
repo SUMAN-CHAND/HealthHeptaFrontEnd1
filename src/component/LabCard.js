@@ -48,7 +48,7 @@ export default function LabCard(props) {
               <p className="card-text">{props.phone}</p>
               <p className="card-text">{props.location}</p>
               {/* <p className="card-text">{props.openingtime} - {props.closetime}</p> */}
-              <Link to={`/particular-laboratory/${props.id}`} className="btn btn-primary" style={{ fontSize: '0.9rem' }} onClick={openModal}>{props.btntext}</Link>
+              <Link to={`/particular-laboratory/${props.id}`} className="btn btn-primary" style={{ fontSize: '0.7rem' }} onClick={openModal}>{props.btntext}</Link>
               <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}

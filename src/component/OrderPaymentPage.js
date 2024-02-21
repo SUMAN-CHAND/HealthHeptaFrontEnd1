@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosClient from './axiosClient';
+import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
 
 
 const customStyles = {
@@ -95,7 +96,7 @@ export default function OrderPaymentPage() {
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
-            setUserAddress(response.data[1])
+            setUserAddress(response.data[1]);
         });
     }, []);
 
@@ -167,7 +168,7 @@ export default function OrderPaymentPage() {
     // })
     let total_amountAfterCouponApply = 0;
     const total_amount = (totalActusalPrice - discount + delivaryCharge + totalGst);
-    let pay_amount
+    let pay_amount;
     if (total_amountAfterCouponApply !== 0) {
         pay_amount = total_amountAfterCouponApply;
     } else {
@@ -245,6 +246,11 @@ export default function OrderPaymentPage() {
             })
             .catch(err => console.log(err));
     }
+    const paymentTypeCheck = (event) => {
+       alert("Plese select the payment method !")
+    }
+
+    
 
     return (
         <div style={{ backgroundColor: '#8a858521' }}>
@@ -252,17 +258,18 @@ export default function OrderPaymentPage() {
                 <div className="row ">
                     <div className='order_payment_page' style={{ display: 'flex', alignItems: 'center' }}>
                         <div className="col-8 m-4 order-payment" >
-                            <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
-                                <><div
-                                    style={{ display: 'flex' }}>
-                                    <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>1</p>
-                                    <p>Login</p>
+                            <div className=" container m-2 p-2" style={{ display: 'flex', backgroundColor: '#fff' }}>
+                                <>
+                                    <div
+                                        style={{ display: 'flex' }}>
+                                        <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>1</p>
+                                        {/* <p>Login</p> */}
+                                         <p>Mobile No :- </p>
 
-                                </div>
-                                    <p>Mobile No :- {user.phone} </p>
+                                    </div>
+                                    <span style={{marginLeft:'26%'}} > {user.phone}  </span>
+                                   
                                 </>
-
-                                <button className='btn btn-primary'><p>Change</p></button>
                             </div>
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
                                 <><div
@@ -274,8 +281,16 @@ export default function OrderPaymentPage() {
                                     <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
                                 </>
 
-                                <button className='btn btn-primary'><p>Change</p></button>
-                            </div>
+                                <button className='btn btn-primary' onClick={openModal}>Change</button>
+                                <Modal
+                                    isOpen={modalIsOpen}
+                                    onAfterOpen={afterOpenModal}
+                                    onRequestClose={closeModal}
+                                    style={customStyles}
+                                    contentLabel="Example Modal"
+                                >
+                                    <ChoosePrimaryAddressByUser closeTheModal={closeModal} />
+                                </Modal>                            </div>
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
                                 <><div
                                     style={{ display: 'flex' }}>
@@ -292,20 +307,26 @@ export default function OrderPaymentPage() {
                                 <div
                                     style={{ display: 'flex' }}>
                                     <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>4</p>
-                                    <p>Payment Option : </p>
+                                    <p>Payment Option <span className='text-danger'>*</span> : </p>
                                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                         <select
                                             required
                                             onChange={handleInput} name='payment_type'
                                             style={{ width: '100%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
-                                            <option value="select">Select</option>
+                                            <option selected >Select</option>
                                             <option value="cod">Cash On Delevary</option>
                                             <option value="cod">online Bankng</option>
                                         </select>
+                                        
                                     </div>
                                 </div>
-                                <div className='mt-2' style={{display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
+                                <div className='mt-2' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                    {values.payment_type? 
+
                                     <button type='submit' onClick={handleSubmit} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
+                                    :
+                                    <button type='submit' onClick={paymentTypeCheck} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
+                                }
                                     {/* <Modal
                                     isOpen={modalIsOpen}
                                     onAfterOpen={afterOpenModal}
@@ -315,7 +336,7 @@ export default function OrderPaymentPage() {
                                 >
                                     <SuccfullyOrderplaceModal closeTheModal={closeModal} TotalAmount={discount} />
                                 </Modal> */}
-                                    <button type='restart' className='btn btn-warning'><p className='text-light'>Clear</p></button>
+                                    {/* <button type='restart' className='btn btn-warning'><p className='text-light'>Clear</p></button> */}
                                 </div>
                             </div>
 
@@ -393,7 +414,7 @@ export default function OrderPaymentPage() {
                                     <button className='btn' onClick={applyCoupon} style={{ backgroundColor: '#07dbc1' }}> <p>Apply</p></button>
                                 </div>
 
-                                <Link ><button type='submit' onClick={handleSubmit} className='btn my-2' style={{ backgroundColor: 'orange' }}> <p>Place Order</p> </button></Link>
+                                {/* <Link ><button type='submit' onClick={handleSubmit} className='btn my-2' style={{ backgroundColor: 'orange' }}> <p>Place Order</p> </button></Link> */}
 
                             </div>
                         </div>

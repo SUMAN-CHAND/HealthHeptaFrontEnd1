@@ -10,6 +10,13 @@ import axiosClient from './axiosClient';
 import ProductCard from './ProductCard';
 import UploadPrescription from './UploadPrescription';
 
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import AddNewAddressOfUser from './AddNewAddressOfUser';
+import Modal from 'react-modal';
+import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
+
+
 export default function OrderPage() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
@@ -157,7 +164,7 @@ export default function OrderPage() {
         setValues({ ...values, prescriptionId: imageId });
         setPrescriptionUploaded(true)
     };
-    console.log(prescriptionUploaded)
+    // console.log(prescriptionUploaded)
     let PlaceOrderHandle = (e) => {
 
         if (isDrug) {
@@ -193,6 +200,14 @@ export default function OrderPage() {
                 })
 
         }
+    }
+    let NoProductPresent = (e) => {
+
+        const response = window.confirm("Cart is epmty !! Please add some Products !!");
+        if (response) {
+            navigate('/')
+        }
+
     }
 
     // setValue({
@@ -247,7 +262,33 @@ export default function OrderPage() {
     }
 
 
+    const [modalIsOpen, setIsOpen] = React.useState(false);
 
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.body.style.overflow = 'unset';
+        setIsOpen(false);
+    }
+
+
+    const customStyles = {
+        content: {
+            overflowY: 'hidden',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
 
 
 
@@ -268,8 +309,22 @@ export default function OrderPage() {
                                     <p>Delevary To : </p>
                                     <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
                                 </>
+                                {/*                                 
+                                <Popup trigger={<button className='btn btn-primary'>Change</button>} modal>
+                                    <span> <AddUserNewAddress/> </span>
+                                </Popup> */}
+                                <button className='btn btn-primary' onClick={openModal}>Change</button>
+                                <Modal
+                                    isOpen={modalIsOpen}
+                                    onAfterOpen={afterOpenModal}
+                                    onRequestClose={closeModal}
+                                    style={customStyles}
+                                    contentLabel="Example Modal"
+                                >
+                                    <ChoosePrimaryAddressByUser closeTheModal={closeModal} />
+                                </Modal>
 
-                                <button className='btn btn-primary'>Change</button>
+
                             </div>
                             <div className="cart-item container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                 {products !== undefined ? <>
@@ -312,34 +367,41 @@ export default function OrderPage() {
                             <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                 <h4>PRICE DETAILS</h4>
                                 <hr />
-                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
                                     <p className='mx-5'>Price ({totalNumofitem} items)</p>
                                     <p className='mx-5'>₹ {totalActusalPrice}</p>
 
 
                                 </div>
-                                <div className="discount" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
+                                <div className="discount" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
                                     <p className=' text-success mx-5' > -₹{totalPrice}</p>
                                 </div>
-                                <div className="discount" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
+                                <div className="discount" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>GST(sgst+cgst)</p>
                                     <p className=' text-success mx-5' >₹{totalGst}</p>
                                 </div>
-                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>Delivery Charges </p>
                                     <p className='mx-5 text-success'>₹{delivaryCharge}</p>
                                 </div>
 
                                 <hr />
-                                <div className="price" style={{ display: 'flex',justifyContent:'center',alignItems:'center' }}>
+                                <div className="price" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>Total Amount  </p>
                                     <p className='mx-5 text-success'>₹{totalActusalPrice - totalPrice + delivaryCharge + totalGst}</p>
                                 </div>
 
 
-                                <> <button onClick={(e) => PlaceOrderHandle(e)} className='btn my-2' style={{ backgroundColor: 'orange' }}>Place Order</button></>
+                                <>
+                                    {products ?
+                                        <button onClick={(e) => PlaceOrderHandle(e)} className='btn my-2' style={{ backgroundColor: 'orange', cursor: 'pointer' }}>Place Order</button> :
+
+                                        <button onClick={(e) => NoProductPresent(e)} className='btn my-2' style={{ backgroundColor: 'orange', cursor: 'pointer' }}>Place Order</button>
+                                    }
+
+                                </>
 
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosClient from '../axiosClient';
+import usePasswordToggle from '../usePasswordToggle';
 
 export default function Delivery_Partner_Login() {
     //main for connecting backend with Session
@@ -84,6 +85,8 @@ export default function Delivery_Partner_Login() {
             transform: 'translate(-50%, -50%)',
         },
     };
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
+
 
 
 
@@ -109,10 +112,12 @@ export default function Delivery_Partner_Login() {
                         <span className="validity"></span>
                         <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
-                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' ,position:'relative'}} >
                         <label className='p-2' htmlFor="password">Password : </label>
-                        <input required className='m-2  p-1' type="password" style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
+                        <input required className='m-2  p-1' type={PasswordInputType}  style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
                         <br />
+                        <span className="password-toogle-icon">{ToggleIcon}</span>
+
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
                     <button type='submit' className='btn' style={{ width: '90%', color: 'white', backgroundColor: '#6775ec' }}>Log In</button>

@@ -14,6 +14,7 @@ export default function AddProductBySubAdmin() {
         category: '',
         discount: '',
         description: '',
+        fulldesctiption: '',
         manufacturing: '',
         expiry: '',
         dragornot: '',
@@ -76,9 +77,14 @@ export default function AddProductBySubAdmin() {
                                 name='product_name' onChange={handleInput} /><br />
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            <label className='p-1' htmlFor="product_dec">Product Description<span style={{fontSize:'9px',color:'red'}}>(Product Name ,Brand Name, Moluqule name ,what is product do?)</span> : </label><br></br>
+                            <label className='p-1' htmlFor="product_dec">Product Description<span style={{fontSize:'9px',color:'red'}}>(Product quantity)</span> : </label><br></br>
                             <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product Description'
                                 name='description' onChange={handleInput} /><br />
+                        </div>
+                        <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            <label className='p-1' htmlFor="product_dec">Product Full Desctiption<span style={{fontSize:'9px',color:'red'}}>(Product Name ,Brand Name, Moluqule name ,what is product do?)</span> : </label><br></br>
+                            <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Product Full Description'
+                                name='fulldesctiption' onChange={handleInput} /><br />
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="product_price">Product Price : </label>

@@ -285,6 +285,32 @@ table td button{
 .doctor-profile_img{
   width: 45% !important;
 }
+
+.password-toogle-icon{
+  position: absolute;
+  top: 60px;
+  right: 43px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.password-toogle-icon-signup{
+  position: absolute;
+  top: 49px;
+  right: 43px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.product-btn:hover{
+  background-color: #cae0e0f7 !important;
+}
+
+
+
+
+
+
 @media screen and (max-width: 1050px) {
   .profile-full-class{
     justify-content: center;

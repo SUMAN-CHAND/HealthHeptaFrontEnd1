@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosClient from './axiosClient';
 import { Helmet } from 'react-helmet';
+import usePasswordToggle from './usePasswordToggle';
 
 export default function Login() {
     //main for connecting backend with Session
@@ -63,10 +64,10 @@ export default function Login() {
             const user = axiosClient.post(`/login`, values)
                 .then(res => {
                     if (res.data === null) {
-                        console.log(res.data )
+                        console.log(res.data)
                         danger();
                     }
-                    else if (res.data[0] !== null || res.data[0] !== undefined ) {
+                    else if (res.data[0] !== null || res.data[0] !== undefined) {
                         // localStorage.setItem('user-info', JSON.stringify(user));
                         // setLoggedIn(true)      
                         console.log(res.data[0])
@@ -91,10 +92,11 @@ export default function Login() {
                     console.log(err)
                     console.error("Error occurred during login request:", err);
                     danger(); // Display error message for network/server errors
-           });
-            console.log(user)
+                });
+            // console.log(user)
         }
     }
+    const [PasswordInputType, ToggleIcon] = usePasswordToggle();
     return (
         <>
             <Helmet>
@@ -126,10 +128,11 @@ export default function Login() {
                             <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                         </div>
 
-                        <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                        <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700', position: 'relative' }} >
                             <label className='p-2' htmlFor="password">Password : </label>
-                            <input className='m-2  p-1' type="password" style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
+                            <input className='m-2  p-1' type={PasswordInputType} style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
                             <br />
+                            <span className="password-toogle-icon">{ToggleIcon}</span>
                             {errors.password && <span className='text-danger'>{errors.password}</span>}
                         </div>
                         <button type='submit' className='btn' style={{ width: '90%', color: 'white', backgroundColor: '#6775ec' }}>Log In</button>

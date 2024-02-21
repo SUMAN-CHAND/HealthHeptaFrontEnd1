@@ -204,7 +204,7 @@ export default function Doctor() {
                 {doctorsTimes.map(doctorsTime => (
                   <div className='m-1 text-primary fs-5' onClick={() => BookDoctor(doctorsTime.weekly_day, doctorsTime.starting_time)}><p className='btn btn-outline-primary '>{doctorsTime.weekly_day}</p></div>
                 ))}
-                <DateSelectionComponent/>
+                {/* <DateSelectionComponent/> */}
                 {/* {selectedDates && (
                   <div>
                     <p>Selected Week: {selectedWeek}</p>

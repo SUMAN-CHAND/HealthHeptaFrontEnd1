@@ -11,12 +11,12 @@ export default function CartItemCard(props) {
         if (response) {
             axiosClient.delete(`/remove/cart/product/${id}`)
                 .then(response => {
-                    console.log(response)
+                    // console.log(response)
                     if (response.data === 'success') {
                         alert('Product Remove Successfully');
                     }
                     else if (response.data === null) {
-                        console.log(response.data)
+                        // console.log(response.data)
                         alert('Product not Removed at this time');
                     }
                 })
