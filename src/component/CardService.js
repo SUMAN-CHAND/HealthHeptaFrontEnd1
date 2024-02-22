@@ -53,7 +53,7 @@ export default function CardService(props) {
                 <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
             </Helmet>
             <div>
-                <div className="container ">
+                <div className="container" style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
                     <div className="card card-service shadow" style={cardStyles}>
                         <img src={props.img} style={{ height: '25vh' }} className="card-img-top " alt="..." />
                         <h5 className="card-title mt-1">{props.title}</h5>

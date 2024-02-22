@@ -11,6 +11,7 @@ import ModalSearchClinicByLoaction from './ModalSearchClinicByLoaction';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
 
 export default function AllServices() {
   const responsive = {
@@ -40,8 +41,15 @@ export default function AllServices() {
         <meta name="description" content="Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
       </Helmet>
       <div>
-        <div className="container">
-          <h3 className=''>|| Affordable Healthcare Services For You ||</h3>
+        <motion.div
+           animate={{
+            x: 0,
+            y: 0,
+            scale: 1,
+            rotate: 0,
+          }}
+          className="container">
+          <h3 className=''>|| Affordable Healthcare Services For You ||</h3>
           {/* <div className="container servicess" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
           <Carousel className='ourserviceCarousel' responsive={responsive} style={{ height: '53vh' }}>
             {/* <div className='servicess-sm' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
@@ -54,7 +62,7 @@ export default function AllServices() {
             {/* </div> */}
           </Carousel>
           {/* </div> */}
-        </div>
+        </motion.div>
       </div>
     </>
   )

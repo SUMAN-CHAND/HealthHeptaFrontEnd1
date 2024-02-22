@@ -49,8 +49,7 @@ export default function Fotter() {
                                         <i className="fas fa-gem me-3 "></i>Healthhepta
                                     </h6>
                                     <p className='text-light'>
-                                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
-                                    </p>
+                                        Affordable healthcare services for you.Search pharmacy near you. Book your lab test with our platform. Find Doctor near you .schedule Doctor appointment online 24/7 even after hours.                                    </p>
                                 </div>
 
 
@@ -107,7 +106,7 @@ export default function Fotter() {
                                 <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
 
                                     <h6 className="text-uppercase fw-bold mb-4 text-light">Contact</h6>
-                                    <p className='text-light'><i className="fas fa-home me-3 "></i>  Gokarna, Ps- Kandi, Gokarna, Murshidabad,Murshidabad, West Bengal, India,742136</p>
+                                    <p className='text-light'><i className="fas fa-home me-3 "></i>Gokarna, Ps- Kandi, Gokarna, Murshidabad,Murshidabad, West Bengal, India,742136</p>
                                     <p className='text-light'>
                                         <i className="fas fa-envelope me-3 "></i>
                                         www.healthhepta.com
@@ -123,7 +122,7 @@ export default function Fotter() {
 
                     <div className=" fotter-copy-right text-center p-4 text-light" style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', display: 'flex' }}>
                         © 2024 Copyright:
-                        <a className="text-reset fw-bold text-light" href='/'>Healthhepta.com</a>
+                        <a className="text-reset fw-bold text-light" href='/'> Healthhepta PVT LTD</a>
                     </div>
                 </footer>
 

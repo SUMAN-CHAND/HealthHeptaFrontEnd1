@@ -19,6 +19,9 @@
 .card:hover{
   transform: scale(1.15);
 }
+.card-service:hover{
+  border-bottom: 5px solid rgb(104, 22, 104) ;
+}
 h1{
   color:#000 !important;
 }
