@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "7c35fb3ac8e35b10b4ee",
+    "revision": "798207a44a7786c4b719",
     "url": "/static/css/main.4dd132bf.chunk.css"
   },
   {
-    "revision": "7c35fb3ac8e35b10b4ee",
-    "url": "/static/js/main.7c35fb3a.chunk.js"
+    "revision": "798207a44a7786c4b719",
+    "url": "/static/js/main.798207a4.chunk.js"
   },
   {
     "revision": "bc1fcd9c4e8960c0d337",
@@ -36,12 +36,12 @@ self.__precacheManifest = [
     "url": "/static/media/revicons.04eb8fc5.woff"
   },
   {
-    "revision": "2feb69ccb596730c72920c6ba3e37ef8",
-    "url": "/static/media/revicons.2feb69cc.eot"
-  },
-  {
     "revision": "17629a5dfe0d3c3946cf401e1895f091",
     "url": "/static/media/revicons.17629a5d.ttf"
+  },
+  {
+    "revision": "2feb69ccb596730c72920c6ba3e37ef8",
+    "url": "/static/media/revicons.2feb69cc.eot"
   },
   {
     "revision": "e0ed0d94c9162edd63072b1fd730a769",
@@ -112,7 +112,7 @@ self.__precacheManifest = [
     "url": "/static/media/babyproduct.185ecb7e.webp"
   },
   {
-    "revision": "fad81939d101705127084d1ab01760ef",
+    "revision": "7130a22e5ead90b1e2357dc8e63bc351",
     "url": "/index.html"
   }
 ];

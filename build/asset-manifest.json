@@ -1,7 +1,7 @@
 {
   "main.css": "/static/css/main.4dd132bf.chunk.css",
-  "main.js": "/static/js/main.7c35fb3a.chunk.js",
-  "main.js.map": "/static/js/main.7c35fb3a.chunk.js.map",
+  "main.js": "/static/js/main.798207a4.chunk.js",
+  "main.js.map": "/static/js/main.798207a4.chunk.js.map",
   "static/js/1.bc1fcd9c.chunk.js": "/static/js/1.bc1fcd9c.chunk.js",
   "static/js/1.bc1fcd9c.chunk.js.map": "/static/js/1.bc1fcd9c.chunk.js.map",
   "static/css/2.93cd82b4.chunk.css": "/static/css/2.93cd82b4.chunk.css",
@@ -11,7 +11,7 @@
   "runtime~main.js.map": "/static/js/runtime~main.7131321a.js.map",
   "static/media/loginpageimg.jpg": "/static/media/loginpageimg.27e1c41d.jpg",
   "static/media/modalclinicimg.png": "/static/media/modalclinicimg.7ffd23fa.png",
-  "static/media/styles.css": "/static/media/revicons.17629a5d.ttf",
+  "static/media/styles.css": "/static/media/revicons.2feb69cc.eot",
   "static/media/Medicines.avif": "/static/media/Medicines.e0ed0d94.avif",
   "static/media/madicalProduct.avif": "/static/media/madicalProduct.593da263.avif",
   "static/media/logo.jpeg": "/static/media/logo.d8876123.jpeg",
@@ -29,9 +29,9 @@
   "static/media/eyedoctor.webp": "/static/media/eyedoctor.8acbd95b.webp",
   "static/media/banner.jpg": "/static/media/banner.6fef2301.jpg",
   "static/media/babyproduct.webp": "/static/media/babyproduct.185ecb7e.webp",
-  "static/css/main.4dd132bf.chunk.css.map": "/static/css/main.4dd132bf.chunk.css.map",
   "static/css/2.93cd82b4.chunk.css.map": "/static/css/2.93cd82b4.chunk.css.map",
+  "static/css/main.4dd132bf.chunk.css.map": "/static/css/main.4dd132bf.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.5849e01118ca8bdbfb478c45e4ee974d.js": "/precache-manifest.5849e01118ca8bdbfb478c45e4ee974d.js",
+  "precache-manifest.71d3068398342c0cf70e6288ef81b9ff.js": "/precache-manifest.71d3068398342c0cf70e6288ef81b9ff.js",
   "service-worker.js": "/service-worker.js"
 }
