@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "7bd7ed58768aabff77ef",
+    "revision": "7c35fb3ac8e35b10b4ee",
     "url": "/static/css/main.4dd132bf.chunk.css"
   },
   {
-    "revision": "7bd7ed58768aabff77ef",
-    "url": "/static/js/main.7bd7ed58.chunk.js"
+    "revision": "7c35fb3ac8e35b10b4ee",
+    "url": "/static/js/main.7c35fb3a.chunk.js"
   },
   {
     "revision": "bc1fcd9c4e8960c0d337",
@@ -112,7 +112,7 @@ self.__precacheManifest = [
     "url": "/static/media/babyproduct.185ecb7e.webp"
   },
   {
-    "revision": "cdcbff3363bbcb11edd82a17691b04a4",
+    "revision": "fad81939d101705127084d1ab01760ef",
     "url": "/index.html"
   }
 ];
