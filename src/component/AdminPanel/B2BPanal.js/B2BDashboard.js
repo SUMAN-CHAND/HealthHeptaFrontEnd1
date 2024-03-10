@@ -1,10 +1,7 @@
 import React from 'react'
-import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
-  from 'react-icons/bs'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
-import axios from 'axios';
 import axiosClient from '../../axiosClient';
 
 function B2BDashboard() {

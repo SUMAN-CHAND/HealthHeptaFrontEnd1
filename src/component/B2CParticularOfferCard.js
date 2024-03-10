@@ -1,7 +1,5 @@
 import React from 'react'
 import medicines from '../img/Medicines.avif';
-
-
 function B2CParticularOfferCard() {
     const imageStyle = {
         borderBottom: '1px solid black',
@@ -11,9 +9,9 @@ function B2CParticularOfferCard() {
     const b2cOfferCard = {
         border: '0'
     }
-  return (
-    <div>
-      <div>
+    return (
+        <div>
+            <div>
                 <div className='m-1 p-1'>
                     <div className="card" style={b2cOfferCard} >
                         <img src={medicines} className="card-img-top" alt="..." style={imageStyle} />
@@ -24,8 +22,7 @@ function B2CParticularOfferCard() {
                     </div>
                 </div>
             </div>
-    </div>
-  )
+        </div>
+    )
 }
-
 export default B2CParticularOfferCard

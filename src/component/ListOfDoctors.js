@@ -5,19 +5,15 @@ import { useLocation } from 'react-router-dom';
 import AllDoctors from './AllDoctors';
 import Doctors from './DoctorCard';
 import axiosClient from './axiosClient';
-
 export default function ListOfDoctors() {
-
   let data = [];
   const location = useLocation();
   data = location.state;
   console.log(data.data[0])
   const [doctors, setDoctors] = useState(data.data[0]);
   const [image, setImages] = useState(data.data[1]);
-
   const [doctorsss, setDoctorsss] = useState([])
   const [imagess, setImagesss] = useState([])
-
   useEffect(() => {
     axiosClient.get(`/doctors`).then((res) => {
       // Handle response
@@ -25,7 +21,6 @@ export default function ListOfDoctors() {
         setDoctorsss(res.data[0]);
         setImagesss(res.data[1]);
       }
-      // console.log(response.data);
     })
       .catch(err => {
         // Handle errors
@@ -33,13 +28,10 @@ export default function ListOfDoctors() {
       });
 
   }, [])
-
-  // console.log(doctors)
   return (
     <div style={{ display: 'flex', width: '100vw' }}>
       {doctors !== undefined ? <>
         <div className='listof-doctors' style={{ margin: '3rem', width: '60vw' }}>
-
           {doctors.map(doctor => (
             <div key={doctor.id}>
               {image.map((img) => (
@@ -50,7 +42,6 @@ export default function ListOfDoctors() {
                     </>
                     : <>
                     </>}
-
                 </div>
               ))}
             </div>
@@ -58,13 +49,9 @@ export default function ListOfDoctors() {
         </div>
       </> : <>
         <div>
-
-
           <p className='py-2 text-warning'> No Doctor found of your search result </p>
           <p className='py-2'> Here is some suggested Doctors </p>
-
           <div className='listof-doctors' style={{ margin: '3rem', width: '60vw' }}>
-
             {doctorsss.map(doctor => (
               <div key={doctor.id}>
                 {imagess.map((img) => (
@@ -84,11 +71,9 @@ export default function ListOfDoctors() {
         </div>
       </>
       }
-
       <div style={{ width: '40vw' }}>
         <h3 className='py-2'>|| Suggested Doctors ||</h3>
         <div className="container" style={{ marginTop: '5vh', width: '14vw' }}>
-          {/* <Carousel responsive={responsive}> */}
           {doctorsss.map(doctor => (
             <div key={doctor.id}>
               {imagess.map((img) => (
@@ -105,18 +90,9 @@ export default function ListOfDoctors() {
               ))}
             </div>
           ))}
-          {/* </Carousel> */}
-
         </div>
       </div>
 
     </div>
   )
 }
-
-
-{/* {doctors.map(doctor => (
-          <div key={doctor.id}>
-            <DoctorCardOfList id={doctor.id} name={doctor.doc_name} desc={doctor.doc_desc} location={doctor.location} clinic={doctor.clinic} clinic_desc={doctor.clinic_desc} />
-          </div>
-        ))} */}

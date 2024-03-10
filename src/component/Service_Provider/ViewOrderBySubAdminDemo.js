@@ -2,20 +2,14 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
-
 export default function ViewOrderBySubAdminDemo() {
-
   const [product, setProduct] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [order, setOrders] = useState([]);
   const [orderDetail, setorderDetail] = useState([]);
 
   const param = useParams();
-  // var order_id = param.id;
   var product_id = param.product_id;
-  // console.log(order_id)
-  // console.log(product_id)
-  // console.log(product_id)
   useEffect(() => {
     axiosClient.get(`/sub-admin/orders/product/${product_id}`)
       .then(res => {

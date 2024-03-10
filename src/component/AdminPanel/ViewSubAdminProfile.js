@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import productimg from '../../img/doctor2.webp'
-import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewSubAdminProfile() {
@@ -9,11 +8,9 @@ export default function ViewSubAdminProfile() {
         alignItems: 'center',
 
     }
-
     const [customer, setCustomer] = useState([]);
     const param = useParams();
     var user_id = param.user_id;
-    // console.log(user_id)
     useEffect(() => {
         axiosClient.get(`/superadmin/orders/customer/${user_id}`)
             .then(res => {
@@ -24,7 +21,6 @@ export default function ViewSubAdminProfile() {
             .catch(err => {
                 console.log(err)
             })
-
     },[])
 
     console.log(customer)
@@ -32,9 +28,7 @@ export default function ViewSubAdminProfile() {
     const handleClick = ()=>{
         navigate('/superadmin' , { state: { loggedIn: true } });
     }
-
     return (
-
         <>
             <div className="container mt-4 " style={{ minHeight: '50vh' }}>
                 <div className="product" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

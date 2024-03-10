@@ -1,10 +1,7 @@
 import React from 'react'
-import doctorimg from '../img/doctor3.webp';
 import {
     Link
 } from "react-router-dom";
-
-
 export default function DoctorCardForAD(props) {
     return (
         <div className='doctor-c-l' style={{padding:'5px'}}>
@@ -38,9 +35,7 @@ export default function DoctorCardForAD(props) {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     )
 }

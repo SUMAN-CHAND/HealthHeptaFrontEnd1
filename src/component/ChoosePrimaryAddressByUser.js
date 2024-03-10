@@ -2,27 +2,18 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import AddNewAddressOfUser from './AddNewAddressOfUser';
 import axiosClient from './axiosClient';
-
-
 export default function ChoosePrimaryAddressByUser({ closeTheModal }) {
-
-
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);
     }
-
-
     const customStyles = {
         content: {
             overflowY: 'hidden',
@@ -34,21 +25,15 @@ export default function ChoosePrimaryAddressByUser({ closeTheModal }) {
             transform: 'translate(-50%, -50%)',
         },
     };
-
     const [userAddress, setUserAddress] = useState([]);
     const [address_id, setAddress_id] = useState();
-
-
     useEffect(() => {
         axiosClient.get(`/get/all/address`).then((response) => {
             setUserAddress(response.data)
         });
     }, []);
-
-
     let makePrimaryAddress = (e) => {
         e.preventDefault();
-        console.log(address_id)
         axiosClient.post(`/makeprimary/address`, {address_id})
             .then(res => {
                 console.log(res.data)
@@ -67,7 +52,6 @@ export default function ChoosePrimaryAddressByUser({ closeTheModal }) {
     const handleInput = (id) => {
         setAddress_id(id);
     }
-
     return (
         <div style={{ width: '40vw', textAlign: 'center' }}>
             <div>
@@ -75,7 +59,7 @@ export default function ChoosePrimaryAddressByUser({ closeTheModal }) {
                     <h5 style={{ fontWeight: '700' }}>Your all address</h5>
                 </div>
                 <div>
-                    {userAddress.map(address => (
+                    {userAddress&&userAddress.map(address => (
                         <div key={address.address_id} className='m-2' style={{ border: '1px solid black' }}>
                             <div className='m-1 p-2' style={{ display: 'flex' }}>
                                 <input className='m-1 p-1' type="radio" onChange={(e) => handleInput(address.address_id)} name="p_address" id="p_address" />

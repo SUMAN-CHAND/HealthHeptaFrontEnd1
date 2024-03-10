@@ -4,7 +4,6 @@ import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
-import axios from 'axios';
 import axiosClient from '../axiosClient';
 
 function Dashboard() {

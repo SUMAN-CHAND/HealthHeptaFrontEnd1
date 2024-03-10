@@ -1,11 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import axiosClient from './axiosClient';
 import { Link } from 'react-router-dom';
-
 export default function OrderBill() {
-
   const [product, setProduct] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [order, setOrders] = useState([]);
@@ -14,30 +11,6 @@ export default function OrderBill() {
   let stateData = location.state;
   var order_id = stateData.orderId;
   var productIds = stateData.productIds;
-  
-// console.log(productIds)
-//   const param = useParams();
-  // var order_id = param.id;
-//   var product_id = param.product_id;
-  // console.log(order_id)
-  // console.log(product_id)
-  // console.log(product_id)
-//   useEffect(() => {
-//     axiosClient.get(`/sub-admin/orders/product/${product_id}`)
-//       .then(res => {
-//         if (res.data !== null) {
-//           setProduct(res.data[0]);
-//         }
-//       })
-//       .catch(err => {
-//         console.log(err)
-//       })
-
-//   }, [])
-//   console.log(product)
-
-//   var user_id = param.user_id;
-  // console.log(user_id)
   useEffect(() => {
     axiosClient.get(`/profile`)
       .then(res => {
@@ -48,18 +21,13 @@ export default function OrderBill() {
       .catch(err => {
         console.log(err)
       })
-
   }, [])
-
-//   var order_id = param.id;
-  // console.log(product_id)
   useEffect(() => {
     axiosClient.get(`/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data !== null) {
           setOrders(res.data[0]);
           setorderDetail(res.data[0])
-          // console.log(product)
         }
       })
       .catch(err => {
@@ -73,63 +41,41 @@ export default function OrderBill() {
   let TotalSgst = 0;
   let totalNumofitem;
   if (order) {
-      totalNumofitem = order.length;
-
+    totalNumofitem = order.length;
   }
   if (totalNumofitem > 0) {
-      let totalPriceArray = order.map((orders => {
-          return ((((orders.product_price * orders.discount) / 100)) * orders.quantity);
-      }))
-      totalPrice = totalPriceArray.reduce((val1, val2) => {
-          return val1 + val2;
-      }, 0)
+    let totalPriceArray = order.map((orders => {
+      return ((((orders.product_price * orders.discount) / 100)) * orders.quantity);
+    }))
+    totalPrice = totalPriceArray.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
   }
   if (totalNumofitem > 0) {
-      let totalPriceArray = order.map((product => {
-          return (product.product_price * product.quantity);
-      }))
-      totalActusalPrice = totalPriceArray.reduce((val1, val2) => {
-          return val1 + val2;
-      }, 0)
+    let totalPriceArray = order.map((product => {
+      return (product.product_price * product.quantity);
+    }))
+    totalActusalPrice = totalPriceArray.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
   }
   if (totalNumofitem > 0) {
-      let TotalSgstPerProduct = order.map((product => {
-          return ((((product.product_price * product.sgst) / 100)));
-      }))
-      let TotalCgstPerProduct = order.map((product => {
-          return ((((product.product_price * product.cgst) / 100)));
-      }))
-      TotalSgst = TotalSgstPerProduct.reduce((val1, val2) => {
-          return val1 + val2;
-      }, 0)
-      TotalCgst = TotalCgstPerProduct.reduce((val1, val2) => {
-          return val1 + val2;
-      }, 0)
+    let TotalSgstPerProduct = order.map((product => {
+      return ((((product.product_price * product.sgst) / 100)));
+    }))
+    let TotalCgstPerProduct = order.map((product => {
+      return ((((product.product_price * product.cgst) / 100)));
+    }))
+    TotalSgst = TotalSgstPerProduct.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
+    TotalCgst = TotalCgstPerProduct.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
   }
-  // console.log(TotalCgst)
-  // console.log(TotalSgst)
   let totalGst = TotalCgst + TotalSgst;
-  // let total_Price = 0;
-  // let total_Discount = 0;
-  // useEffect(() => {
-  //   order.map((items)=>{
-  //     // console.log(items.product_price)
-  //     total_Price = total_Price + (items.product_price);
-  //     total_Discount = total_Discount +(items.product_price * (items.discount/100));
-  //   })
-
-  // }, [order.length])
-  // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate('/sub-admin/home', { state: { loggedIn: true } });
-  // }
-  // console.log(total_Price,total_Discount)
-//   console.log(product.product_price)
-//   const discountPrice = (product.product_price - ((product.product_price * product.discount) / 100));
-//   console.log(discountPrice)
-const discountPrice=1;
+  const discountPrice = 1;
   const delevaryCharge = 25;
-
   return (
     <div>
       <div className='m-5 p-3 shadow' style={{ border: '2px solid black' }}>
@@ -149,9 +95,7 @@ const discountPrice=1;
                       <p><i className="uil uil-phone me-1"></i>742136</p>
                     </div>
                   </div>
-
                   <hr className="my-4" />
-
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="text-muted">
@@ -171,14 +115,11 @@ const discountPrice=1;
                           <h5 className="font-size-15 mb-1">Order Date:</h5>
                           <p>{orderDetail.order_date}</p>
                         </div>
-
                       </div>
                     </div>
                   </div>
-
                   <div className="py-2">
                     <h5 className="font-size-15">Order Summary</h5>
-
                     <div className="table-responsive">
                       <table className="table align-middle table-nowrap table-centered mb-0">
                         <thead>
@@ -190,9 +131,7 @@ const discountPrice=1;
                             <th className="text-end" style={{ width: '120px' }}>Total</th>
                           </tr>
                         </thead>
-
                         <tbody>
-
                           {order.map((orders, index) => (
                             <tr key={index}>
                               <th scope="row">{orders.product_id}</th>
@@ -207,11 +146,8 @@ const discountPrice=1;
                               <td className="text-end">₹ ({orders.quantuity}  {orders.product_price} )</td>
                             </tr>
                           ))}
-
                           <tr>
-
                           </tr>
-
                           <tr>
                             <th scope="row" colspan="4" className="text-end">Sub Total</th>
                             <td className="text-end">₹{totalActusalPrice}</td>
@@ -235,7 +171,7 @@ const discountPrice=1;
 
                           <tr>
                             <th scope="row" colspan="4" className="border-0 text-end">Total</th>
-                            <td className="border-0 text-end"><h4 className="m-0 fw-semibold">₹{(totalActusalPrice-totalPrice+delevaryCharge+totalGst)} </h4></td>
+                            <td className="border-0 text-end"><h4 className="m-0 fw-semibold">₹{(totalActusalPrice - totalPrice + delevaryCharge + totalGst)} </h4></td>
                           </tr>
 
                         </tbody>
@@ -244,10 +180,9 @@ const discountPrice=1;
                     <div className="d-print-none mt-4">
                       <div className="float-end">
                         <a href="javascript:window.print()" className="btn btn-success me-1"><i className="fa fa-print">Print</i></a>
-                        {/* <a href="#" className="btn btn-primary w-md"></a> */}
                       </div>
                       <div>
-                       <Link to='/'> <button className='btn btn-primary'>Go to Home </button></Link>
+                        <Link to='/'> <button className='btn btn-primary'>Go to Home </button></Link>
                       </div>
                     </div>
                   </div>

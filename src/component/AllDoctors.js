@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Doctors from './DoctorCard'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
-import axios from 'axios';
-import ProductCard from './ProductCard';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Helmet } from 'react-helmet';
-
 export default function AllDoctors(props) {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
@@ -33,8 +30,6 @@ export default function AllDoctors(props) {
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-
-  // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
       axiosClient.get(`/doctors`).then((res) => {
@@ -43,9 +38,7 @@ export default function AllDoctors(props) {
           setDoctors(res.data[0]);
           setImages(res.data[1]);
           setLoading(true);
-
         }
-        // console.log(response.data);
       })
         .catch(err => {
           // Handle errors
@@ -53,26 +46,8 @@ export default function AllDoctors(props) {
         });
 
     }, [])
-
   }
 
-  //  else {
-  //   useEffect(() => {
-  //     axiosClient.get(`/product/${props.location}`).then((res) => {
-
-  //       // Handle response
-  //       if (res.data !== null) {
-  //         setDoctors(res.data)
-  //       }
-  //       // console.log(response.data);
-  //     })
-  //       .catch(err => {
-  //         // Handle errors
-  //         console.error(err);
-  //       });
-
-  //   }, [])
-  // }
 
 
 

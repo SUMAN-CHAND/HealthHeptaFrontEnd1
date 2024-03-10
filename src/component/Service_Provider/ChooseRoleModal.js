@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 import {
     Link, useNavigate
@@ -16,38 +16,6 @@ const customStyle = {
 
 export default function ChooseRoleModal({ closeTheModal }) {
     const navigate = useNavigate();
-    // const [values, setValues] = useState({
-    //     role: ''
-    // });
-
-    // const handleChange = (event) => {
-    //     setValues({ ...values, [event.target.name]: event.target.value });
-    //     console.log(values)
-    //     HandleSubmit();
-    // }
-    // const [values, setValues] = useState({
-    //     role: ''
-    // });
-
-    // const handleChange = (event) => {
-    //     setValues({ role: event.target.value});
-    //     console.log(values)
-    //     // Now you're correctly updating the 'values' object
-    //     // HandleSubmit();
-    // }
-
-    // function HandleSubmit() {
-    //     closeTheModal();
-    //     navigate('/sub-admin/signup', {
-    //         state: {
-    //             role: values.role
-    //         }
-    //     });
-    // }
-
-    // const navigate = useNavigate();
-    // const [role, setRole] = useState('');
-
     const [values, setValues] = useState({
         role: '',
     });

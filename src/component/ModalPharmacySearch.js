@@ -3,7 +3,6 @@ import medicines from '../img/Medicine_Delivery.png';
 import {
   Link, useNavigate
 } from "react-router-dom";
-import axios from 'axios';
 import axiosClient from './axiosClient';
 const customStyle = {
   maxHeight: '60vh',
@@ -12,73 +11,41 @@ const customStyle = {
   overflow: 'hidden',
   background: 'linear-gradient(rgba(250,0,0,-0.5),transparent)',
   backgroundColor: 'rgb(41 116 132)'
-
 };
-
-
 export default function ModalPharmacySearch({ closeTheModal }) {
-
   const [locations, setLocation] = useState([])
   const [chooseLocation, setChooseLocation] = useState([])
   const [selectLocation, setSelectLocation] = useState()
   const [products, setProducts] = useState([])
   const [chooseProduct, setChooseProduct] = useState([])
-
   useEffect(() => {
     axiosClient.get(`/profile-details`)
         .then(res => {
             setSelectLocation(res.data[2])
         })
 },[]);
-// consol.log(selectLocation)
-
 useEffect(() => {
     axiosClient.get(`/locations`)
         .then(res => {
             setLocation(res.data);
-            // setChooseLocation(res.data)
         })
 }, [])
   useEffect(() => {
     axiosClient.get(`/search`)
       .then(res => {
         setProducts(res.data);
-        // setChooseLocation(res.data)
       })
   }, [])
-
-
-  // const handleFilter = (event) => {
-  //   const searchword = event.target.value.toLowerCase();
-  //   const newFilter = locations.filter((value) => {
-  //     return value.name.toLowerCase().includes(searchword);
-  //   });
-  //   if (searchword === "") {
-  //     setChooseLocation([]);
-  //   } else {
-  //     setChooseLocation(newFilter);
-  //   }
-  // };
-  // var value;
-  // if (selectLocation !== undefined) {
-  //   value = `/medicines/${selectLocation}`;
-  // } else {
-  //   value = `/medicines`
-  // }
   useEffect(() => {
     axiosClient.get(`/madicine/medicineshops`)
       .then(res => {
         setProducts(res.data);
-        // setChooseLocation(res.data)
       })
   }, [])
   const navigate = useNavigate();
   const [values, setValues] = useState({
     input: ''
   })
-  // const handleInput = (event) => {
-  //     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-  // }
   const handleFilter = (event) => {
     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
@@ -93,9 +60,7 @@ useEffect(() => {
   };
   const searchMedicne = async () => {
     try {
-        // const response = await axiosClient.post(`/medicineshop/search`, values);
-        // if (response.data !== null) {
-            // console.log(response.data)
+      
             navigate(`/medicineshop/search/${values.input}`,
                 {
                     // state: {
@@ -113,11 +78,6 @@ useEffect(() => {
                 });
                 setChooseProduct([]);
 
-            //    console.log(response.data)
-    //     } else {
-    //         // Handle logout failure
-    //         console.error(response.data.message);
-    //     }
     } catch (error) {
         console.error('An error occurred:', error);
     }
@@ -137,8 +97,9 @@ useEffect(() => {
             <div className="search-m search-m-in-modal" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem' }}>
               <div className="dropdown me-2 dropdown-location-modal-m dropdown-toggle-modal"  >
                 <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary dropdown-location-modal-m" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
+                <option defaultValue={'choose your location..'} >choose your Pin Code..</option>
                   {locations.map((location, index) => (
-                    <option key={index} value={location.name}>{location.name}</option>
+                    <option key={index} value={location.pin_code}>{location.pin_code}</option>
                   )
                   )}
                 </select>

@@ -1,25 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 
 export default function DoctorTimeTable() {
-
-
-
-    // var appoint_date = '';
-    // var appoint_time = '';
-
-    // const [values, setValues] = useState({
-    //     appoint_date: appoint_date,
-    //     appoint_time: appoint_time,
-
-    // });
-    // const handleInput = (event) => {
-    //     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    // }
-
     const param = useParams();
     const doctor_id = param.doctor_id;
 

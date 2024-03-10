@@ -1,10 +1,5 @@
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-// import { BrowserRouter } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
-// import CartItemCard from './CartItemCard';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactWhatsapp from 'react-whatsapp';
@@ -15,14 +10,9 @@ import axiosClient from './axiosClient';
 import Modal from 'react-modal';
 import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
 import AddNewAddressOfUser from './AddNewAddressOfUser';
-
-
-
-
 export default function UserProfile() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const success = () => toast.success('Success', {
         position: "top-right",
         autoClose: 5000,
@@ -43,41 +33,28 @@ export default function UserProfile() {
         progress: undefined,
         theme: "light",
     });
-    // const location = useLocation();
-    // const propsData = location.state;
-    // // console.log(propsData);
-
-
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);
     }
     const [modalIsOpenAdd, setIsOpenAdd] = React.useState(false);
-
     function openModalAdd() {
         setIsOpenAdd(true);
     }
-
     function afterOpenModalAdd() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModalAdd() {
         document.body.style.overflow = 'unset';
         setIsOpenAdd(false);
     }
-
-
     const customStyles = {
         content: {
             overflowY: 'hidden',
@@ -90,13 +67,10 @@ export default function UserProfile() {
             zIndex: '100'
         },
     };
-
     const navigate = useNavigate();
-
     const [user, setUser] = useState({});
     const [userAddress, setUserAddress] = useState({});
     const [loggedIn, setLoggedIn] = useState([])
-
     const handleLogout = async () => {
         try {
             const response = await axiosClient.post('/profile');
@@ -111,21 +85,8 @@ export default function UserProfile() {
             console.error('An error occurred:', error);
         }
     };
-    // const navigate = useNavigate;
-
-
     const [products, setProducts] = useState([]);
     const [ind_product_Images, setInd_product_Images] = useState([]);
-    // useEffect(() => {
-    //     axiosClient.get('/profile/order').then((res) => {
-    //         if (res.data !== null) {
-    //             setProducts(res.data)
-    //         } else {
-    //             console.log('Product not present')
-    //         }
-    //     })
-    // }, [])
-
     const showOrders = () => {
         axiosClient.get(`/profile/orders`).then((res) => {
             if (res.data !== null) {
@@ -136,8 +97,6 @@ export default function UserProfile() {
             }
         })
     }
-
-
     let flag = false;
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
@@ -145,8 +104,6 @@ export default function UserProfile() {
             setUserAddress(response.data[1])
         });
     }, []);
-
-    // console.log(user)
     let numOfProduct;
     if (products) {
         numOfProduct = products.length;
@@ -166,15 +123,9 @@ export default function UserProfile() {
     const renDataStyle = {
         backgroundColor: 'rgb(237 237 237)',
         display: 'flex',
-        // minHeight: '50vh',
         justifyContent: 'center',
         alignItems: 'center'
     }
-    // var [phonenum, updatePhonenum] = useState(false);
-    // const UpdatePhone = () => {
-    //     updatePhonenum(true);
-    //     console.log(phonenum)
-    // }
     var [address, setAddress] = useState(false);
     const UpdateAddress = () => {
         setAddress(true);
@@ -183,11 +134,9 @@ export default function UserProfile() {
     const updatePhone = () => {
         setPhoneStatus(true);
     }
-
     const [phoneno, setPhoneno] = useState({
         phone: ''
     })
-
     const handlePInput = (event) => {
         setPhoneno(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
@@ -209,7 +158,6 @@ export default function UserProfile() {
                 }
             })
     }
-
     const [values, setValues] = useState({
         Village: '',
         P_O: '',
@@ -218,7 +166,6 @@ export default function UserProfile() {
         State: '',
         Pin: '',
     })
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
@@ -227,7 +174,6 @@ export default function UserProfile() {
         axiosClient.patch(`/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
-                    // console.log(values)
                     setAddress(false);
                     success();
                     navigate('/profile');
@@ -246,7 +192,6 @@ export default function UserProfile() {
         axiosClient.post(`/profile/address`, values)
             .then(res => {
                 if (res.data !== null) {
-                    // console.log(values)
                     setAddress(false);
                     success();
                     navigate('/profile');
@@ -315,11 +260,7 @@ export default function UserProfile() {
                 console.error(err);
             });
     }
-    // console.log(appoiments)
-    //to get user address
-    // console.log(`${process.env.REACT_APP_GEOLOCATION_API_KEY}`)
-    // console.log(`${process.env.REACT_APP_GEOLOCATION_API_ENDPOINT}`)
-    // console.log(`${process.env.REACT_APP_HOST}`)
+   
     const getUserCurrentAddress = async (latitude, longitude) => {
         // console.log(latitude,longitude)
         let query = `${latitude},${longitude}`;
@@ -542,11 +483,10 @@ export default function UserProfile() {
                                                         <td>{appoiment.AppointmentStatus}</td>
                                                         {appoiment.type_of_visite === 'online' ? <>
                                                             <td>{appoiment.type_of_visite}
-                                                                console.log({appoiment.Phone_number})
                                                                 <ReactWhatsapp number={`'+91 ' + ${appoiment.Phone_number}`} className="btn btn-primary outline" massage="Hi There is HealthHeapta">Join Now</ReactWhatsapp>
                                                             </td>
                                                         </> : <>
-                                                            <td>{appoiment.type_of_visite}</td>
+                                                            <td>{appoiment.type_of_visite}</td> 
                                                         </>}
                                                         <td> <Link to={`/reschedule/${appoiment.id}`}><button className="btn btn-info m-1">Reschedule</button></Link></td>
                                                     </tr>

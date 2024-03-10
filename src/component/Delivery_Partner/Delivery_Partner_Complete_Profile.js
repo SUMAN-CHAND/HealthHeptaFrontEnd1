@@ -1,24 +1,14 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
-
 export default function Delivery_Partner_Complete_Profile() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const location = useLocation();
     const state = location.state;
-    // console.log(state)
     const data = location.state.data
     const value = location.state.value
-    // console.log(data.insertId)
-    // console.log(value)
-
-
-
-
     const [values, setValues] = useState({
         partner_id: data.insertId,
         fullname: value.name,
@@ -34,12 +24,6 @@ export default function Delivery_Partner_Complete_Profile() {
         AadhaarCardImageID: null,
         PanCardImageID: null
     })
-
-    // const [values, setValues] = useState({
-    //     // ...other product data fields
-    //     productImageId: null, // Initialize as null
-    // });
-
     const handleAadhaarImageUpload = (imageId) => {
         setValues({ ...values, AadhaarCardImageID: imageId });
     };
@@ -49,7 +33,6 @@ export default function Delivery_Partner_Complete_Profile() {
 
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const navigate = useNavigate();
     const handleSubmit = (event) => {
@@ -118,10 +101,6 @@ export default function Delivery_Partner_Complete_Profile() {
                                 <input required className='m-2  p-1' type="text" style={{ width: '33vw' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br />
                             </div>
                         </div>
-
-
-
-
                         <div style={{ textAlign: 'left' }}>
                             <h5 className='m-2 p-3'>Add Parmanent Address :- </h5>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -162,16 +141,11 @@ export default function Delivery_Partner_Complete_Profile() {
                             </div>
                             <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="image">Add Your Aadhaar Card Image </label>
-                                {/* <input className='m-2  p-1' type="file" style={{ width: '90%' }} placeholder='Enter Product image'
-                                name='img' onChange={handleInput} /><br /> */}
                                 <UploadImage onImageUpload={handleAadhaarImageUpload} />
                             </div>
                             <div className="form-check licence-add" style={{ textAlign: 'initial', fontWeight: '700' }}>
                                 <label className='p-1' htmlFor="image">Add Your Pan Card Image</label>
-                                {/* <span className='mx-3'><input type="file" name="licence" id="licence" /></span> */}
-                                {/* <UploadImage/> */}
                                 <UploadImage onImageUpload={handlePanCardImageUpload} />
-
                             </div>
                         </div>
 
@@ -179,12 +153,9 @@ export default function Delivery_Partner_Complete_Profile() {
                             <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} />
                             <label className="form-check-label" htmlFor="flexCheckChecked">
                                 <p>Please confirm the data are  <span className='text-warning'>right</span> </p>
-
                             </label>
                         </div>
-                        {/* <Link to='/login'> */}
                         <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '40%', color: 'white', cursor: 'pointer' }}>Submit</button>
-                        {/* </Link> */}
                     </form>
                 </div>
             </div>

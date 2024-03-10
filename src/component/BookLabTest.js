@@ -1,47 +1,34 @@
 import React, { useEffect, useState } from 'react'
-import doctor3 from '../img/doctor3.webp';
 import {
-    Link, useLocation, useNavigate, useParams
+    useNavigate, useParams
 } from "react-router-dom";
-import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
 import axiosClient from './axiosClient';
-
 export default function BookLabTest() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
     const param = useParams();
     const id = param.id;
-    // console.log(param)
-
-
     const [user, setUser] = useState({});
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
-    // console.log(user)
     var user_id = user.id;
-    // console.log(user_id)
     const [LabTests, setLabTests] = useState([]);
     const [image, setImages] = useState([]);
     const [clinic_id, setClinicId] = useState();
     const [total_amount, setTotal_amount] = useState();
     useEffect(() => {
         axiosClient.get(`/book/lab-test/${id}`).then((res) => {
-
             // Handle response
             if (res.data !== null) {
                 setLabTests(res.data[0])
                 setImages(res.data[1])
-                // console.log(res.data[0][0])
-                // console.log(res.data[0][0].Clinic_id)
                 setClinicId(res.data[0][0].Clinic_id);
                 setTotal_amount(res.data[0][0].Price);
-
             }
-            // console.log(response.data);
         })
             .catch(err => {
                 // Handle errors
@@ -49,11 +36,6 @@ export default function BookLabTest() {
             });
 
     }, []);
-
-    // console.log(clinic_id)
-
-
-
     const [values, setValues] = useState({
         Test_id: id,
         appoint_date: '',
@@ -69,27 +51,16 @@ export default function BookLabTest() {
         payment: '',
         total_amount: total_amount,
     });
-
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
-
-    // console.log(doctors)
-
-    // console.log(values)
     const navigate = useNavigate();
     const handleSubmit = (event) => {
         if (user_id !== undefined) {
-            // console.log(values)
-
-
-            // navigate('/');  
             event.preventDefault();
             axiosClient.post(`/labbook`, [values, clinic_id, user_id, total_amount])
                 .then(res => {
                     if (res.data !== null) {
-                        // console.log(values)
                         if (values.payment[0] === 'cod') {
                             alert('Lab Booking Successfull!!!');
                             navigate('/');
@@ -100,11 +71,6 @@ export default function BookLabTest() {
                                 }
                             });
                         }
-                        // Notify admins and super admins about the new order
-                        // socket.emit('newOrder', 'New order placed!');
-
-                        // alert('Lab Booking Successfull!!!');
-
                     }
                     else if (res.data === null) {
                         alert('Appoiment Failed');
@@ -119,10 +85,6 @@ export default function BookLabTest() {
             navigate('/login')
         }
     }
-
-
-
-
     return (
         <div style={{ backgroundColor: 'rgb(193 193 206 / 36%)' }}>
             <div className="row doctor-appoiment" style={{ display: 'flex', padding: '2rem' }}>
@@ -167,8 +129,7 @@ export default function BookLabTest() {
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="type_of_visite">Gender : </label><br></br>
-                            {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  Your Type Of Visite'
-                                    name='type_of_visite' onChange={handleInput} /><br /> */}
+                            
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <select
                                     onChange={handleInput}
@@ -184,8 +145,6 @@ export default function BookLabTest() {
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="type_of_visite">Sample Collection : </label><br></br>
-                            {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  Your Type Of Visite'
-                                    name='type_of_visite' onChange={handleInput} /><br /> */}
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <select
                                     onChange={handleInput}
@@ -215,7 +174,6 @@ export default function BookLabTest() {
                                     required className=' p-1' type="text" style={{ width: '85%', border: '2px solid black', marginLeft: '5%', borderRadius: '5px' }}
                                     placeholder='Enter  Your Type Of Visite'
                                     name='payment'
-
                                 >
                                     <option value="select" selected>Select</option>
                                     <option value="online_banking">Online Banking</option>

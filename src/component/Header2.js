@@ -18,11 +18,6 @@ import { LiaClinicMedicalSolid } from "react-icons/lia";
 import { BiSolidOffer } from "react-icons/bi";
 import { IoMedkitOutline } from 'react-icons/io5';
 import ModalPharmacySearch from './ModalPharmacySearch';
-
-
-
-
-
 const customStyles = {
     content: {
         top: '50%',
@@ -33,7 +28,6 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-
 const fontStyle = {
     fontSize: 'calc(1vw + 0.5rem)',
     display: 'flex',
@@ -45,12 +39,10 @@ export default function Header2() {
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.backgroundColor = 'rgb(76 76 76 / 19%)'
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         document.body.style.backgroundColor = '#fff'
@@ -153,7 +145,6 @@ export default function Header2() {
                             style={customStyles}
                             contentLabel="Example Modal"
                         >
-
                             <SearchMedicinesStoreByLocation closeTheModal={closeModal} />
                         </Modal>
                     </div>

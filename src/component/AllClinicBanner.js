@@ -1,11 +1,9 @@
 import React from 'react'
 import MedicineBanner from './MedicineBanner'
 import clinic from '../img/Clinic.webp';
-
 export default function AllClinicBanner() {
   return (
     <div>
-      
       <div>
             <div id="carouselExampleDark" className="carousel carousel-dark slide">
                 <div className="carousel-indicators">

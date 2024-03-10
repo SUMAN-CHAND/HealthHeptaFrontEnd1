@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import productimg from '../../img/doctor2.webp'
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewSubAdminOrders() {
-    const pStyle = {
-        display: 'flex',
-        alignItems: 'center',
-
-    }
-
     const [orders, setOrders] = useState([]);
     const param = useParams();
     var user_id = param.user_id;
-    // console.log(user_id)
     useEffect(() => {
         console.log('click')
         axiosClient.get(`/superadmin/subadmin/orders/${user_id}`)
@@ -23,27 +14,12 @@ export default function ViewSubAdminOrders() {
                 if (response.data !== null) {
                     setOrders(response.data)
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }, [])
-    // useEffect(() => {
-    //     axiosClient.get(`/superadmin/orders/customer/${user_id}`)
-    //         .then(res => {
-    //             if (res.data) {
-    //                 setCustomer(res.data[0]);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-
-    // },[])
-
-    // console.log(customer)
     const navigate = useNavigate();
     const handleClick = () => {
         navigate('/superadmin', { state: { loggedIn: true } });

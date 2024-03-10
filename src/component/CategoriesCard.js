@@ -1,23 +1,19 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import axiosClient from './axiosClient';
-
 export default function CategoriesCard(props) {
   const navigate = useNavigate();
   const [chooseProduct, setChooseProduct] = useState([])
   const [selectLocation, setSelectLocation] = useState()
   const Category = props.title;
-  // console.log(Category)
   const [values, setValues] = useState({
     input: Category,
     from:'category'
 })
   const searchMedicne = async () => {
-    // console.log(values)
     try {
         const response = await axiosClient.post(`/search`, values);
         if (response.data !== null) {
-            // console.log(response.data)
             navigate(`/medicines/${values.input}`,
                 {
                     state: {
@@ -36,10 +32,7 @@ export default function CategoriesCard(props) {
                     input:''
                 });
                 setChooseProduct([]);
-
-            //    console.log(response.data)
         } else {
-            // Handle logout failure
             console.error(response.data.message);
         }
     } catch (error) {

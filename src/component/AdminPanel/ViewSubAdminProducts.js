@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import productimg from '../../img/doctor2.webp'
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewSubAdminProducts() {
-    const pStyle = {
-        display: 'flex',
-        alignItems: 'center',
-
-    }
-
     const [products, setProducts] = useState([]);
     const param = useParams();
     var user_id = param.user_id;
-    // console.log(user_id)
     useEffect(() => {
         console.log('click')
         axiosClient.get(`/superadmin/subadmin/products/${user_id}`)
@@ -23,27 +14,12 @@ export default function ViewSubAdminProducts() {
                 if (response.data !== null) {
                     setProducts(response.data)
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }, [])
-    // useEffect(() => {
-    //     axiosClient.get(`/superadmin/orders/customer/${user_id}`)
-    //         .then(res => {
-    //             if (res.data) {
-    //                 setCustomer(res.data[0]);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-
-    // },[])
-
-    // console.log(customer)
     const navigate = useNavigate();
     const handleClick = () => {
         navigate('/superadmin', { state: { loggedIn: true } });
@@ -64,9 +40,7 @@ export default function ViewSubAdminProducts() {
           alert('No Product Delete')
         }
       }
-
     return (
-
         <>
             <div className="container mt-4 " style={{ minHeight: '50vh' }}>
                 <table className="table table-striped">

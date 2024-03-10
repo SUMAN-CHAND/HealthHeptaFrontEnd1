@@ -1,14 +1,10 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosClient from '../axiosClient';
-
 export default function UpdateProduct() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
     const param = useParams();
-    // console.log(param)
-    // console.log(param.product_id)
     const [values, setValues] = useState({
         product_name: '',
         product_price: '',
@@ -23,10 +19,8 @@ export default function UpdateProduct() {
 
     })
     const [check, setCheck] = useState(false);
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const navigate = useNavigate();
     const handleSubmit = (event) => {
@@ -134,9 +128,7 @@ export default function UpdateProduct() {
 
                             </label>
                         </div>
-                        {/* <Link to='/login'> */}
                         <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Update Product</button>
-                        {/* </Link> */}
                     </form>
                 </div>
             </div>

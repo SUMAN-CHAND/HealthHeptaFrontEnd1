@@ -2,23 +2,15 @@ import React, { useEffect, useState } from 'react'
 import ClinicCardForList from './clinicCardForList.js';
 import DoctorCardOfList from './DoctorCardOfList';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import axiosClient from './axiosClient.js';
-
 export default function ParticularLaboratory() {
     const param = useParams();
-    // console.log(param)
     const client_id = param.id;
-
     const [clinics, setClinic] = useState([]);
     const [image, setImage] = useState([]);
     const [laboratorys, setLaboratorys] = useState([]);
     const [ind_laboratory_images, setInd_laboratory_images] = useState([]);
-
-
-
-
     useEffect(() => {
         axiosClient.get(`/particular-laboratory/${client_id}`)
             .then(res => {
@@ -30,7 +22,6 @@ export default function ParticularLaboratory() {
 
                 }
             })
-
     }, []);
     useEffect(() => {
         axiosClient.get(`/particular-laboratory/see-labtests/${client_id}`)
@@ -41,21 +32,12 @@ export default function ParticularLaboratory() {
                     setInd_laboratory_images(response.data[1])
                     // loadImages();
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }, []);
-    console.log(laboratorys)
-    console.log(ind_laboratory_images)
-
-
-    // console.log(clinic)
-    // console.log(image)
-
-    // const clinic_name = 'Applo Clinic';
     return (
         <div>
             <div className="clinic" >
@@ -67,8 +49,6 @@ export default function ParticularLaboratory() {
                                     <div key={img.id}>
                                         {parseInt(clinic.SubAdminImageId) === img.id ?
                                             <>
-                                                {/* <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.city} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
-                                                < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
                                                 <div className="col-13 m-1 p-1 mb-2 shadow " style={{ display: 'flex', backgroundColor: 'white', borderRadius: '5px' }}>
                                                     <div className="col-5  ">
                                                         <div className="clinicimage py-2">
@@ -93,12 +73,10 @@ export default function ParticularLaboratory() {
                                             </>
                                             : <>
                                             </>}
-
                                     </div>
                                 ))}
                             </div>
                         ))}
-
                         <div className='doctor-list-clinic' style={{ textAlign: 'center' }}>
                             <h2 className='text-decoration-underline shadow font-weight-bold m-1 p-1' style={{ backgroundColor: 'white', borderRadius: '5px' }} >All Test Lab's in <span style={{ color: '#0d6efd' }}>Here</span> </h2>
 
@@ -110,8 +88,6 @@ export default function ParticularLaboratory() {
                                                 <div key={img.id}>
                                                     {parseInt(laboratory.test_imageId) === img.id ?
                                                         <>
-                                                            {/* <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.city} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
-                                                < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
                                                             <div className='doctor-c-l' >
                                                                 <div className="row">
                                                                     <div className="col-12" >
@@ -170,7 +146,7 @@ export default function ParticularLaboratory() {
                                                                 <span className='py-1' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                                     <h6>{clinic.name}</h6>
                                                                     <p>Location:- {clinic.landmark}</p>
-                                                                    <p>Phone No:- {clinic.phone}</p>                                                                    
+                                                                    <p>Phone No:- {clinic.phone}</p>
                                                                     <Link to='/particular-clinic'> <button className='btn btn-primary'><p className='btn-text'>View Tests</p></button></Link>
                                                                 </span>
                                                             </div>

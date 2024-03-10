@@ -1,16 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
 import productimg from '../../img/madicalProduct.avif'
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewPaymentBySubAdmin() {
   const pStyle = {
     display: 'flex',
     alignItems: 'center',
-
   }
-
   const [product, setProduct] = useState([]);
   const [customer, setCustomer] = useState([]);
   const [order, setOrders] = useState([]);
@@ -18,9 +15,6 @@ export default function ViewPaymentBySubAdmin() {
   const param = useParams();
   // var order_id = param.id;
   var product_id = param.product_id;
-  // console.log(order_id)
-  // console.log(product_id)
-  // console.log(product_id)
   useEffect(() => {
     axiosClient.get(`/sub-admin/orders/product/${product_id}`)
       .then(res => {

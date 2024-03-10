@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
-import validation from '../SignUpValidation';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 import usePasswordToggle from '../usePasswordToggle';
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 export default function Partner_SignUp() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -32,21 +28,17 @@ export default function Partner_SignUp() {
         progress: undefined,
         theme: "light",
     });
-   
     const [values, setValues] = useState({
         name: '',
         ph_num: '',
         password: '',
         
     })
-    
     const [check, setCheck] = useState(false);
-    // console.log(check)
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -54,12 +46,10 @@ export default function Partner_SignUp() {
 
             axiosClient.post(`/add-partner`, values)
                 .then(res => {
-                    // console.log(res)
                     if (res.data === null) {
                         danger();
                     }
                     else if (res.data !== null) {
-                        // console.log(res.data)
                         success();
                         navigate('/partner/complete-profile',{
                             state: {
@@ -73,14 +63,9 @@ export default function Partner_SignUp() {
                     }
                 })
                 .catch(err => console.log(err));
-        
-
     }
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
     return (
-
-
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
 
             <div className="img  login-img" >

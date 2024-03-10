@@ -5,8 +5,6 @@ import {
 } from "react-router-dom";
 import BookAppointment from './ModalBookAppointment';
 import Modal from 'react-modal';
-
-
 const customStyles = {
     content: {
         top: '50%',
@@ -18,7 +16,6 @@ const customStyles = {
         margin: '0px'
     },
 };
-
 const bannnerTextStyle = {
     maxHeight: '40vh', 
     maxWidth: '35vw',
@@ -30,7 +27,6 @@ const bannnerTextStyle = {
 const fontStyle={
     fontSize:'calc(1.8vw + 0.5rem)'
 }
-
 export default function Banner({imgPath,imgName}) {
 
     const [modalIsOpen, setIsOpen] = React.useState(false);

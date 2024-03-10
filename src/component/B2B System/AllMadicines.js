@@ -1,18 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import AllMadicineCard from './AllMadicineCard';
-import axios from 'axios';
 import axiosClient from '../axiosClient';
-
 export default function AllMadicines() {
-
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const [products, setProducts] = useState([])
     const [image, setImages] = useState([])
 
     useEffect(() => {
-        // console.log("Fetching data...");
         axiosClient.get(`/b2b/product`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
@@ -25,7 +20,6 @@ export default function AllMadicines() {
     const [newAddedimage, setnewAddedimage] = useState([])
 
     useEffect(() => {
-        // console.log("newAddedimage Fetching data...");
         axiosClient.get(`/b2b/product/newadded`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
@@ -38,7 +32,6 @@ export default function AllMadicines() {
     const [offimage, setoffimage] = useState([])
 
     useEffect(() => {
-        // console.log("newAddedimage Fetching data...");
         axiosClient.get(`/b2b/product/20%off`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
@@ -51,7 +44,6 @@ export default function AllMadicines() {
     const [bestofferimage, setbestofferimage] = useState([])
 
     useEffect(() => {
-        // console.log("newAddedimage Fetching data...");
         axiosClient.get(`/b2b/product/bestoffer`).then((res) => {
             if (res.data !== null) {
                 // console.log(res.data);
@@ -60,9 +52,6 @@ export default function AllMadicines() {
             }
         });
     }, []);
-    // console.log(products, image)
-
-
     return (
         <div>
             <AllMadicineCard headline='Top Offers :-' products={bestofferProduct} image={bestofferimage} />

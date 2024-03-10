@@ -1,8 +1,6 @@
 import React from 'react'
 import B2BBanner from './B2BBanner'
-// import medicines from '../img/Medicines.avif';
 import medicines from '../../img/Medicines.avif';
-
 export default function AllB2BBanner() {
     return (
         <div>

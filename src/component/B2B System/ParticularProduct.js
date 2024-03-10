@@ -2,32 +2,23 @@ import React, { useState, useEffect } from 'react'
 import product from '../../img/medicalproduct.webp'
 import ProductCardForList from '../ProductCardForList'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios';
 import axiosClient from '../axiosClient';
 require('dotenv').config();
-
-
 export default function ParticularProduct() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const param = useParams();
     const product_id = param.product_id;
     const [products, setProducts] = useState([])
     const navigate = useNavigate();
-    const [user, setUser] = useState({});
     const [image, setImage] = useState([])
     const [ProductForLists, setProductForLists] = useState([])
     const [imageLists, setImageLists] = useState([])
-
-
     let productActualQuantity;
-
     useEffect(() => {
         axiosClient.get(`/b2b/addtocart/${product_id}`).then((res) => {
             setProducts(res.data[0]);
             setImage(res.data[1]);
-
         })
     }, [])
     useEffect(() => {
@@ -37,50 +28,29 @@ export default function ParticularProduct() {
 
         })
     }, [])
-    // console.log(products)
-
     const haldelClick = () => {
-        console.log('click')
         axiosClient.post(`/b2b/addtocart/${product_id}/${quantity}`)
             .then(res => {
                 if (res.data !== null) {
-                    // success();
                     navigate('/b2b/cart');
                 }
                 else if (res.data === null) {
-                    // danger();
                 }
 
             })
             .catch(err => console.log(err));
     }
-    // const haldelOrderClick =()=>{
-    //     axiosClient.post(`/addtocart/${product_id}`)
-    //     .then(res => {
-    //         console.log ('click')
-    //         navigate('/cart');
-    //     })
-    //     .catch(err => console.log(err));
-    // }
-    // productActualQuantity = products[0].product_quantity;
-
-
     if (products[0] !== undefined) {
         productActualQuantity = products[0].product_quantity;
-        // console.log(products[0].product_quantity)
     }
-
     // Quantity State
     const [quantity, setQuantity] = useState(1);
-
     // Increase Quantity
     const AddItems = () => setQuantity(quantity => quantity + 1);
-
     // Decrease Quantity
     const DecreaseItems = () => {
         if (quantity > 0) setQuantity(quantity => quantity - 1);
     };
-
     return (
         <div>
             <div className="product" style={{ overflowX: 'hidden', backgroundColor: 'gainsboro' }}>
@@ -152,7 +122,6 @@ export default function ParticularProduct() {
                                     }
 
                                     <p>Inclusive of all taxes</p>
-                                    {/* <button onClick={haldelOrderClick} type='submit' className='btn' style={{ backgroundColor: '#0cbea9' }}>Order Now</button> */}
                                     <p className='my-2'>%Offer%</p>
                                     <p className='my-2'>{product.discount}% Off</p>
                                 </div>

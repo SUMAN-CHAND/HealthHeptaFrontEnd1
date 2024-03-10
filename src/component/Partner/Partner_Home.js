@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import Dashboard from '../Service_Provider/Dashboard.js';
 import ViewCommissionModal from './ViewCommissionModal.js';
 import Modal from 'react-modal';
 import { CgProfile } from "react-icons/cg";
@@ -35,8 +33,6 @@ export default function Partner_Home() {
         progress: undefined,
         theme: "light",
     });
-
-
     const customStyles = {
         content: {
             top: '50%',
@@ -47,45 +43,28 @@ export default function Partner_Home() {
             transform: 'translate(-50%, -50%)',
         },
     };
-
-    const fontStyle = {
-        fontSize: 'calc(1vw + 0.5rem)'
-    }
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.backgroundColor = 'rgb(76 76 76 / 19%)'
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         document.body.style.backgroundColor = '#fff'
         setIsOpen(false);
     }
-
-
     const navigate = useNavigate();
     let flag = false;
     const [user, setUser] = useState({});
     const [userAddress, setUserAddress] = useState({});
     const location = useLocation();
     const [commissions, setCommissions] = useState([]);
-
-    // console.log(location)
-    // if (location.state === null) {
-    //     return <Navigate to='/partner/login' />;
-    // }
-    // const [your_orders, setYour_orders] = useState([])
     const [payments, setPayments] = useState([]);
     const [appoiments, setAppoiments] = useState([]);
-
     const [orders, setOrders] = useState([])
-
     const showOrders = () => {
         axiosClient.get(`/partner/profile/order`).then((res) => {
             if (res.data !== null) {
@@ -95,14 +74,11 @@ export default function Partner_Home() {
             }
         })
     }
-
     const numOfProduct = orders.length;
     if (numOfProduct > 0) {
         flag = true;
     }
-
     const deleteOrder = (id) => {
-        // console.log('click')
         const response = window.confirm("Are you sure to Cancle the Order?");
         if (response) {
             axiosClient.delete(`/orders/${id}`)
@@ -122,57 +98,31 @@ export default function Partner_Home() {
         } else {
             alert('No Order Cancled')
         }
-
     }
     const showPartnerCommission = () => {
         axiosClient.get(`/superadmin/partner-commissions`)
             .then(response => {
                 // Handle response
                 setCommissions(response.data)
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }
-
-
-
     useEffect(() => {
         axiosClient.get(`/partner/home/profile`).then((response) => {
             if (response.data !== null) {
                 setUser(response.data[0]);
-                // setUserAddress(response.data[1]);
-
             }
         });
     }, []);
-
-
-    // console.log(user)
-
-    // var [address, setAddress] = useState(false);
-    // const UpdateAddress = () => {
-    //   setAddress(true);
-    // }
-
-
-
-
-
-
     const flagm = true;
     const listStyle = {
         backgroundColor: 'rgb(207 244 252)',
         display: 'flex',
         justifyContent: 'space-between'
     }
-
-
-
-    // const [appoiments, setAppoiments] = useState([]);
-
     const ShowAppoiment = () => {
         axiosClient.get(`/user/see-appoiment`)
             .then(response => {
@@ -180,15 +130,12 @@ export default function Partner_Home() {
                 if (response.data !== null) {
                     setAppoiments(response.data);
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }
-    // console.log(appoiments)
-
     const [labBookings, setLabBookings] = useState([]);
 
     const ShowLabBooking = () => {
@@ -198,19 +145,13 @@ export default function Partner_Home() {
                 if (response.data !== null) {
                     setLabBookings(response.data[0]);
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }
-
-    // console.log(labBookings)
-
     const [loggedIn, setLoggedIn] = useState([]);
-
-
     const handleLogout = async () => {
         try {
             const response = await axiosClient.post(`/profile`);
@@ -225,13 +166,9 @@ export default function Partner_Home() {
             console.error('An error occurred:', error);
         }
     };
-
-    //TODO
-
     const renDataStyle = {
         backgroundColor: 'rgb(237 237 237)',
         display: 'flex',
-        // minHeight: '50vh',
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: '1vh'
@@ -243,7 +180,6 @@ export default function Partner_Home() {
         color: 'white',
         borderRadius: '5px'
     }
-
     return (
         <div>
             <div className=" partner-profile-full-class row" style={{ height: '70vh', overflowX: 'hidden' }}>
@@ -252,7 +188,6 @@ export default function Partner_Home() {
                         <h5 style={quiceLink}>Quick Links</h5>
                         <hr />
                         <div className="list-group shadow" id="list-tab" role="tablist">
-                            {/* <Link to="#summary" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Summary</Link> */}
                             <Link to="#profile" className="list-group-item list-group-item-action active list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
                             <Link to="/" className="list-group-item list-group-item-action list-group-item-info">Shop Now</Link>
                             <Link to="#appoiment" onClick={ShowAppoiment} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Appoiment</Link>
@@ -265,10 +200,6 @@ export default function Partner_Home() {
                 </div>
                 <div className="col-9" style={{ marginTop: '2vh' }}>
                     <div className="tab-content shadow" id="nav-tabContent" style={{ color: 'black', borderRadius: '5px' }} >
-                        {/* <div className="tab-pane fade show active text-light" style={{ backgroundColor: '#rgba(255, 255, 255, 0.95)' }} id="summary" role="tabpanel" aria-labelledby="list-summry-list">
-                            <h2 className='p-2 text-dark'></h2>
-                            <Dashboard />
-                        </div> */}
                         <div className="tab-pane fade show active text-light" id="profile" role="tabpanel" aria-labelledby="list-profile-list">
                             <h2 className='p-2 text-dark' > || Profile ||</h2>
                             <div className="container text-dark " style={renDataStyle}>
@@ -276,33 +207,18 @@ export default function Partner_Home() {
                                     <div className="tab-pane fade show active text-light" id="profile" role="tabpanel" aria-labelledby="list-profile-list">
                                         <ul className="list-group" >
                                             <li className="list-group-item " style={listStyle}>
-                                                {/* <div>
-                          {images.map((img) => (
-                            <div key={img.id}>
-                              <img
-                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                alt={img.name}
-
-                                style={{ borderRadius: '50%', width: '8vw', height: '16vh', border: '5px solid cadetblue' }}
-                              />
-                              {/* <p>{img.name}</p> */}
-                                                {/* </div>
-                          ))}
-                        </div> */}
                                             </li>
-                                            <li className="list-group-item " style={listStyle}><h2>Hi <span style={{ color: '#1facff' }}>{user.name}</span>!</h2></li>
+                                            <li className="list-group-item " style={listStyle}><h2>Hi <span style={{ color: '#1facff' }}>{user&&user.name}</span>!</h2></li>
                                             <li className="list-group-item " style={listStyle}>
                                                 <p>
-                                                    Phone no:- {user.ph_num}
+                                                    Phone no:- {user&&user.ph_num}
                                                 </p>
-
                                             </li>
                                             <li className="list-group-item " style={listStyle}>
                                                 <>
-                                                    Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin}
+                                                    Address :- {user&&user.name}, {user&&user.Village},{user&&user.P_O},{user&&user.City},{user&&user.district},{user&&user.State},{user&&user.Pin}
                                                 </>
                                             </li>
-
                                             <li className="list-group-item " style={listStyle}>
                                                 <div className=' p-1' style={{ fontWeight: '700', display: 'flex', justifyContent: 'space-between', width: '100%' }} >
 
@@ -313,7 +229,6 @@ export default function Partner_Home() {
                                 </div>
                             </div>
                         </div>
-
                         <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
                             <h2 className='p-2'>|| Payments ||</h2>
                             <div className="container text-dark" style={renDataStyle}>
@@ -544,16 +459,6 @@ export default function Partner_Home() {
             </div>
             <div className="partner-profile-full-class-mob row m-2 p-2">
                 <div className="shadow">
-                    {/* <div className="list-group shadow" id="list-tab" role="tablist">
-                            <Link to="#profile" className="list-group-item list-group-item-action active  list-group-item-info" id="list-profile-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
-                            <Link to="#appoiment" onClick={ShowAppoiment} className="list-group-item list-group-item-action  list-group-item-info" id="list-Appointments-list" data-bs-toggle="list" role="tab" aria-controls="list-Appointments">Appointments</Link>
-                            {flagm ? <Link to="#order" onClick={showOrders} className="list-group-item list-group-item-action  list-group-item-info" id="list-Medicine-list" data-bs-toggle="list" role="tab" aria-controls="list-Medicine">Medicine Order</Link>
-                                :
-                                ''
-                            }
-                            <Link to="#list-Lab" onClick={ShowLabBooking} className="list-group-item list-group-item-action  list-group-item-info" id="list-Lab-list" data-bs-toggle="list" role="tab" aria-controls="list-Lab">Lab Test</Link>
-                            <Link to="#list-Clinic" className="list-group-item list-group-item-action  list-group-item-info" id="list-Clinic-list" data-bs-toggle="list" role="tab" aria-controls="list-Clinic">Clinic Book</Link>
-                        </div> */}
                     <div >
                         <nav >
                             <div >
@@ -597,23 +502,6 @@ export default function Partner_Home() {
                                 <IoIosArrowForward />
                             </div>
                         </div>
-                        {/* <div className="phone" style={{ display: 'none', justifyContent: 'space-around', alignItems: 'center', padding: '2vh 0' }}>
-                                {phoneStatus ?
-                                    <form onSubmit={onPSubmit} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <div style={{ display: 'flex' }}>
-                                            <p style={{ marginBottom: 'inherit' }}>Phone no:-</p>
-                                            <input type="text" name="phone" id="phone" placeholder={user.phone} onChange={handlePInput} />
-                                        </div>
-                                        <button className='btn btn-info' type='submit'>Save</button>
-                                    </form>
-                                    : <>
-                                        <p>
-                                        Phone no:- {user.phone}
-                                        </p>
-                                        <Link to='phone'><button className='btn btn-primary' onClick={updatePhone}>Update</button></Link>
-                                    </>
-                                }
-                            </div> */}
                     </div>
                 </div>
                 <div className="logout">

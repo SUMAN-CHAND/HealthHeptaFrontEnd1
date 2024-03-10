@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UploadImage from '../../UploadImage';
@@ -24,10 +23,6 @@ export default function B2BAddNewProductBySuperAdmin() {
         productImageId: null,
     })
 
-    // const [values, setValues] = useState({
-    //     // ...other product data fields
-    //     productImageId: null, // Initialize as null
-    // });
 
     // Callback function to set the productImageId when an image is uploaded
     const handleImageUpload = (imageId) => {
@@ -179,8 +174,6 @@ export default function B2BAddNewProductBySuperAdmin() {
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="product_category">Add Product Image </label>
-                            {/* <input className='m-2  p-1' type="file" style={{ width: '90%' }} placeholder='Enter Product image'
-                                name='img' onChange={handleInput} /><br /> */}
                             <UploadImage onImageUpload={handleImageUpload} />
                         </div>
 
@@ -191,9 +184,7 @@ export default function B2BAddNewProductBySuperAdmin() {
 
                             </label>
                         </div>
-                        {/* <Link to='/login'> */}
                         <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Add Product</button>
-                        {/* </Link> */}
                     </form>
                 </div>
             </div>

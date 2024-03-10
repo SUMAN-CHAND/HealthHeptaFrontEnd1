@@ -1,22 +1,19 @@
 import React from 'react'
 import product2 from '../img/medicalproduct.webp'
 import axiosClient from './axiosClient';
-
-
 export default function CartItemCard(props) {
+    // console.log(props)
     const product_id = props.product_id;
-    const removeProductFormCart = (id) => {
-        // console.log('click')
+    const removeProductFormCart = (product_id) => {
         const response = window.confirm("Are you sure to remove the Product from cart ?");
+        // console.log(product_id)
         if (response) {
-            axiosClient.delete(`/remove/cart/product/${id}`)
+            axiosClient.delete(`/remove/cart/product/${product_id}`)
                 .then(response => {
-                    // console.log(response)
                     if (response.data === 'success') {
                         alert('Product Remove Successfully');
                     }
                     else if (response.data === null) {
-                        // console.log(response.data)
                         alert('Product not Removed at this time');
                     }
                 })
@@ -26,7 +23,6 @@ export default function CartItemCard(props) {
         } else {
             alert('No Product Remove!!')
         }
-
     }
     return (
         <div>
@@ -43,10 +39,8 @@ export default function CartItemCard(props) {
                         <p className="text-primary m-2" style={{ marginRight: '10px' }}>Qty {props.quantity}</p>
                         <p className="text-success m-2" style={{ marginRight: '10px', }}>{props.discount} % off</p>
                     </div>
-                    {/* <p className="text-success m-2" style={{ marginRight: '10px', }}> Expected Delivery Date :- {props.expected_delivery_date} </p> */}
                     <div className="icons">
                         <button className='btn btn-danger' onClick={() => removeProductFormCart(product_id)}>Remove</button>
-                        {/* <IoIosArrowForward /> */}
                     </div>
                 </div>
             </div>

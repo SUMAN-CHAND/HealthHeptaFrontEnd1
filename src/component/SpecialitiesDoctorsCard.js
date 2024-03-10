@@ -18,19 +18,12 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
-
 export default function SpecialitiesDoctorsCard(props) {
   const [selectLocation, setSelectLocation] = useState()
-
-
   const navigate = useNavigate();
-
-
   const searchDoctor = async () => {
     const data = { specializes: props.specializes };
-    // searchDoctor(data);
     try {
-      // console.log(data)
       axiosClient.post(`/doctorspecializes`, data)
         .then(res => {
           if (res.data !== null) {
@@ -50,14 +43,10 @@ export default function SpecialitiesDoctorsCard(props) {
           }
         })
         .catch(err => console.log(err));
-
-
     } catch (error) {
       console.error('An error occurred:', error);
     }
   }
-
-
   return (
     <div>
       <Link style={{ textDecoration: 'none' }}>
@@ -66,9 +55,7 @@ export default function SpecialitiesDoctorsCard(props) {
             <img src={doctor3} className="card-img-top" alt="..." />
             <div className="card-body">
               <h6 className="card-title" style={{ fontSize: '0.9rem' }} >{props.specializes}</h6>
-              {/* <p className="card-text">{props.location}</p> */}
               <button className="btn btn-primary" style={{ fontSize: '0.7rem' }} onClick={(event) => searchDoctor()}> View Doctor's </button>
-
             </div>
           </div>
         </div>

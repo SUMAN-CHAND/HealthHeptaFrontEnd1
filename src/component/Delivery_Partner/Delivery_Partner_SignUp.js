@@ -1,17 +1,13 @@
 import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
-import validation from '../SignUpValidation';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 import usePasswordToggle from '../usePasswordToggle';
-// import 'react-toastify/dist/ReactToastify.css';
 export default function Delivery_Partner_SignUp() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -32,26 +28,20 @@ export default function Delivery_Partner_SignUp() {
         progress: undefined,
         theme: "light",
     });
-
     const [values, setValues] = useState({
         name: '',
         ph_num: '',
         password: '',
 
     })
-
     const [check, setCheck] = useState(false);
-    // console.log(check)
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(values)
-        
         axiosClient.post(`/add-delivery-partner`, values)
             .then(res => {
                 console.log(res)
@@ -64,7 +54,6 @@ export default function Delivery_Partner_SignUp() {
                     alert("Phone number is Already Exists!!")
                 }
                 else if (res.data !== null) {
-                    // console.log(res.data)
                     success();
                     navigate('/delivery-partner/complete-profile',{
                         state: {
@@ -79,31 +68,21 @@ export default function Delivery_Partner_SignUp() {
             })
             .catch(err => 
                 danger()
-                // console.log(err)
-                
                 );
 
 
     }
-
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
     return (
-
-
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
-
             <div className="img  login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />
             </div>
-
             <div className='bg-white m-3 pt-3 pl-2 rounded w-30 shadow' style={{ height: '110%' }}>
                 <form action='submit' onSubmit={handleSubmit}>
                     <h5>Join <span className='text-info'>Healthhepta</span></h5>
                     <hr style={{ border: '3px solid black' }} />
                     <h5>Registration From <span className='text-info'></span></h5>
-
-
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="name">Full Name <span className='text-danger'>*</span> : </label><br></br>
                         <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Full Name'

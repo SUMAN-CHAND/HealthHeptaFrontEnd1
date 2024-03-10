@@ -3,19 +3,15 @@ import img from '../img/loginpageimg.jpg'
 import './style.css';
 import { Link } from 'react-router-dom';
 import validation from './LoginValidaation';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axiosClient from './axiosClient';
 import { Helmet } from 'react-helmet';
 import usePasswordToggle from './usePasswordToggle';
-
 export default function Login() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [loggedIn, setLoggedIn] = useState(true);
-    // loggedIn
     const success = () => toast.success('Login Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -42,21 +38,11 @@ export default function Login() {
         password: ''
     })
     const navigate = useNavigate();
-    // axios.defaults.withCredentials = true
-    // const history = useHistory();
-    // useEffect(() => {
-    //     if (localStorage.getItem('user-info')) {
-    //         // navigate('/');
-    //     }
-    // })
-
     const [errors, setErrors] = useState([])
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
     const redirectUrl = sessionStorage.getItem('redirectUrl');
-
-
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrors(validation(values));
@@ -68,14 +54,9 @@ export default function Login() {
                         danger();
                     }
                     else if (res.data[0] !== null || res.data[0] !== undefined) {
-                        // localStorage.setItem('user-info', JSON.stringify(user));
-                        // setLoggedIn(true)      
-                        console.log(res.data[0])
                         if (redirectUrl) {
-
                             sessionStorage.setItem("user_id", res.data[0].id);
                             sessionStorage.setItem("LogedIn", res.data[1]);
-
                             navigate(redirectUrl);
                             sessionStorage.removeItem('redirectUrl');
                         }
@@ -93,7 +74,6 @@ export default function Login() {
                     console.error("Error occurred during login request:", err);
                     danger(); // Display error message for network/server errors
                 });
-            // console.log(user)
         }
     }
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
@@ -111,7 +91,7 @@ export default function Login() {
                 <div className='bg-white m-3 pt-3 pl-2 rounded w-30 shadow' style={{ height: '110%' }}>
                     <form action='submit' onSubmit={handleSubmit}>
                         <h5>Log in to <span className='text-info'>Healthhepta</span></h5>
-                        <Link to='/sub-admin/login'><p style={{ textAlign: 'right', paddingRight: '2vw', marginTop: '2vh' }}>Are you a Service Provider?</p></Link>
+                        <Link to='/sub-admin/login' target='_Block'><p style={{ textAlign: 'right', paddingRight: '2vw', marginTop: '2vh' }}>Are you a Service Provider?</p></Link>
                         <Link to='/partner/login'><p style={{ textAlign: 'right', paddingRight: '2vw', marginTop: '2vh' }}>Are you a Partner?</p></Link>
 
                         <div className='p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >

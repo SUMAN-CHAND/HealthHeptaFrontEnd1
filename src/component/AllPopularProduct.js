@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
-// import { Carousel } from "react-bootstrap";
 import ProductCard from './ProductCard'
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Helmet } from 'react-helmet';
-
 export default function AllPopularProduct(props) {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
@@ -33,8 +30,6 @@ export default function AllPopularProduct(props) {
   const [products, setProducts] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-
-  // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
       axiosClient.get(`/product`).then((res) => {
@@ -45,7 +40,6 @@ export default function AllPopularProduct(props) {
           setLoading(true);
 
         }
-        // console.log(response.data);
       })
         .catch(err => {
           // Handle errors
@@ -53,18 +47,15 @@ export default function AllPopularProduct(props) {
         });
 
     }, [])
-
   } else {
     useEffect(() => {
       axiosClient.get(`/product/${props.location}`).then((res) => {
-
         // Handle response
         if (res.data !== null) {
           setProducts(res.data)
           setLoading(true);
 
         }
-        // console.log(response.data);
       })
         .catch(err => {
           // Handle errors
@@ -73,9 +64,6 @@ export default function AllPopularProduct(props) {
 
     }, [])
   }
-
-
-
   return (
     <>
       <Helmet>
@@ -139,8 +127,6 @@ export default function AllPopularProduct(props) {
                           <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
@@ -148,24 +134,7 @@ export default function AllPopularProduct(props) {
             </Carousel>
             : <ClipLoader color="blue" />}
           <p style={{ margin: '5px' }}></p>
-          {/* <Carousel responsive={responsive}>
-          {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
-            <div key={fproduct.product_id}>
-              {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <>
-                      <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                    </>
-                    : <></>}
-
-                </div>
-              ))}
-            </div>
-          ))}
-        </Carousel> */}
-          {/* <div><PopularProductCard/> </div> */}
-        </div>
+         </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Allopathy Products ||</h5>
           {loading ?
@@ -179,8 +148,6 @@ export default function AllPopularProduct(props) {
                           <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
@@ -199,15 +166,12 @@ export default function AllPopularProduct(props) {
                           <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
-          {/* <div><PopularProductCard/> </div> */}
         </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Homeopathy Products ||</h5>
@@ -222,8 +186,6 @@ export default function AllPopularProduct(props) {
                           <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
@@ -242,15 +204,12 @@ export default function AllPopularProduct(props) {
                           <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
-          {/* <div><PopularProductCard/> </div> */}
         </div>
       </div>
     </>

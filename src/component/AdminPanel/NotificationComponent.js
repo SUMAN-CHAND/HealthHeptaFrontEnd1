@@ -1,21 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import React, {useState } from 'react';
 
 const NotificationComponent = () => {
   const [notifications, setNotifications] = useState([]);
-
-  // useEffect(() => {
-  //   const socket = io('/orders'); // Replace with your server URL
-
-  //   // Listen for order notifications
-  //   socket.on('orderNotification', (data) => {
-  //     setNotifications((prevNotifications) => [data, ...prevNotifications]);
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   return (
     <div>

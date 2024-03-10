@@ -4,12 +4,9 @@ import Carousel from 'react-multi-carousel';
 import clinic from '../img/modalclinicimg.png';
 import ClinicCard from './ClinicCard';
 import { useLocation } from 'react-router-dom';
-
 export default function AllClinics() {
-    
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 1150 },
       items: 7
     },
@@ -26,16 +23,12 @@ export default function AllClinics() {
       items: 2
     }
   };
-
   const location = useLocation();
   const statedata = location.state;
-  console.log(statedata) 
-  
   return (
     <div>
         <div className="container"style={{marginTop:'3vh'}}>
         <h1 className='py-3'>||Best Medicines Seller In Your Location ||</h1>
-            
             <Carousel responsive={responsive}>
                 <div><ClinicCard img={clinic} title="Applo Clinic" location="Kolkata" btntext="Book Now"/> </div>
                 <div><ClinicCard img={clinic} title="Applo Clinic" location="Kolkata" btntext="Book Now"/> </div>
@@ -48,8 +41,6 @@ export default function AllClinics() {
                 <div><ClinicCard img={clinic} title="Applo Clinic" location="Kolkata" btntext="Book Now"/> </div>
                 <div><ClinicCard img={clinic} title="Applo Clinic" location="Kolkata" btntext="Book Now"/> </div>
                 <div><ClinicCard img={clinic} title="Applo Clinic" location="Kolkata" btntext="Book Now"/> </div>
-                
-            
             </Carousel>
         </div>
     </div>

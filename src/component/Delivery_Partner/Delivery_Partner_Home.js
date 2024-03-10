@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import Modal from 'react-modal';
 import { CgProfile } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoLocationOutline } from "react-icons/io5";
 import axiosClient from '../axiosClient';
-
-
 export default function Delivery_Partner_Home() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const success = () => toast.success('Success', {
         position: "top-right",
         autoClose: 5000,
@@ -34,21 +29,6 @@ export default function Delivery_Partner_Home() {
         theme: "light",
     });
 
-
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-        },
-    };
-
-    const fontStyle = {
-        fontSize: 'calc(1vw + 0.5rem)'
-    }
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
@@ -65,8 +45,6 @@ export default function Delivery_Partner_Home() {
         document.body.style.backgroundColor = '#fff'
         setIsOpen(false);
     }
-
-
     const navigate = useNavigate();
     let flag = false;
     const [user, setUser] = useState({});
@@ -74,17 +52,9 @@ export default function Delivery_Partner_Home() {
     const location = useLocation();
     const [commissions, setCommissions] = useState([]);
     const [ownCommissions, setOwnCommissions] = useState([]);
-
-    // console.log(location)
-    // if (location.state === null) {
-    //     return <Navigate to='/partner/login' />;
-    // }
-    // const [your_orders, setYour_orders] = useState([])
     const [payments, setPayments] = useState([]);
     const [appoiments, setAppoiments] = useState([]);
-
     const [orders, setOrders] = useState([])
-
     useEffect(() => {
         axiosClient.get(`/deleviry_partner/assigned/orders`)
             .then(res => {
@@ -95,48 +65,12 @@ export default function Delivery_Partner_Home() {
             .catch(err => {
                 console.log(err)
             })
-
     }, [])
-    // console.log(orders)
-    // console.log(orders)
-    // let numOfProduct;
-    // // if (orders) {
-    // // }
-    // numOfProduct = orders.length;
-    // if (numOfProduct > 0) {
-    //     flag = true;
-    // }
-    // console.log(orders)
-    // console.log(flag)
-    // const deleteOrder = (id) => {
-    //     // console.log('click')
-    //     const response = window.confirm("Are you sure to Cancle the Order?");
-    //     if (response) {
-    //         axiosClient.delete(`/orders/${id}`)
-    //             .then(response => {
-    //                 console.log(response)
-    //                 if (response.data === 'success') {
-    //                     alert('Order Delete Successfully');
-    //                 }
-    //                 else if (response.data === null) {
-    //                     console.log(response.data)
-    //                     alert('Order cannot be canceled at this time');
-    //                 }
-    //             })
-    //             .catch(err => {
-    //                 console.log(err)
-    //             })
-    //     } else {
-    //         alert('No Order Cancled')
-    //     }
-
-    // }
     const showPartnerCommission = () => {
         axiosClient.get(`/superadmin/delivery-partner-commissions`)
             .then(response => {
                 // Handle response
                 setCommissions(response.data)
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
@@ -155,71 +89,24 @@ export default function Delivery_Partner_Home() {
                 console.error(err);
             });
     }
-
-
-
     useEffect(() => {
         axiosClient.get(`/delivery_partner/home/profile`).then((response, err) => {
             if (response.data !== null) {
                 setUser(response.data[0]);
-                // setUserAddress(response.data[1]);
-
             } else {
                 console.error(err);
 
             }
         });
     }, []);
-
-
-    // console.log(user)
-
-    // var [address, setAddress] = useState(false);
-    // const UpdateAddress = () => {
-    //   setAddress(true);
-    // }
-
-
-
-
-
-
     const flagm = true;
     const listStyle = {
         backgroundColor: 'rgb(207 244 252)',
         display: 'flex',
         justifyContent: 'space-between'
     }
-
-
-
-    // const [appoiments, setAppoiments] = useState([]);
-
-
-    // console.log(appoiments)
-
     const [labBookings, setLabBookings] = useState([]);
-
-    // const ShowLabBooking = () => {
-    //     axiosClient.get(`/user/see-lab-booking`)
-    //         .then(response => {
-    //             // Handle response
-    //             if (response.data !== null) {
-    //                 setLabBookings(response.data[0]);
-    //             }
-    //             // console.log(response.data);
-    //         })
-    //         .catch(err => {
-    //             // Handle errors
-    //             console.error(err);
-    //         });
-    // }
-
-    // console.log(labBookings)
-
     const [loggedIn, setLoggedIn] = useState([]);
-
-
     const handleLogout = async () => {
         try {
             const response = await axiosClient.post(`/profile`);
@@ -236,7 +123,7 @@ export default function Delivery_Partner_Home() {
     };
     const updateStatus = (orderId) => {
         const response = window.confirm("Are you sure to Accept the Order?");
-        if(response){
+        if (response) {
             axiosClient.post(`/delivery_partner/orders/accept/${orderId}`).then(response => {
                 if (response.data) {
                     alert('Order Accepted');
@@ -244,10 +131,10 @@ export default function Delivery_Partner_Home() {
             }).catch(err => {
                 console.log(err)
             })
-        }else{
+        } else {
             alert('Order Not Accepted');
         }
-        
+
     }
     const updateToCompleteStatus = (orderId) => {
         const response = window.confirm("Are you sure that Order is Delivered?");
@@ -314,26 +201,12 @@ export default function Delivery_Partner_Home() {
                                     <div className="tab-pane fade show active text-light" id="profile" role="tabpanel" aria-labelledby="list-profile-list">
                                         <ul className="list-group" >
                                             <li className="list-group-item " style={listStyle}>
-                                                {/* <div>
-                          {images.map((img) => (
-                            <div key={img.id}>
-                              <img
-                                src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                alt={img.name}
-
-                                style={{ borderRadius: '50%', width: '8vw', height: '16vh', border: '5px solid cadetblue' }}
-                              />
-                              {/* <p>{img.name}</p> */}
-                                                {/* </div>
-                          ))}
-                        </div> */}
                                             </li>
                                             <li className="list-group-item " style={listStyle}><h2>Hi <span style={{ color: '#1facff' }}>{user.name}</span>!</h2></li>
                                             <li className="list-group-item " style={listStyle}>
                                                 <p>
                                                     Phone no:- {user.ph_num}
                                                 </p>
-
                                             </li>
                                             <li className="list-group-item " style={listStyle}>
                                                 <>
@@ -351,39 +224,6 @@ export default function Delivery_Partner_Home() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
-                            <h2 className='p-2'>|| Payments ||</h2>
-                            <div className="container text-dark" style={renDataStyle}>
-                                <table className="table table-striped">
-                                    <thead className='thead-dark'>
-                                        <tr>
-                                            <th scope="col">Payments Id</th>
-                                            <th scope="col">User Id</th>
-                                            <th scope="col">Order Id</th>
-                                            <th scope="col">Total Amount</th>
-                                            <th scope="col">Payment Status</th>
-                                            <th scope="col">Payment Type</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {payments.map((payment, index) => (
-                                            <tr key={index}>
-                                                <th scope="row">{payment.payment_id}</th>
-                                                <td>{payment.user_id}</td>
-                                                <td>{payment.order_id}</td>
-                                                <td>{payment.total_amount}</td>
-                                                <td>{payment.payment_status}</td>
-                                                <td>{payment.payment_type}</td>
-                                                <td> <Link to={`/sub-admin/payment/${payment.order_id}/${payment.user_id}/${payment.product_id}`}><button className="btn btn-info m-1">View</button></Link></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div> */}
-
                         <div className="tab-pane active fade text-light" id="orders" role="tabpanel" style={{ opacity: '1' }} aria-labelledby="list-Medicine-list">
                             <h2 className='p-2 text-dark'> Orders</h2>
                             <div className="container text-dark" style={renDataStyle}>
@@ -471,29 +311,10 @@ export default function Delivery_Partner_Home() {
                                                     <td>{labBooking.Test_Name}</td>
                                                     <td>{labBooking.sample_collection}</td>
                                                     <td>{labBooking.sub_name}</td>
-                                                    {/* <td>{appoiment.clinic_desc}</td> */}
                                                     <td>{labBooking.LabTestStatus}</td>
-                                                    {/* {labBooking.type_of_visite === 'online' ? <>
-                                                            <td>{appoiment.type_of_visite}
-                                                            console.log({appoiment.Phone_number})
-                                                            <ReactWhatsapp number={`'+91 ' + ${appoiment.Phone_number}` } className="btn btn-primary outline" massage="Hi There is HealthHeapta">Join Now</ReactWhatsapp>
-                                                            </td>
-                                                        </> : <>
-                                                            <td>{appoiment.type_of_visite}</td>
-                                                        </>} */}
                                                     <td> <Link to={`/reschedule/${labBooking.id}`}><button className="btn btn-info m-1">Reschedule</button></Link>
 
                                                         <Link className=" btn btn-info mx-2" aria-current="page" onClick={openModal} >View Commission</Link>
-                                                        {/* <Modal
-                                                            isOpen={modalIsOpen}
-                                                            onAfterOpen={afterOpenModal}
-                                                            onRequestClose={closeModal}
-                                                            style={customStyles}
-                                                            contentLabel="Example Modal"
-                                                        >
-                                                            <ViewCommissionModal closeTheModal={closeModal} data={labBooking.id} product_ids={labBooking.Test_id} />
-
-                                                        </Modal> */}
                                                     </td>
                                                 </tr>
                                             ))}
@@ -504,7 +325,6 @@ export default function Delivery_Partner_Home() {
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                         <div className="tab-pane fade text-light" id="commission-service-wise" role="tabpanel" aria-labelledby="list-commission-service-wise-list">
                             <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Partner Commission ||</h2></span>
@@ -575,16 +395,6 @@ export default function Delivery_Partner_Home() {
             </div>
             <div className="partner-profile-full-class-mob row m-2 p-2">
                 <div className="shadow">
-                    {/* <div className="list-group shadow" id="list-tab" role="tablist">
-                            <Link to="#profile" className="list-group-item list-group-item-action active  list-group-item-info" id="list-profile-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
-                            <Link to="#appoiment" onClick={ShowAppoiment} className="list-group-item list-group-item-action  list-group-item-info" id="list-Appointments-list" data-bs-toggle="list" role="tab" aria-controls="list-Appointments">Appointments</Link>
-                            {flagm ? <Link to="#order" onClick={showOrders} className="list-group-item list-group-item-action  list-group-item-info" id="list-Medicine-list" data-bs-toggle="list" role="tab" aria-controls="list-Medicine">Medicine Order</Link>
-                                :
-                                ''
-                            }
-                            <Link to="#list-Lab" onClick={ShowLabBooking} className="list-group-item list-group-item-action  list-group-item-info" id="list-Lab-list" data-bs-toggle="list" role="tab" aria-controls="list-Lab">Lab Test</Link>
-                            <Link to="#list-Clinic" className="list-group-item list-group-item-action  list-group-item-info" id="list-Clinic-list" data-bs-toggle="list" role="tab" aria-controls="list-Clinic">Clinic Book</Link>
-                        </div> */}
                     <div >
                         <nav >
                             <div >
@@ -628,23 +438,6 @@ export default function Delivery_Partner_Home() {
                                 <IoIosArrowForward />
                             </div>
                         </div>
-                        {/* <div className="phone" style={{ display: 'none', justifyContent: 'space-around', alignItems: 'center', padding: '2vh 0' }}>
-                                {phoneStatus ?
-                                    <form onSubmit={onPSubmit} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <div style={{ display: 'flex' }}>
-                                            <p style={{ marginBottom: 'inherit' }}>Phone no:-</p>
-                                            <input type="text" name="phone" id="phone" placeholder={user.phone} onChange={handlePInput} />
-                                        </div>
-                                        <button className='btn btn-info' type='submit'>Save</button>
-                                    </form>
-                                    : <>
-                                        <p>
-                                        Phone no:- {user.phone}
-                                        </p>
-                                        <Link to='phone'><button className='btn btn-primary' onClick={updatePhone}>Update</button></Link>
-                                    </>
-                                }
-                            </div> */}
                     </div>
                 </div>
                 <div className="logout">

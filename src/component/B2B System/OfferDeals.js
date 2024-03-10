@@ -1,11 +1,7 @@
 import React from 'react'
-import medicines from '../../img/Medicines.avif';
 import topOffers from '../../img/topOffers.jpg';
 import { Link } from 'react-router-dom';
-
-
 export default function OfferDeals() {
-
     const imageStyle = {
         width: '5vw',
         height: '5vw',

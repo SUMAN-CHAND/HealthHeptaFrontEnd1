@@ -2,15 +2,12 @@ import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
 import validation from '../SignUpValidation';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosClient from '../axiosClient';
-// import 'react-toastify/dist/ReactToastify.css';
 export default function AddNewServiceProvider() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -31,28 +28,20 @@ export default function AddNewServiceProvider() {
         progress: undefined,
         theme: "light",
     });
-//    const handleChange=(e)=>{
-//     setRole(e.target.value)
-//    }
-
-
     const [values, setValues] = useState({
         name: '',
         phone: '',
         password: '',
-       
+
     })
     const [check, setCheck] = useState(false);
-    // console.log(check)
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-
         setErrors(validation(values, check));
         if (errors.name === "" && errors.phone === "" && errors.password === "" && errors.check === "") {
             axiosClient.post(`/sub-admin/signup`, values)
@@ -62,10 +51,10 @@ export default function AddNewServiceProvider() {
                     }
                     else if (res.data !== null) {
                         success();
-                        navigate('/superadmin/complete-profile' , {
+                        navigate('/superadmin/complete-profile', {
                             state: {
                                 data: res.data,
-                                value : values
+                                value: values
                             }
                         });
                     }
@@ -114,7 +103,7 @@ export default function AddNewServiceProvider() {
                         <input className='m-2  p-1' type="password" style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} />
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
-                    <div className="form-check " style={{display:'flex',justifyContent:'space-between'}}>
+                    <div className="form-check " style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p className='text-warning'>Add Your Licence</p>
                         <span className='mx-3'><input type="file" name="licence" id="licence" /></span>
                     </div>
@@ -125,9 +114,7 @@ export default function AddNewServiceProvider() {
                             {errors.check && <span className='text-danger'>{errors.check}</span>}
                         </label>
                     </div>
-                    {/* <Link to='/login'> */}
-                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white',cursor:'pointer' }}>Sign Up</button>
-                    {/* </Link> */}
+                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Sign Up</button>
                 </form>
             </div>
             <ToastContainer />

@@ -1,40 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import productimg from '../../img/madicalProduct.avif'
-import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewOrder() {
-
     const pStyle = {
         display: 'flex',
         alignItems: 'center',
-
     }
-
     const [order, setOrders] = useState([]);
     const param = useParams();
     var order_id = param.order_id;
-    // console.log(product_id)
     useEffect(() => {
         axiosClient.get(`/superadmin/orders/order/${order_id}`)
             .then(res => {
                 if (res.data) {
                     setOrders(res.data[0]);
-                    // console.log(product)
                 }
             })
             .catch(err => {
                 console.log(err)
             })
-
     },[])
     const navigate = useNavigate();
     const handleClick = ()=>{
         navigate('/superadmin' , { state: { loggedIn: true } });
     }
-
     return (
-
         <>
             <div className="container mt-4 " style={{ minHeight: '50vh' }}>
                 <div className="product" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

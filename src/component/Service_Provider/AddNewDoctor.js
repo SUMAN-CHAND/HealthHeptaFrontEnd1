@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import UploadImage from '../UploadImage';
@@ -42,17 +41,7 @@ export default function AddNewDoctor() {
     }
 
     const location = useLocation();
-    console.log(location);
 
-    // const [timeTable, setTimeTable] = useState([]);
-
-
-    // useEffect(()=>{
-
-    // if (location.state !== null) {
-    //     timeTable.push(location.state);
-    // }
-    // console.log(timeTable);
     useEffect(() => {
         if (location.state !== null) {
             timeTable.push(location.state);
@@ -78,9 +67,6 @@ export default function AddNewDoctor() {
         location: '',
         clinic: '',
         clinic_desc: '',
-        // day_of_week: '',
-        // start_time: '',
-        // end_time: '',
         doctor_imageId: null,
         Phone_number: '',
         type_of_visite: '',

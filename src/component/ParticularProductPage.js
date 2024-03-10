@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react'
 import product from '../img/medicalproduct.webp'
 import ProductCardForList from './ProductCardForList'
 import { useNavigate, useParams } from 'react-router-dom'
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
-
-
 export default function ParticularProductPage() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const param = useParams();
     const product_id = param.product_id;
     const [products, setProducts] = useState([])
@@ -19,36 +15,27 @@ export default function ParticularProductPage() {
     const navigate = useNavigate();
     const [ProductForLists, setProductForLists] = useState([])
     const [imageLists, setImageLists] = useState([])
-
     const [user, setUser] = useState({});
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
         });
     }, []);
-
-
     useEffect(() => {
         axiosClient.get(`/addtocart/${product_id}`).then((res) => {
             setProducts(res.data[0]);
             setImage(res.data[1]);
-
         })
     }, [])
     useEffect(() => {
         axiosClient.get(`/product`).then((res) => {
             setProductForLists(res.data[0]);
             setImageLists(res.data[1]);
-
         })
     }, [])
-    // console.log(products)
-    // console.log(image)
     const LogedIn = sessionStorage.getItem('LogedIn');
     const userId = sessionStorage.getItem('user_id');
-    // console.log(LogedIn)
     const haldelClick = () => {
-        // console.log(user)
         if (LogedIn) {
             axiosClient.post(`/addtocart/${product_id}/${quantity}`)
                 .then(res => {
@@ -64,36 +51,19 @@ export default function ParticularProductPage() {
                 .catch(err => console.log(err));
         }
         else {
-            // alert('Please Log In !! ')
-            // navigate('/login')
-
             const redirectUrl = `/addtocart/${product_id}/`;
             sessionStorage.setItem('redirectUrl', redirectUrl);
-            //  query parameters: navigate('/login?redirect=/cart');
             navigate('/login');
-
         }
     }
-    // const haldelOrderClick =()=>{
-    //     axiosClient.post(`/addtocart/${product_id}`)
-    //     .then(res => {
-    //         console.log ('click')
-    //         navigate('/cart');
-    //     })
-    //     .catch(err => console.log(err));
-    // }
-
     // Quantity State
     const [quantity, setQuantity] = useState(1);
-
     // Increase Quantity
     const AddItems = () => setQuantity(quantity => quantity + 1);
-
     // Decrease Quantity
     const DecreaseItems = () => {
         if (quantity > 1) setQuantity(quantity => quantity - 1);
     };
-
     return (
         <div>
             <div className="product" style={{ overflowX: 'hidden' }}>
@@ -136,7 +106,6 @@ export default function ParticularProductPage() {
                                     </span>
                                     <p>Inclusive of all taxes</p>
                                     <button onClick={haldelClick} type='submit' className='btn m-2' style={{ backgroundColor: '#0cbea9' }}>Add To Cart</button>
-                                    {/* <button onClick={haldelOrderClick} type='submit' className='btn' style={{ backgroundColor: '#0cbea9' }}>Order Now</button> */}
                                     <p className='my-2'>%Offer%</p>
                                     <p className='my-2'>{product.discount}% Off</p>
                                 </div>
@@ -154,24 +123,11 @@ export default function ParticularProductPage() {
                                                 <ProductCardForList imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                                             </>
                                             : <></>}
-
-                                        {/* <p>{img.name}</p> */}
                                     </div>
                                 ))}
                             </div>
                         ))}
-                        {/* <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList />
-                        <ProductCardForList /> */}
-
                     </div>
-
                 </div>
             </div>
         </div>

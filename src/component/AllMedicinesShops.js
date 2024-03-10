@@ -3,21 +3,13 @@ import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import MedicineShopCard from './MedicineShopCard';
 import medicineshop from '../img/medicinesShop.webp';
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Helmet } from 'react-helmet';
-
 export default function AllMedicinesShops(props) {
-
   const [madicalPage, setMadicalPage] = useState([])
   const [image, setImages] = useState([]);
   let [loading, setLoading] = useState(false);
-
-
-  // if (props.location !== undefined) {
-  // }
-  // console.log(props.location)
   if (props.location === undefined) {
     useEffect(() => {
       axiosClient.get(`/madicine/medicineshops`)
@@ -28,7 +20,6 @@ export default function AllMedicinesShops(props) {
             setImages(response.data[1]);
             setLoading(true);
           }
-          // console.log(response.data);
         })
         .catch(err => {
           // Handle errors
@@ -72,7 +63,6 @@ export default function AllMedicinesShops(props) {
       items: 2
     }
   };
-
   return (
     <>
       <Helmet>
@@ -84,11 +74,6 @@ export default function AllMedicinesShops(props) {
           <h3 className='py-1'>||Best Medicines Seller In Your Location ||</h3>
           {loading ?
             <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
-              {/* {madicalPage.map(madical => (
-            <div key={madical.id} >
-              <MedicineShopCard img={medicineshop} title={madical.name} phone={madical.phone} location={madical.City} btntext="Order Now" />
-            </div>
-          ))} */}
               {madicalPage.map(madical => (
                 <div key={madical.id}>
                   {image.map((img) => (

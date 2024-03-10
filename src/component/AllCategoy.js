@@ -28,26 +28,19 @@ export default function AllCategoy() {
   };
   const [catagorys, setCatagorys] = useState([]);
   let [loading, setLoading] = useState(false);
-
-
-
   useEffect(() => {
     axiosClient.get(`/catagorys`).then((res) => {
       // Handle response
       if (res.data !== null) {
         setCatagorys(res.data)
         setLoading(true);
-        // setImages(res.data[1])
       }
-      // console.log(response.data);
     })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
-
   }, [])
-
   return (
     <>
     <Helmet>
@@ -61,23 +54,13 @@ export default function AllCategoy() {
           <Carousel responsive={responsive} className='allCategoryCarousel'>
             {catagorys.map((catagory, index) => (
               <div key={index}>
-                {/* {image.map((img) => (
-                <div key={img.id}>
-                  {parseInt(fproduct.productImageId) === img.id ?
-                    <> */}
-                {/* <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} /> */}
-                <CategoriesCard img={baby} title={catagory.category} btntext="Shop Now" />
-                {/* </>
-                    : <></>}
-
-                </div>
-              ))} */}
+                 <CategoriesCard img={baby} title={catagory.category} btntext="Shop Now" />
+                
               </div>
             ))}
           </Carousel>
           : <ClipLoader color="blue" />}
       </div>
-
     </div>
     </>
   )

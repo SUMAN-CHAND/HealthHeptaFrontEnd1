@@ -25,6 +25,7 @@
     "react-document-head": "^1.0.1",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.4",
     "react-icons": "^4.11.0",
     "react-modal": "^3.16.1",
     "react-multi-carousel": "^2.8.4",
@@ -44,7 +45,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

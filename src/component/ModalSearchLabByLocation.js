@@ -3,9 +3,7 @@ import lab from '../img/labimg.webp';
 import {
   Link, useNavigate
 } from "react-router-dom";
-import axios from 'axios';
 import axiosClient from './axiosClient';
-
 const customStyle = {
   maxHeight: '60vh',
   maxWidth: '85vw',
@@ -13,45 +11,25 @@ const customStyle = {
   overflow: 'hidden',
   background: 'linear-gradient(rgba(250,0,0,-0.5),transparent)',
   backgroundColor: 'rgb(41 116 132)'
-
 };
-
 export default function ModalSearchLabByLoaction({ closeTheModal }) {
-
-
   const [locations, setLocation] = useState([])
   const [chooseLocation, setChooseLocation] = useState([])
   const [selectLocation, setSelectLocation] = useState()
-  // const [doctors, setDoctors] = useState([])
   const [chooseDoctor, setChooseDoctor] = useState([])
-
-
   useEffect(() => {
     axiosClient.get(`/locations`)
       .then(res => {
         setLocation(res.data);
-        // setChooseLocation(res.data)
       })
   })
-  // useEffect(() => {
-  //   axiosClient.get('/doctorsearch')
-  //     .then(res => {
-  //       setDoctors(res.data);
-  //       // setChooseLocation(res.data)
-  //     })
-  // }, [])
-
   const navigate = useNavigate();
-
   const [values, setValues] = useState({
     input: ''
   })
   const handleInput = (event) => {
     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    // console.log('click'+values)
   }
-
-
   const searchLabs = async () => {
     try {
       closeTheModal();
@@ -65,7 +43,6 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
               location: selectLocation
             }
           })
-        //    console.log(response.data)
       } else {
         // Handle logout failure
         console.error(response.data.message);
@@ -77,7 +54,6 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
   const handleClick = event => {
     setChooseDoctor([]);
   };
-
   return (
     <>
       <div className="lab container " style={customStyle}>
@@ -86,11 +62,12 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
           <div className="search-l">
             <h2 className=' text-light' style={{ textAlign: 'center' }}>Search Pathological Lab Near You</h2>
             <p className=' text-light' style={{ textAlign: 'center' }}>Search the best pathological lab, test in the city nearest to you.</p>
-            <div className="search-l" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem',alignItems:'center' }}>
+            <div className="search-l" style={{ display: 'flex', marginTop: '15%', marginLeft: '2rem', alignItems: 'center' }}>
               <div className="dropdown  me-2 ">
                 <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary dropdown-location-modal-m" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
+                  <option defaultValue={'choose your location..'} >choose your Pin Code..</option>
                   {locations.map((location, index) => (
-                    <option key={index} value={location.name}>{location.name}</option>
+                    <option key={index} value={location.pin_code}>{location.pin_code}</option>
                   )
                   )}
                 </select>
@@ -104,15 +81,6 @@ export default function ModalSearchLabByLoaction({ closeTheModal }) {
                     </svg>
                   </button>
                 </div>
-                {/* {chooseDoctor.length !== 0 && (
-                  <div className="inputResult" onClick={handleClick}>
-                    {chooseDoctor.map((doctor, index) => {
-                      // {`/doctor/${product.id}`}
-                      return <Link to={`/doctor/${doctor.id}`} onClick={closeTheModal} style={{ textDecoration: 'none', color: 'black' }}><p style={{ cursor: 'pointer', padding: '0px' }} key={index}>{doctor.doc_name}</p></Link>
-                    }
-                    )}
-                  </div>
-                )} */}
               </div>
             </div>
           </div>

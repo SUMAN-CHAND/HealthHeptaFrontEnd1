@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import UploadImage from '../UploadImage';
 import Dashboard from './Dashboard';
@@ -8,8 +7,6 @@ import ReactWhatsapp from 'react-whatsapp';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axiosClient from '../axiosClient';
-
-
 export default function Sub_Admin_Home_Page() {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
@@ -41,7 +38,6 @@ export default function Sub_Admin_Home_Page() {
   const [userAddress, setUserAddress] = useState({});
   const [rolePresent, setRolePresentStatus] = useState('');
   const location = useLocation();
-  // console.log(location)
   if (location.state === null) {
     return <Navigate to='/sub-admin/login' />;
   }
@@ -70,15 +66,6 @@ export default function Sub_Admin_Home_Page() {
       }
     });
   }, []);
-
-
-  // console.log(user)
-  // 
-  // var [address, setAddress] = useState(false);
-  // const UpdateAddress = () => {
-  //   setAddress(true);
-  // }
-
   useEffect(() => {
     axiosClient.get('/sub-admin/product')
       .then(response => {

@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
-
 export default function OrderAction() {
-
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
-    // const [product, setProduct] = useState([]);
     const [order, setOrders] = useState([]);
     const [deliveryPartners, setDeliveryPartner] = useState([]);
-
-
     const param = useParams();
-    var product_id = param.product_id;
-
-    var user_id = param.user_id;
     var order_id = param.id;
-
-    // console.log(product_id)
-    // console.log(user_id)
-    // console.log(order_id)
-
     useEffect(() => {
         axiosClient.get(`/superadmin/orders/order/${order_id}`)
             .then(res => {
@@ -32,32 +18,18 @@ export default function OrderAction() {
             .catch(err => {
                 console.log(err)
             })
-
     }, [])
     useEffect(() => {
         axiosClient.get(`/superadmin/delivery_partner`)
             .then(response => {
                 // Handle response
                 setDeliveryPartner(response.data)
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }, [])
-    // useEffect(() => {
-    //     axiosClient.get(`/superadmin/orders/order/${order_id}`)
-    //         .then(res => {
-    //             if (res.data !== null) {
-    //                 setOrders(res.data[0]);
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         })
-
-    // }, [])
     console.log(order)
 
     const [values, setValues] = useState({
@@ -67,19 +39,11 @@ export default function OrderAction() {
         assigndeliverypersion: '',
 
     })
-
-    // const [values, setValues] = useState({
-    //     // ...other product data fields
-    //     productImageId: null, // Initialize as null
-    // });
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const navigate = useNavigate();
     const handleSubmit = (event) => {
-        // console.log(values)
         event.preventDefault();
         axiosClient.post(`/superadmin/update/order`, values)
             .then(res => {
@@ -103,8 +67,6 @@ export default function OrderAction() {
         fontSize: "1.1rem",
         width: '90%'
     };
-
-
     return (
         <div>
             <div className="container mt-3" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -171,29 +133,18 @@ export default function OrderAction() {
                                     )
 
                                 }
-                                {/* <option value="select">{order.status}</option>
-                                <option value="accepted">Accepted</option>
-                                <option value="completed">Completed</option> */}
                             </select><br />
                         </div>
-
-
-
-
-
                         <div className="form-check ">
                             <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} />
                             <label className="form-check-label" htmlFor="flexCheckChecked">
                                 <p>You are sure to add  <span className='text-warning'>product</span> </p>
                             </label>
                         </div>
-                        {/* <Link to='/login'> */}
                         <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Add Product</button>
-                        {/* </Link> */}
                     </form>
                 </div>
             </div>
         </div>
     )
-
 }

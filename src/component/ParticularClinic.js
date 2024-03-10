@@ -2,7 +2,6 @@ import React from 'react'
 import clinic from '../img/modalclinicimg.png';
 import ClinicCardForList from './clinicCardForList.js';
 import DoctorCardOfList from './DoctorCardOfList';
-
 export default function ParticularClinic() {
     const clinic_name = 'Applo Clinic';
     return (

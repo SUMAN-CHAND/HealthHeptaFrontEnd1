@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 export default function SuccfullyOrderplaceModal({closeTheModal,totalActusalPrice}) {
-console.log(totalActusalPrice);
     return (
         <div>
             <div className="container " style={{ height: '75vh', width: '75vw', border: '2px solid black', borderRadius: '5px' }}>
@@ -17,15 +15,12 @@ console.log(totalActusalPrice);
                     <h4 className='m-3'>Cash On Delivary at Home</h4>
                     <h5 className='m-3'>with in 25th March</h5>
                     <h5 className='m-3'>You have to pay:- ₹{totalActusalPrice}</h5>
-
                     <div className="button">
                     <Link to='/' onClick={closeTheModal}> 
                     <button type="button" className="btn btn-success ">Close</button></Link>
                 </div>
-                    
                 </div>
             </div>
-
         </div>
     )
 }

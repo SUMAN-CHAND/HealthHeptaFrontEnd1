@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react'
 import {
     Link, useLocation
 } from "react-router-dom";
-
 import Modal from 'react-modal';
 import SearchMedicinesStoreByLocation from './ModalSearchMedicinesStoreByLocation';
 import ModalBookAppointment from './ModalBookAppointment';
 import ModalSearchLabByLocation from './ModalSearchLabByLocation';
 import ModalSearchClinicByLoaction from './ModalSearchClinicByLoaction';
-import axios from 'axios';
 import axiosClient from './axiosClient';
 
 const customStyles = {
@@ -40,22 +38,13 @@ export default function AppoitmentConfirmation() {
 
     const location = useLocation();
     let stateData = location.state.value;
-    // console.log(stateData)
-
     var doctor_id = stateData.doctor_id;
-    // var appoint_date = stateData.appoint_date;
-    // var appoint_time = stateData.appoint_time;
-
     const [doctors, setDoctor] = useState([]);
-
     useEffect(() => {
         axiosClient.get(`/doctorsearch/${doctor_id}`).then((res) => {
-
-            // Handle response
             if (res.data !== null) {
                 setDoctor(res.data[0])
             }
-            // console.log(response.data);
         })
             .catch(err => {
                 // Handle errors
@@ -63,8 +52,6 @@ export default function AppoitmentConfirmation() {
             });
 
     }, [])
-    // console.log(doctors)
-
     return (
         <div>
             <div className="container " style={{  borderRadius: '5px' }}>

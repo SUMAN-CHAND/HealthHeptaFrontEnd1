@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
-import axios from 'axios';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import B2BProdCard from './B2BProdCard';
 import axiosClient from '../axiosClient';
-
-
 export default function AllProductPage() {
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 1150 },
             items: 6
         },
@@ -45,15 +41,6 @@ export default function AllProductPage() {
                 setProducts(res.data[0])
                 setImages(res.data[1])
                 setMadicineShop(res.data)
-
-                // // Filter out duplicate values
-                // console.log(madicineShops)
-                // const uniqueMedicineShops = [...new Set(madicineShops)];
-
-                // // Update state with unique numbers
-                // setMadicineShop(uniqueMedicineShops);
-                // console.log(madicineShops)
-
             })
         }, [])
     } else {
@@ -61,8 +48,6 @@ export default function AllProductPage() {
             setProducts(stateData.data)
             setImages(stateData.image)
             setMadicineShop(stateData.data)
-
-
             setDataFound(true)
         }, [])
     }
@@ -74,11 +59,7 @@ export default function AllProductPage() {
     })
     const handleMedicineType = (event) => {
         setMedicineType(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
-
-    // console.log(products)
-    // functions();
     return (
         <div style={{ backgroundColor: '#80808024' }}>
             <div class="row m-2" style={{ justifyContent: 'center' }}>

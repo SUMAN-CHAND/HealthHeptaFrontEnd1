@@ -1,7 +1,6 @@
 import React from 'react'
 import product2 from '../img/modalclinicimg.png'
 import { Link } from 'react-router-dom'
-
 export default function ClinicCardForList() {
   return (
     <div>

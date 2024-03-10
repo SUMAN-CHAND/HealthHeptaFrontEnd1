@@ -1,9 +1,7 @@
 import React from 'react'
-
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
-import axios from 'axios';
 import axiosClient from '../axiosClient';
 
 const Dashboard = () => {
@@ -30,38 +28,12 @@ const Dashboard = () => {
   const [userOrderonWeek, setUserOrderonWeek] = useState([]);
   const [salesCountWeek, setSalesCountWeek] = useState([]);
   const [purchaseCountWeek, setPurchaseCountWeek] = useState([]);
-
-  // console.log(userCount);
-  // console.log(productCount);
-  // console.log(productPrice);
-  // console.log(expiryproductCount);
-  // console.log(expiryproductPrice);
-  // console.log(expiryingproductCount);
-  // console.log(expiryingproductPrice);
-  // console.log(purchase_monthlyproductCount);
-  // console.log(purchase_monthlyproductPrice);
-  // console.log(sales_monthlyproductCount);
-  // console.log(sales_monthlyproductPrice);
-  // console.log(sales_yearlyproductCount);
-  // console.log(sales_yearlyproductPrice);
-  // console.log(purchase_yearlyproductCount);
-  // console.log(purchase_yearlyproductPrice);
-  // console.log(productCountLowStock);
-  // console.log(productPriceLowStock);
-  // console.log(ordersCount);
-  // console.log(serviceProviderCount);
-  // console.log(userCountonWeek);
-  // console.log(userOrderonWeek);
-  // console.log(salesCountWeek);
-  // console.log(purchaseCountWeek);
-
   useEffect(() => {
     axiosClient.get(`/superadmin/userno`)
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
           setUserCount(response.data[0].no)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -77,18 +49,12 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setuserCountonWeek(response.data)
         }
-
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
   }, [])
-  // if(userCountonWeek.length()>0){
-  // console.log(userCountonWeek)
-  // }
-
   useEffect(() => {
     axiosClient.get(`/superadmin/productno`)
       .then(response => {
@@ -96,7 +62,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setProductCount(response.data[0].no)
           setProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -111,7 +76,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setProductCountLowStock(response.data[0].no)
           setProductPriceLowStock(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -126,7 +90,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setExpiryingProductCount(response.data[0].no)
           setExpiryingProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -141,7 +104,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setExpiryProductCount(response.data[0].no)
           setExpiryProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -156,7 +118,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setPurchase_yearlyproductCount(response.data[0].no)
           setPurchase_yearlyProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -171,7 +132,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setPurchase_monthlyproductCount(response.data[0].no)
           setPurchase_monthlyProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -186,7 +146,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setSales_monthlyproductCount(response.data[0].no)
           setSales_monthlyProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -202,7 +161,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setSales_yearlyproductCount(response.data[0].no)
           setSales_yearlyProductPrice(response.data[0].price)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -216,7 +174,6 @@ const Dashboard = () => {
         // Handle response
         if (response.data !== undefined) {
           setOrdersCount(response.data[0].no)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -228,12 +185,9 @@ const Dashboard = () => {
     axiosClient.get(`/superadmin/ordersno/week`)
       .then(response => {
         // Handle response
-        // console.log(response.data)
         if (response.data !== undefined) {
           setUserOrderonWeek(response.data)
         }
-
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -246,7 +200,6 @@ const Dashboard = () => {
         // Handle response
         if (response.data !== undefined) {
           setServiceProviderCount(response.data[0].no)
-          // console.log(response.data);
         }
       })
       .catch(err => {
@@ -254,7 +207,6 @@ const Dashboard = () => {
         console.error(err);
       });
   }, [])
-
   useEffect(() => {
     axiosClient.get(`/superadmin/sales/week`)
       .then(response => {
@@ -263,8 +215,6 @@ const Dashboard = () => {
         if (response.data !== undefined) {
           setSalesCountWeek(response.data)
         }
-
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -275,28 +225,16 @@ const Dashboard = () => {
     axiosClient.get(`/superadmin/purchase/week`)
       .then(response => {
         // Handle response
-        // console.log(response.data)
         if (response.data !== undefined) {
           setPurchaseCountWeek(response.data)
         }
-
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
   }, [])
-
-
-
-  // {userCountonWeek.length > 0 && (
-  //   // Render the component that uses userCountonWeek
-  // )}
   var data = [];
-  // if (userCountonWeek[0] > 0 || userCountonWeek[1] > 0 || userCountonWeek[2] > 0 || userCountonWeek[3] > 0 || userCountonWeek[4] > 0 || userCountonWeek[5] > 0 || userCountonWeek[6] > 0) {
-  //   if (userOrderonWeek[0] > 0 || userOrderonWeek[1] > 0 || userOrderonWeek[2] > 0 || userOrderonWeek[3] > 0 || userOrderonWeek[4] > 0 || userOrderonWeek[5] > 0 || userOrderonWeek[6] > 0) {
-
   data = [
     {
       name: '1',
@@ -341,14 +279,7 @@ const Dashboard = () => {
       amt: 2100,
     },
   ];
-  //   }
-  // }
-
   var salesReport = [];
-  // if (salesCountWeek[0] > 0 || salesCountWeek[1] > 0 || salesCountWeek[2] > 0 || salesCountWeek[3] > 0 || salesCountWeek[4] > 0 || salesCountWeek[5] > 0 || salesCountWeek[6] > 0) {
-  //   if (purchaseCountWeek[0] > 0 || purchaseCountWeek[1] > 0 || purchaseCountWeek[2] > 0 || purchaseCountWeek[3] > 0 || purchaseCountWeek[4] > 0 || purchaseCountWeek[5] > 0 || purchaseCountWeek[6] > 0) {
-
-
   salesReport = [
     {
       name: '1',
@@ -395,29 +326,14 @@ const Dashboard = () => {
     },
 
   ];
-  //   }
-  // }
-
-  // console.log(data);
-  // console.log(salesReport);
   var flag1Chart = false;
   var flag2Chart = false;
   if ((userCountonWeek[0] > 0 || userCountonWeek[1] > 0 || userCountonWeek[2] > 0 || userCountonWeek[3] > 0 || userCountonWeek[4] > 0 || userCountonWeek[5] > 0 || userCountonWeek[6] > 0) && (userOrderonWeek[0] > 0 || userOrderonWeek[1] > 0 || userOrderonWeek[2] > 0 || userOrderonWeek[3] > 0 || userOrderonWeek[4] > 0 || userOrderonWeek[5] > 0 || userOrderonWeek[6] > 0)) {
-    // console.log('true')
     flag1Chart = true;
   }
   if ((salesCountWeek[0] > 0 || salesCountWeek[1] > 0 || salesCountWeek[2] > 0 || salesCountWeek[3] > 0 || salesCountWeek[4] > 0 || salesCountWeek[5] > 0 || salesCountWeek[6] > 0) && (purchaseCountWeek[0] > 0 || purchaseCountWeek[1] > 0 || purchaseCountWeek[2] > 0 || purchaseCountWeek[3] > 0 || purchaseCountWeek[4] > 0 || purchaseCountWeek[5] > 0 || purchaseCountWeek[6] > 0)) {
-    // console.log('true')
     flag2Chart = true;
   }
-
-  // const YourComponent = ({ userCountonWeek, userOrderonWeek }) => {
-  //   const data = [
-  //     // Your data here
-  //   ];
-
-  // const shouldRenderChart = userCountonWeek.some((count, index) => count > 0 || userOrderonWeek[index] > 0);
-
   return (
     <main className='main-container' style={{fontSize:'13px'}}>
       <div className='main-title'>

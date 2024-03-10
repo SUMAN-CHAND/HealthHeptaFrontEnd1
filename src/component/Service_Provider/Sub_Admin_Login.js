@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
-import { Link } from 'react-router-dom';
 import validation from '../LoginValidaation';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
-import ChooseRoleModal from './ChooseRoleModal';
+// import ChooseRoleModal from './ChooseRoleModal';
 import axiosClient from '../axiosClient';
 import usePasswordToggle from '../usePasswordToggle';
+import HashLoader from 'react-spinners/HashLoader';
+const ChooseRoleModal = lazy(() => import('./ChooseRoleModal'));
+
 
 
 export default function Sub_Admin_Login() {
@@ -127,9 +128,9 @@ export default function Sub_Admin_Login() {
                         <span className="validity"></span>
                         <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
-                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700',position:'relative' }} >
+                    <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700', position: 'relative' }} >
                         <label className='p-2' htmlFor="password">Password : </label>
-                        <input className='m-2  p-1' type={PasswordInputType}  style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
+                        <input className='m-2  p-1' type={PasswordInputType} style={{ width: '90%' }} name='password' placeholder='Enter Password' onChange={handleInput} />
                         <br />
                         <span className="password-toogle-icon">{ToggleIcon}</span>
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
@@ -141,7 +142,7 @@ export default function Sub_Admin_Login() {
                         <button className='  btn-default border p-2 mb-3 btnonhover' style={{ borderRadius: '5px', width: '90%' }}>Create Account</button>
                     </Link> */}
                     <>
-                    {/* <Link className="btn-default border p-2 mb-3 btnonhover" onClick={openModal}><p>Create Account</p></Link> */}
+                        {/* <Link className="btn-default border p-2 mb-3 btnonhover" onClick={openModal}><p>Create Account</p></Link> */}
                         <button className='  btn-default border p-2 mb-3 btnonhover' style={{ borderRadius: '5px', width: '90%' }} onClick={openModal}>Create Account</button>
                         <Modal
                             isOpen={modalIsOpen}
@@ -150,7 +151,7 @@ export default function Sub_Admin_Login() {
                             style={customStyles}
                             contentLabel="Example Modal"
                         >
-                            <ChooseRoleModal closeTheModal={closeModal} />
+                            <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChooseRoleModal closeTheModal={closeModal} /></Suspense> </div>
                         </Modal>
 
                     </>

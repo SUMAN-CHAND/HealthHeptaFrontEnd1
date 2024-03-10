@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import axiosClient from './axiosClient';
 import { ToastContainer, toast } from 'react-toastify';
-import Popup from 'reactjs-popup';
-
-
 export default function AddUserNewAddress({closeTheModal}) {
-
-    
     const success = () => toast.success('Success', {
         position: "top-right",
         autoClose: 5000,
@@ -27,7 +22,6 @@ export default function AddUserNewAddress({closeTheModal}) {
         progress: undefined,
         theme: "light",
     });
-
     const [values, setValues] = useState({
         Village: '',
         P_O: '',
@@ -36,11 +30,9 @@ export default function AddUserNewAddress({closeTheModal}) {
         State: '',
         Pin: '',
     })
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     }
-
     const onAPostSubmit = (event) => {
         event.preventDefault();
         axiosClient.post(`/profile/address`, values)

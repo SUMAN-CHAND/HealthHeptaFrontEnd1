@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import Modal from 'react-modal';
 import UploadPrescription from './UploadPrescription';
-
 const customStyles = {
   content: {
     top: '50%',
@@ -19,35 +18,28 @@ const customStyles = {
     borderRadius: '5%',
   },
 };
-
 export default function LabCard(props) {
   const [modalIsOpen, setIsOpen] = React.useState(false);
-
   function openModal() {
     setIsOpen(true);
   }
-
   function afterOpenModal() {
     document.body.style.overflow = 'hidden';
   }
-
   function closeModal() {
     document.body.style.overflow = 'unset';
     setIsOpen(false);
   }
   return (
-
     <div className=" "  >
       <Link style={{ textDecoration: 'none' }}>
         <div className="container"  >
           <div className="card  ">
-            {/* <img src={props.img} className="card-img-top" alt="..." /> */}
             <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.img}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }}  />
             <div className="card-body">
               <p className="card-title" style={{ fontWeight: '800' }}>{props.title}</p>
               <p className="card-text">{props.phone}</p>
               <p className="card-text">{props.location}</p>
-              {/* <p className="card-text">{props.openingtime} - {props.closetime}</p> */}
               <Link to={`/particular-laboratory/${props.id}`} className="btn btn-primary" style={{ fontSize: '0.7rem' }} onClick={openModal}>{props.btntext}</Link>
               <Modal
                 isOpen={modalIsOpen}
@@ -63,6 +55,5 @@ export default function LabCard(props) {
         </div>
       </Link>
     </div>
-
   )
 }

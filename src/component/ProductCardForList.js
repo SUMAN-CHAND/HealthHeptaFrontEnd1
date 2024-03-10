@@ -1,15 +1,10 @@
 import React from 'react'
-import product2 from '../img/medicalproduct.webp'
 import { Link } from 'react-router-dom'
-
 export default function ProductCardForList(props) {
-
   const product_id = props.product_id;
   const value = `/addtocart/${product_id}`;
   const discount = props.discount;
   const productPrice = props.price;
-  // console.log(discount)
-  // console.log(productPrice)
   const discountPrice = productPrice - (productPrice * discount) / 100;
   return (
     <div>

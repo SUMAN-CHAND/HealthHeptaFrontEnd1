@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import productimg from '../../img/doctor2.webp'
-import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewUser() {
@@ -9,7 +8,6 @@ export default function ViewUser() {
         alignItems: 'center',
 
     }
-
     const [customer, setCustomer] = useState([]);
     const param = useParams();
     var user_id = param.user_id;
@@ -26,15 +24,11 @@ export default function ViewUser() {
             })
 
     },[])
-
-    console.log(customer)
     const navigate = useNavigate();
     const handleClick = ()=>{
         navigate('/superadmin' , { state: { loggedIn: true } });
     }
-
     return (
-
         <>
             <div className="container mt-4 " style={{ minHeight: '50vh' }}>
                 <div className="product" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

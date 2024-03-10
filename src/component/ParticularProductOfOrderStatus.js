@@ -2,27 +2,19 @@ import React, { useState, useEffect } from 'react'
 import product from '../img/medicalproduct.webp'
 import ProductCardForList from './ProductCardForList'
 import {  useParams } from 'react-router-dom'
-import axios from 'axios';
 import axiosClient from './axiosClient';
-
 export default function ParticularProductOfOrderStatus() {
     //main for connecting backend with Session
-    axios.defaults.withCredentials= true;
-
+    axiosClient.defaults.withCredentials= true;
     const param = useParams();
     const product_id = param.product_id;
     const order_id = param.order_id;
     const [products, setProducts] = useState([])
-    // const navigate = useNavigate();
-
-
     useEffect(() => {
         axiosClient.get(`/order/${order_id}/product/${product_id}`).then((res)=>{
             setProducts(res.data);
         })
     }, [])
-
-   
     return (
         <div>
             <div className="product" style={{ overflowX: 'hidden' }}>
@@ -41,15 +33,11 @@ export default function ParticularProductOfOrderStatus() {
                                 <hr />
                                 <h5>₹ {product.product_price}</h5>
                                 <p>Inclusive of all taxes</p>
-                                {/* <button onClick={haldelClick} type='submit' className='btn m-2' style={{ backgroundColor: '#0cbea9' }}>Add To Cart</button> */}
-                                {/* <button onClick={haldelOrderClick} type='submit' className='btn' style={{ backgroundColor: '#0cbea9' }}>Order Now</button> */}
                                 <p className='my-2'>%Offer%</p>
                             </div>
                         ))}
                     </div>
-
                     <div className="products" style={{ width: '35vw', marginTop: '2rem' }}>
-
                         <ProductCardForList />
                         <ProductCardForList />
                         <ProductCardForList />
@@ -59,9 +47,7 @@ export default function ParticularProductOfOrderStatus() {
                         <ProductCardForList />
                         <ProductCardForList />
                         <ProductCardForList />
-
                     </div>
-
                 </div>
             </div>
         </div>

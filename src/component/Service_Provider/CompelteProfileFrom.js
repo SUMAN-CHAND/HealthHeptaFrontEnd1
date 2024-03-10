@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
@@ -13,12 +12,6 @@ export default function CompelteProfileFrom() {
     // console.log(state)
     const data = location.state.data
     const value = location.state.value
-    console.log(data.insertId)
-    console.log(value)
-
-
-
-
     const [values, setValues] = useState({
         subadmin_id: data.insertId,
         fullname: value.name,
@@ -65,8 +58,16 @@ export default function CompelteProfileFrom() {
             axiosClient.post(`/sub_admin/complete_profile`, values)
                 .then(res => {
                     if (res.data === 'success') {
-                        alert('Sign up  Successfully!!')
+                        alert('Sign up  Successfully!!');
                         navigate('/sub-admin/login');
+                    } else if (res.data === 'success by b2b_employee') {
+                        alert('Sub Admin Added  Successfully!!');
+                        navigate('/b2b/emp/home', { state: { loggedIn: res.data[1] } });
+                    }
+                    else if (res.data === 'success by admin') {
+                        alert('Sub Admin Added  Successfully!!');
+                        navigate('/superadmin', { state: { loggedIn: res.data[1] } });
+
                     }
                     else if (res.data === null) {
                         alert('Error')
@@ -121,7 +122,7 @@ export default function CompelteProfileFrom() {
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="role">Role<span className='text-danger'>*</span> : </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Your Role'
-                                    name='role' onChange={handleInput} value={value.role.toUpperCase()} /><br />
+                                    name='role' onChange={handleInput} value={value.role[0].toUpperCase()} /><br />
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

@@ -3,13 +3,10 @@ import lab from '../img/labimg.webp';
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import LabTestCard from './LabTestCard';
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Helmet } from 'react-helmet';
-
 export default function AllTest(props) {
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -29,7 +26,6 @@ export default function AllTest(props) {
       items: 2
     }
   };
-
   const [labTests, setLabTests] = useState([]);
   const [image, setImages] = useState([]);
   let [loading, setLoading] = useState(false);
@@ -43,9 +39,7 @@ export default function AllTest(props) {
             setLabTests(response.data[0]);
             setImages(response.data[1])
             setLoading(true);
-
           }
-          // console.log(response.data);
         })
         .catch(err => {
           // Handle errors
@@ -61,10 +55,7 @@ export default function AllTest(props) {
             setLabTests(response.data)
             setImages(response.data[1])
             setLoading(true);
-
-
           }
-          // console.log(response.data);
         })
         .catch(err => {
           // Handle errors
@@ -72,8 +63,6 @@ export default function AllTest(props) {
         });
     }, [])
   }
-
-
   return (
     <>
       <Helmet>

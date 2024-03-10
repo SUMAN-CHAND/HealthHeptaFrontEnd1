@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import LabTestCard from './LabTestCard';
-import Doctors from './DoctorCard';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import Carousel from 'react-multi-carousel';
 import axiosClient from './axiosClient';
-
 export default function LabSearchResults() {
     const responsive = {
         superLargeDesktop: {
@@ -26,20 +23,14 @@ export default function LabSearchResults() {
             items: 2
         }
     };
-
-
-
-
     let data = [];
     const location = useLocation();
     data = location.state;
     console.log(data.data[0])
     const [labTests, setLabTests] = useState(data.data[0]);
     const [image, setImages] = useState(data.data[1]);
-
     const [labss, setLabss] = useState([])
     const [imagess, setImagesss] = useState([])
-
     useEffect(() => {
         axiosClient.get(`/laboratory/lab_tests`)
             .then(response => {
@@ -47,19 +38,13 @@ export default function LabSearchResults() {
                 if (response.data !== null) {
                     setLabss(response.data[0]);
                     setImagesss(response.data[1])
-
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
                 console.error(err);
             });
     }, [])
-
-
-
-
     return (
         <div>
             <div style={{ display: 'flex', width: '100vw' }}>
@@ -116,7 +101,6 @@ export default function LabSearchResults() {
                 <div style={{ width: '40vw' }}>
                     <h3 className='py-2'>|| Suggested Labs ||</h3>
                     <div className="container" style={{ marginTop: '5vh', width: '18vw' }}>
-                        {/* <Carousel responsive={responsive}> */}
                         {labss.map(lab => (
                                 <div key={lab.id}>
                                     {imagess.map((img) => (
@@ -132,11 +116,8 @@ export default function LabSearchResults() {
                                     ))}
                                 </div>
                             ))}
-                        {/* </Carousel> */}
-
                     </div>
                 </div>
-
             </div>
         </div>
     )

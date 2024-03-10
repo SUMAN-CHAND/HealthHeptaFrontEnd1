@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Link, useNavigate
-} from "react-router-dom";
-import axios from 'axios';
 import axiosClient from '../axiosClient';
 const customStyle = {
   maxHeight: '60vh',
@@ -13,28 +9,16 @@ const customStyle = {
   overflow: 'hidden',
   background: 'linear-gradient(rgba(250,0,0,-0.5),transparent)',
   backgroundColor: 'rgb(41 116 132)'
-
 };
-
-
 export default function ViewCommissionModal({ closeTheModal, data, product_ids }) {
-
-  // console.log(data)
-  // console.log(product_ids)
   const order_id = data;
   const product_id = product_ids;
-
-
-
   const [commissions, setCommissions] = useState([]);
   const [payments, setPayments] = useState([]);
   const [products, setProducts] = useState([])
-
-
   useEffect(() => {
     axiosClient.get(`/partner/commission/${order_id}`)
       .then(res => {
-        // setSelectLocation(res.data[2])
         setCommissions(res.data[0]);
         setPayments(res.data[1]);
       })
@@ -49,11 +33,6 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
         })
   }, []);
   var total_amount = 0;
-  // console.log(commissions)
-  // console.log(payments)
-  // console.log(products)
-
-
   return (
     <>
       <div className="commission container " style={customStyle}>
@@ -89,10 +68,7 @@ export default function ViewCommissionModal({ closeTheModal, data, product_ids }
               </>}
             </div>
           </>
-
           ))}
-
-
         </div>
       </div>
     </>

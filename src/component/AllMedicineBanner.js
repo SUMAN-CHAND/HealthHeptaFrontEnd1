@@ -1,7 +1,6 @@
 import React from 'react'
 import MedicineBanner from './MedicineBanner'
 import medicines from '../img/Medicines.avif';
-
 export default function AllMedicineBanner() {
     return (
         <div>
@@ -26,11 +25,11 @@ export default function AllMedicineBanner() {
                                         distribution of letters, as opposed to " btntext="Order Now" img={medicines} />
                     </div>
                 </div>
-                <button className="carousel-control-prev" style={{width:'5vw'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <button className="carousel-control-prev" style={{ width: '5vw' }} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Previous</span>
                 </button>
-                <button className="carousel-control-next" style={{width:'5vw'}} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <button className="carousel-control-next" style={{ width: '5vw' }} type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Next</span>
                 </button>

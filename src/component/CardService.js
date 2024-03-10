@@ -4,8 +4,6 @@ import {
 } from "react-router-dom";
 import Modal from 'react-modal';
 import { Helmet } from 'react-helmet';
-
-
 const customStyles = {
     content: {
         overflowY: 'hidden',
@@ -17,25 +15,18 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-
 const cardStyles = {
     maxWidth: "18vw",
     height: '45vh',
-    // backgroundColor :'white'
 };
-
 export default function CardService(props) {
-
     const [modalIsOpen, setIsOpen] = React.useState(false);
-
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);

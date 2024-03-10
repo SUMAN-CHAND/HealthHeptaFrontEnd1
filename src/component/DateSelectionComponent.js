@@ -1,12 +1,8 @@
-
 import React, { useState } from 'react';
-
 const DateSelectionComponent = () => {
   const [selectedDay, setSelectedDay] = useState('');
   const [availableDates, setAvailableDates] = useState([]);
-
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
   const handleDaySelection = (event) => {
     setSelectedDay(event.target.value);
     // Calculate and set the available dates based on the selected day
@@ -42,7 +38,6 @@ const DateSelectionComponent = () => {
       // Move to the next occurrence in the next week
       date.setDate(date.getDate() + 7);
     }
-
     return dates;
   };
 

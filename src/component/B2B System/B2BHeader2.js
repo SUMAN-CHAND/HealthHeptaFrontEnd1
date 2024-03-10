@@ -44,11 +44,6 @@ export default function B2BHeader2() {
         document.body.style.backgroundColor = '#fff'
         setIsOpen(false);
     }
-    // Shop By Cartagory
-// Explore Best Deals
-// when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-// distribution of letters, as opposed to
-// Quick Orders My Orders Contact us
     return (
         <div className='Header2' >
             <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#232f3e"}}>

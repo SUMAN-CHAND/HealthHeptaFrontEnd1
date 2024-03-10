@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
-import labimg from '../img/lab.webp';
-import axios from 'axios';
 import LabCard from './LabCard';
 import axiosClient from './axiosClient';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Helmet } from 'react-helmet';
-
 export default function AllLabs(props) {
-
-
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -31,14 +25,9 @@ export default function AllLabs(props) {
       items: 2
     }
   };
-
-
   const [labs, setLabs] = useState([])
   const [image, setImages] = useState([]);
   let [loading, setLoading] = useState(false);
-
-
-
   if (props.location === undefined) {
     useEffect(() => {
       axiosClient.get(`/laboratory/laboratorys`)
@@ -97,7 +86,6 @@ export default function AllLabs(props) {
                       {parseInt(lab.SubAdminImageId) === img.id ?
                         <>
                           <LabCard id={lab.id} img={img.path} title={lab.name} phone={lab.phone} location={lab.landmark} openingtime={lab.OpeningTime} closetime={lab.CloseingTime} desc={lab.description} btntext="Book A Test Now" />
-                          {/* < LabCard img={labimg} title="Ghose Laboratory" location="Kolkata" btntext="Order Now"/> */}
 
                         </>
                         : <>

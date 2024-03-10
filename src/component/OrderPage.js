@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import CartItemCard from './CartItemCard'
-import { Link, useNavigate } from 'react-router-dom'
-import PopularProductCard from './PopularProductCard'
-
+import { useNavigate } from 'react-router-dom'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import ProductCard from './ProductCard';
-import UploadPrescription from './UploadPrescription';
-
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import AddNewAddressOfUser from './AddNewAddressOfUser';
 import Modal from 'react-modal';
 import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
-
-
+import UploadPrescription from './UploadPrescription';
 export default function OrderPage() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -40,7 +31,6 @@ export default function OrderPage() {
             items: 2
         }
     };
-
     const [products, setProducts] = useState([])
     const [productsImage, setProductsImage] = useState([])
     const [isDrug, setIsDrug] = useState(false)
@@ -50,13 +40,6 @@ export default function OrderPage() {
     const [values, setValues] = useState({
         prescriptionId: null,
     })
-
-
-    // const [value, setValue] = useState({
-    //     totalActusalPrice: 0,
-    //     totalPrice: 0
-    // })
-
     useEffect(() => {
         axiosClient.get(`/cart`).then((res) => {
             if (res.data !== null) {
@@ -68,7 +51,6 @@ export default function OrderPage() {
 
         })
     }, [])
-    // console.log(products)
     useEffect(() => {
         axiosClient.get(`/profile`).then((response) => {
             setUser(response.data[0]);
@@ -90,7 +72,6 @@ export default function OrderPage() {
                 console.error(err);
             });
     }, [])
-    //    console.log(products)
     let totalPrice = 0;
     let totalActusalPrice = 0;
     let TotalCgst = 0;
@@ -130,10 +111,7 @@ export default function OrderPage() {
             return val1 + val2;
         }, 0)
     }
-    // console.log(TotalCgst)
-    // console.log(TotalSgst)
     let totalGst = TotalCgst + TotalSgst;
-    // console.log(totalGst)
     const [coupon, setCoupon] = useState();
     const navigate = useNavigate();
     const Amount = totalActusalPrice - totalPrice + totalGst;
@@ -141,32 +119,11 @@ export default function OrderPage() {
     const [value, setValue] = useState({
         amount: Amount
     });
-    // useEffect(() => {
-    //     // setValue({
-    //     //     amount: Amount
-    //     // })
-    //     // setValue(Amount)
-    //     console.log(value)
-    //     axiosClient.post('/cart/get-coupons', value)
-    //         .then(res => {
-    //             console.log(res.data)
-    //             if (res.data !== null) {
-    //                 setCoupon(res.data);
-    //             }else{
-    //                 setCoupon('No Coupon Applicable')
-    //             }
-
-    //         })
-    //         .catch(err => console.log(err));
-
-    // }, [])
     const handleImageUpload = (imageId) => {
         setValues({ ...values, prescriptionId: imageId });
         setPrescriptionUploaded(true)
     };
-    // console.log(prescriptionUploaded)
     let PlaceOrderHandle = (e) => {
-
         if (isDrug) {
             console.log(prescriptionUploaded)
             if (prescriptionUploaded) {
@@ -237,7 +194,6 @@ export default function OrderPage() {
                 });
 
         }, [])
-
         // } else {
         useEffect(() => {
             axiosClient.get(`/product`).then((res) => {
@@ -260,24 +216,18 @@ export default function OrderPage() {
     } catch (error) {
         console.log(error)
     }
-
-
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);
     }
-
-
     const customStyles = {
         content: {
             overflowY: 'hidden',
@@ -289,10 +239,6 @@ export default function OrderPage() {
             transform: 'translate(-50%, -50%)',
         },
     };
-
-
-
-
     const delivaryCharge = 25;
     return (
         <div style={{ backgroundColor: '#8a858521' }}>
@@ -309,10 +255,6 @@ export default function OrderPage() {
                                     <p>Delevary To : </p>
                                     <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
                                 </>
-                                {/*                                 
-                                <Popup trigger={<button className='btn btn-primary'>Change</button>} modal>
-                                    <span> <AddUserNewAddress/> </span>
-                                </Popup> */}
                                 <button className='btn btn-primary' onClick={openModal}>Change</button>
                                 <Modal
                                     isOpen={modalIsOpen}
@@ -323,8 +265,6 @@ export default function OrderPage() {
                                 >
                                     <ChoosePrimaryAddressByUser closeTheModal={closeModal} />
                                 </Modal>
-
-
                             </div>
                             <div className="cart-item container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                 {products !== undefined ? <>
@@ -338,8 +278,6 @@ export default function OrderPage() {
 
                                                         </>
                                                         : <></>}
-
-                                                    {/* <p>{img.name}</p> */}
                                                 </div>
                                             ))}
                                         </div>
@@ -347,10 +285,7 @@ export default function OrderPage() {
                                 </> : <>
                                     <p>No Product in Cart</p>
                                 </>}
-
-
                             </div>
-
                             {isDrug ?
                                 <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
                                     <h5>Add Your Prescription </h5>
@@ -361,7 +296,6 @@ export default function OrderPage() {
                                 :
                                 ''
                             }
-
                         </div>
                         <div className="col-4 m-4 order-detail" >
                             <div className="container m-2 p-2" style={{ backgroundColor: '#fff' }}>
@@ -371,8 +305,6 @@ export default function OrderPage() {
 
                                     <p className='mx-5'>Price ({totalNumofitem} items)</p>
                                     <p className='mx-5'>₹ {totalActusalPrice}</p>
-
-
                                 </div>
                                 <div className="discount" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
@@ -386,23 +318,18 @@ export default function OrderPage() {
                                     <p className='mx-5'>Delivery Charges </p>
                                     <p className='mx-5 text-success'>₹{delivaryCharge}</p>
                                 </div>
-
                                 <hr />
                                 <div className="price" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <p className='mx-5'>Total Amount  </p>
                                     <p className='mx-5 text-success'>₹{totalActusalPrice - totalPrice + delivaryCharge + totalGst}</p>
                                 </div>
-
-
                                 <>
                                     {products ?
                                         <button onClick={(e) => PlaceOrderHandle(e)} className='btn my-2' style={{ backgroundColor: 'orange', cursor: 'pointer' }}>Place Order</button> :
 
                                         <button onClick={(e) => NoProductPresent(e)} className='btn my-2' style={{ backgroundColor: 'orange', cursor: 'pointer' }}>Place Order</button>
                                     }
-
                                 </>
-
                             </div>
                         </div>
                     </div>
@@ -445,10 +372,8 @@ export default function OrderPage() {
                             ))}
                         </Carousel>
                     </>}
-
                 </div>
             </div>
-
         </div >
     )
 }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
-
 import {
-    Link, useNavigate
+     useNavigate
 } from "react-router-dom";
 import axiosClient from '../axiosClient';
 
@@ -10,10 +8,7 @@ const customStyle = {
     maxHeight: '60vh',
     maxWidth: '85vw',
     borderRadius: '5px',
-    overflow: 'hidden',
-    //   background: 'linear-gradient(rgba(250,0,0,-0.5),transparent)',
-    //   backgroundColor: 'rgb(41 116 132)'
-
+    overflow: 'hidden'
 };
 
 
@@ -35,8 +30,6 @@ export default function AddTimeTable({ closeTheModal }) {
                 setSelectLocation(res.data[2])
             })
     });
-
-
     const navigate = useNavigate();
     const [values, setValues] = useState({
 
@@ -44,7 +37,6 @@ export default function AddTimeTable({ closeTheModal }) {
         start_time: '',
         end_time: ''
     })
-
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         // setRole(event.target.value)

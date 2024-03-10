@@ -2,14 +2,10 @@ import React, { useEffect, useState } from 'react'
 import "react-multi-carousel/lib/styles.css";
 import Carousel from 'react-multi-carousel';
 import SpecialitiesDoctorsCard from './SpecialitiesDoctorsCard';
-import axios from 'axios';
 import axiosClient from './axiosClient';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Helmet } from 'react-helmet';
-
 export default function AllSpecialitiesDoctors(props) {
-
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -29,25 +25,17 @@ export default function AllSpecialitiesDoctors(props) {
       items: 2
     }
   };
-
-
-
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-
-  // console.log(props.location)
   if (props.location === undefined) {
-    // specializes-doctors
     useEffect(() => {
       axiosClient.get(`/specializes-doctors`).then((res) => {
         // Handle response
         if (res.data !== null) {
           setDoctors(res.data[0]);
           setLoading(true);
-          // setImages(res.data[1]);
         }
-        // console.log(response.data);
       })
         .catch(err => {
           // Handle errors
@@ -57,9 +45,6 @@ export default function AllSpecialitiesDoctors(props) {
     }, [])
 
   }
-
-
-
   return (
     <>
       <Helmet>

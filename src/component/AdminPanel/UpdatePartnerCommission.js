@@ -1,8 +1,6 @@
-import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axiosClient from '../axiosClient';
-
 export default function UpdatePartnerCommission() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
@@ -10,22 +8,14 @@ export default function UpdatePartnerCommission() {
         service_type: '',
         commision_type: '',
         commision: '',
-
     })
-
-    // const [values, setValues] = useState({
-    //     // ...other product data fields
-    //     productImageId: null, // Initialize as null
-    // });
-
     // Callback function to set the productImageId when an image is uploaded
-const param =useParams();
-const commission_id = param.commission_id;
-     const [check, setCheck] = useState(false);
+    const param = useParams();
+    const commission_id = param.commission_id;
+    const [check, setCheck] = useState(false);
 
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const navigate = useNavigate();
     const handleSubmit = (event) => {
@@ -45,15 +35,6 @@ const commission_id = param.commission_id;
             })
             .catch(err => console.log(err));
     }
-
-    const dateStyle = {
-        width: "13.2rem",
-        height: "2rem",
-        fontSize: "1.1rem",
-        width: '90%'
-    };
-
-
     return (
         <div>
             <div className="container mt-3" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -103,9 +84,7 @@ const commission_id = param.commission_id;
 
                             </label>
                         </div>
-                        {/* <Link to='/login'> */}
                         <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Submit</button>
-                        {/* </Link> */}
                     </form>
                 </div>
             </div>

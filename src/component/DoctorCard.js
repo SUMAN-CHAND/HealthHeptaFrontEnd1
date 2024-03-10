@@ -1,15 +1,8 @@
 import React from 'react'
-import doctor2 from '../img/doctor2.webp';
-// import doctor3 from '../img/doctor3.webp';
 import {
   Link
 } from "react-router-dom";
-
 export default function Doctors(props) {
-
-  // <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnic={clnic} doctor_id={doctor.id} clinic_desc={clinic_desc}/>
-
-
   return (
     <div>
       <Link to={`/doctor/${props.id}`} style={{textDecoration: 'none'}}>

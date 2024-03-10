@@ -2,16 +2,13 @@ import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
 import validation from '../SignUpValidation';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosClient from '../axiosClient';
 import usePasswordToggle from '../usePasswordToggle';
-// import 'react-toastify/dist/ReactToastify.css';
 export default function AdminSignUp() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -32,11 +29,6 @@ export default function AdminSignUp() {
         progress: undefined,
         theme: "light",
     });
-//    const handleChange=(e)=>{
-//     setRole(e.target.value)
-//    }
-
-
     const [values, setValues] = useState({
         name: '',
         phone: '',
@@ -44,12 +36,10 @@ export default function AdminSignUp() {
         role: ''
     })
     const [check, setCheck] = useState(false);
-    // console.log(check)
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -72,9 +62,7 @@ export default function AdminSignUp() {
                 .catch(err => console.log(err));
         }
     }
-
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
-
     return (
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
             <div className="img  login-img" >
@@ -83,15 +71,6 @@ export default function AdminSignUp() {
             <div className='bg-white m-3 pt-3 pl-2 rounded w-30 shadow' style={{ height: '110%' }}>
                 <form action='submit' onSubmit={handleSubmit}>
                     <h5>Join <span className='text-info'>Healthhepta</span></h5>
-                    {/* <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <p style={{ marginLeft: '10px' }}>Select Your Role :</p>
-                        <select
-                            onChange={handleInput} name='role'
-                            style={{ width: '80%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
-                            <option value="select">Select</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div> */}
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="name">Full Name : </label><br></br>
                         <input className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Full Name'
@@ -119,9 +98,7 @@ export default function AdminSignUp() {
                             {errors.check && <span className='text-danger'>{errors.check}</span>}
                         </label>
                     </div>
-                    {/* <Link to='/login'> */}
                     <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white',cursor:'pointer' }}>Sign Up</button>
-                    {/* </Link> */}
                 </form>
             </div>
             <ToastContainer />

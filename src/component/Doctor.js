@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import doctor3 from '../img/doctor3.webp';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Carousel from 'react-multi-carousel';
-import axios from 'axios';
 import AllDoctorCardForAD from './AllDoctorCardForAD';
 import axiosClient from './axiosClient';
-import ViewDoctorDetailsModal from './ViewDoctorDetailsModal';
-import DateSelectionComponent from './DateSelectionComponent';
-
 const customStyle = {
   maxWidth: '85vw',
   borderRadius: '5px',
@@ -17,10 +11,7 @@ const customStyle = {
   padding: '2vw'
 
 };
-
-
 export default function Doctor() {
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -40,7 +31,6 @@ export default function Doctor() {
       items: 3
     }
   };
-
   const [user, setUser] = useState({});
   useEffect(() => {
     axiosClient.get(`/profile`).then((response) => {
@@ -54,18 +44,14 @@ export default function Doctor() {
   const [image, setImages] = useState([]);
 
   const param = useParams();
-  // console.log(param.id)
   let doctor_id = param.id;
-
   useEffect(() => {
     axiosClient.get(`/doctorsearch/${param.id}`).then((res) => {
-
       // Handle response
       if (res.data !== null) {
         setDoctor(res.data[0]);
         setImages(res.data[1]);
       }
-      // console.log(response.data);
     })
       .catch(err => {
         // Handle errors
@@ -79,11 +65,8 @@ export default function Doctor() {
       // Handle response
       if (res.data !== null) {
         const date = Date();
-        // console.log(date.slice(0,3) )
-        // console.log(res.data)
         setDoctorTime(res.data)
       }
-      // console.log(response.data);
     })
       .catch(err => {
         // Handle errors
@@ -92,10 +75,6 @@ export default function Doctor() {
 
   }, [])
   const navigate = useNavigate();
-  // console.log(doctors)
-  // console.log(image[0].path)
-
-
   const BookDoctor = (appoint_date, appoint_time) => {
     
     navigate('/appoitment-from',
@@ -110,19 +89,14 @@ export default function Doctor() {
       })
 
   }
-
   const [doctorDetails, setDoctorDetails] = useState([]);
   const [doctorTimeTable, setDoctorTimeTable] = useState([]);
-  // const [image, setImage] = useState([]);
-
   useEffect(() => {
     axiosClient.get(`/viewdetails/doctor/${doctor_id}`)
       .then(res => {
         if (res.data) {
           setDoctorDetails(res.data[0]);
           setDoctorTimeTable(res.data[2]);
-          // setSelectedWeek(res.data[2].weekly_day);
-          // setImage(res.data[1]);
           console.log(res.data[2])
         }
       })
@@ -131,53 +105,13 @@ export default function Doctor() {
       })
 
   }, [])
-  
-
-//   const calculateDates = (selectedDay) => {
-//   const currentDate = new Date();
-//   const currentMonth = currentDate.getMonth();
-//   const currentYear = currentDate.getFullYear();
-
-//   const selectedDayIndex = daysOfWeek.indexOf(selectedDay);
-
-//   const dates = [];
-
-//   for (let i = 0; i < 4; i++) { // Get dates for the next 4 weeks
-//     let date = new Date(currentYear, currentMonth, 1); // Start from the 1st day of the current month
-
-//     while (date.getDay() !== selectedDayIndex) { // Find the selected day of the week
-//       date.setDate(date.getDate() + 1); // Move to the next day
-//     }
-
-//     // If the selected day is before today, move to the next occurrence in the next month
-//     if (date < currentDate) {
-//       date = new Date(currentYear, currentMonth + 1, 1);
-//       while (date.getDay() !== selectedDayIndex) {
-//         date.setDate(date.getDate() + 1);
-//       }
-//     }
-
-//     dates.push(date.toDateString()); // Store the date as a string
-
-//     // Move to the next occurrence in the next week
-//     date.setDate(date.getDate() + 7);
-//   }
-
-//   return dates;
-// };
-
-
   return (
     <>
-      {/* <div className="header" style={{ height: '7vh', backgroundColor: 'rgb(42 165 181)' }}>
-        <h5 className='text-light ' style={{ display: 'flex', paddingTop: '1rem', marginLeft: '3rem' }}>{doctors[0].doc_name}</h5>
-      </div> */}
       <div className="row particular-doctor-page" style={{ margin: '0px', backgroundColor: 'rgb(193 193 206 / 36%)', overflow: 'scroll' }}>
         <div className="col-8 particular-doctor" style={{ position: 'sticky', top: '0' }} >
           <div className="doctor container  shadow" style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }}>
             {doctors.map(doctor => (
               <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
-                {/* <img src={doctor3} alt="....img" style={{ height: '20vh', width: '10vw' }} /> */}
                 <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
 
                 <div className="deccription" style={{ paddingTop: '7vh', width: '100%', display: 'flex', flexDirection: "column" }}>
@@ -204,15 +138,6 @@ export default function Doctor() {
                 {doctorsTimes.map(doctorsTime => (
                   <div className='m-1 text-primary fs-5' onClick={() => BookDoctor(doctorsTime.weekly_day, doctorsTime.starting_time)}><p className='btn btn-outline-primary '>{doctorsTime.weekly_day}</p></div>
                 ))}
-                {/* <DateSelectionComponent/> */}
-                {/* {selectedDates && (
-                  <div>
-                    <p>Selected Week: {selectedWeek}</p>
-                    <p>Start Date: {selectedDates.startDate.toLocaleDateString()}</p>
-                    <p>End Date: {selectedDates.endDate.toLocaleDateString()}</p>
-                  </div> */}
-                {/* )} */}
-                {/* </Carousel> */}
               </div>
               <div className='doctor-time'>
                 <div style={{ display: 'flex' }}>
@@ -226,29 +151,15 @@ export default function Doctor() {
                   </div>
                 ))}
               </div>
-              {/* <div className="after-noon" style={{ margin: '2rem 0', display: 'flex', justifyContent: 'center' }}>
-                <p className=' fs-5 text-primary after-noon-time'> <p>After noon:</p>  </p>
-                <Link to='/appoitment-from'><button type="button" className="btn btn-outline-primary mx-1"><p> 12:00pm</p></button></Link>
-                <Link to='/appoitment-from'><button type="button" className="btn btn-outline-primary mx-1"><p>12:30pm </p></button></Link>
-                <Link to='/appoitment-from'><button type="button" className="btn btn-outline-primary mx-1"><p>01:00pm </p></button></Link>
-              </div> */}
             </div>
           </div>
           <div className='docter-ad shadow' style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }} >
-            {/* <AllDoctorCardForAD/> */}
             <>
               <div className="container " style={customStyle}>
-                {/* <button onClick={closeTheModal} style={{ marginLeft: '95%', borderRadius: '50%' }} className='my-2 btn btn-dark close-btn'>X</button> */}
                 <div className="" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
                   <div>
                     {doctorDetails.map((doctor, index) => (
                       <div className="doctor-profile" style={{ display: 'flex' }}>
-                        {/* <div style={{ width: '45%' }}>
-                                    <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '75%' }} />
-                                </div> */}
-                        {/* <div className='' style={{ width: "1px", backgroundColor: 'grey' }}>
-                                </div> */}
                         <div className="deccription" style={{ margin: '0 1vw', padding: '0 1vw', display: 'flex', alignItems: 'center' }}>
                           <div style={{ display: 'flex', alignItems: 'self-start', flexDirection: 'column', marginRight: '2vw' }}>
                             <h5>Doctor Name :- {doctor.doc_name}</h5>
@@ -283,9 +194,7 @@ export default function Doctor() {
                               ))}
                             </table>
                           </div>
-
                         </div>
-
                       </div>
                     ))}
                   </div>
@@ -296,7 +205,6 @@ export default function Doctor() {
           </div>
         </div>
         <div className="col-4 my-4 shadow list-of-doctor" style={{ backgroundColor: 'white', width: '32vw' }}>
-          {/* <h2>Suggested Doctors For You</h2> */}
           <div>
             <AllDoctorCardForAD />
           </div>

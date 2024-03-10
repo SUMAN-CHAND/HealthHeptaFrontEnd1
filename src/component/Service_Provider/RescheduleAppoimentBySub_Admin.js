@@ -1,19 +1,13 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
-
 export default function RescheduleAppoimentBySub_Admin() {
-
-    
-
     var appoint_date = '';
     var appoint_time = '';
 
     const [values, setValues] = useState({
         appoint_date: appoint_date,
         appoint_time: appoint_time,
-        
     });
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))

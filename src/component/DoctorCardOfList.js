@@ -1,11 +1,9 @@
 import React from 'react'
-import doctorimg from '../img/doctor3.webp';
 import {
     Link
 } from "react-router-dom";
 import ViewDoctorDetailsModal from './ViewDoctorDetailsModal';
 import Modal from 'react-modal';
-
 const customStyles = {
     content: {
         top: '50%',
@@ -16,24 +14,15 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-
-const fontStyle = {
-    fontSize: 'calc(1vw + 0.5rem)',
-    display: 'flex',
-    alignItems: 'center'
-}
-export default function DoctorCardOfList(props) {
-    
+export default function DoctorCardOfList(props) {  
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
         setIsOpen(true);
     }
-
     function afterOpenModal() {
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.body.style.overflow = 'unset';
         setIsOpen(false);
@@ -83,9 +72,7 @@ export default function DoctorCardOfList(props) {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     )
 }

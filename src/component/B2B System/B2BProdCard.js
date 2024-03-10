@@ -1,5 +1,4 @@
 import React from 'react'
-import medical from '../../img/medicalproduct.webp';
 import { Link } from 'react-router-dom'
 
 export default function B2BProdCard(props) {
@@ -7,11 +6,7 @@ export default function B2BProdCard(props) {
   const value = `/b2b/addtocart/${product_id}`;
   const discount = props.discount;
   const productPrice = props.price;
-  // console.log(discount)
-  // console.log(productPrice)
   const discountPrice = productPrice - (productPrice* discount) /100;
-  // console.log(discountPrice)
-
   return (
     <div className='' >
       <Link style={{ textDecoration: 'none' }}>

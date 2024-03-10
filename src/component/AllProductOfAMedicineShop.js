@@ -5,9 +5,6 @@ import Carousel from 'react-multi-carousel';
 import ProductCard from './ProductCard'
 import "react-multi-carousel/lib/styles.css";
 import MedicineShopCard from './MedicineShopCard';
-
-
-
 export default function AllProductOfAMedicineShop() {
     const responsive = {
         superLargeDesktop: {
@@ -45,7 +42,6 @@ export default function AllProductOfAMedicineShop() {
                     setMedicineShop(response.data[2])
                     setmedicineShopImages(response.data[3])
                 }
-                // console.log(response.data);
             })
             .catch(err => {
                 // Handle errors
@@ -56,8 +52,6 @@ export default function AllProductOfAMedicineShop() {
         <div style={{ width: '100%', display: 'flex',flexDirection:'column',alignItems:'center',justifyContent:'center' }}>
             <div style={{ display: 'flex', alignItems: "center", justifyContent: 'center' }}>
                 <div className=''>
-
-
                     {medicineShop.map(madical => (
                         <div key={madical.id}>
                             {medicineShopimage.map((img) => (
@@ -68,14 +62,12 @@ export default function AllProductOfAMedicineShop() {
                                         </>
                                         : <>
                                         </>}
-
                                 </div>
                             ))}
                         </div>
                     ))}
                 </div>
             </div>
-            
             {products && <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
                 <h3 className='py-1'>|| All Products ||</h3>
 
@@ -89,38 +81,19 @@ export default function AllProductOfAMedicineShop() {
                                             <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                                         </>
                                         : <></>}
-
-                                    {/* <p>{img.name}</p> */}
                                 </div>
                             ))}
                         </div>
                     ))}
                 </Carousel>
                 <p style={{ margin: '5px' }}></p>
-                {/* <Carousel responsive={responsive} className='productCarousel'>
-                    {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
-                        <div key={fproduct.product_id}>
-                            {image.map((img) => (
-                                <div key={img.id}>
-                                    {parseInt(fproduct.productImageId) === img.id ?
-                                        <>
-                                            <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
-                                        </>
-                                        : <></>}
-
-                                </div>
-                            ))}
-                        </div>
-                    ))}
-                </Carousel> */}
-                {/* <div><PopularProductCard/> </div> */}
+               
             </div>}
             {!products && <>
                 <div>
                     <p>Data not found</p>
                 </div>
             </>}
-
         </div>
     )
 }

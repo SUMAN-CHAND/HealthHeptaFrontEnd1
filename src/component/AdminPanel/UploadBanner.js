@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
 import { useNavigate } from 'react-router-dom';
@@ -10,31 +9,7 @@ export default function UploadBanner() {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-  // const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
-
-  // const handleImageChange = (e) => {
-  //     setImage(e.target.files[0]);
-  // };
-
-  // const handleUpload = () => {
-  //     const formData = new FormData();
-  //     formData.append('image', image);
-
-  //     axios
-  //         .post('/upload', formData, {
-  //             headers: {
-  //                 'Content-Type': 'multipart/form-data',
-  //             },
-  //         })
-  //         .then((response) => {
-  //             console.log(response.data);
-  //             loadImages();
-  //         })
-  //         .catch((error) => {
-  //             console.error('Image upload error: ' + error);
-  //         });
-  // };
 const navigate = useNavigate();
   const handleUpload = async () => {
     if (file.size > 100000) {
@@ -46,9 +21,7 @@ const navigate = useNavigate();
 
         try {
           const response = await axiosClient.post(`/upload/banner`, formData);
-          // loadImages();
           const imageId = response.data.imageId; // Retrieve the image ID from the response
-          // onImageUpload(imageId); // Pass the image ID to the parent component
           alert("Image Uplodad Succfully");
           navigate('/superadmin', { state: { loggedIn: true } });
           
@@ -72,11 +45,8 @@ const navigate = useNavigate();
       });
 
   };
-  
-
   return (
     <div className='image-upload'>
-    {/* <h1>Image Upload</h1> */}
     <input type="file" onChange={handleFileChange} />
     <button className='btn btn-warning m-2' onClick={handleUpload}>Upload Image</button>
 

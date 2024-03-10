@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import ProductCard from './ProductCard';
-import axios from 'axios';
 import medicineshop from '../img/medicinesShop.webp';
 import MedicineShopCard from './MedicineShopCard';
 import "react-multi-carousel/lib/styles.css";
@@ -9,9 +8,6 @@ import Carousel from 'react-multi-carousel';
 import LabTestCard from './LabTestCard';
 import Doctors from './DoctorCard';
 import axiosClient from './axiosClient';
-
-
-
 export default function MedicinePageSearchResult() {
   const responsive = {
     superLargeDesktop: {
@@ -49,30 +45,14 @@ export default function MedicinePageSearchResult() {
   const [madicineShops, setMadicineShop] = useState([])
   const [madicineShopsImage, setMadicineShopImage] = useState([])
   const [dataFound, setDataFound] = useState(false)
-
-
   const [productsNF, setProductsNF] = useState([])
   const [imageNF, setImagesNF] = useState([])
   const [labTestsNF, setLabTestsNF] = useState([])
   const [labImageNF, setLabImagesNF] = useState([])
-  // if (stateData.data === undefined) {
-
-  // if (stateData.product.length <= 0 && stateData.lab.length <= 0 && stateData.doctor.length <= 0) {
-  //   param.selectLocation = "NO Result Match"
   useEffect(() => {
     axiosClient.get(`/product`).then((res) => {
       setProductsNF(res.data[0])
       setImagesNF(res.data[1])
-      // setMadicineShop(res.data)
-
-      // // Filter out duplicate values
-      // console.log(madicineShops)
-      // const uniqueMedicineShops = [...new Set(madicineShops)];
-
-      // // Update state with unique numbers
-      // setMadicineShop(uniqueMedicineShops);
-      // console.log(madicineShops)
-
     })
 
     axiosClient.get(`/laboratory/lab_tests`)
@@ -83,7 +63,6 @@ export default function MedicinePageSearchResult() {
           setLabImagesNF(response.data[1])
 
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -96,7 +75,6 @@ export default function MedicinePageSearchResult() {
         setDoctorsNF(res.data[0]);
         setDoctorImageNF(res.data[1]);
       }
-      // console.log(response.data);
     })
       .catch(err => {
         // Handle errors
@@ -105,8 +83,6 @@ export default function MedicinePageSearchResult() {
 
   }, [])
 
-  // }
-  //  else {
   useEffect(() => {
     setProducts(stateData.product)
     setImages(stateData.image)
@@ -118,23 +94,12 @@ export default function MedicinePageSearchResult() {
     setMadicineShopImage(stateData.medicineShopImage);
     setDataFound(true)
   }, [])
-  // }
-
-
-  // }
-  // console.log(image)
-
-
   const [medicineType, setMedicineType] = useState({
     type: 'select'
   })
   const handleMedicineType = (event) => {
     setMedicineType(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    // setRole(event.target.value)
   }
-
-  // console.log(products)
-  // functions();
   return (
     <div style={{ backgroundColor: '#80808024', minHeight: '100vh' }}>
       <div className="row m-2" style={{ justifyContent: 'center', minHeight: "95vh" }}>
@@ -161,20 +126,6 @@ export default function MedicinePageSearchResult() {
             <div className="caontainer">
               {medicineType.type[0] === 'select' ? <>
                 <Carousel responsive={responsive}>
-
-                  {/* {products.map(fproduct => (
-                  <div key={fproduct.product_id}>
-                    <ProductCard
-                      name={fproduct.product_name}
-                      price={fproduct.product_price}
-                      product_id={fproduct.product_id}
-                      discount={fproduct.discount}
-                      description={fproduct.description}
-                    />
-                    <br />
-                  </div>
-                ))} */}
-
                   {products.map(fproduct => (
                     <div key={fproduct.product_id}>
                       {image.map((img) => (
@@ -185,8 +136,6 @@ export default function MedicinePageSearchResult() {
                               <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                             </>
                             : <></>}
-
-                          {/* <p>{img.name}</p> */}
                         </div>
                       ))}
                     </div>
@@ -203,8 +152,6 @@ export default function MedicinePageSearchResult() {
                               <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                             </>
                             : <></>}
-
-                          {/* <p>{img.name}</p> */}
                         </div>
                       ))}
                     </div>
@@ -226,8 +173,6 @@ export default function MedicinePageSearchResult() {
                                 <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                               </>
                               : <></>}
-
-                            {/* <p>{img.name}</p> */}
                           </div>
                         ))}
                       </div>
@@ -243,8 +188,6 @@ export default function MedicinePageSearchResult() {
                                 <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                               </>
                               : <></>}
-
-                            {/* <p>{img.name}</p> */}
                           </div>
                         ))}
                       </div>
@@ -265,8 +208,6 @@ export default function MedicinePageSearchResult() {
                                 <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                               </>
                               : <></>}
-
-                            {/* <p>{img.name}</p> */}
                           </div>
                         ))}
                       </div>
@@ -284,8 +225,6 @@ export default function MedicinePageSearchResult() {
                                 <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                               </>
                               : <></>}
-
-                            {/* <p>{img.name}</p> */}
                           </div>
                         ))}
                       </div>
@@ -307,8 +246,6 @@ export default function MedicinePageSearchResult() {
                                   <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                         </div>
@@ -327,8 +264,6 @@ export default function MedicinePageSearchResult() {
                                 <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
                               </>
                               : <></>}
-
-                            {/* <p>{img.name}</p> */}
                           </div>
                         ))}
                       </div>

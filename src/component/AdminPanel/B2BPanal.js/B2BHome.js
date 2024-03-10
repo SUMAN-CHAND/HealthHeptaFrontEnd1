@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios';
 import NotificationComponent from '../NotificationComponent';
 import '../Style.css';
 import UploadBanner from '../UploadBanner';
@@ -19,16 +18,7 @@ export default function B2BHome() {
   const [payments, setPayments] = useState([]);
   const [subAdmins, setSubAdmin] = useState([]);
   const [coupons, setCoupons] = useState([]);
-
-
-
   const location = useLocation();
-  // const [loggedIn ,setLoggedIn] = useState();
-
-
-  // if (location.state === null) {
-  //   return <Navigate to='/superadmin/login' />;
-  // }
   const [ind_product_Images, setInd_product_Images] = useState([]);
 
   useEffect(() => {
@@ -44,12 +34,9 @@ export default function B2BHome() {
         console.log(response.data);
       })
       .catch(err => {
-        // Handle errors
         console.error(err);
       });
   }, [])
-
-  
   const showCoupon = () => {
     axiosClient.get(`/superadmin/coupon`)
       .then(response => {
@@ -57,15 +44,12 @@ export default function B2BHome() {
         if (response.data !== null) {
           setCoupons(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
   }
-  // const param = useParams();
-  // const product_id = param.product_id;
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
@@ -98,7 +82,6 @@ export default function B2BHome() {
       alert('No Coupon Delete')
     }
   }
-
   const updateStatus = (orderId) => {
     axiosClient.post(`/superadmin/orders/accept/${orderId}`).then(response => {
       if (response.data) {
@@ -154,26 +137,6 @@ export default function B2BHome() {
   const toB2C = () => {
     navigate('/superadmin', { state: { loggedIn: true } });
   }
-
-  // const [images, setImages] = useState([]);
-
-  // const loadImages = () => {
-  //   axiosClient
-  //     .get('/images')
-  //     .then((response) => {
-  //       setImages(response.data);
-  //       // console.log(images)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Image retrieval error: ' + error);
-  //     });
-  // };
-
-  // function handleMedicineTypeChange(e) {
-  //   setMedicineType(e.target.value);
-  //   console.log(medicineType)
-  // }
-
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
@@ -187,13 +150,9 @@ export default function B2BHome() {
   const dashboardStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
-    // minHeight: '50vh',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     paddingTop: '1vh',
     flexDirection: 'column'
   }
-
   const quiceLink = {
     backgroundColor: '#055160',
     padding: '5px',
@@ -207,7 +166,6 @@ export default function B2BHome() {
     width: '90%',
     cursor: 'pointer'
   };
-
   return (
     <div>
       <div className="row" style={{ height: '70vh', overflowX: 'hidden' }}>
@@ -217,7 +175,6 @@ export default function B2BHome() {
             <hr />
             <div className="list-group shadow m-3" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
               <span onClick={toB2C} className="list-group-item list-group-item-action list-group-item-info" style={{cursor:'pointer'}}>B2C </span>
-              {/* <Link to="/b2b" className="list-group-item list-group-item-action  list-group-item-info" id="list-b2b-list" data-bs-toggle="list" role="tab" aria-controls="list-b2b">B2B</Link> */}
               <Link className="list-group-item list-group-item-action active list-group-item-info">B2B</Link>
             </div>
 
@@ -234,7 +191,6 @@ export default function B2BHome() {
             </div>
           </div>
         </div>
-
         <div className="col-10" style={{ marginTop: '2vh' }}>
           <div className="tab-content shadow" id="nav-tabContent" style={{ backgroundColor: '#64B5F6', borderRadius: '5px' }} >
             <div className="tab-pane fade show active text-light" id="summary" role="tabpanel" aria-labelledby="list-summary-list">
@@ -288,8 +244,6 @@ export default function B2BHome() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -312,7 +266,6 @@ export default function B2BHome() {
                         </tr>
                       ))}
                     </> : <>
-
                     </>
                     }
                     {medicineType.type === 'select' ? <>
@@ -330,8 +283,6 @@ export default function B2BHome() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -354,7 +305,6 @@ export default function B2BHome() {
                         </tr>
                       ))}
                     </> : <>
-
                     </>
                     }
                     {medicineType.type[0] === 'drug' ? <>
@@ -372,8 +322,6 @@ export default function B2BHome() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -396,7 +344,6 @@ export default function B2BHome() {
                         </tr>
                       ))}
                     </> : <>
-
                     </>
                     }
                     {medicineType.type[0] === 'otc' ? <>
@@ -414,8 +361,6 @@ export default function B2BHome() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -438,7 +383,6 @@ export default function B2BHome() {
                         </tr>
                       ))}
                     </> : <>
-
                     </>
                     }
                   </tbody>
@@ -453,7 +397,8 @@ export default function B2BHome() {
                     <tr>
                       <th scope="col">Id</th>
                       <th scope="col">Product Id</th>
-                      <th scope="col">User ID</th>
+                      <th scope="col">Sub Admin ID</th>
+                      <th scope="col">Order By</th>
                       <th scope="col">Date</th>
                       <th scope="col">Payment Mood</th>
                       <th scope="col">Payment Status</th>
@@ -468,6 +413,7 @@ export default function B2BHome() {
                         <th scope="row">{order.id}</th>
                         <td>{order.product_id}</td>
                         <td>{order.sub_admin_id}</td>
+                        <td>{order.order_by}</td>
                         <td>{order.order_date}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
@@ -487,20 +433,11 @@ export default function B2BHome() {
                             />
                             <br />
                           </div>
-                          {/* :
-                            <div>{order.expected_delivery_date}
-                              <button className='btn btn-warning'>Change</button>
-                            </div>
-                          } */}
-
                         </td>
                         <td> <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                           <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                           <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                         </svg></div></Link></td>
-
-                        {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
-
                       </tr>
                     ))}
                   </tbody>

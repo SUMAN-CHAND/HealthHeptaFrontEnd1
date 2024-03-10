@@ -1,40 +1,8 @@
 import React from 'react'
-
-
 import {
   Link
 } from "react-router-dom";
-
-// const customStyles = {
-//   content: {
-//     top: '50%',
-//     left: '50%',
-//     right: 'auto',
-//     bottom: 'auto',
-//     padding:'3%',
-//     marginRight: '-50%',
-//     transform: 'translate(-50%, -50%)',
-//     backgroundColor:'#4c4cce',
-//     textAlign:'center',
-//     borderRadius:'5%',
-//   },
-// };
-
 export default function ClinicCard(props) {
-//     const [modalIsOpen, setIsOpen] = React.useState(false);
-
-//     function openModal() {
-//       setIsOpen(true);
-//     }
-  
-//     function afterOpenModal() {
-//       document.body.style.overflow = 'hidden';
-//   }
-  
-//   function closeModal() {
-//       document.body.style.overflow = 'unset';
-//       setIsOpen(false);
-//   }
   return (
     <div>
       <div>

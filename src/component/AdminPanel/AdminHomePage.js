@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import axios from 'axios';
 import NotificationComponent from './NotificationComponent';
 import Dashboard from './Dashboard';
 import './Style.css';
@@ -8,13 +7,9 @@ import UploadBanner from './UploadBanner';
 import axiosClient from '../axiosClient';
 import { FaRegEdit } from 'react-icons/fa';
 import { GrView } from "react-icons/gr";
-
-
 export default function AdminHomePage() {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
-
-
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [user, setUser] = useState([]);
@@ -23,25 +18,20 @@ export default function AdminHomePage() {
   const [payments, setPayments] = useState([]);
   const [subAdmins, setSubAdmin] = useState([]);
   const [partners, setPartner] = useState([]);
+  const [employees, setB2bEmployee] = useState([]);
   const [deliveryPartners, setDeliveryPartner] = useState([]);
   const [commissions, setCommissions] = useState([]);
   const [deliveryCommissions, setDeliveryCommissions] = useState([]);
   const [coupons, setCoupons] = useState([]);
   const [searchUser, setSearchUser] = useState([])
   const [searchPatient, setSearchPatient] = useState([])
-
   const navigate = useNavigate();
-
   const location = useLocation();
-  // const [loggedIn ,setLoggedIn] = useState();
-
-
   if (location.state === null) {
     return <Navigate to='/superadmin/login' />;
   }
   const [ind_product_Images, setInd_product_Images] = useState([]);
 
-  // useEffect(() => {
   const ShowProduct = () => {
     axiosClient.get(`/superadmin/product`)
       .then(response => {
@@ -51,14 +41,12 @@ export default function AdminHomePage() {
           setInd_product_Images(response.data[1]);
           // loadImages();
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       })
   }
-  // }, [])
   useEffect(() => {
     axiosClient.get(`/superadmin/orders`)
       .then(response => {
@@ -66,7 +54,6 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setOrders(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -94,7 +81,6 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setAppoiments(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -108,7 +94,6 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setLabbokking(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -123,7 +108,6 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setPayments(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -135,7 +119,6 @@ export default function AdminHomePage() {
       .then(response => {
         // Handle response
         setSubAdmin(response.data)
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -147,7 +130,17 @@ export default function AdminHomePage() {
       .then(response => {
         // Handle response
         setPartner(response.data)
-        // console.log(response.data);
+      })
+      .catch(err => {
+        // Handle errors
+        console.error(err);
+      });
+  }
+  const showB2BEmployee = () => {
+    axiosClient.get(`/superadmin/b2b/employee`)
+      .then(response => {
+        // Handle response
+        setB2bEmployee(response.data)
       })
       .catch(err => {
         // Handle errors
@@ -159,7 +152,6 @@ export default function AdminHomePage() {
       .then(response => {
         // Handle response
         setDeliveryPartner(response.data)
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -171,7 +163,6 @@ export default function AdminHomePage() {
       .then(response => {
         // Handle response
         setCommissions(response.data)
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -183,7 +174,6 @@ export default function AdminHomePage() {
       .then(response => {
         // Handle response
         setDeliveryCommissions(response.data)
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
@@ -197,15 +187,12 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setCoupons(response.data)
         }
-        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
   }
-  // const param = useParams();
-  // const product_id = param.product_id;
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
     if (response) {
@@ -285,7 +272,6 @@ export default function AdminHomePage() {
   })
   const handleInput = (event) => {
     setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    // setRole(event.target.value)
   }
 
   const [medicineType, setMedicineType] = useState({
@@ -294,10 +280,7 @@ export default function AdminHomePage() {
 
   const handleMedicineType = (event) => {
     setMedicineType(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    // setRole(event.target.value)
   }
-  // console.log(medicineType.type)
-
   const updateDeliveryDate = (orderId) => {
     console.log('click')
     axiosClient.post(`/superadmin/orders/delivery/${orderId}`, values).then(response => {
@@ -336,6 +319,20 @@ export default function AdminHomePage() {
       alert('Permission Denied')
     }
   }
+  const updateEmployeeStatus = (emp_id) => {
+    const response = window.confirm("Are you sure to give the Permission?");
+    if (response) {
+      axiosClient.post(`/superadmin/b2b/employee/accept/${emp_id}`).then(response => {
+        if (response.data) {
+          alert('Permission Garented');
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    } else {
+      alert('Permission Denied')
+    }
+  }
   const updateDeliveryPartnerStatus = (delivery_partner_id) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
@@ -350,41 +347,9 @@ export default function AdminHomePage() {
       alert('Permission Denied')
     }
   }
-
-  // console.log(partners)
-
   const ViewAadhaar = (AadhaarCardImageID) => {
     navigate(`/superadmin/image/${AadhaarCardImageID}`)
   }
-
-  // const [images, setImages] = useState([]);
-
-  // const loadImages = () => {
-  //   axiosClient
-  //     .get('/images')
-  //     .then((response) => {
-  //       setImages(response.data);
-  //       // console.log(images)
-  //     })
-  //     .catch((error) => {
-  //       console.error('Image retrieval error: ' + error);
-  //     });
-  // };
-
-  // function handleMedicineTypeChange(e) {
-  //   setMedicineType(e.target.value);
-  //   console.log(medicineType)
-  // }
-
-
-  // const [partnerType, setPartnerType] = useState({
-  //   type: 'all'
-  // })
-  // const handlePartnerType = (event) => {
-  //   setPartnerType(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-  //   console.log(partnerType)
-  //   // setRole(event.target.value)
-  // }
   const [searchValue, setSearchValue] = useState({
     input: ''
   })
@@ -418,13 +383,9 @@ export default function AdminHomePage() {
       setSearchPatient(filtered);
     }
   };
-
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
-    // minHeight: '50vh',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     paddingTop: '1vh',
     flexDirection: 'column',
     overflowX: 'auto'
@@ -434,8 +395,6 @@ export default function AdminHomePage() {
     display: 'flex',
     height: '100%',
     width: '100%',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     paddingTop: '1vh',
     flexDirection: 'column'
   }
@@ -446,14 +405,6 @@ export default function AdminHomePage() {
     color: 'white',
     borderRadius: '5px'
   }
-  const dateStyle = {
-    width: "13.2rem",
-    height: "2rem",
-    fontSize: "1.1rem",
-    width: '90%',
-    cursor: 'pointer'
-  };
-
   return (
     <div>
       <div className="row" style={{ overflowX: 'hidden' }}>
@@ -477,6 +428,7 @@ export default function AdminHomePage() {
               <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
               <Link to="#serviceprovider" onClick={showServiceProvider} className="list-group-item list-group-item-action list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Service Provider</Link>
               <Link to="#partner" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner</Link>
+              <Link to="#b2bemployee" onClick={showB2BEmployee} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Employee</Link>
               <Link to="#delivery-partner" onClick={showDeliveryPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Delivery Partner</Link>
               <Link to="#partner-commission" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-commission-list" data-bs-toggle="list" role="tab" aria-controls="list-partner-commission">Partner Commission</Link>
               <Link to="#delivery-partner-commission" onClick={showDeliveryPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-delivery-partner-commission-list" data-bs-toggle="list" role="tab" aria-controls="list-partner-commission">Delivery Partner Commission</Link>
@@ -541,8 +493,6 @@ export default function AdminHomePage() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -583,8 +533,6 @@ export default function AdminHomePage() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -625,8 +573,6 @@ export default function AdminHomePage() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -667,8 +613,6 @@ export default function AdminHomePage() {
                                   />
                                 </>
                                 : <></>}
-
-                              {/* <p>{img.name}</p> */}
                             </div>
                           ))}
                           </td>
@@ -728,34 +672,15 @@ export default function AdminHomePage() {
                         <td>{order.payment_status}</td>
                         <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>
                         <td>
-                          {/* {order.expected_delivery_date === null ? */}
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             {order.expected_delivery_date}
-                            {/* <input
-                              className='m-2 p-1'
-                              type="date"
-                              style={dateStyle}
-                              name='expected_delivery_date'
-                              placeholder={order.expected_delivery_date}
-                              onChange={handleInput}
-                              onClick={() => updateDeliveryDate(order.id)}
-                            /> */}
                             <br />
                           </div>
-                          {/* :
-                            <div>{order.expected_delivery_date}
-                              <button className='btn btn-warning'>Change</button>
-                            </div>
-                          } */}
-
                         </td>
                         <td className='flex items-center justify-center'>
                           <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
                           <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
                         </td>
-
-                        {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
-
                       </tr>
                     ))}
                   </tbody>
@@ -798,28 +723,6 @@ export default function AdminHomePage() {
                           <td>{appoiment.appoint_date}</td>
                           <td>{appoiment.appoint_time}</td>
                           <td onClick={() => updateStatus(appoiment.id)} style={{ cursor: 'pointer', color: 'blue' }} >{appoiment.status}</td>
-                          {/* <td>
-                          <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            {order.expected_delivery_date}
-                            <input
-                              className='m-2 p-1'
-                              type="date"
-                              style={dateStyle}
-                              name='expected_delivery_date'
-                              placeholder={order.expected_delivery_date}
-                              onChange={handleInput}
-                              onClick={() => updateDeliveryDate(order.id)}
-                            />
-                            <br />
-                          </div>
-                        </td>
-                        <td> <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
-                          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                        </svg></div></Link></td> */}
-
-                          {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
-
                         </tr>
                       ))}
                     </tbody>
@@ -861,28 +764,6 @@ export default function AdminHomePage() {
                         <td>{lab.sample_collection}</td>
                         <td>{lab.role}</td>
                         <td onClick={() => updateStatus(lab.id)} style={{ cursor: 'pointer', color: 'blue' }} >{lab.LabTestStatus}</td>
-                        {/* <td>
-                          <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            {order.expected_delivery_date}
-                            <input
-                              className='m-2 p-1'
-                              type="date"
-                              style={dateStyle}
-                              name='expected_delivery_date'
-                              placeholder={order.expected_delivery_date}
-                              onChange={handleInput}
-                              onClick={() => updateDeliveryDate(order.id)}
-                            />
-                            <br />
-                          </div>
-                        </td>
-                        <td> <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
-                          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                        </svg></div></Link></td> */}
-
-                        {/* <Link to={`/superadmin/orders/customer/${order.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td> */}
-
                       </tr>
                     ))}
                   </tbody>
@@ -1036,6 +917,44 @@ export default function AdminHomePage() {
                             <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
 
                           </td>
+                        </tr>
+                      ))}
+
+
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+            <div className="tab-pane fade  text-light" id="b2bemployee" role="tabpanel" aria-labelledby="list-partner-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  B2B Employee ||</h2> <Link to='addnew/b2bemployee'><button className='btn btn-primary mx-3 my-2' >Add New B2B Employee</button></Link></span>
+              <div className="container text-dark" style={renDataStyle}>
+                {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
+                  <Link to="#partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Partner </Link>
+                  <Link to="#newpartner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Partner</Link>
+                </div> */}
+                <div id='b2bemployee'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope='col'>Index</th>
+                        <th scope="col">Employee Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Permission</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {employees.map((employee, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index}</th>
+                          <th scope="row">{employee.id}</th>
+                          <td>{employee.name}</td>
+                          <td>{employee.ph_num}</td>
+                          <td>{employee.email}</td>
+                          <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
                         </tr>
                       ))}
 

@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axiosClient from './axiosClient';
 import ChoosePrimaryAddressByUser from './ChoosePrimaryAddressByUser';
-
-
 const customStyles = {
     content: {
         top: '50%',
@@ -20,21 +18,6 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-
-
-// function couponDisplay({ isMatched ,total_DiscountAfterCouponApply,total_amountAfterCouponApply}) {
-//     if (isMatched) {
-//         return(
-//         <div className="conatainer">
-//             <p>- {total_DiscountAfterCouponApply}</p>
-//             <hr />
-//             <p className='text-success'>{total_amountAfterCouponApply}</p>
-//         </div>)
-
-//     }
-//     return null;
-// }
-
 export default function OrderPaymentPage() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
@@ -99,16 +82,6 @@ export default function OrderPaymentPage() {
             setUserAddress(response.data[1]);
         });
     }, []);
-
-    // socket.on('new-order-notification', (message) => {
-    //     // Play the notification sound
-    //     this.audio.play();
-
-    //     // Handle the notification, e.g., display it to the user
-    // });
-
-
-
     const location = useLocation();
     let stateData = location.state
     // console.log(location.state)
@@ -118,18 +91,6 @@ export default function OrderPaymentPage() {
     var amount = stateData.amount
     var totalGst = stateData.totalGst
     var prescriptionId = stateData.prescriptionId
-    // console.log(amount)
-    // const totalNumofitem = products.length;
-    // let totalPriceArray = products.map((product => {
-    //     return ((product.product_price - ((product.product_price * product.discount) / 100)) * product.quantity);
-    // }))
-    // const totalPrice = totalPriceArray.reduce((val1, val2) => {
-    //     return val1 + val2;
-    // }, 0)
-    // let phone_no = products.map((product => {
-    //     return product.phone;
-    // }))
-    // const discount = 0;
     const [couponAvailable, setCouponAvailable] = useState(false);
     const [amounts, setAmount] = useState({
         amount: amount
@@ -146,26 +107,16 @@ export default function OrderPaymentPage() {
                 } else {
                     setCoupon('No Coupon Applicable')
                 }
-
             })
             .catch(err => console.log(err));
 
     }, [])
-
-    console.log(coupon[0])
-
-
     const delivaryCharge = 25;
-
     const [values, setValues] = useState({
         payment_type: '',
         total_amount: '',
         prescriptionId: ''
     })
-    // setValues('');
-    // setValues({
-
-    // })
     let total_amountAfterCouponApply = 0;
     const total_amount = (totalActusalPrice - discount + delivaryCharge + totalGst);
     let pay_amount;
@@ -174,10 +125,6 @@ export default function OrderPaymentPage() {
     } else {
         pay_amount = total_amount;
     }
-    // console.log(total_amountAfterCouponApply)
-    // console.log(total_amount)
-    // console.log(pay_amount)
-
     const handleInput = (e) => {
         setValues({
             payment_type: e.target.value,
@@ -185,7 +132,6 @@ export default function OrderPaymentPage() {
             prescriptionId: prescriptionId
         })
     }
-
     const [couponValue, setCouponValue] = useState({
         coupon: ''
     })
@@ -194,7 +140,6 @@ export default function OrderPaymentPage() {
             coupon: e.target.value
         })
     }
-
     const applyCoupon = (event) => {
         console.log('click')
         axiosClient.post(`/orders/coupon`, couponValue)
@@ -216,19 +161,12 @@ export default function OrderPaymentPage() {
     console.log(couponDetails.discount_percentage)
     const total_DiscountAfterCouponApply = ((total_amount * couponDetails.discount_percentage) / 100);
     total_amountAfterCouponApply = (total_amount - ((total_amount * couponDetails.discount_percentage) / 100));
-
-    // const socket = io('/orders'); // Replace with your server URL
     const handleSubmit = (event) => {
-        // navigate('/');  
         event.preventDefault();
         axiosClient.post(`/orders`, values)
             .then(res => {
                 if (res.data !== null) {
-                    // Notify admins and super admins about the new order
-                    // socket.emit('newOrder', 'New order placed!');
                     success();
-                    // console.log(res.data)
-                    // openModal();
                     navigate('/order/bill',
                         {
                             state: {
@@ -247,11 +185,8 @@ export default function OrderPaymentPage() {
             .catch(err => console.log(err));
     }
     const paymentTypeCheck = (event) => {
-       alert("Plese select the payment method !")
+        alert("Plese select the payment method !")
     }
-
-    
-
     return (
         <div style={{ backgroundColor: '#8a858521' }}>
             <div className="container orders-payment" >
@@ -263,12 +198,9 @@ export default function OrderPaymentPage() {
                                     <div
                                         style={{ display: 'flex' }}>
                                         <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>1</p>
-                                        {/* <p>Login</p> */}
-                                         <p>Mobile No :- </p>
-
+                                        <p>Mobile No :- </p>
                                     </div>
-                                    <span style={{marginLeft:'26%'}} > {user.phone}  </span>
-                                   
+                                    <span style={{ marginLeft: '26%' }} > {user.phone}  </span>
                                 </>
                             </div>
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-between', backgroundColor: '#fff' }}>
@@ -276,11 +208,9 @@ export default function OrderPaymentPage() {
                                     style={{ display: 'flex' }}>
                                     <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>2</p>
                                     <p>Delevary To :</p>
-
                                 </div>
                                     <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
                                 </>
-
                                 <button className='btn btn-primary' onClick={openModal}>Change</button>
                                 <Modal
                                     isOpen={modalIsOpen}
@@ -296,11 +226,8 @@ export default function OrderPaymentPage() {
                                     style={{ display: 'flex' }}>
                                     <p className='mx-2 p-1' style={{ backgroundColor: '#797a7b7a', borderRadius: '3px', color: 'blue' }}>3</p>
                                     <p>Order Summary : </p>
-
                                 </div>
-
                                 </>
-
                                 <Link to='/cart'> <button className='btn btn-primary'><p>View</p></button></Link>
                             </div>
                             <div className=" container m-2 p-2" style={{ backgroundColor: '#fff' }}>
@@ -317,26 +244,15 @@ export default function OrderPaymentPage() {
                                             <option value="cod">Cash On Delevary</option>
                                             <option value="cod">online Bankng</option>
                                         </select>
-                                        
                                     </div>
                                 </div>
                                 <div className='mt-2' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                                    {values.payment_type? 
+                                    {values.payment_type ?
 
-                                    <button type='submit' onClick={handleSubmit} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
-                                    :
-                                    <button type='submit' onClick={paymentTypeCheck} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
-                                }
-                                    {/* <Modal
-                                    isOpen={modalIsOpen}
-                                    onAfterOpen={afterOpenModal}
-                                    onRequestClose={closeModal}
-                                    style={customStyles}
-                                    contentLabel="Example Modal"
-                                >
-                                    <SuccfullyOrderplaceModal closeTheModal={closeModal} TotalAmount={discount} />
-                                </Modal> */}
-                                    {/* <button type='restart' className='btn btn-warning'><p className='text-light'>Clear</p></button> */}
+                                        <button type='submit' onClick={handleSubmit} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
+                                        :
+                                        <button type='submit' onClick={paymentTypeCheck} className='btn btn-success '><p className='text-light'>Place Order</p> </button>
+                                    }
                                 </div>
                             </div>
 
@@ -366,8 +282,6 @@ export default function OrderPaymentPage() {
 
                                     <p className=''>Price ({totalNumofitem} items)</p>
                                     <p className=''>₹ {totalActusalPrice}</p>
-
-
                                 </div>
                                 <div className="discount" style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                                     <p className=''>Discount  &nbsp;  &nbsp;  &nbsp;  &nbsp; </p>
@@ -413,19 +327,11 @@ export default function OrderPaymentPage() {
                                     <input type="text" onChange={handleCouponInput} name='coupon' className='m-4' style={{ width: '60%', paddingLeft: '5px' }} placeholder='Enter Coupon Code' />
                                     <button className='btn' onClick={applyCoupon} style={{ backgroundColor: '#07dbc1' }}> <p>Apply</p></button>
                                 </div>
-
-                                {/* <Link ><button type='submit' onClick={handleSubmit} className='btn my-2' style={{ backgroundColor: 'orange' }}> <p>Place Order</p> </button></Link> */}
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* // Somewhere in your render() method, you can include a button to test the sound
-            
-            <audio ref={(audio) => { this.audio = audio; }}>
-                <source src="./img/notification-bell.wav" type="audio/mpeg" />
-            </audio> */}
             <ToastContainer />
         </div>
     )

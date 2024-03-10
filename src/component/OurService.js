@@ -13,7 +13,6 @@ export default function OurService() {
                 <title>healthhepta.com</title>
                 <meta name="description" content="Find Doctor near you .schedule Doctor appointment online 24/7 even after hours." />
             </Helmet>
-
             <div>
                 <div className="service" style={{ height: '100%', width: '100%', backgroundColor: '#99d9d9', paddingBottom: '2vh', paddingTop: '2vh' }}>
                     <AllServices />

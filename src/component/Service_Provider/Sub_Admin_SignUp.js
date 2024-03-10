@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
 import validation from '../SignUpValidation';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
 import usePasswordToggle from '../usePasswordToggle';
-// import 'react-toastify/dist/ReactToastify.css';
 export default function Sub_Admin_SignUp() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;

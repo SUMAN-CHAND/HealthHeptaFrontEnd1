@@ -7,5 +7,7 @@ const axiosClient = axios.create({
     credentials: 'include'
 })
 //52.203.121.35
+//https://api.healthhepta.com
+// http://localhost:8081
 
 export default axiosClient;

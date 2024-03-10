@@ -2,21 +2,16 @@ import React, { useState, useEffect } from 'react'
 import ProductCard from './ProductCard'
 import axios from 'axios';
 import axiosClient from './axiosClient';
-
 export default function ProductList() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-
     const [products, setProducts] = useState([])
-
-
     useEffect(() => {
 
         axiosClient.get(`/product`).then((res) => {
             setProducts(res.data);
         })
     }, [])
-
     return (
         <div>
             <div className="body" style={{ overflow: 'hidden' }}>

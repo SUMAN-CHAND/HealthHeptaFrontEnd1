@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import productimg from '../../img/madicalProduct.avif'
-import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function ViewProductModal() {
-    
     const pStyle = {
         display: 'flex',
         alignItems: 'center',
 
     }
-
     const [product, setProduct] = useState([]);
     const param = useParams();
     var product_id = param.product_id;
-    // console.log(product_id)
     useEffect(() => {
         axiosClient.get(`/superadmin/orders/product/${product_id}`)
             .then(res => {

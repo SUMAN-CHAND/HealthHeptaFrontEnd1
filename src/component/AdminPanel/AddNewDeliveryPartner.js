@@ -1,16 +1,12 @@
 import React, { useState } from 'react'
 import img from '../../img/loginpageimg.jpg'
 import '../style.css';
-import validation from '../SignUpValidation';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
-// import 'react-toastify/dist/ReactToastify.css';
 export default function AddNewDeliveryPartner() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
-    // const [role,setRole] = useState('')
     const success = () => toast.success('Registraction Successfull', {
         position: "top-right",
         autoClose: 5000,
@@ -31,21 +27,16 @@ export default function AddNewDeliveryPartner() {
         progress: undefined,
         theme: "light",
     });
-   
     const [values, setValues] = useState({
         name: '',
         ph_num: '',
-        password: '',
-        
+        password: '',  
     })
-    
     const [check, setCheck] = useState(false);
-    // console.log(check)
     const navigate = useNavigate();
     const [errors, setErrors] = useState({})
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        // setRole(event.target.value)
     }
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -53,12 +44,10 @@ export default function AddNewDeliveryPartner() {
 
             axiosClient.post(`/add-delivery-partner`, values)
                 .then(res => {
-                    // console.log(res)
                     if (res.data === null) {
                         danger();
                     }
                     else if (res.data !== null) {
-                        // console.log(res.data)
                         success();
                         navigate('/delivery-partner/complete-profile',{
                             state: {
@@ -72,12 +61,8 @@ export default function AddNewDeliveryPartner() {
                     }
                 })
                 .catch(err => console.log(err));
-        
-
     }
     return (
-
-
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
 
             <div className="img  login-img" >
@@ -116,9 +101,7 @@ export default function AddNewDeliveryPartner() {
                             {errors.check && <span className='text-danger'>{errors.check}</span>}
                         </label>
                     </div>
-                    {/* <Link to='/login'> */}
                     <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Sign Up</button>
-                    {/* </Link> */}
                 </form>
             </div>
             <ToastContainer />

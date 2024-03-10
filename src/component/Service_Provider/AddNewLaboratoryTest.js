@@ -1,15 +1,11 @@
-import axios from 'axios';
 import React, {useState } from 'react';
 import {useNavigate } from 'react-router-dom';
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
 
-
 export default function AddNewLaboratoryTest() {
     // Main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
- 
-   
     const [values, setValues] = useState({
         Test_Name: '',
         Test_Desc: '',
@@ -33,9 +29,6 @@ export default function AddNewLaboratoryTest() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-
-
-            //    console.log(response.data)
             axiosClient.post(`/sub-admin/add-new-laboratory-test`, values)
                 .then(async (res) => {
                     if (res.data > 0) {
@@ -62,11 +55,6 @@ export default function AddNewLaboratoryTest() {
         fontSize: '1.1rem',
         width: '90%',
     };
-
-    // const addTimeToTimeTable = (newTimeTable) => {
-    //     setTimeTable([...timeTable, newTimeTable]); // Update state with new data
-    //     closeModal(); // Close modal after adding data
-    // };
     return (
         <div>
             <div className="container mt-3" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
