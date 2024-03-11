@@ -77,7 +77,7 @@ export default function OrderAction() {
                         <h5> <span className='text-warning'>{order.assign_delivery_persion_id !== undefined ? <>
                             <p>Delivery Person Already Assigned</p>
                         </> : <>
-                            <p>Delivery Person Already Assigned</p>
+                            <p>Delivery Person Not Assigned</p>
                         </>}</span></h5>
 
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
@@ -90,6 +90,7 @@ export default function OrderAction() {
                             <br />
                             <select
                                 className='m-2 p-1'
+                                required
                                 onChange={handleInput} name='orderstatus'
                                 style={{ width: '90%', cursor: 'pointer' }}>
                                 <option value="select">{order.status}</option>
@@ -102,6 +103,7 @@ export default function OrderAction() {
                             <input
                                 className='m-2 p-1'
                                 type="date"
+                                required
                                 style={dateStyle}
                                 name='expected_delivery_date'
                                 value={order.expected_delivery_date}
@@ -114,6 +116,7 @@ export default function OrderAction() {
                             <label className='p-1' htmlFor="assigndeliverypersion">Assign Delivery Persion : </label>
                             <select
                                 className='m-2 p-1'
+                                required
                                 onChange={handleInput} name='assigndeliverypersion'
                                 style={{ width: '90%', cursor: 'pointer' }}>
                                 {order.assign_delivery_persion_id !== undefined ? <>
@@ -138,10 +141,10 @@ export default function OrderAction() {
                         <div className="form-check ">
                             <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} />
                             <label className="form-check-label" htmlFor="flexCheckChecked">
-                                <p>You are sure to add  <span className='text-warning'>product</span> </p>
+                                <p>You are sure to Assign  <span className='text-warning'>Delivery Boy</span> </p>
                             </label>
                         </div>
-                        <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Add Product</button>
+                        <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Submit</button>
                     </form>
                 </div>
             </div>

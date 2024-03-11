@@ -22,7 +22,7 @@ export default function ViewOrderBySubAdminDemo() {
       })
 
   }, [])
-  console.log(product)
+  // console.log(product)
 
   var user_id = param.user_id;
   // console.log(user_id)
@@ -41,13 +41,28 @@ export default function ViewOrderBySubAdminDemo() {
 
   var order_id = param.id;
   // console.log(product_id)
+  // useEffect(() => {
+  //   axiosClient.get(`/sub-admin/orders/order/${order_id}`)
+  //     .then(res => {
+  //       if (res.data !== null) {
+  //         setorderDetail(res.data[0])
+  //         setOrders(res.data);
+  //         // console.log(product)
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+
+  // }, [])
+
   useEffect(() => {
-    axiosClient.get(`/sub-admin/orders/order/${order_id}`)
+    axiosClient.get(`/b2b/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data !== null) {
-          setorderDetail(res.data[0])
-          setOrders(res.data);
-          // console.log(product)
+            // console.log(res.data)
+          setOrders(res.data[0]);
+          setorderDetail(res.data[0]);
         }
       })
       .catch(err => {
@@ -59,9 +74,52 @@ export default function ViewOrderBySubAdminDemo() {
   const handleClick = () => {
     navigate('/sub-admin/home', { state: { loggedIn: true } });
   }
-  console.log(product.product_price)
-  const discountPrice = (product.product_price - ((product.product_price * product.discount) / 100));
-  console.log(discountPrice)
+  // console.log(product.product_price)
+  // const discountPrice = (product.product_price - ((product.product_price * product.discount) / 100));
+  // console.log(discountPrice)
+  // const delevaryCharge = 25;
+
+  
+  let totalPrice = 0;
+  let totalActusalPrice = 0;
+  let TotalCgst = 0;
+  let TotalSgst = 0;
+  let totalNumofitem;
+  if (order) {
+    totalNumofitem = order.length;
+  }
+  if (totalNumofitem > 0) {
+    let totalPriceArray = order.map((orders => {
+      return ((((orders.product_price * orders.discount) / 100)) * orders.quantity);
+    }))
+    totalPrice = totalPriceArray.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
+  }
+  if (totalNumofitem > 0) {
+    let totalPriceArray = order.map((product => {
+      return (product.product_price * product.quantity);
+    }))
+    totalActusalPrice = totalPriceArray.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
+  }
+  if (totalNumofitem > 0) {
+    let TotalSgstPerProduct = order.map((product => {
+      return ((((product.product_price * product.sgst) / 100)));
+    }))
+    let TotalCgstPerProduct = order.map((product => {
+      return ((((product.product_price * product.cgst) / 100)));
+    }))
+    TotalSgst = TotalSgstPerProduct.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
+    TotalCgst = TotalCgstPerProduct.reduce((val1, val2) => {
+      return val1 + val2;
+    }, 0)
+  }
+  let totalGst = TotalCgst + TotalSgst;
+  const discountPrice = 1;
   const delevaryCharge = 25;
 
   return (
@@ -73,7 +131,7 @@ export default function ViewOrderBySubAdminDemo() {
               <div className="card-order " >
                 <div className="card-body">
                   <div className="invoice-title">
-                    <h4 className="float-end font-size-15">OrderNo: {orderDetail.id} <span className="badge bg-success font-size-12 ms-2">{orderDetail.payment_status}</span></h4>
+                    <h4 className="float-end font-size-15">OrderNo: {orderDetail.length>0 ? orderDetail[0].id : undefined} <span className="badge bg-success font-size-12 ms-2">{orderDetail.length>0 ? orderDetail[0].payment_status : undefined}</span></h4>
                     <div className="mb-4">
                       <h2 className="mb-1 text-muted">Healthhepta.com</h2>
                     </div>
@@ -99,11 +157,11 @@ export default function ViewOrderBySubAdminDemo() {
                       <div className="text-muted text-sm-end">
                         <div>
                           <h5 className="font-size-15 mb-1">Order No:</h5>
-                          <p>{orderDetail.id}</p>
+                          <p>{orderDetail.length>0 ? orderDetail[0].id : undefined}</p>
                         </div>
                         <div className="mt-4">
                           <h5 className="font-size-15 mb-1">Order Date:</h5>
-                          <p>{orderDetail.order_date}</p>
+                          <p>{orderDetail.length>0 ? orderDetail[0].order_date : undefined}</p>
                         </div>
 
                       </div>
@@ -125,9 +183,9 @@ export default function ViewOrderBySubAdminDemo() {
                           </tr>
                         </thead>
 
-                        <tbody>
+                        {/* <tbody>
 
-                          {order.map((orders, index) => (
+                        {order.map((orders, index) => (
                             <tr key={index}>
                               <th scope="row">{orders.product_id}</th>
                               <td>
@@ -137,11 +195,10 @@ export default function ViewOrderBySubAdminDemo() {
                                 </div>
                               </td>
                               <td>₹ {orders.product_price}</td>
-                              <td>{orders.quantuity}</td>
-                              <td className="text-end">₹ ({orders.quantuity}  {orders.product_price} )</td>
+                              <td>{orders.quantity}</td>
+                              <td className="text-end">₹ ({orders.quantity}  {orders.product_price} )</td>
                             </tr>
                           ))}
-
                           <tr>
 
                           </tr>
@@ -170,6 +227,50 @@ export default function ViewOrderBySubAdminDemo() {
                           <tr>
                             <th scope="row" colspan="4" className="border-0 text-end">Total</th>
                             <td className="border-0 text-end"><h4 className="m-0 fw-semibold">₹({discountPrice}+{delevaryCharge}) </h4></td>
+                          </tr>
+
+                        </tbody> */}
+                        <tbody>
+                          {order.map((orders, index) => (
+                            <tr key={index}>
+                              <th scope="row">{orders.product_id}</th>
+                              <td>
+                                <div>
+                                  <h5 className="text-truncate font-size-14 mb-1">{orders.product_name}</h5>
+                                  <p className="text-muted mb-0">{orders.description}</p>
+                                </div>
+                              </td>
+                              <td>₹ {orders.product_price}</td>
+                              <td>{orders.quantity}</td>
+                              <td className="text-end">₹ {orders.quantity * orders.product_price}</td>
+                            </tr>
+                          ))}
+                          <tr>
+                          </tr>
+                          <tr>
+                            <th scope="row" colspan="4" className="text-end">Sub Total</th>
+                            <td className="text-end">₹{totalActusalPrice}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" colspan="4" className="border-0 text-end">
+                              Discount :</th>
+                            <td className="border-0 text-end">₹{totalPrice}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row" colspan="4" className="border-0 text-end">
+                              Shipping Charge :</th>
+                            <td className="border-0 text-end">₹{delevaryCharge}</td>
+                          </tr>
+
+                          <tr>
+                            <th scope="row" colspan="4" className="border-0 text-end">
+                              Tax</th>
+                            <td className="border-0 text-end">₹ {totalGst}</td>
+                          </tr>
+
+                          <tr>
+                            <th scope="row" colspan="4" className="border-0 text-end">Total</th>
+                            <td className="border-0 text-end"><h4 className="m-0 fw-semibold">₹{(totalActusalPrice - totalPrice + delevaryCharge + totalGst)} </h4></td>
                           </tr>
 
                         </tbody>

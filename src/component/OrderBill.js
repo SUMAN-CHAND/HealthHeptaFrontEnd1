@@ -142,8 +142,8 @@ export default function OrderBill() {
                                 </div>
                               </td>
                               <td>₹ {orders.product_price}</td>
-                              <td>{orders.quantuity}</td>
-                              <td className="text-end">₹ ({orders.quantuity}  {orders.product_price} )</td>
+                              <td>{orders.quantity}</td>
+                              <td className="text-end">₹ {orders.quantity * orders.product_price}</td>
                             </tr>
                           ))}
                           <tr>

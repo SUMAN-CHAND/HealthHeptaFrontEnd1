@@ -648,9 +648,10 @@ export default function AdminHomePage() {
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
+                      <th scope="col">Count</th>
                       <th scope="col">Id</th>
-                      <th scope="col">Product Id</th>
-                      <th scope="col">User ID</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Coustomer Name</th>
                       <th scope="col">User Role</th>
                       <th scope="col">Date</th>
                       <th scope="col">Payment Mood</th>
@@ -663,11 +664,13 @@ export default function AdminHomePage() {
                   <tbody>
                     {orders.map((order, index) => (
                       <tr key={index}>
+                        <th scope="row">{index+1}</th>
                         <th scope="row">{order.id}</th>
-                        <td>{order.product_id}</td>
-                        <td>{order.user_id}</td>
+                        <td>{order.product_name}</td>
+                        <td>{order.name}</td>
                         <td>{order.role}</td>
-                        <td>{order.order_date}</td>
+                        {/* <td>{order.order_date}</td> */}
+                        <td>{order.order_date.slice(0, 10)}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
                         <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>

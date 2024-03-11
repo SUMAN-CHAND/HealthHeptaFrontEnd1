@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import logo from '../img/logo.jpeg';
+import logo from '../../img/logo.jpeg';
 import {
     Link, useParams
 } from "react-router-dom";
-import './style.css'
+import '../../component/style.css';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 export default function AdminHeader() {
@@ -22,6 +22,7 @@ export default function AdminHeader() {
     useEffect(() => {
         axiosClient.get(`/profile-details`)
             .then(res => {
+                // console.log(res.data)
                 setnumOfItem(res.data[0]);
                 setLoggedIn(res.data[1]);
                 setUserLocation(res.data[2]);
@@ -44,7 +45,7 @@ export default function AdminHeader() {
                 setProducts(res.data);
             })
     }, [])
-    if (loggedIn > 0) {
+    if (loggedIn !== undefined) {
         var login = true;
     }
     const handleLogout = async () => {
@@ -52,7 +53,7 @@ export default function AdminHeader() {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
-                navigate('/')
+                navigate('/superadmin/login')
             } else {
                 // Handle logout failure
                 console.error(response.data.message);
@@ -118,7 +119,7 @@ export default function AdminHeader() {
                         <li>Log Out</li>
                     </ul>
                     <span onClick={() => setActive(!active)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="white" class="bi bi-x" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="white" className="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                         </svg>
                     </span>
@@ -130,15 +131,15 @@ export default function AdminHeader() {
             <div className='Header' >
                 <nav className="navbar navbar-expand-md">
                     <div className="right">
-                        <Link className="navbar-brand" to='/' style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
+                        <div className="navbar-brand"  style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
                             <img src={logo} alt="Logo" className="d-inline-block align-text-top logo-image" width="50vw" height="50vh" style={{ borderRadius: "50%" }} />
-                            <div class="container-fluid line-header" onClick={() => setActive(!active)} >
+                            <div className="container-fluid line-header" onClick={() => setActive(!active)} >
                                 {active ? <>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                     </svg>
                                 </> : <>
-                                    <span class="navbar-toggler-icon line-icon-header"></span>
+                                    <span className="navbar-toggler-icon line-icon-header"></span>
                                 </>
 
                                 }
@@ -146,10 +147,10 @@ export default function AdminHeader() {
                             <div>
                                 <h5 className='text-light mx-1 logo-text' style={{ fontWeight: '700' }} >Healthhepta.com</h5>
                             </div>
-                        </Link>
+                        </div>
                     </div>
-                    <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'space-evenly' }} >
-                        <div className="dropdown me-2 dropdown-location "  >
+                    <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'end' }} >
+                        {/* <div className="dropdown me-2 dropdown-location "  >
                             <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary" aria-expanded="false" style={{ color: "black", backgroundColor: "white", width: '20vw', fontSize: '1em' }}>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.name}>{location.name}</option>
@@ -174,34 +175,34 @@ export default function AdminHeader() {
                                     )}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
                         <div className='login-order' style={{ alignItems: "center" }}>
-                        <Link to='/b2b-home' style={{textDecoration:'none',marginBottom:'5px'}}><p className='btn btn-outline' style={{ display: 'flex', color: 'white',border:'2px solid white',fontWeight: '700' }}> For Dealer</p></Link>
-                            <Link to='/cart' style={{ textDecoration: 'none' }} >
+                        {/* <Link to='/b2b-home' style={{textDecoration:'none',marginBottom:'5px'}}><p className='btn btn-outline' style={{ display: 'flex', color: 'white',border:'2px solid white',fontWeight: '700' }}> For Dealer</p></Link> */}
+                            {/* <Link to='/cart' style={{ textDecoration: 'none' }} >
                                 <div className="cart " style={{ display: 'flex', justifyContent: 'start', marginLeft: "auto", textDecoration: 'none' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="5vw" height="5vh" fill="currentColor" className="bi bi-cart p-0 drop-dwon-profile" viewBox="0 0 16 16" >
                                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                                     </svg>
                                     <p className='px-2 cartItemNo' style={{ color: 'white', marginLeft: '-10px', marginRight: '10px', backgroundColor: 'orange', borderRadius: '5px' }}>{numOfItem}</p>
                                 </div>
-                            </Link>
+                            </Link> */}
                             {login ?
                                 <div className="buttom profile-icon mx-3">
-                                    <div class="dropdown">
-                                        <span class="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{ padding: '0px' }}>
+                                    <div className="dropdown">
+                                        <span className="btn  dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style={{ padding: '0px' }}>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="bi bi-person shadow drop-dwon-profile " style={{ backgroundColor: '' }} viewBox="0 0 16 16">
                                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                                             </svg>
                                         </span>
-                                        <ul class="dropdown-menu">
-                                            <li><Link to='/profile' class="dropdown-item">Profile</Link></li>
-                                            <li><Link class="dropdown-item" onClick={handleLogout} >Log out</Link></li>
+                                        <ul className="dropdown-menu">
+                                            <li><Link to='/superadmin' className="dropdown-item">Profile</Link></li>
+                                            <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                         </ul>
                                     </div>
                                 </div>
                                 :
                                 <div>
-                                    <Link to='/login'>
+                                    <Link to='/superadmin/login'>
                                         <div className="buttom mx-3 login-text">
                                             <p style={{ margin: '0px' }} className="btn btn-primary"> <p style={{ margin: '0px' }}>Login</p> </p>
                                         </div>

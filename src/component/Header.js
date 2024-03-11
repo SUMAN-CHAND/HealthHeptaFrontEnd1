@@ -162,7 +162,8 @@ export default function Header() {
                     <div className="right">
                         <Link className="navbar-brand" to='/' style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
                             <img src={logo} alt="Logo" className="d-inline-block align-text-top logo-image" width="50vw" height="50vh" style={{ borderRadius: "50%" }} />
-                            <div className="container-fluid line-header" onClick={() => setActive(!active)} >
+                            <div className="container-fluid line-header"  > 
+                            {/* onClick={() => setActive(!active)} */}
                                 {active ? <>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />

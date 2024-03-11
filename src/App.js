@@ -16,8 +16,7 @@ import B2BHeader2 from './component/B2B System/B2BHeader2';
 
 import Fotter from './component/Fotter';
 import B2BEmployee_Header from './component/B2BEmployee/B2BEmployee_Header';
-import AddNewCustomer from './component/B2BEmployee/AddNewCustomer';
-import AddProductWhichIsNotPresent from './component/B2BEmployee/AddProductWhichIsNotPresent';
+import AdminHeader from './component/AdminPanel/AdminHeader';
 
 
 const AppoitmentConfirmation = lazy(() => import('./component/AppoitmentConfirmation'));
@@ -109,6 +108,9 @@ const OrderAction = lazy(() => import('./component/AdminPanel/OrderAction'));
 
 const B2BEmployee_Login = lazy(() => import('./component/B2BEmployee/B2BEmployee_Login'));
 const B2BEmployee_Home = lazy(() => import('./component/B2BEmployee/B2BEmployee_Home'));
+const B2BOrderbill = lazy(() => import('./component/B2B System/B2BOrderbill'));
+const AddProductWhichIsNotPresent = lazy(() => import('./component/B2BEmployee/AddProductWhichIsNotPresent'));
+const AddNewCustomer = lazy(() => import('./component/B2BEmployee/AddNewCustomer'));
 
 
 function App() {
@@ -167,7 +169,7 @@ function App() {
 
             <Routes>
               {/* Super Admin Routes */}
-              <Route path='/superadmin' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminHomePage /></Suspense></>} exact />
+              <Route path='/superadmin' element={<> <AdminHeader/><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminHomePage /></Suspense></>} exact />
               {/* <Route path='/superadmin/b2b' Component={AdminHomePage} exact /> */}
               {/* <Route path='/superadmin/list-products' Component={AdminHomePage} exact /> */}
               <Route path='/superadmin/addproduct' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddProduct /></Suspense></>} exact />
@@ -187,7 +189,7 @@ function App() {
               <Route path='/superadmin/orders/order/:order_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewOrder /></Suspense></>} exact />
               <Route path='/superadmin/orders/customer/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewUser /></Suspense></>} exact />
               <Route path='/superadmin/signup' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminSignUp /></Suspense></>} exact />
-              <Route path='/superadmin/login' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminLogin /></Suspense></>} exact />
+              <Route path='/superadmin/login' element={<><AdminHeader/><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminLogin /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/profile/:id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminProfile /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/products/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminProducts /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/orders/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminOrders /></Suspense></>} exact />
@@ -280,6 +282,7 @@ function App() {
               <Route path='/b2b/addtocart/:product_id' element={<><B2BHeader /><B2BHeader2 /><Suspense fallback={<HashLoader color="#36d7b7" />}> <ParticularProduct /></Suspense></>} exact />
               <Route path='/b2b/cart' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2BCartPage /></Suspense></>} exact />
               <Route path='/b2b/order' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2bOrderPage /></Suspense></>} exact />
+              <Route path='b2b/order/bill' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2BOrderbill /></Suspense></>} exact />
               <Route path='/b2b/medicines/:selectLocation' element={<><B2BHeader /><B2BHeader2 /><Suspense fallback={<HashLoader color="#36d7b7" />}>< AllProductPage /></Suspense></>} exact />
             </Routes>
           </div>

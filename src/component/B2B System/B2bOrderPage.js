@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Modal from 'react-modal';
 import SuccfullyOrderplaceModal from '../SuccfullyOrderplaceModal';
 import { ToastContainer, toast } from 'react-toastify';
@@ -40,18 +40,7 @@ export default function B2bOrderPage() {
     });
     const [modalIsOpen, setIsOpen] = useState(false);
 
-    function openModal() {
-        setIsOpen(true);
-    }
-
-    function afterOpenModal() {
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-        document.body.style.overflow = 'unset';
-        setIsOpen(false);
-    }
+    
 
     const [products, setProducts] = useState([])
     const [user, setUser] = useState({});
@@ -92,7 +81,7 @@ export default function B2bOrderPage() {
             });
         // }, []);
     }
-
+    const navigate =useNavigate();
 
 
     const location = useLocation();
@@ -180,7 +169,13 @@ export default function B2bOrderPage() {
             .then(res => {
                 if (res.data !== null) {
                     success();
-                    openModal();
+                    navigate('/b2b/order/bill',
+                    {
+                        state: {
+                            orderId: res.data[0],
+                            productIds: res.data[1]
+                        }
+                    });
                 }
                 else if (res.data === null) {
                     danger();
@@ -191,7 +186,6 @@ export default function B2bOrderPage() {
             })
             .catch(err => console.log(err));
         success();
-        openModal();
     }
 
     return (
@@ -252,15 +246,7 @@ export default function B2bOrderPage() {
                                 </div>
 
                                 <button type='submit' onClick={handleSubmit} className='btn btn-success mx-5'>Place Order</button>
-                                <Modal
-                                    isOpen={modalIsOpen}
-                                    onAfterOpen={afterOpenModal}
-                                    onRequestClose={closeModal}
-                                    style={customStyles}
-                                    contentLabel="Example Modal"
-                                >
-                                    <SuccfullyOrderplaceModal closeTheModal={closeModal} TotalAmount={totalActusalPrice} />
-                                </Modal>
+                                
                                 <button type='restart' className='btn btn-warning'>Clear</button>
                             </div>
 
