@@ -7,6 +7,7 @@ import ReactWhatsapp from 'react-whatsapp';
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import axiosClient from '../axiosClient';
+import { GrView } from 'react-icons/gr';
 export default function Sub_Admin_Home_Page() {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
@@ -266,7 +267,7 @@ export default function Sub_Admin_Home_Page() {
       [name]: value,
     }));
 
-    console.log(value)
+    // console.log(value)
     setAppointmentStatus({ AppointmentStatus: value });
     // handleSubmit(value);
   };
@@ -312,15 +313,15 @@ export default function Sub_Admin_Home_Page() {
   };
 
   const deleteOrder = (id) => {
-    console.log('click')
+    // console.log('click')
     axiosClient.delete(`/sub-admin/delete/orders/${id}`)
       .then(response => {
-        console.log(response)
+        // console.log(response)
         if (response.data === 'success') {
           alert('Order Delete Successfully');
         }
         else if (response.data === null) {
-          console.log(response.data)
+          // console.log(response.data)
           alert('Order cannot be canceled at this time');
         }
       })
@@ -583,27 +584,40 @@ export default function Sub_Admin_Home_Page() {
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
+                      <th scope="col">Count</th>
                       <th scope="col">Id</th>
-                      <th scope="col">Product Id</th>
-                      <th scope="col">User ID</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Customer Name</th>
                       <th scope="col">Date</th>
                       <th scope="col">Payment Mood</th>
                       <th scope="col">Payment Status</th>
                       <th scope="col">Status</th>
+                      <th scope="col">Expected delivery date</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {orders.map((order, index) => (
                       <tr key={index}>
+                        <th scope="row">{index}</th>
                         <th scope="row">{order.id}</th>
-                        <td>{order.product_id}</td>
-                        <td>{order.user_id}</td>
+                        <td>{order.product_name}</td>
+                        <td>{order.name}</td>
                         <td>{order.order_date}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
-                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>
-                        <td> <Link to={`/sub-admin/orders/${order.id}/${order.user_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td>
+                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}<br/>  {order.orderAcceptedBy}</td>
+                        {/* <td> <Link to={`/sub-admin/orders/${order.id}/${order.user_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td> */}
+                        <td>
+                          <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            {order.expected_delivery_date}
+                            <br />
+                          </div>
+                        </td>
+                        <td className='flex items-center justify-center'>
+                          <Link to={`/sub-admin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+                          <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                        </td>
                       </tr>
                     ))}
                   </tbody>

@@ -57,7 +57,7 @@ export default function ViewOrderBySubAdminDemo() {
   // }, [])
 
   useEffect(() => {
-    axiosClient.get(`/b2b/sub-admin/orders/order/${order_id}`)
+    axiosClient.get(`/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data !== null) {
             // console.log(res.data)
@@ -150,7 +150,7 @@ export default function ViewOrderBySubAdminDemo() {
                         <h5 className="font-size-16 mb-3">Billed To:</h5>
                         <h5 className="font-size-15 mb-2">{customer.name}</h5>
                         <p className="mb-1">{customer.phone}</p>
-                        <p className="mb-1">{customer.name}, {customer.Village},{customer.P_O},{customer.City},{customer.district},{customer.State},{customer.Pin}</p>
+                        <p className="mb-1">{customer.name}, {customer.Village},{customer.P_O},{customer.City},{customer.district},{customer.State},{customer.pin_code}</p>
                       </div>
                     </div>
                     <div className="col-sm-6">

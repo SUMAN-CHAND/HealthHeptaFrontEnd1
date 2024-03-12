@@ -673,7 +673,7 @@ export default function AdminHomePage() {
                         <td>{order.order_date.slice(0, 10)}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
-                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>
+                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br/>{order.orderAcceptedBy}</td>
                         <td>
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             {order.expected_delivery_date}

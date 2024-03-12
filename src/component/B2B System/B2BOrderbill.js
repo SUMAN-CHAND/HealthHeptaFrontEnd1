@@ -210,7 +210,7 @@ if (userRole === 'b2b_employee') {
                         <a href="javascript:window.print()" className="btn btn-success me-1"><i className="fa fa-print">Print</i></a>
                       </div>
                       <div>
-                        <Link to='/'> <button className='btn btn-primary'>Go to Home </button></Link>
+                        <Link to='/b2b-home'> <button className='btn btn-primary'>Go to Home </button></Link>
                       </div>
                     </div>
                   </div>

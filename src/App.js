@@ -111,6 +111,8 @@ const B2BEmployee_Home = lazy(() => import('./component/B2BEmployee/B2BEmployee_
 const B2BOrderbill = lazy(() => import('./component/B2B System/B2BOrderbill'));
 const AddProductWhichIsNotPresent = lazy(() => import('./component/B2BEmployee/AddProductWhichIsNotPresent'));
 const AddNewCustomer = lazy(() => import('./component/B2BEmployee/AddNewCustomer'));
+const OrderActionBySubAdmin = lazy(() => import('./component/Service_Provider/OrderActionBySubAdmin'));
+const B2BSuperAdminOrderBill = lazy(() => import('./component/AdminPanel/B2BPanal.js/B2BSuperAdminOrderBill'));
 
 
 function App() {
@@ -198,6 +200,7 @@ function App() {
               <Route path='/superadmin/b2b' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BHome /></Suspense></>} exact />
               <Route path='/superadmin/b2b/addproduct' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BAddNewProductBySuperAdmin /></Suspense></>} exact />
               <Route path='/superadmin/image/:image_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewDocuments /></Suspense></>} exact />
+              <Route path='/superadmin/b2b/orders/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BSuperAdminOrderBill /></Suspense></>} exact />
 
             </Routes>
           </div>
@@ -268,6 +271,7 @@ function App() {
               <Route path='/sub-admin/reschedule/see/:appoiment_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><SeeRequestReschedule /></Suspense></>} exact />
               <Route path='/sub-admin/reschedule/see/lab/:appoiment_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><SeeRequestRescheduleOfLab /></Suspense></>} exact />
               <Route path='/sub-admin/home/timetable/doctor/:doctor_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><DoctorTimeTable /></Suspense></>} exact />
+              <Route path='/sub-admin/orders/action/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><OrderActionBySubAdmin /></Suspense></>} exact />
 
             </Routes>
           </div>

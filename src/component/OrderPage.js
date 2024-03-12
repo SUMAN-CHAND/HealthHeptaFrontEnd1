@@ -253,7 +253,7 @@ export default function OrderPage() {
                             <div className=" container m-2 p-2" style={{ display: 'flex', justifyContent: 'space-around', backgroundColor: '#fff' }}>
                                 <>
                                     <p>Delevary To : </p>
-                                    <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
+                                    <p>{user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.pin_code} </p>
                                 </>
                                 <button className='btn btn-primary' onClick={openModal}>Change</button>
                                 <Modal

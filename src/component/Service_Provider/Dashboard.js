@@ -65,7 +65,7 @@ function Dashboard() {
 
 
         // setProductCount
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
