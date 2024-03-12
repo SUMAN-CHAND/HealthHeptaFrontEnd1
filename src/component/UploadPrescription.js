@@ -36,7 +36,7 @@ export default function UploadPrescription({ onImageUpload }) {
 const navigate = useNavigate();
   const handleUpload = async () => {
     if (file.size > 100000) {
-      alert("File size more then 1Mb")
+      alert("You File size is more then 1Mb !! \n Please ensure the file size is below 1 MB")
     } else {
       if (file) {
         const formData = new FormData();
@@ -90,6 +90,7 @@ const navigate = useNavigate();
         </div>
       ))}
     </div> */}
+    <p className='text-danger'>*Please ensure the file size is below 1 MB*</p>
   </div>
   )
 }

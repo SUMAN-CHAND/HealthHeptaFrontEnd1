@@ -409,7 +409,7 @@ export default function UserProfile() {
                                         } */}
                                         {/* <button className="btn btn-primary" onClick={getUserLocation}>Add Current Location</button> */}
                                         <div>
-                                            <p>Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin} </p>
+                                            <p>Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.pin_code} </p>
                                         </div>
                                         <div>
 
