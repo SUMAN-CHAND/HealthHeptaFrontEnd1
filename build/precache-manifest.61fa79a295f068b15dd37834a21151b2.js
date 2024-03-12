@@ -40,12 +40,12 @@ self.__precacheManifest = [
     "url": "/static/js/7.b32ddcc5.chunk.js"
   },
   {
-    "revision": "1f3cf76733ae670cd330",
+    "revision": "ceb23fb88cf3f61b2bf3",
     "url": "/static/css/main.6646a0d2.chunk.css"
   },
   {
-    "revision": "1f3cf76733ae670cd330",
-    "url": "/static/js/main.1f3cf767.chunk.js"
+    "revision": "ceb23fb88cf3f61b2bf3",
+    "url": "/static/js/main.ceb23fb8.chunk.js"
   },
   {
     "revision": "67bee4290c7fdd0d82d7",
@@ -572,12 +572,12 @@ self.__precacheManifest = [
     "url": "/static/media/revicons.04eb8fc5.woff"
   },
   {
-    "revision": "2feb69ccb596730c72920c6ba3e37ef8",
-    "url": "/static/media/revicons.2feb69cc.eot"
-  },
-  {
     "revision": "17629a5dfe0d3c3946cf401e1895f091",
     "url": "/static/media/revicons.17629a5d.ttf"
+  },
+  {
+    "revision": "2feb69ccb596730c72920c6ba3e37ef8",
+    "url": "/static/media/revicons.2feb69cc.eot"
   },
   {
     "revision": "27e1c41db262524f6774c3ec73607a14",
@@ -624,7 +624,7 @@ self.__precacheManifest = [
     "url": "/static/media/eyedoctor.8acbd95b.webp"
   },
   {
-    "revision": "70582bd03d8218c95eba262f4421ea55",
+    "revision": "d0c85a67192db7c840fced78dd8d0ebe",
     "url": "/index.html"
   }
 ];
