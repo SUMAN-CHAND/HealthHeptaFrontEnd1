@@ -662,7 +662,7 @@ export default function AdminHomePage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.map((order, index) => (
+                    {orders&&orders.map((order, index) => (
                       <tr key={index}>
                         <th scope="row">{index+1}</th>
                         <th scope="row">{order.id}</th>
