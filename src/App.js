@@ -256,8 +256,8 @@ function App() {
             {/* Sub Admin Routes */}
             <Routes>
               <Route path='/sub-admin/login' element={<><B2BHeader /><div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <Sub_Admin_Login /> </Suspense></div></>} exact />
-              <Route path='/sub-admin/signup' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_SignUp /></Suspense></>} exact />
-              <Route path='/sub-admin/complete-profile' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><CompelteProfileFrom /></Suspense></>} exact />
+              <Route path='/sub-admin/signup' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_SignUp /></Suspense></>} exact />
+              <Route path='/sub-admin/complete-profile' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><CompelteProfileFrom /></Suspense></>} exact />
               <Route path='/sub-admin/home' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_Home_Page /></Suspense></>} exact />
               <Route path='/sub-admin/home/address' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_Home_Page /></Suspense></>} exact />
               <Route path='/sub-admin/home/phone' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_Home_Page /></Suspense></>} exact />

@@ -68,6 +68,9 @@ export default function Sub_Admin_Login() {
                         // setLoggedIn(true)               
                         success();
                         navigate('/b2b-home', { state: { loggedIn: res.data[1] } });
+                        sessionStorage.setItem("user_id", res.data[0].id);
+                        sessionStorage.setItem("LogedIn", res.data[1]);
+
 
                     }
                 })
@@ -106,7 +109,7 @@ export default function Sub_Admin_Login() {
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
     return (
-        <div className='d-flex justify-content-center align-item-center p-3 m-3'>
+        <div id='sub_admin_login_mob' className='d-flex justify-content-center align-item-center  p-3 m-3'>
 
             <div className="img login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />

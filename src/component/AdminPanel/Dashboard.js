@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
 import axiosClient from '../axiosClient';
+import HashLoader from 'react-spinners/HashLoader';
+import Modal from 'react-modal';
+const ProductListModal = lazy(() => import('./B2BDashboardTabModals/ProductListModal'));
+
+
 
 const Dashboard = () => {
   const [userCount, setUserCount] = useState();
@@ -334,14 +339,44 @@ const Dashboard = () => {
   if ((salesCountWeek[0] > 0 || salesCountWeek[1] > 0 || salesCountWeek[2] > 0 || salesCountWeek[3] > 0 || salesCountWeek[4] > 0 || salesCountWeek[5] > 0 || salesCountWeek[6] > 0) && (purchaseCountWeek[0] > 0 || purchaseCountWeek[1] > 0 || purchaseCountWeek[2] > 0 || purchaseCountWeek[3] > 0 || purchaseCountWeek[4] > 0 || purchaseCountWeek[5] > 0 || purchaseCountWeek[6] > 0)) {
     flag2Chart = true;
   }
+
+
+  const customStyles = {
+    content: {
+      overflowY: 'hidden',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.body.style.overflow = 'unset';
+    setIsOpen(false);
+  }
+
   return (
-    <main className='main-container' style={{fontSize:'13px'}}>
+    <main className='main-container' style={{ fontSize: '13px' }}>
       <div className='main-title'>
         <h3 className='text-dark'>DASHBOARD</h3>
       </div>
       <div className="row mt-4">
-        <div className="col-xl-3 col-md-6 mb-4">
-          <a className="text-decoration-none" href="">
+        <div className="col-xl-3 col-md-6 mb-4" >
+          <a className="text-decoration-none" onClick={openModal} >
             <div className="card border-left-primary shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -356,7 +391,17 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
+
           </a>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ProductListModal closeTheModal={closeModal} /></Suspense> </div>
+          </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">

@@ -70,6 +70,8 @@ export default function B2BHeader() {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
+                sessionStorage.removeItem('LogedIn');
+                sessionStorage.removeItem('user_id');
                 navigate('/')
             } else {
                 // Handle logout failure

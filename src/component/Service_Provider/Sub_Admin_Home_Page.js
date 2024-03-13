@@ -39,9 +39,7 @@ export default function Sub_Admin_Home_Page() {
   const [userAddress, setUserAddress] = useState({});
   const [rolePresent, setRolePresentStatus] = useState('');
   const location = useLocation();
-  if (location.state === null) {
-    return <Navigate to='/sub-admin/login' />;
-  }
+
   const [products, setProducts] = useState([])
   const [orders, setOrders] = useState([])
   const [your_orders, setYour_orders] = useState([])
@@ -53,6 +51,12 @@ export default function Sub_Admin_Home_Page() {
   const [images, setImages] = useState([]);
   const [userRole, setUserRole] = useState('');
 
+  const LogedIn = sessionStorage.getItem('LogedIn');
+  const userId = sessionStorage.getItem('user_id');
+
+  if (LogedIn === undefined || LogedIn === null) {
+    return <Navigate to='/sub-admin/login' />;
+  }
 
   let flag = false;
   useEffect(() => {
@@ -67,6 +71,8 @@ export default function Sub_Admin_Home_Page() {
       }
     });
   }, []);
+  
+
   useEffect(() => {
     axiosClient.get('/sub-admin/product')
       .then(response => {
@@ -380,7 +386,7 @@ export default function Sub_Admin_Home_Page() {
               {
                 userRole.toLowerCase() === 'medicine shop' ? <>
                   <Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
-                  <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Orders</Link>
+                  <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Order from HealthHepta</Link>
                   <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
                 </> : <></>
               }
@@ -482,9 +488,9 @@ export default function Sub_Admin_Home_Page() {
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New</button></Link></span>
 
               <div className="search  me-2 search-location" >
-                <div style={{ display: 'flex',flexDirection:'column',textAlign:'left'}}>
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                   <p className='p-1 m-1'>Search Products here</p>
-                  <input className="form-control" name='input' onChange={handleFilter} placeholder="Search product name" value={values.input} style={{ fontSize: '0.9em', width:'95%',borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px',margin:'8px 12px 17px 12px' }} />
+                  <input className="form-control" name='input' onChange={handleFilter} placeholder="Search product name" value={values.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
                   {/* <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -525,10 +531,10 @@ export default function Sub_Admin_Home_Page() {
                               <td>{product.expiry}</td>
                               <td>{product.discount} %</td>
                               <td>{product.DrugOrNot} </td>
-                              <td style={{display:'flex'}}>
-                                <Link to={`updateproduct/${product.product_id}`} >  <FaRegEdit  style={{ cursor: 'pointer',color:'blue',margin:'1px',height: '5vh', width: '2vw'}}/>
+                              <td style={{ display: 'flex' }}>
+                                <Link to={`updateproduct/${product.product_id}`} >  <FaRegEdit style={{ cursor: 'pointer', color: 'blue', margin: '1px', height: '5vh', width: '2vw' }} />
                                 </Link>
-                                <RiDeleteBin6Line onClick={() => deleteProduct(product.product_id)} style={{ cursor: 'pointer',color:'red',margin:'1px',height: '5vh', width: '2vw' }} />
+                                <RiDeleteBin6Line onClick={() => deleteProduct(product.product_id)} style={{ cursor: 'pointer', color: 'red', margin: '1px', height: '5vh', width: '2vw' }} />
 
                               </td>
                             </tr>
@@ -585,7 +591,7 @@ export default function Sub_Admin_Home_Page() {
                   <thead className='thead-dark'>
                     <tr>
                       <th scope="col">Count</th>
-                      <th scope="col">Id</th>
+                      <th scope="col">OrderId</th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Customer Name</th>
                       <th scope="col">Date</th>
@@ -606,7 +612,7 @@ export default function Sub_Admin_Home_Page() {
                         <td>{order.order_date}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
-                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}<br/>  {order.orderAcceptedBy}</td>
+                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}<br />  {order.orderAcceptedBy}</td>
                         {/* <td> <Link to={`/sub-admin/orders/${order.id}/${order.user_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td> */}
                         <td>
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >

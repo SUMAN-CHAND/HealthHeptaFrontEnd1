@@ -464,6 +464,7 @@ export default function AdminHomePage() {
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
+                      <th scope="col">Count</th>
                       <th scope="col">Id</th>
                       <th scope="col">image</th>
                       <th scope="col">Name</th>
@@ -481,6 +482,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'select' ? <>
                       {products.map((product, index) => (
                         <tr key={index}>
+                          <th scope="row">{index+1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -521,6 +523,7 @@ export default function AdminHomePage() {
                     {medicineType.type === 'select' ? <>
                       {products.map((product, index) => (
                         <tr key={index}>
+                          <th scope="row">{index+1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -561,6 +564,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'drug' ? <>
                       {products.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
                         <tr key={index}>
+                          <th scope="row">{index+1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -601,6 +605,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'otc' ? <>
                       {products.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
                         <tr key={index}>
+                          <th scope="row">{index+1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -649,10 +654,11 @@ export default function AdminHomePage() {
                   <thead className='thead-dark'>
                     <tr>
                       <th scope="col">Count</th>
-                      <th scope="col">Id</th>
+                      <th scope="col">OrderId</th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Coustomer Name</th>
                       <th scope="col">User Role</th>
+                      <th scope="col">Order From</th>
                       <th scope="col">Date</th>
                       <th scope="col">Payment Mood</th>
                       <th scope="col">Payment Status</th>
@@ -662,18 +668,19 @@ export default function AdminHomePage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders&&orders.map((order, index) => (
+                    {orders && orders.map((order, index) => (
                       <tr key={index}>
-                        <th scope="row">{index+1}</th>
+                        <th scope="row">{index + 1}</th>
                         <th scope="row">{order.id}</th>
                         <td>{order.product_name}</td>
                         <td>{order.name}</td>
                         <td>{order.role}</td>
                         {/* <td>{order.order_date}</td> */}
+                        <td>{order.subadmin_name}</td>
                         <td>{order.order_date.slice(0, 10)}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
-                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br/>{order.orderAcceptedBy}</td>
+                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
                         <td>
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             {order.expected_delivery_date}

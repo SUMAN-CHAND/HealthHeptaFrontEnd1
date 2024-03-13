@@ -10,8 +10,9 @@ export default function CompelteProfileFrom() {
     const location = useLocation();
     const state = location.state;
     // console.log(state)
-    const data = location.state.data
-    const value = location.state.value
+    const data = location.state.data;
+    const value = location.state.value;
+    const role = value.role;
     const [values, setValues] = useState({
         subadmin_id: data.insertId,
         fullname: value.name,
@@ -22,6 +23,8 @@ export default function CompelteProfileFrom() {
         Reg_id: '',
         OpeningTime: '',
         CloseingTime: '',
+        owner_name: '',
+        owner_phonenumber: '',
         Village: '',
         P_O: '',
         City: '',
@@ -101,9 +104,9 @@ export default function CompelteProfileFrom() {
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                             </svg>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div className='complete_profile_divs'>
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                                <label className='p-1' htmlFor="product_name">Full Name<span className='text-danger'>*</span> : </label><br></br>
+                                <label className='p-1' htmlFor="product_name">Full {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>} Name :<span className='text-danger'>*</span> : </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Full Name'
                                     name='fullname' onChange={handleInput} value={value.name} /><br />
                             </div>
@@ -113,7 +116,7 @@ export default function CompelteProfileFrom() {
                                     name='phone' onChange={handleInput} value={value.phone} /><br />
                             </div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div className='complete_profile_divs'>
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="landmark">Landmark <span className='text-danger'>*</span> : </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter landmark'
@@ -122,10 +125,10 @@ export default function CompelteProfileFrom() {
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="role">Role<span className='text-danger'>*</span> : </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Your Role'
-                                    name='role' onChange={handleInput} value={value.role[0].toUpperCase()} /><br />
+                                    name='role' onChange={handleInput} value={value.role.toUpperCase()} /><br />
                             </div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div className='complete_profile_divs'>
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="description">Description <span className='text-danger'>*</span>: </label><br></br>
                                 <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Describe Your self'
@@ -137,7 +140,7 @@ export default function CompelteProfileFrom() {
                                     name='Reg_id' onChange={handleInput} /><br />
                             </div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div className='complete_profile_divs'>
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="OpeningTime">Opening Time <span className='text-danger'>*</span>: </label><br></br>
                                 <input required className='m-2 p-1' type="time" style={{ width: '33vw' }} placeholder='Enter Opening Time'
@@ -149,10 +152,32 @@ export default function CompelteProfileFrom() {
                                     name='CloseingTime' onChange={handleInput} /><br />
                             </div>
                         </div>
+                        <div className='complete_profile_divs'>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="owner_name"> {role === "Medicine Shop" ? <>Pharmacy Shop Owner</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory Owner</> : <></>}{role === 'clinic' ? <>Clinic Owner</> : <></>} Name <span className='text-danger'>*</span>: </label><br></br>
+                                <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Owner Name'
+                                    name='owner_name' onChange={handleInput} /><br />
+                            </div>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="owner_phonenumber">{role === "Medicine Shop" ? <>Pharmacy Shop Owner</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory Owner</> : <></>}{role === 'clinic' ? <>Clinic Owner</> : <></>}  Phone Number <span className='text-danger'>*</span>: </label><br></br>
+                                {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  Owner phone number'
+                                    name='owner_phonenumber' onChange={handleInput} /><br /> */}
+                                <input
+                                    className='m-2 p-1'
+                                    onChange={handleInput}
+                                    name='owner_phonenumber'
+                                    id="phone"
+                                    type="tel"
+                                    required
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Enter  Owner phone number" style={{ width: '33vw', border: '1px solid gray', borderRadius: '4px' }} />
+                                <span className="validity"></span>
+                                <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
+                            </div>
+                        </div>
 
                         <div style={{ textAlign: 'left' }}>
-                            <h5 className='m-2 p-3'>Add Parmanent Address :- </h5>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <label className='m-2 p-3'>Add {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>} Full Address :- </label>
+                            <div className='complete_profile_divs'>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="Village">Village / Road name : </label><br></br>
                                     <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Village or Road Name'
@@ -164,7 +189,7 @@ export default function CompelteProfileFrom() {
                                         name='P_O' onChange={handleInput} /><br />
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div className='complete_profile_divs'>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="City">City : </label><br></br>
                                     <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Your City'
@@ -176,7 +201,7 @@ export default function CompelteProfileFrom() {
                                         name='district' onChange={handleInput} /><br />
                                 </div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div className='complete_profile_divs'>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="state">State: </label><br></br>
                                     <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter State'
@@ -190,13 +215,13 @@ export default function CompelteProfileFrom() {
                             </div>
                         </div>
                         <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            <label className='p-1' htmlFor="image">Add Your Image </label>
+                            <label className='p-1' htmlFor="image">Add {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>}  Image </label>
                             {/* <input className='m-2  p-1' type="file" style={{ width: '90%' }} placeholder='Enter Product image'
                                 name='img' onChange={handleInput} /><br /> */}
                             <UploadImage onImageUpload={handleImageUpload} />
                         </div>
                         <div className="form-check licence-add" style={{ textAlign: 'initial', fontWeight: '700' }}>
-                            <label className='p-1' htmlFor="image">Add Your Licence</label>
+                            <label className='p-1' htmlFor="image">Add {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>} Licence</label>
                             {/* <span className='mx-3'><input type="file" name="licence" id="licence" /></span> */}
                             {/* <UploadImage/> */}
                             <UploadImage onImageUpload={handleLicenceImageIdUpload} />

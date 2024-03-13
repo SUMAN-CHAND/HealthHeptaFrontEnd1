@@ -88,7 +88,7 @@ export default function Sub_Admin_SignUp() {
     return (
 
 
-        <div className='d-flex justify-content-center align-item-center p-3 m-3'>
+        <div id='sub_admin_signup_mob' className='d-flex justify-content-center align-item-center p-3 m-3'>
 
             <div className="img  login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />
@@ -102,7 +102,7 @@ export default function Sub_Admin_SignUp() {
 
 
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <label className='p-1' htmlFor="name">Full Name : </label><br></br>
+                        <label className='p-1' htmlFor="name">Full {role === "Medicine Shop" ? <>Pharmacy Shop</>:<></>} {role ==='doctor'?<>Doctor</>:<></>}{role==="Laboratory"?<>Laboratory</>:<></>}{role === 'clinic' ?<>Clinic</>:<></>} Name : </label><br></br>
                         <input required className='m-2 p-1' type="text" style={{ width: '90%' }} placeholder='Enter Full Name'
                             name='name' onChange={handleInput} /><br />
                         {errors.name && <span className='text-danger'>{errors.name}</span>}
