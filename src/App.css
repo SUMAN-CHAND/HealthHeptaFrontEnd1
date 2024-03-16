@@ -509,7 +509,7 @@ table td button{
     justify-content: space-between !important;
   }
   .ourserviceCarousel{
-    height: 40vh !important;
+    height: 45vh !important;
   }
 }
 
@@ -519,7 +519,7 @@ table td button{
     background-color: lightgreen;
   } */
   .ourserviceCarousel{
-    height: 25vh !important;
+    height: 30vh !important;
   }
   .header-location-mobile{
     color: rgb(0, 0, 0) !important;
@@ -894,7 +894,7 @@ display: none !important;
     margin: 8px !important;
   }
   .ourserviceCarousel{
-    height: 25vh !important;
+    height: 30vh !important;
   }
   .for-dealer-btn{
     width: 19vw !important;
