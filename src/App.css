@@ -22,6 +22,10 @@
 .card-service:hover{
   border-bottom: 5px solid rgb(104, 22, 104) ;
 }
+.card-service{
+  height: 42vh !important
+}
+
 h1{
   color:#000 !important;
 }
@@ -189,6 +193,21 @@ body {
 .card-body{
   padding: 10px 0 !important;
 }
+.product-card-div{
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.product-card-div a{
+  text-decoration: none; 
+  color: black;
+  width:100%;
+}
 
 
 
@@ -276,7 +295,7 @@ table td button{
   height: 35vh;
 }
 .productCarousel{
-  height: 45vh;
+  height: 49vh;
 }
 
 .allProductOfAMedicineShopCard{
@@ -352,9 +371,18 @@ table td button{
   align-items: center;
    justify-content: space-between;
 }
-
+.banner-container{
+  margin: 0px !important;
+}
 
 @media screen and (max-width: 1050px) {
+  .banner-container{
+    margin: 0px !important;
+  }
+  .container{
+    margin: 0px !important;
+
+  }
   .profile-full-class{
     justify-content: center;
   }
@@ -395,6 +423,9 @@ table td button{
     max-width: 40vw !important;
     margin-top: 2vh;
   }
+  .card-service{
+    height: 40vh !important
+  }
   .p-clinic{
     flex-direction: column;
   }
@@ -426,7 +457,6 @@ table td button{
   }
   .container{
     max-width: 100% !important;
-    margin:5px!important;
   }
 
   .product-card{
@@ -478,6 +508,9 @@ table td button{
   .navbar-expand-md{
     justify-content: space-between !important;
   }
+  .ourserviceCarousel{
+    height: 40vh !important;
+  }
 }
 
 
@@ -485,13 +518,18 @@ table td button{
   /* .App {
     background-color: lightgreen;
   } */
+  .ourserviceCarousel{
+    height: 25vh !important;
+  }
   .header-location-mobile{
-    color: white !important;
-      background-color: rgb(55, 71, 90) !important;
-      width: 100vw !important;
+    color: rgb(0, 0, 0) !important;
+      background-color: rgb(255, 255, 255) !important;
+      width: 30vw !important;
       font-size: 1em !important;
       border: 0px !important;
-      padding: 4px !important;
+      padding: 8px !important;
+      margin: 1px 5px 2px 5px;
+      border-radius: 5px;
   }
   .sub-admin-quicklink{
     font-size: 0.5rem !important;
@@ -554,7 +592,7 @@ table td button{
     margin-top: 10px; 
   }
   .card-img-top{
-    height: 20vh  !important;
+    height: 10vh  !important;
   }
   .profile-icon{
     margin: 0px !important;
@@ -674,15 +712,13 @@ max-width: 25vw;
 } */
  .location-search-under{
   display: flex !important;
-  width: 100% !important;
   margin: 0vw 5vw !important;
   justify-content: center !important;
  }
- .dropdown-location-under{
-  width: 100vw !important;
-  color: white;
-  background-color: black;
- }
+ /* .dropdown-location-under{
+  width: 20vw !important;
+  margin: 3px;
+ } */
  .search-location-under{
   width: 42vw !important;
  }
@@ -827,13 +863,39 @@ display: none !important;
   .complete_profile_divs input{
     width: 40vw !important;
   }
+  .min-h-20{
+    height: 19vh;
+  }
+  .allSpecialitiesDoctorsCarousel{
+    height: 20vh !important;
+  }
+  .allDoctorsCarousel{
+    height: 30vh !important;
+  }
+  .allLabsCarousel{
+    height: 30vh !important;
+  }
+  .allLabTestCarousel{
+    height: 35vh !important;
+  }
+  .allMedicinesShopsCarousel{
+    height: 27vh !important;
+  }
+  .allCategoryCarousel{
+    height: 25vh !important;
+  }
+  .productCarousel{
+    height: 30vh !important;
+  }
 }
 
 @media screen and (max-width: 550px) {
   .login-text {
     margin: 8px !important;
   }
-
+  .ourserviceCarousel{
+    height: 25vh !important;
+  }
   .for-dealer-btn{
     width: 19vw !important;
   }
@@ -844,7 +906,10 @@ display: none !important;
     padding: 0px !important;
   }
   .card-img-top{
-    height: 15vh  !important;
+    height: 9vh  !important;
+  }
+  .min-h-20{
+    height: 18vh;
   }
   .drop-dwon-profile {
     width: 6vw;
@@ -987,6 +1052,27 @@ display: none !important;
   .doctor_deccription{
     width: 80vw !important;
   }
+  .allSpecialitiesDoctorsCarousel{
+    height: 20vh !important;
+  }
+  .allDoctorsCarousel{
+    height: 25vh !important;
+  }
+  .allLabsCarousel{
+    height: 25vh !important;
+  }
+  .allLabTestCarousel{
+    height: 28vh !important;
+  }
+  .allMedicinesShopsCarousel{
+    height: 22vh !important;
+  }
+  .allCategoryCarousel{
+    height: 20vh !important;
+  }
+  .productCarousel{
+    height: 30vh !important;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -1078,13 +1164,15 @@ display: none !important;
    outline: 0;
 }
   
-#phone:valid {
-  
+#phone:valid{
   border-color: green;
+  border: 2px solid green !important;
 }
   
   #phone:focus:invalid {
   border-color: red;
+  border: 2px solid red !important;
+
 }
 
 input:invalid + span:after {

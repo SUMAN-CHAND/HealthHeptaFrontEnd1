@@ -53,6 +53,8 @@ export default function AdminHeader() {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
+                sessionStorage.removeItem('LogedIn');
+                sessionStorage.removeItem('user_id');
                 navigate('/superadmin/login')
             } else {
                 // Handle logout failure

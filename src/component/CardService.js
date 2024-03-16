@@ -17,7 +17,7 @@ const customStyles = {
 };
 const cardStyles = {
     maxWidth: "18vw",
-    height: '45vh',
+    
 };
 export default function CardService(props) {
     const [modalIsOpen, setIsOpen] = React.useState(false);

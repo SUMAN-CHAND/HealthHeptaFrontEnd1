@@ -113,7 +113,8 @@ const AddProductWhichIsNotPresent = lazy(() => import('./component/B2BEmployee/A
 const AddNewCustomer = lazy(() => import('./component/B2BEmployee/AddNewCustomer'));
 const OrderActionBySubAdmin = lazy(() => import('./component/Service_Provider/OrderActionBySubAdmin'));
 const B2BSuperAdminOrderBill = lazy(() => import('./component/AdminPanel/B2BPanal.js/B2BSuperAdminOrderBill'));
-
+const AddProductBySubAdmin = lazy(() => import('./component/Service_Provider/AddProductBySubAdmin'));
+const B2BOrderAction = lazy(() => import('./component/AdminPanel/B2BPanal.js/B2BOrderAction'));
 
 function App() {
   return (
@@ -171,7 +172,7 @@ function App() {
 
             <Routes>
               {/* Super Admin Routes */}
-              <Route path='/superadmin' element={<> <AdminHeader/><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminHomePage /></Suspense></>} exact />
+              <Route path='/superadmin' element={<> <AdminHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminHomePage /></Suspense></>} exact />
               {/* <Route path='/superadmin/b2b' Component={AdminHomePage} exact /> */}
               {/* <Route path='/superadmin/list-products' Component={AdminHomePage} exact /> */}
               <Route path='/superadmin/addproduct' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddProduct /></Suspense></>} exact />
@@ -191,16 +192,17 @@ function App() {
               <Route path='/superadmin/orders/order/:order_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewOrder /></Suspense></>} exact />
               <Route path='/superadmin/orders/customer/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewUser /></Suspense></>} exact />
               <Route path='/superadmin/signup' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminSignUp /></Suspense></>} exact />
-              <Route path='/superadmin/login' element={<><AdminHeader/><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminLogin /></Suspense></>} exact />
+              <Route path='/superadmin/login' element={<><AdminHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><AdminLogin /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/profile/:id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminProfile /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/products/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminProducts /></Suspense></>} exact />
               <Route path='/superadmin/subadmin/orders/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewSubAdminOrders /></Suspense></>} exact />
               <Route path='/superadmin/addcoupon' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddCoupon /></Suspense></>} exact />
               <Route path='/superadmin/addcoupon/:coupon_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddCoupon /></Suspense></>} exact />
-              <Route path='/superadmin/b2b' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BHome /></Suspense></>} exact />
+              <Route path='/superadmin/b2b' element={<> <AdminHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BHome /></Suspense></>} exact />
               <Route path='/superadmin/b2b/addproduct' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BAddNewProductBySuperAdmin /></Suspense></>} exact />
               <Route path='/superadmin/image/:image_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewDocuments /></Suspense></>} exact />
               <Route path='/superadmin/b2b/orders/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BSuperAdminOrderBill /></Suspense></>} exact />
+              <Route path='/superadmin/b2b/orders/action/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BOrderAction /></Suspense></>} exact />
 
             </Routes>
           </div>
@@ -263,6 +265,7 @@ function App() {
               <Route path='/sub-admin/home/phone' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><Sub_Admin_Home_Page /></Suspense></>} exact />
               <Route path='/sub-admin/home/updateproduct/:product_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><UpdateProductBySubAdmin /></Suspense></>} exact />
               <Route path='/sub-admin/home/add-new-doctor' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewDoctor /></Suspense></>} exact />
+              <Route path='/sub-admin/home/addproduct' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><AddProductBySubAdmin /></Suspense></>} exact />
               <Route path='/sub-admin/home/add-new-laboratory-test' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewLaboratoryTest /></Suspense></>} exact />
               <Route path='/sub-admin/orders/:id/:user_id/:product_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewOrderBySubAdminDemo /></Suspense></>} exact />
               <Route path='/sub-admin/payment/:order_id/:user_id/:product_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewPaymentBySubAdmin /></Suspense></>} exact />

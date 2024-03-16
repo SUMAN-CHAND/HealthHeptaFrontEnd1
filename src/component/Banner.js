@@ -45,7 +45,7 @@ export default function Banner({imgPath,imgName}) {
     }
     return (
         <div className='container ' style={{  marginTop: '2vh', marginBottom: '3vh' }} >
-            <div className="container text-center">
+            <div className="container banner-container text-center">
                 <div className="row banner" style={{justifyContent:'space-around'}}>
                     <div className="col baner-text" style={bannnerTextStyle}>
                         <div className=' p-2' >

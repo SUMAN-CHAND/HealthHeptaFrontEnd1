@@ -6,6 +6,15 @@ import axiosClient from '../axiosClient';
 import HashLoader from 'react-spinners/HashLoader';
 import Modal from 'react-modal';
 const ProductListModal = lazy(() => import('./B2BDashboardTabModals/ProductListModal'));
+const LowStockProductModal = lazy(() => import('./B2BDashboardTabModals/LowStockProductModal'));
+const ExpiringProductModal = lazy(() => import('./B2BDashboardTabModals/ExpiringProductModal'));
+const ExpiredProductModal = lazy(() => import('./B2BDashboardTabModals/ExpiredProductModal'));
+const SubAdminModal = lazy(() => import('./B2BDashboardTabModals/SubAdminModal'));
+const UserModal = lazy(() => import('./B2BDashboardTabModals/UserModal'));
+const OrderYModal = lazy(() => import('./B2BDashboardTabModals/OrderYModal'));
+const OrderMModal = lazy(() => import('./B2BDashboardTabModals/OrderMModal'));
+const SaleYModal = lazy(() => import('./B2BDashboardTabModals/SaleYModal'));
+const SaleMModal = lazy(() => import('./B2BDashboardTabModals/SaleMModal'));
 
 
 
@@ -120,9 +129,10 @@ const Dashboard = () => {
     axiosClient.get(`/superadmin/product/purchase_monthly`)
       .then(response => {
         // Handle response
+        setPurchase_monthlyproductCount(response.data[0].no)
+        setPurchase_monthlyProductPrice(response.data[0].price)
+        
         if (response.data !== undefined) {
-          setPurchase_yearlyproductCount(response.data[0].no)
-          setPurchase_yearlyProductPrice(response.data[0].price)
         }
       })
       .catch(err => {
@@ -135,8 +145,8 @@ const Dashboard = () => {
       .then(response => {
         // Handle response
         if (response.data !== undefined) {
-          setPurchase_monthlyproductCount(response.data[0].no)
-          setPurchase_monthlyProductPrice(response.data[0].price)
+          setPurchase_yearlyproductCount(response.data[0].no)
+          setPurchase_yearlyProductPrice(response.data[0].price)
         }
       })
       .catch(err => {
@@ -369,6 +379,110 @@ const Dashboard = () => {
     setIsOpen(false);
   }
 
+  const [lowStockmodalIsOpen, setLowStockmodalIsOpen] = React.useState(false);
+  function lsopenModal() {
+    setLowStockmodalIsOpen(true);
+  }
+  function afterlsOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function lscloseModal() {
+    document.body.style.overflow = 'unset';
+    setLowStockmodalIsOpen(false);
+  }
+  
+  const [expiringProductIsOpen, setExpiringProductIsOpen] = React.useState(false);
+  function expiringopenModal() {
+    setExpiringProductIsOpen(true);
+  }
+  function afterexpiringOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function expiringcloseModal() {
+    document.body.style.overflow = 'unset';
+    setExpiringProductIsOpen(false);
+  }
+
+  const [expiredProductIsOpen, setExpiredProductIsOpen] = React.useState(false);
+  function expiredopenModal() {
+    setExpiredProductIsOpen(true);
+  }
+  function afterexpiredOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function expiriedcloseModal() {
+    document.body.style.overflow = 'unset';
+    setExpiredProductIsOpen(false);
+  }
+
+  const [subadminIsOpen, setsubadminIsOpen] = React.useState(false);
+  function subadminopenModal() {
+    setsubadminIsOpen(true);
+  }
+  function aftersubadminOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function subadmincloseModal() {
+    document.body.style.overflow = 'unset';
+    setsubadminIsOpen(false);
+  }
+
+  const [userIsOpen, setuserIsOpen] = React.useState(false);
+  function useropenModal() {
+    setuserIsOpen(true);
+  }
+  function afteruserOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function usercloseModal() {
+    document.body.style.overflow = 'unset';
+    setuserIsOpen(false);
+  }
+  const [orderYIsOpen, setorderYIsOpen] = React.useState(false);
+  function orderYopenModal() {
+    setorderYIsOpen(true);
+  }
+  function afterorderYOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function orderYcloseModal() {
+    document.body.style.overflow = 'unset';
+    setorderYIsOpen(false);
+  }
+
+  const [orderMIsOpen, setorderMIsOpen] = React.useState(false);
+  function orderMopenModal() {
+    setorderMIsOpen(true);
+  }
+  function afterorderMOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function orderMcloseModal() {
+    document.body.style.overflow = 'unset';
+    setorderMIsOpen(false);
+  }
+  const [saleYIsOpen, setsaleYIsOpen] = React.useState(false);
+  function saleYopenModal() {
+    setsaleYIsOpen(true);
+  }
+  function aftersaleYOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function saleYcloseModal() {
+    document.body.style.overflow = 'unset';
+    setsaleYIsOpen(false);
+  }
+  const [saleMIsOpen, setsaleMIsOpen] = React.useState(false);
+  function saleMopenModal() {
+    setsaleMIsOpen(true);
+  }
+  function aftersaleMOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function saleMcloseModal() {
+    document.body.style.overflow = 'unset';
+    setsaleMIsOpen(false);
+  }
   return (
     <main className='main-container' style={{ fontSize: '13px' }}>
       <div className='main-title'>
@@ -405,7 +519,7 @@ const Dashboard = () => {
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a className="text-decoration-none" href="">
+          <a className="text-decoration-none" onClick={lsopenModal} >
             <div className="card border-left-danger shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -421,9 +535,18 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+            <Modal
+              isOpen={lowStockmodalIsOpen}
+              onAfterOpen={afterlsOpenModal}
+              onRequestClose={lscloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <LowStockProductModal closeTheModal={lscloseModal} /></Suspense> </div>
+            </Modal>
         </div>
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href="" className="text-decoration-none">
+          <a  className="text-decoration-none" onClick={expiringopenModal}>
             <div className="card border-left-warning shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -443,10 +566,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={expiringProductIsOpen}
+              onAfterOpen={afterexpiringOpenModal}
+              onRequestClose={expiringcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ExpiringProductModal closeTheModal={expiringcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href="" className="text-decoration-none">
+          <a  className="text-decoration-none" onClick={expiredopenModal}>
             <div className="card border-left-danger shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -462,9 +594,18 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={expiredProductIsOpen}
+              onAfterOpen={afterexpiredOpenModal}
+              onRequestClose={expiriedcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ExpiredProductModal closeTheModal={expiriedcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href="" className="text-decoration-none">
+          <a className="text-decoration-none"  onClick={orderMopenModal}>
             <div className="card border-left-info shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -480,10 +621,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={orderMIsOpen}
+              onAfterOpen={afterorderMOpenModal}
+              onRequestClose={orderMcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <OrderMModal closeTheModal={orderMcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href="" className="text-decoration-none">
+          <a  className="text-decoration-none"  onClick={orderYopenModal}>
             <div className="card border-left-primary shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -499,10 +649,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={orderYIsOpen}
+              onAfterOpen={afterorderYOpenModal}
+              onRequestClose={orderYcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <OrderYModal closeTheModal={orderYcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href=" " className="text-decoration-none">
+          <a  className="text-decoration-none"  onClick={saleMopenModal}>
             <div className="card border-left-success shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -518,10 +677,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={saleMIsOpen}
+              onAfterOpen={aftersaleMOpenModal}
+              onRequestClose={saleMcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <SaleMModal closeTheModal={saleMcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href=" " className="text-decoration-none">
+          <a  className="text-decoration-none"  onClick={saleYopenModal}>
             <div className="card border-left-success shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -537,10 +705,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={saleYIsOpen}
+              onAfterOpen={aftersaleYOpenModal}
+              onRequestClose={saleYcloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <SaleYModal closeTheModal={saleYcloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href=" " className="text-decoration-none">
+          <a className="text-decoration-none" onClick={useropenModal}>
             <div className="card border-left-info shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -555,10 +732,19 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={userIsOpen}
+              onAfterOpen={afteruserOpenModal}
+              onRequestClose={usercloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <UserModal closeTheModal={usercloseModal} /></Suspense> </div>
+            </Modal>
         </div>
 
         <div className="col-xl-3 col-md-6 mb-4">
-          <a href=" " id='service-provider' className="text-decoration-none">
+          <a  id='service-provider' className="text-decoration-none" onClick={subadminopenModal}>
             <div className="card border-left-primary shadow h-100 py-2 align-items-center">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
@@ -573,6 +759,15 @@ const Dashboard = () => {
               </div>
             </div>
           </a>
+          <Modal
+              isOpen={subadminIsOpen}
+              onAfterOpen={aftersubadminOpenModal}
+              onRequestClose={subadmincloseModal}
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <SubAdminModal closeTheModal={subadmincloseModal} /></Suspense> </div>
+            </Modal>
         </div>
       </div>
 

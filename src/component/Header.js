@@ -148,11 +148,11 @@ export default function Header() {
                         <li>Clinics</li>
                         <li>Log Out</li>
                     </ul>
-                    <span onClick={() => setActive(!active)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="white" className="bi bi-x" viewBox="0 0 16 16">
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                        </svg>
-                    </span>
+                    {/* <span onClick={() => setActive(!active)}> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="white" className="bi bi-x" viewBox="0 0 16 16">
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                    {/* </span> */}
                 </div>
             </> : <>
             </>
@@ -162,8 +162,8 @@ export default function Header() {
                     <div className="right">
                         <Link className="navbar-brand" to='/' style={{ margin: '0 2vw', display: 'flex', alignItems: 'center' }}>
                             <img src={logo} alt="Logo" className="d-inline-block align-text-top logo-image" width="50vw" height="50vh" style={{ borderRadius: "50%" }} />
-                            <div className="container-fluid line-header"  > 
-                            {/* onClick={() => setActive(!active)} */}
+                            <div className="container-fluid line-header"  >
+                                {/* onClick={() => setActive(!active)} */}
                                 {active ? <>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="7vw" height="5vh" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -235,17 +235,17 @@ export default function Header() {
                                                     <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                                 </ul>
                                             </> : <>
-                                                
+
                                             </>
                                         }
                                         {
                                             loggedIn.role === 'customer' ? <>
-                                               <ul className="dropdown-menu">
+                                                <ul className="dropdown-menu">
                                                     <li><Link to='/partner/home' className="dropdown-item">Profile</Link></li>
                                                     <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                                 </ul>
                                             </> : <>
-                                                
+
                                             </>
                                         }
 
@@ -263,9 +263,23 @@ export default function Header() {
                             }
                         </div>
                     </div>
+
+                </nav>
+
+                <div style={{display:'flex',justifyContent:'center',backgroundColor:"rgb(7, 219, 193)" , padding:'2px 0px'}}>
+                    <div className="dropdown-location-under "  >
+                        <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className=" header-location-mobile" aria-expanded="false" >
+                            <option defaultValue={'choose your location..'} ><p>choose your Pin Code..</p></option>
+                            {locations.map((location, index) => (
+                                <option key={index} value={location.pin_code}><p>{location.pin_code}</p></option>
+                            )
+                            )}
+                        </select>
+
+                    </div>
                     <div className="search  me-2 mx-2 location-search-under" >
-                        <div style={{ display: 'flex' }}>
-                            <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{ width: '75vw', fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                        <div style={{ display: 'flex',width:'60vw' }}>
+                            <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                             <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
@@ -281,19 +295,10 @@ export default function Header() {
                             </div>
                         )}
                     </div>
-                </nav>
-                <div className="dropdown me-2 dropdown-location-under "  >
-                    <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-mobile" aria-expanded="false" >
-                        <option defaultValue={'choose your location..'} ><p>choose your Pin Code..</p></option>
-                        {locations.map((location, index) => (
-                            <option key={index} value={location.pin_code}><p>{location.pin_code}</p></option>
-                        )
-                        )}
-                    </select>
-
                 </div>
+
             </div>
-            </>
+        </>
         // </HelmetProvider>
     )
 }

@@ -5,6 +5,8 @@ import '../Style.css';
 import UploadBanner from '../UploadBanner';
 import B2BDashboard from './B2BDashboard';
 import axiosClient from '../../axiosClient';
+import { FaRegEdit } from 'react-icons/fa';
+import { GrView } from 'react-icons/gr';
 
 export default function B2BHome() {
   //main for connecting backend with Session
@@ -30,7 +32,7 @@ export default function B2BHome() {
         setOrders(response.data[2]);
         setPayments(response.data[3]);
         setSubAdmin(response.data[4]);
-        
+
         console.log(response.data);
       })
       .catch(err => {
@@ -145,7 +147,7 @@ export default function B2BHome() {
     // alignItems: 'center',
     paddingTop: '1vh',
     flexDirection: 'column',
-    overflowX:'auto'
+    overflowX: 'auto'
   }
   const dashboardStyle = {
     backgroundColor: 'rgb(237 237 237)',
@@ -174,15 +176,15 @@ export default function B2BHome() {
             <h5 style={quiceLink}>Quick Links</h5>
             <hr />
             <div className="list-group shadow m-3" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
-              <span onClick={toB2C} className="list-group-item list-group-item-action list-group-item-info" style={{cursor:'pointer'}}>B2C </span>
+              <span onClick={toB2C} className="list-group-item list-group-item-action list-group-item-info" style={{ cursor: 'pointer' }}>B2C </span>
               <Link className="list-group-item list-group-item-action active list-group-item-info">B2B</Link>
             </div>
 
             <div className="list-group shadow" id="list-tab" role="tablist">
               <Link to="#summary" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Summary</Link>
-              <Link to="#list-products"  className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
+              <Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
               <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Orders</Link>
-              <Link to="#payment"  className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
+              <Link to="#payment" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
               <Link to="#service-provider" className="list-group-item list-group-item-action  list-group-item-info" id="list-service-provider-list" data-bs-toggle="list" role="tab" aria-controls="list-service-provider">Service Provider</Link>
               <Link to="#notification" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Order</Link>
               <Link to="#commission" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Commission</Link>
@@ -395,9 +397,10 @@ export default function B2BHome() {
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Product Id</th>
-                      <th scope="col">Sub Admin ID</th>
+                      <th scope="col">Count</th>
+                      <th scope="col">Order Id</th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Service Provider Name</th>
                       <th scope="col">Order By</th>
                       <th scope="col">Date</th>
                       <th scope="col">Payment Mood</th>
@@ -410,11 +413,12 @@ export default function B2BHome() {
                   <tbody>
                     {orders.map((order, index) => (
                       <tr key={index}>
+                        <th scope="row">{index}</th>
                         <th scope="row">{order.id}</th>
-                        <td>{order.product_id}</td>
-                        <td>{order.sub_admin_id}</td>
+                        <td>{order.product_name}</td>
+                        <td>{order.name}</td>
                         <td>{order.order_by}</td>
-                        <td>{order.order_date}</td>
+                        <td>{order.order_date.slice(0, 10)}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
                         <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>
@@ -422,22 +426,20 @@ export default function B2BHome() {
                           {/* {order.expected_delivery_date === null ? */}
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             {order.expected_delivery_date}
-                            <input
-                              className='m-2 p-1'
-                              type="date"
-                              style={dateStyle}
-                              name='expected_delivery_date'
-                              placeholder={order.expected_delivery_date}
-                              onChange={handleInput}
-                              onClick={() => updateDeliveryDate(order.id)}
-                            />
                             <br />
                           </div>
                         </td>
-                        <td> <Link to={`/superadmin/b2b/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                        <td>
+                          {/* <Link to={`/superadmin/b2b/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                           <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                           <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                        </svg></div></Link></td>
+                        </svg></div></Link> */}
+
+                          <Link to={`/superadmin/b2b/orders/action/${order.id}/${order.sub_admin_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+                          <Link to={`/superadmin/b2b/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+
+
+                        </td>
                       </tr>
                     ))}
                   </tbody>

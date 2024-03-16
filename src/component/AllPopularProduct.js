@@ -81,7 +81,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
                         </>
                         : <></>}
 

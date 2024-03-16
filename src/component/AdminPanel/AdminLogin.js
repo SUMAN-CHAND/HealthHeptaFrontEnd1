@@ -53,6 +53,8 @@ export default function AdminLogin() {
                     else if (res.data[0] !== null) {
                         success();
                         navigate('/superadmin', { state: { loggedIn: res.data[1] } });
+                        sessionStorage.setItem("user_id", res.data[0].id);
+                        sessionStorage.setItem("LogedIn", res.data[1]);
                     }
                     else {
                         danger();

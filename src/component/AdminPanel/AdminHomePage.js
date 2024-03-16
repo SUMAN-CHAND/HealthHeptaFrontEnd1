@@ -27,9 +27,14 @@ export default function AdminHomePage() {
   const [searchPatient, setSearchPatient] = useState([])
   const navigate = useNavigate();
   const location = useLocation();
-  if (location.state === null) {
+  const LogedIn = sessionStorage.getItem('LogedIn');
+  const userId = sessionStorage.getItem('user_id');
+
+  if (LogedIn === undefined || LogedIn === null) {
     return <Navigate to='/superadmin/login' />;
   }
+
+  
   const [ind_product_Images, setInd_product_Images] = useState([]);
 
   const ShowProduct = () => {
@@ -67,7 +72,7 @@ export default function AdminHomePage() {
         if (response.data !== null) {
           setUser(response.data)
         }
-        console.log(user);
+        // console.log(user);
       })
       .catch(err => {
         // Handle errors
@@ -304,7 +309,8 @@ export default function AdminHomePage() {
     } else {
       alert('Permission Denied')
     }
-  }
+  };
+
   const updatePartnerStatus = (partner_id) => {
     const response = window.confirm("Are you sure to give the Permission?");
     if (response) {
@@ -470,6 +476,7 @@ export default function AdminHomePage() {
                       <th scope="col">Name</th>
                       <th scope="col">Description</th>
                       <th scope="col">MRP</th>
+                      <th scope="col">Whose Product </th>
                       <th scope="col">Product Quantity</th>
                       <th scope="col">Manufacturing Date</th>
                       <th scope="col">Expiry Date</th>
@@ -482,7 +489,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'select' ? <>
                       {products.map((product, index) => (
                         <tr key={index}>
-                          <th scope="row">{index+1}</th>
+                          <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -501,9 +508,10 @@ export default function AdminHomePage() {
                           <td>{product.product_name}</td>
                           <td>{product.description}</td>
                           <td>{product.product_price}</td>
+                          <td>{product.productOf}</td>
                           <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing}</td>
-                          <td>{product.expiry}</td>
+                          <td>{product.manufacturing.slice(0, 10)}</td>
+                          <td>{product.expiry.slice(0, 10)}</td>
                           <td>{product.discount} %</td>
                           <td>{product.DrugOrNot} </td>
                           <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -523,7 +531,7 @@ export default function AdminHomePage() {
                     {medicineType.type === 'select' ? <>
                       {products.map((product, index) => (
                         <tr key={index}>
-                          <th scope="row">{index+1}</th>
+                          <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -542,9 +550,10 @@ export default function AdminHomePage() {
                           <td>{product.product_name}</td>
                           <td>{product.description}</td>
                           <td>{product.product_price}</td>
+                          <td>{product.productOf}</td>
                           <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing}</td>
-                          <td>{product.expiry}</td>
+                          <td>{product.manufacturing.slice(0, 10)}</td>
+                          <td>{product.expiry.slice(0, 10)}</td>
                           <td>{product.discount} %</td>
                           <td>{product.DrugOrNot} </td>
                           <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -564,7 +573,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'drug' ? <>
                       {products.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
                         <tr key={index}>
-                          <th scope="row">{index+1}</th>
+                          <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -583,9 +592,10 @@ export default function AdminHomePage() {
                           <td>{product.product_name}</td>
                           <td>{product.description}</td>
                           <td>{product.product_price}</td>
+                          <td>{product.productOf}</td>
                           <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing}</td>
-                          <td>{product.expiry}</td>
+                          <td>{product.manufacturing.slice(0, 10)}</td>
+                          <td>{product.expiry.slice(0, 10)}</td>
                           <td>{product.discount} %</td>
                           <td>{product.DrugOrNot} </td>
                           <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -605,7 +615,7 @@ export default function AdminHomePage() {
                     {medicineType.type[0] === 'otc' ? <>
                       {products.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
                         <tr key={index}>
-                          <th scope="row">{index+1}</th>
+                          <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
                           <td>{ind_product_Images.map((img) => (
                             <div key={img.id}>
@@ -624,9 +634,10 @@ export default function AdminHomePage() {
                           <td>{product.product_name}</td>
                           <td>{product.description}</td>
                           <td>{product.product_price}</td>
+                          <td>{product.productOf}</td>
                           <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing}</td>
-                          <td>{product.expiry}</td>
+                          <td>{product.manufacturing.slice(0, 10)}</td>
+                          <td>{product.expiry.slice(0, 10)}</td>
                           <td>{product.discount} %</td>
                           <td>{product.DrugOrNot} </td>
                           <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -709,8 +720,8 @@ export default function AdminHomePage() {
                     <thead className='thead-dark'>
                       <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Doctor Id</th>
-                        <th scope="col">User ID</th>
+                        <th scope="col">Doctor Name</th>
+                        <th scope="col">User Name</th>
                         <th scope="col">User Role</th>
                         <th scope="col">Clinic ID</th>
                         <th scope="col">Patient Name</th>
@@ -724,8 +735,8 @@ export default function AdminHomePage() {
                       {searchPatient.map((appoiment, index) => (
                         <tr key={index}>
                           <th scope="row">{appoiment.id}</th>
-                          <td>{appoiment.doctor_id}</td>
-                          <td>{appoiment.user_id}</td>
+                          <td>{appoiment.doc_name}</td>
+                          <td>{appoiment.name}</td>
                           <td>{appoiment.role}</td>
                           <td>{appoiment.clinic_id}</td>
                           <td>{appoiment.name}</td>

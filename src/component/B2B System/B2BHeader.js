@@ -72,7 +72,7 @@ export default function B2BHeader() {
                 setLoggedIn(0);
                 sessionStorage.removeItem('LogedIn');
                 sessionStorage.removeItem('user_id');
-                navigate('/')
+                navigate('/sub-admin/login');
             } else {
                 // Handle logout failure
                 console.error(response.data.message);

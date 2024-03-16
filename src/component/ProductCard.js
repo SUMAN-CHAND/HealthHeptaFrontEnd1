@@ -67,17 +67,20 @@ export default function ProductCard(props) {
     <div className='' >
       <Link style={{ textDecoration: 'none' }}>
         <div className="container"  >
-          <div className="card " style={{ alignItems: 'center' }} >
+          <div className="card" style={{ alignItems: 'center' }} >
             <Link to={value}>
               <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxHeight: '13vh' }} />
             </Link>
-            <div className="card-body">
-              <Link to={value} style={{textDecoration:'none',color:'black'}}>
+            <div className="card-body product-card-div">
+              <Link to={value} style={{ textDecoration: 'none', color: 'black',width:'100%' }}>
                 <h5 className="card-title">{props.name}</h5>
-                <div style={{}}>
+                <div>
+                  <p style={{ marginBottom: '1px' }}>{props.productOf}</p>
                   <p style={{ marginBottom: '1px' }}>{props.description}</p>
-                  <p className="text-success" style={{ marginBottom: '1px' }}>Price:- ₹{discountPrice}</p>
-                  <p >MRP:- <span style={{ textDecoration: 'line-through', color: '#878787' }}>₹{props.price}</span></p>
+                  {/* <div style={{display:'flex',width:'100%',justifyContent:'space-around'}}> */}
+                    <p className="text-success" style={{ marginBottom: '1px' }}>Price:- ₹{discountPrice}</p>
+                    <p >MRP:- <span style={{ textDecoration: 'line-through', color: '#878787' }}>₹{props.price}</span></p>
+                  {/* </div> */}
                 </div>
                 <p className="text-success card-body-product-discount" style={{ marginRight: '10px' }}>{props.discount}% Off</p>
               </Link>
