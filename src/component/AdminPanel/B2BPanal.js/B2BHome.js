@@ -21,8 +21,12 @@ export default function B2BHome() {
   const [subAdmins, setSubAdmin] = useState([]);
   const [coupons, setCoupons] = useState([]);
   const location = useLocation();
-  const [ind_product_Images, setInd_product_Images] = useState([]);
+  const [searchOrder, setSearchOrder] = useState([])
 
+  const [ind_product_Images, setInd_product_Images] = useState([]);
+  const [searchValue, setSearchValue] = useState({
+    input: ''
+  })
   useEffect(() => {
     axiosClient.get(`/superadmin/b2b/home`)
       .then(response => {
@@ -139,6 +143,23 @@ export default function B2BHome() {
   const toB2C = () => {
     navigate('/superadmin', { state: { loggedIn: true } });
   }
+
+  const handleOrderFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+
+    const filtered = orders.filter((item) => {
+      const phoneNumber = item.phone.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchOrder([]);
+    } else {
+      setSearchOrder(filtered);
+    }
+  };
+
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
@@ -393,6 +414,11 @@ export default function B2BHome() {
             </div>
             <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-orders-list">
               <h2 className='p-2'>|| Orders ||</h2>
+
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Order by User Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
               <div className="container text-dark " style={renDataStyle}>
                 <table className="table table-striped">
                   <thead className='thead-dark'>
@@ -411,7 +437,7 @@ export default function B2BHome() {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.map((order, index) => (
+                    {searchOrder.map((order, index) => (
                       <tr key={index}>
                         <th scope="row">{index}</th>
                         <th scope="row">{order.id}</th>

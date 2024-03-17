@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import NotificationComponent from './NotificationComponent';
 import Dashboard from './Dashboard';
@@ -7,6 +7,10 @@ import UploadBanner from './UploadBanner';
 import axiosClient from '../axiosClient';
 import { FaRegEdit } from 'react-icons/fa';
 import { GrView } from "react-icons/gr";
+import Modal from 'react-modal';
+import HashLoader from 'react-spinners/HashLoader';
+
+
 export default function AdminHomePage() {
   //main for connecting backend with Session
   axiosClient.defaults.withCredentials = true;
@@ -25,6 +29,7 @@ export default function AdminHomePage() {
   const [coupons, setCoupons] = useState([]);
   const [searchUser, setSearchUser] = useState([])
   const [searchPatient, setSearchPatient] = useState([])
+  const [searchOrder, setSearchOrder] = useState([])
   const navigate = useNavigate();
   const location = useLocation();
   const LogedIn = sessionStorage.getItem('LogedIn');
@@ -34,7 +39,7 @@ export default function AdminHomePage() {
     return <Navigate to='/superadmin/login' />;
   }
 
-  
+
   const [ind_product_Images, setInd_product_Images] = useState([]);
 
   const ShowProduct = () => {
@@ -389,6 +394,24 @@ export default function AdminHomePage() {
       setSearchPatient(filtered);
     }
   };
+
+  const handleOrderFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+
+    const filtered = orders.filter((item) => {
+      const phoneNumber = item.phone.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchOrder([]);
+    } else {
+      setSearchOrder(filtered);
+    }
+  };
+
+
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
@@ -411,6 +434,19 @@ export default function AdminHomePage() {
     color: 'white',
     borderRadius: '5px'
   }
+  const customStyles = {
+    content: {
+      overflowY: 'hidden',
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
+
+
   return (
     <div>
       <div className="row" style={{ overflowX: 'hidden' }}>
@@ -660,31 +696,37 @@ export default function AdminHomePage() {
             </div>
             <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-orders-list">
               <h2 className='p-2'>|| Orders ||</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Order by User Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
               <div className="container text-dark " style={renDataStyle}>
                 <table className="table table-striped">
                   <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Count</th>
-                      <th scope="col">OrderId</th>
-                      <th scope="col">Product Name</th>
-                      <th scope="col">Coustomer Name</th>
-                      <th scope="col">User Role</th>
-                      <th scope="col">Order From</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Payment Mood</th>
-                      <th scope="col">Payment Status</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Expected delivery date</th>
-                      <th scope="col">Action</th>
-                    </tr>
+                    {searchOrder &&
+                      <tr>
+                        <th scope="col">Count</th>
+                        <th scope="col">OrderId</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Coustomer Name(Phone Number)</th>
+                        <th scope="col">User Role</th>
+                        <th scope="col">Order From</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Payment Mood</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Expected delivery date</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    }
                   </thead>
                   <tbody>
-                    {orders && orders.map((order, index) => (
+                    {searchOrder && searchOrder.map((order, index) => (
                       <tr key={index}>
                         <th scope="row">{index + 1}</th>
                         <th scope="row">{order.id}</th>
                         <td>{order.product_name}</td>
-                        <td>{order.name}</td>
+                        <td>{order.name}({order.phone})</td>
                         <td>{order.role}</td>
                         {/* <td>{order.order_date}</td> */}
                         <td>{order.subadmin_name}</td>
@@ -720,10 +762,10 @@ export default function AdminHomePage() {
                     <thead className='thead-dark'>
                       <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Doctor Name</th>
-                        <th scope="col">User Name</th>
+                        <th scope="col">Doctor Name(Doctor ID)</th>
+                        <th scope="col">User Name (User ID)</th>
                         <th scope="col">User Role</th>
-                        <th scope="col">Clinic ID</th>
+                        <th scope="col">Clinic Name(Clinic ID)</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Patient Ph No</th>
                         <th scope="col">Date</th>
@@ -734,16 +776,16 @@ export default function AdminHomePage() {
                     <tbody>
                       {searchPatient.map((appoiment, index) => (
                         <tr key={index}>
-                          <th scope="row">{appoiment.id}</th>
-                          <td>{appoiment.doc_name}</td>
-                          <td>{appoiment.name}</td>
+                          <th scope="row">{appoiment.a_id}</th>
+                          <td>{appoiment.doc_name}({appoiment.doctor_id})</td>
+                          <td>{appoiment.name}({appoiment.user_id})</td>
                           <td>{appoiment.role}</td>
-                          <td>{appoiment.clinic_id}</td>
+                          <td>{appoiment.clinic}({appoiment.clinic_id})</td>
                           <td>{appoiment.name}</td>
                           <td>{appoiment.ph_number}</td>
                           <td>{appoiment.appoint_date}</td>
                           <td>{appoiment.appoint_time}</td>
-                          <td onClick={() => updateStatus(appoiment.id)} style={{ cursor: 'pointer', color: 'blue' }} >{appoiment.status}</td>
+                          <td style={{ cursor: 'pointer', color: 'blue' }} >{appoiment.status}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -757,27 +799,30 @@ export default function AdminHomePage() {
                 <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
-                      <th scope="col">Id</th>
-                      <th scope="col">Test Id</th>
-                      <th scope="col">User ID</th>
-                      <th scope="col">Clinic ID</th>
+                      <th scope="col">Count</th>
+                      <th scope="col">Lab Booking Id</th>
+                      <th scope="col">Test Name (Test Id)</th>
+                      <th scope="col">User Name (User Id) </th>
+                      <th scope="col">Clinic Name (Clinic Id)</th>
                       <th scope="col">Patient Name</th>
                       <th scope="col">Patient Ph No</th>
                       <th scope="col">Date</th>
                       <th scope="col">Time</th>
                       <th scope="col">Sample Collection</th>
                       <th scope="col">User Role</th>
-                      <th scope="col">Actions</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
 
                     </tr>
                   </thead>
                   <tbody>
                     {labbokking.map((lab, index) => (
                       <tr key={index}>
+                        <th scope="row">{index}</th>
                         <th scope="row">{lab.id}</th>
-                        <td>{lab.Test_id}</td>
-                        <td>{lab.user_id}</td>
-                        <td>{lab.clinic_id}</td>
+                        <td>{lab.Test_name}({lab.Test_id})</td>
+                        <td>{lab.username}({lab.user_id})</td>
+                        <td>{lab.sname}({lab.clinic_id})</td>
                         <td>{lab.name}</td>
                         <td>{lab.ph_number}</td>
                         <td>{lab.appoint_date}</td>
@@ -785,6 +830,13 @@ export default function AdminHomePage() {
                         <td>{lab.sample_collection}</td>
                         <td>{lab.role}</td>
                         <td onClick={() => updateStatus(lab.id)} style={{ cursor: 'pointer', color: 'blue' }} >{lab.LabTestStatus}</td>
+                        <td >
+
+                          <Link to={`/superadmin/labtest/action/${lab.id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+
+                        </td>
+
+
                       </tr>
                     ))}
                   </tbody>

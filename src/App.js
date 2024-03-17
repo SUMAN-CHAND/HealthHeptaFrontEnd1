@@ -115,6 +115,8 @@ const OrderActionBySubAdmin = lazy(() => import('./component/Service_Provider/Or
 const B2BSuperAdminOrderBill = lazy(() => import('./component/AdminPanel/B2BPanal.js/B2BSuperAdminOrderBill'));
 const AddProductBySubAdmin = lazy(() => import('./component/Service_Provider/AddProductBySubAdmin'));
 const B2BOrderAction = lazy(() => import('./component/AdminPanel/B2BPanal.js/B2BOrderAction'));
+const LabStatusUpdate = lazy(() => import('./component/AdminPanel/LabStatusUpdate'));
+
 
 function App() {
   return (
@@ -203,6 +205,7 @@ function App() {
               <Route path='/superadmin/image/:image_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><ViewDocuments /></Suspense></>} exact />
               <Route path='/superadmin/b2b/orders/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BSuperAdminOrderBill /></Suspense></>} exact />
               <Route path='/superadmin/b2b/orders/action/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BOrderAction /></Suspense></>} exact />
+              <Route path='/superadmin/labtest/action/:id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><LabStatusUpdate /></Suspense></>} exact />
 
             </Routes>
           </div>

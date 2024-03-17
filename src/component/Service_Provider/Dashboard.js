@@ -173,6 +173,25 @@ function Dashboard() {
       </div>
       <div className="row mt-4">
         <div className="col-xl-3 col-md-6 mb-4">
+          <a className="text-decoration-none" href="/b2b-home">
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Shop From HealthHepta</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800"><button type="button" class="btn btn-outline-info">Shop Now</button></div>
+                  </div>
+                  <div className="col-auto">
+                    
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div className="col-xl-3 col-md-6 mb-4">
           <a className="text-decoration-none" href="">
             <div className="card border-left-primary shadow h-100 py-2 align-items-center">
               <div className="card-body">

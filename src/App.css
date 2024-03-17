@@ -23,7 +23,7 @@
   border-bottom: 5px solid rgb(104, 22, 104) ;
 }
 .card-service{
-  height: 42vh !important
+  height: 45vh !important
 }
 
 h1{
@@ -939,7 +939,6 @@ display: none !important;
  }
  .card-service{
   max-width: 70vw !important;
-  margin-top: 2vh;
 }
 .fotter-copy-right{
   flex-direction: column;
