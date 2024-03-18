@@ -693,6 +693,7 @@ max-width: 25vw;
 }
 .dropdown-location-under {
   display: block;
+  margin-left: 10px !important;
 }
 .left{
   justify-content: end !important;
