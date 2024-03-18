@@ -141,7 +141,7 @@ export default function MedicinePageSearchResult() {
                     </div>
                   ))}
                 </Carousel>
-                <Carousel responsive={responsive}>
+                {/* <Carousel responsive={responsive}>
                   {products.map(fproduct => (
                     <div key={fproduct.product_id}>
                       {image.map((img) => (
@@ -156,7 +156,7 @@ export default function MedicinePageSearchResult() {
                       ))}
                     </div>
                   ))}
-                </Carousel>
+                </Carousel> */}
               </> : <>
               </>
               }
@@ -178,7 +178,7 @@ export default function MedicinePageSearchResult() {
                       </div>
                     ))}
                   </Carousel>
-                  <Carousel responsive={responsive}>
+                  {/* <Carousel responsive={responsive}>
                     {products.map(fproduct => (
                       <div key={fproduct.product_id}>
                         {image.map((img) => (
@@ -192,7 +192,7 @@ export default function MedicinePageSearchResult() {
                         ))}
                       </div>
                     ))}
-                  </Carousel>
+                  </Carousel> */}
                 </> : <></>}
               {medicineType.type[0] === 'Homeopathy' ?
                 <>
@@ -214,7 +214,7 @@ export default function MedicinePageSearchResult() {
                     ))}
                   </Carousel>
 
-                  <Carousel responsive={responsive}>
+                  {/* <Carousel responsive={responsive}>
                     {products.filter(productf => productf.typeOfMedicine === 'Homeopathy').map(fproduct => (
                       <div key={fproduct.product_id}>
                         {image.map((img) => (
@@ -229,7 +229,7 @@ export default function MedicinePageSearchResult() {
                         ))}
                       </div>
                     ))}
-                  </Carousel>
+                  </Carousel> */}
                 </> : <></>}
               {medicineType.type[0] === 'Allopathy' ?
                 <>
@@ -298,7 +298,7 @@ export default function MedicinePageSearchResult() {
 
           </>
           }
-          {doctors ? <>
+          {doctors.length > 0 ? <>
             <span> <h5>Doctors :</h5> </span>
 
             <Carousel responsive={responsive}>
@@ -322,7 +322,7 @@ export default function MedicinePageSearchResult() {
 
           </>
           }
-          {madicineShops ? <>
+          {madicineShops.length > 0 ? <>
             <span> <h5>Medicine Shops :</h5> </span>
 
             <Carousel responsive={responsive}>

@@ -37,7 +37,7 @@ export default function B2BHome() {
         setPayments(response.data[3]);
         setSubAdmin(response.data[4]);
 
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(err => {
         console.error(err);

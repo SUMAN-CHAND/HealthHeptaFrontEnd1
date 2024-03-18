@@ -44,7 +44,7 @@ export default function B2BHeader() {
             setSelectLocation(userLocation)
         }
 
-    }, [])
+    }, [userLocation])
     useEffect(() => {
         axiosClient.get(`/locations`)
             .then(res => {

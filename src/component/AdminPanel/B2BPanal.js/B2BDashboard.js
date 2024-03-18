@@ -1,11 +1,29 @@
-import React from 'react'
+
+import React, { Suspense, lazy } from 'react'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
 import axiosClient from '../../axiosClient';
+import Modal from 'react-modal';
+import HashLoader from 'react-spinners/HashLoader';
 
-function B2BDashboard() {
-  const [userCount, setUserCount] = useState();
+
+const OtcOrderProduct = lazy(() => import('../B2BDashboardTabModals/OtcOrderProduct'));
+const DrugOrderProduct = lazy(() => import('../B2BDashboardTabModals/DrugOrderProduct'));
+
+const customStyles = {
+  content: {
+    overflowY: 'hidden',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+export default function B2BDashboard() {
+    const [userCount, setUserCount] = useState();
   const [productCount, setProductCount] = useState(0);
   const [productPrice, setProductPrice] = useState(0);
   const [expiryproductCount, setExpiryProductCount] = useState(0);
@@ -30,11 +48,19 @@ function B2BDashboard() {
   const [purchaseCountWeek, setPurchaseCountWeek] = useState([]);
 
 
+  const [otcorderCount, setOtcOrderCount] = useState(0);
+  const [otcorderproductPrice, setOtcOrderProductPrice] = useState(0);
 
+  const [drugorderCount, setDrugOrderCount] = useState(0);
+  const [drugorderproductPrice, setDrugOrderProductPrice] = useState(0);
+
+let re ;
   useEffect(() => {
     axiosClient.get(`/super_admin/b2b/dashboard/details`)
       .then(response => {
         // Handle response
+        console.log(response)
+        re = response;
         setUserCount(response.data[0]);
         setUserCountonMonday(response.data[1]);
         setProductCount(response.data[5].no)
@@ -58,17 +84,21 @@ function B2BDashboard() {
         setOrderCountonMonday(response.data[4])
         setSalesCountWeek(response.data[2])
         setPurchaseCountWeek(response.data[3])
+        // setOtcOrderCount(response.data[3])
+        // setOtcOrderProductPrice(response.data[3])
+        // setDrugOrderCount(response.data[3])
+        // setDrugOrderProductPrice(response.data[3])
 
 
 
         // setProductCount
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(err => {
         // Handle errors
         console.error(err);
       });
-  }, [])
+  }, [re])
 
 
   const data = [
@@ -161,6 +191,30 @@ function B2BDashboard() {
     },
   ];
 
+  const [otcOrderIsOpen, setotcOrderIsOpen] = React.useState(false);
+  function otcOrderopenModal() {
+    setotcOrderIsOpen(true);
+  }
+  function afterotcOrderOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function otcOrdercloseModal() {
+    document.body.style.overflow = 'unset';
+    setotcOrderIsOpen(false);
+  }
+  const [drugOrderIsOpen, setdrugOrderIsOpen] = React.useState(false);
+  function drugOrderopenModal() {
+    setdrugOrderIsOpen(true);
+  }
+  function afterdrugOrderOpenModal() {
+    document.body.style.overflow = 'hidden';
+  }
+  function drugOrdercloseModal() {
+    document.body.style.overflow = 'unset';
+    setdrugOrderIsOpen(false);
+  }
+
+
 
 
   return (
@@ -168,19 +222,19 @@ function B2BDashboard() {
       <div className='main-title'>
         <h3 className='text-dark'>DASHBOARD</h3>
       </div>
-      <div class="row mt-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a class="text-decoration-none" href="">
-            <div class="card border-left-primary shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Product</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{productCount}</div>
+      <div className="row mt-4">
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a className="text-decoration-none" href="">
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Product</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{productCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{productPrice}</div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{productPrice}</div>
                   </div>
                 </div>
               </div>
@@ -188,38 +242,38 @@ function B2BDashboard() {
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a class="text-decoration-none" href="">
-            <div class="card border-left-danger shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Low Stock</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{productCountLowStock}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a className="text-decoration-none" href="">
+            <div className="card border-left-danger shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">Low Stock</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{productCountLowStock}</div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{productPriceLowStock}</div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{productPriceLowStock}</div>
                   </div>
                 </div>
               </div>
             </div>
           </a>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href="" class="text-decoration-none">
-            <div class="card border-left-warning shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Expiring Product</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href="" className="text-decoration-none">
+            <div className="card border-left-warning shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-secondary text-uppercase mb-1">Expiring Product</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">
                       {expiryingproductCount}
                     </div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-secondary text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">
                       ₹&nbsp;{expiryingproductPrice}
                     </div>
                   </div>
@@ -229,55 +283,36 @@ function B2BDashboard() {
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href="" class="text-decoration-none">
-            <div class="card border-left-danger shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Expired Product</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{expiryproductCount}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href="" className="text-decoration-none">
+            <div className="card border-left-danger shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-danger text-uppercase mb-1">Expired Product</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{expiryproductCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{expiryproductPrice}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href="" class="text-decoration-none">
-            <div class="card border-left-info shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1" title="October, 2023">Purchase (Monthly)</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{purchase_monthlyproductCount}</div>
-                  </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{purchase_monthlyproductPrice}</div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-danger text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{expiryproductPrice}</div>
                   </div>
                 </div>
               </div>
             </div>
           </a>
         </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href="" class="text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" title="2023">Purchase (Yearly)</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{purchase_yearlyproductCount}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href="" className="text-decoration-none">
+            <div className="card border-left-info shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1" title="October, 2023">Purchase (Monthly)</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{purchase_monthlyproductCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{purchase_yearlyproductPrice}</div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{purchase_monthlyproductPrice}</div>
                   </div>
                 </div>
               </div>
@@ -285,37 +320,18 @@ function B2BDashboard() {
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href=" " class="text-decoration-none">
-            <div class="card border-left-success shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1" title="October, 2023">Sales (Monthly)</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{sales_monthlyproductCount}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href="" className="text-decoration-none">
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1" title="2023">Purchase (Yearly)</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{purchase_yearlyproductCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{sales_monthlyproductPrice}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href=" " class="text-decoration-none">
-            <div class="card border-left-success shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1" title="2023">Sales (Yearly)</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{sales_yearlyproductCount}</div>
-                  </div>
-                  <div class="col-auto">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800 text-right">₹{sales_yearlyproductPrice}</div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{purchase_yearlyproductPrice}</div>
                   </div>
                 </div>
               </div>
@@ -323,17 +339,18 @@ function B2BDashboard() {
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href=" " class="text-decoration-none">
-            <div class="card border-left-info shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Customer</div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{userCount}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href=" " className="text-decoration-none">
+            <div className="card border-left-success shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1" title="October, 2023">Sales (Monthly)</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{sales_monthlyproductCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <i class="fas fa-users fa-2x text-gray-300" aria-hidden="true"></i>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹&nbsp;{sales_monthlyproductPrice}</div>
                   </div>
                 </div>
               </div>
@@ -341,39 +358,138 @@ function B2BDashboard() {
           </a>
         </div>
 
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href=" " id='service-provider' class="text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Orders </div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{ordersCount}</div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href=" " className="text-decoration-none">
+            <div className="card border-left-success shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1" title="2023">Sales (Yearly)</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{sales_yearlyproductCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <i class="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹{sales_yearlyproductPrice}</div>
                   </div>
                 </div>
               </div>
             </div>
           </a>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-          <a href=" " id='service-provider' class="text-decoration-none">
-            <div class="card border-left-primary shadow h-100 py-2 align-items-center">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Service Provider </div>
-                    <div class="h6 mb-0 font-weight-bold text-gray-800">{serviceProviderCount}</div>
+
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href=" " className="text-decoration-none">
+            <div className="card border-left-info shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Total Customer</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{userCount}</div>
                   </div>
-                  <div class="col-auto">
-                    <i class="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  <div className="col-auto">
+                    <i className="fas fa-users fa-2x text-gray-300" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
             </div>
           </a>
+        </div>
+
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href=" " id='service-provider' className="text-decoration-none">
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Orders </div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{ordersCount}</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a href=" " id='service-provider' className="text-decoration-none">
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Service Provider </div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{serviceProviderCount}</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a id='otc-order' className="text-decoration-none" >
+          {/* onClick={otcOrderopenModal} */}
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total  OTC Order </div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{0}</div>
+                  </div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹{0}</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <Modal
+            isOpen={otcOrderIsOpen}
+            onAfterOpen={afterotcOrderOpenModal}
+            onRequestClose={otcOrdercloseModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <OtcOrderProduct closeTheModal={otcOrdercloseModal} /></Suspense> </div>
+          </Modal>
+        </div>
+        <div className="col-xl-3 col-md-6 mb-4">
+          <a id='drug-order' className="text-decoration-none" >
+          {/* onClick={drugOrderopenModal} */}
+            <div className="card border-left-primary shadow h-100 py-2 align-items-center">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total  Drug Order </div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800">{0}</div>
+                  </div>
+                  <div className="col-auto">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1 text-right">Value</div>
+                    <div className="h6 mb-0 font-weight-bold text-gray-800 text-right">₹{0}</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+          <Modal
+            isOpen={drugOrderIsOpen}
+            onAfterOpen={afterdrugOrderOpenModal}
+            onRequestClose={drugOrdercloseModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <DrugOrderProduct closeTheModal={drugOrdercloseModal} /></Suspense> </div>
+          </Modal>
         </div>
       </div>
 
@@ -428,4 +544,3 @@ function B2BDashboard() {
   )
 }
 
-export default B2BDashboard

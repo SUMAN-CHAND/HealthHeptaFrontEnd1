@@ -39,7 +39,7 @@ export default function Header() {
         if (userLocation !== 0 || userLocation !== undefined) {
             setSelectLocation(userLocation)
         }
-    })
+    },[userLocation])
     useEffect(() => {
         axiosClient.get(`/locations`)
             .then(res => {
