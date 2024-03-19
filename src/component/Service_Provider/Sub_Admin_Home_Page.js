@@ -622,7 +622,7 @@ export default function Sub_Admin_Home_Page() {
                         </td>
                         <td className='flex items-center justify-center'>
                           <Link to={`/sub-admin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
-                          <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                          <Link to={`/sub-admin/payment/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
                         </td>
                       </tr>
                     ))}
@@ -633,7 +633,42 @@ export default function Sub_Admin_Home_Page() {
             <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
               <h2 className='p-2'>|| Payments ||</h2>
               <div className="container text-dark" style={renDataStyle}>
-                <table className="table table-striped">
+              <table className="table table-striped">
+                  <thead className='thead-dark'>
+                    <tr>
+                      <th scope="col">Payments Id</th>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Order Id</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Payment Type</th>
+                      <th scope="col">Payment Accepted</th>
+                      <th scope="col">Complete Payment</th>
+                      <th scope="col">Payment Accepted User Id</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {payments.map((payment, index) => (
+                      <tr key={index}>
+                        <th scope="row">{payment.payment_id}</th>
+                        <td>{payment.name}({payment.user_id})</td>
+                        <td>{payment.order_id}</td>
+                        <td>{payment.total_amount}</td>
+                        <td>{payment.payment_status}</td>
+                        <td>{payment.payment_type}</td>
+                        <td>{payment.paymentacceptedby}</td>
+                        <td>{payment.paymentacceptedUserId}</td>
+                        <td><Link to={`/sub-admin/payment/complete/action/${payment.order_id}/${payment.user_id}`}>Complete Payment</Link></td>
+                        <td>
+                          <Link to={`/sub-admin/payment/${payment.order_id}/${payment.user_id}`}><button className="btn btn-info m-1">View Order</button></Link>
+                          {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {/* <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
                       <th scope="col">Payments Id</th>
@@ -658,7 +693,9 @@ export default function Sub_Admin_Home_Page() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                </table> */}
+
+
               </div>
             </div>
             <div className="tab-pane fade  text-light" id="doctors" role="tabpanel" aria-labelledby="list-payments-list">

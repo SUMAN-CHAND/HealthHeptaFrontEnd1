@@ -9,19 +9,19 @@ export default function ViewOrderBySubAdminDemo() {
   const [orderDetail, setorderDetail] = useState([]);
 
   const param = useParams();
-  var product_id = param.product_id;
-  useEffect(() => {
-    axiosClient.get(`/sub-admin/orders/product/${product_id}`)
-      .then(res => {
-        if (res.data !== null) {
-          setProduct(res.data[0]);
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  // var product_id = param.product_id;
+  // useEffect(() => {
+  //   axiosClient.get(`/sub-admin/orders/product/${product_id}`)
+  //     .then(res => {
+  //       if (res.data !== null) {
+  //         setProduct(res.data[0]);
+  //       }
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
 
-  }, [])
+  // }, [])
   // console.log(product)
 
   var user_id = param.user_id;
@@ -39,7 +39,8 @@ export default function ViewOrderBySubAdminDemo() {
 
   }, [])
 
-  var order_id = param.id;
+  var order_id = param.order_id;
+  console.log(order_id)
   // console.log(product_id)
   // useEffect(() => {
   //   axiosClient.get(`/sub-admin/orders/order/${order_id}`)
@@ -60,7 +61,7 @@ export default function ViewOrderBySubAdminDemo() {
     axiosClient.get(`/sub-admin/orders/order/${order_id}`)
       .then(res => {
         if (res.data !== null) {
-            // console.log(res.data)
+          console.log(res.data)
           setOrders(res.data[0]);
           setorderDetail(res.data[0]);
         }
@@ -79,7 +80,7 @@ export default function ViewOrderBySubAdminDemo() {
   // console.log(discountPrice)
   // const delevaryCharge = 25;
 
-  
+
   let totalPrice = 0;
   let totalActusalPrice = 0;
   let TotalCgst = 0;
@@ -122,6 +123,10 @@ export default function ViewOrderBySubAdminDemo() {
   const discountPrice = 1;
   const delevaryCharge = 25;
 
+  const handleBack= () => {
+    navigate('/superadmin', { state: { loggedIn: true } });
+  }
+
   return (
     <div>
       <div className='m-5 p-3 shadow' style={{ border: '2px solid black' }}>
@@ -131,7 +136,10 @@ export default function ViewOrderBySubAdminDemo() {
               <div className="card-order " >
                 <div className="card-body">
                   <div className="invoice-title">
-                    <h4 className="float-end font-size-15">OrderNo: {orderDetail.length>0 ? orderDetail[0].id : undefined} <span className="badge bg-success font-size-12 ms-2">{orderDetail.length>0 ? orderDetail[0].payment_status : undefined}</span></h4>
+                    <div style={{display: 'flex', flexDirection: 'column',alignItems: 'flex-end',float: 'right'}}>
+                    <h4 className="float-end font-size-15">OrderNo: {orderDetail.length > 0 ? orderDetail[0].id : undefined} <span className="badge bg-success font-size-12 ms-2">{orderDetail.length > 0 ? orderDetail[0].status : undefined}</span></h4>
+                    <h4 className="float-end font-size-15">PaymentNo: {orderDetail.length > 0 ? orderDetail[0].payment_id : undefined} <span className="badge bg-success font-size-12 ms-2">{orderDetail.length > 0 ? orderDetail[0].payment_status : undefined}</span></h4>
+                    </div>
                     <div className="mb-4">
                       <h2 className="mb-1 text-muted">Healthhepta.com</h2>
                     </div>
@@ -157,11 +165,11 @@ export default function ViewOrderBySubAdminDemo() {
                       <div className="text-muted text-sm-end">
                         <div>
                           <h5 className="font-size-15 mb-1">Order No:</h5>
-                          <p>{orderDetail.length>0 ? orderDetail[0].id : undefined}</p>
+                          <p>{orderDetail.length > 0 ? orderDetail[0].id : undefined}</p>
                         </div>
                         <div className="mt-4">
                           <h5 className="font-size-15 mb-1">Order Date:</h5>
-                          <p>{orderDetail.length>0 ? orderDetail[0].order_date : undefined}</p>
+                          <p>{orderDetail.length > 0 ? orderDetail[0].order_date : undefined}</p>
                         </div>
 
                       </div>
@@ -281,6 +289,9 @@ export default function ViewOrderBySubAdminDemo() {
                         <a href="javascript:window.print()" className="btn btn-success me-1"><i className="fa fa-print">Print</i></a>
                         {/* <a href="#" className="btn btn-primary w-md"></a> */}
                       </div>
+                      {/* <div className="button">
+                        <button className='btn btn-primary' onClick={handleBack} style={{ width: '20%', cursor: 'pointer' }}>Back</button>
+                      </div> */}
                     </div>
                   </div>
                 </div>

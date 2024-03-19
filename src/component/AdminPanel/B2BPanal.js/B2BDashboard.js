@@ -59,7 +59,7 @@ let re ;
     axiosClient.get(`/super_admin/b2b/dashboard/details`)
       .then(response => {
         // Handle response
-        console.log(response)
+        // console.log(response)
         re = response;
         setUserCount(response.data[0]);
         setUserCountonMonday(response.data[1]);

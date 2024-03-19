@@ -467,7 +467,7 @@ export default function AdminHomePage() {
               <Link to="#appoiments" onClick={showAppoiments} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Appoiments</Link>
               <Link to="#labbokking" onClick={showLabbokking} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Lab Bookings</Link>
               <Link to="#list-users" onClick={showUser} className="list-group-item list-group-item-action  list-group-item-info" id="list-users-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Users</Link>
-              {/* <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link> */}
+              <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
               <Link to="#serviceprovider" onClick={showServiceProvider} className="list-group-item list-group-item-action list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Service Provider</Link>
               <Link to="#partner" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner</Link>
               <Link to="#b2bemployee" onClick={showB2BEmployee} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Employee</Link>
@@ -716,6 +716,7 @@ export default function AdminHomePage() {
                         <th scope="col">Payment Status</th>
                         <th scope="col">Status</th>
                         <th scope="col">Expected delivery date</th>
+                        <th scope="col">Complete Payment</th>
                         <th scope="col">Action</th>
                       </tr>
                     }
@@ -736,13 +737,16 @@ export default function AdminHomePage() {
                         <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
                         <td>
                           <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            {order.expected_delivery_date}
+                            {order.expected_delivery_date.slice(0, 10)}
                             <br />
                           </div>
                         </td>
+                        <td>
+                          <Link to={`/superadmin/payment/complete/action/${order.id}/${order.user_id}`}>Complete Payment</Link>
+                        </td>
                         <td className='flex items-center justify-center'>
                           <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
-                          <Link to={`/superadmin/orders/${order.id}/${order.user_id}/${order.product_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                          <Link to={`/superadmin/orders/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
                         </td>
                       </tr>
                     ))}
@@ -883,11 +887,14 @@ export default function AdminHomePage() {
                   <thead className='thead-dark'>
                     <tr>
                       <th scope="col">Payments Id</th>
-                      <th scope="col">User Id</th>
+                      <th scope="col">User Name</th>
                       <th scope="col">Order Id</th>
                       <th scope="col">Total Amount</th>
                       <th scope="col">Payment Status</th>
                       <th scope="col">Payment Type</th>
+                      <th scope="col">Payment Accepted</th>
+                      <th scope="col">Complete Payment</th>
+                      <th scope="col">Payment Accepted User Id</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -895,13 +902,18 @@ export default function AdminHomePage() {
                     {payments.map((payment, index) => (
                       <tr key={index}>
                         <th scope="row">{payment.payment_id}</th>
-                        <td>{payment.user_id}</td>
+                        <td>{payment.name}({payment.user_id})</td>
                         <td>{payment.order_id}</td>
                         <td>{payment.total_amount}</td>
                         <td>{payment.payment_status}</td>
                         <td>{payment.payment_type}</td>
-                        <td> <Link to={`/superadmin/orders/order/${payment.order_id}`}><button className="btn btn-info m-1">View Order</button></Link>
-                          <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td>
+                        <td>{payment.paymentacceptedby}</td>
+                        <td>{payment.paymentacceptedUserId}</td>
+                        <td><Link to={`/superadmin/payment/complete/action/${payment.order_id}/${payment.user_id}`}>Complete Payment</Link></td>
+                        <td>
+                          <Link to={`/superadmin/orders/${payment.order_id}/${payment.user_id}`}><button className="btn btn-info m-1">View Order</button></Link>
+                          {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

@@ -14,6 +14,10 @@ export default function OrderAction() {
                 if (res.data !== null) {
                     setOrders(res.data[0]);
                 }
+                if (res.data == null) {
+                    alert("Server error!!");
+                }
+
             })
             .catch(err => {
                 console.log(err)
@@ -30,7 +34,7 @@ export default function OrderAction() {
                 console.error(err);
             });
     }, [])
-    console.log(order)
+    // console.log(order)
 
     const [values, setValues] = useState({
         order_id: order_id,
@@ -60,7 +64,7 @@ export default function OrderAction() {
             })
             .catch(err => console.log(err));
     }
-
+// const expected_delivery_date = {order && order.expected_delivery_date.slice(0, 10)};
     const dateStyle = {
         width: "13.2rem",
         height: "2rem",
@@ -103,14 +107,16 @@ export default function OrderAction() {
                             <input
                                 className='m-2 p-1'
                                 type="date"
-                                required
                                 style={dateStyle}
+                                value='true'
                                 name='expected_delivery_date'
-                                value={order.expected_delivery_date}
-                                placeholder={order.expected_delivery_date}
+                                // value={order.length>0 && order.expected_delivery_date.slice(0, 10)}
+                                // placeholder={order.expected_delivery_date}
+                                placeholderText={'Please select a date'} 
                                 onChange={handleInput}
                             //   onClick={() => updateDeliveryDate(order.id)}
                             /><br />
+                            <p>Expected Delivery Date = { order.expected_delivery_date}</p>
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="assigndeliverypersion">Assign Delivery Persion : </label>
