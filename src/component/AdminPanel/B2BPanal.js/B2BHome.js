@@ -429,10 +429,11 @@ export default function B2BHome() {
                       <th scope="col">Service Provider Name</th>
                       <th scope="col">Order By</th>
                       <th scope="col">Date</th>
-                      <th scope="col">Payment Mood</th>
-                      <th scope="col">Payment Status</th>
                       <th scope="col">Status</th>
                       <th scope="col">Expected delivery date</th>
+                      <th scope="col">Payment</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Complete Payment</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -445,8 +446,6 @@ export default function B2BHome() {
                         <td>{order.name}</td>
                         <td>{order.order_by}</td>
                         <td>{order.order_date.slice(0, 10)}</td>
-                        <td>{order.payment_type}</td>
-                        <td>{order.payment_status}</td>
                         <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status}</td>
                         <td>
                           {/* {order.expected_delivery_date === null ? */}
@@ -454,6 +453,11 @@ export default function B2BHome() {
                             {order.expected_delivery_date}
                             <br />
                           </div>
+                        </td>
+                        <td>{order.total_amount}({order.payment_type})</td>
+                        <td>{order.payment_status}</td>
+                        <td>
+                          <Link to={`/superadmin/b2b/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link>
                         </td>
                         <td>
                           {/* <Link to={`/superadmin/b2b/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><div className=" m-1" style={{ color: 'blue' }}><svg xmlns="http://www.w3.org/2000/svg" width="3w" height="3vh" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -482,8 +486,11 @@ export default function B2BHome() {
                       <th scope="col">User Id</th>
                       <th scope="col">Order Id</th>
                       <th scope="col">Total Amount</th>
+                      <th scope="col">Paid Amount</th>
+                      <th scope="col">Due Amount</th>
                       <th scope="col">Payment Status</th>
                       <th scope="col">Payment Type</th>
+                      <th scope="col">Complete the Payment </th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -494,10 +501,14 @@ export default function B2BHome() {
                         <td>{payment.sub_admin_id}</td>
                         <td>{payment.order_id}</td>
                         <td>{payment.total_amount}</td>
+                        <td>{payment.paid_amount}</td>
+                        <td>{payment.due_amount}</td>
                         <td>{payment.payment_status}</td>
                         <td>{payment.payment_type}</td>
-                        <td> <Link to={`/superadmin/orders/order/${payment.order_id}`}><button className="btn btn-info m-1">View Order</button></Link>
-                          <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> </td>
+                        <td><Link to={`/superadmin/b2b/payment/complete/action/${payment.order_id}/${payment.sub_admin_id}`}>Complete Payment</Link></td>
+                        <td> <Link to={`/superadmin/b2b/orders/${payment.order_id}/${payment.sub_admin_id}/${payment.product_id}`}><button className="btn btn-info m-1">View Order</button></Link>
+                          {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
+                           </td>
                       </tr>
                     ))}
                   </tbody>

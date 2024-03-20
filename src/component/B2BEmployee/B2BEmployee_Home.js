@@ -347,6 +347,7 @@ export default function B2BEmployee_Home() {
                                                         <th scope="col">Date</th>
                                                         <th scope="col">Payment Mood</th>
                                                         <th scope="col">Payment Status</th>
+                                                        <th scope="col">Complete Payment</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
@@ -360,6 +361,7 @@ export default function B2BEmployee_Home() {
                                                             <td>{order.order_date}</td>
                                                             <td>{order.payment_type}</td>
                                                             <td>{order.payment_status}</td>
+                                                            <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
                                                             <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td>
                                                             <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}>Cancle Order</button></td>
                                                         </tr>

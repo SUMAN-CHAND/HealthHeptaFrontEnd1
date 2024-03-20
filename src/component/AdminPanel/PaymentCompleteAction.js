@@ -93,7 +93,7 @@ export default function PaymentCompleteAction() {
                                 onChange={handleInput}
                                 name='payment_status'
                                 style={{ width: '90%', cursor: 'pointer' }}>
-                                <option value="select">{payment.status}</option>
+                                <option value="select">{payment.payment_status}</option>
                                 <option value="completed">Completed</option>
                             </select><br />
                         </div>
