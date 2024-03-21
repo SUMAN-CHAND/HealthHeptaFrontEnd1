@@ -117,6 +117,8 @@ export default function Doctor() {
                 <div className="deccription" style={{ paddingTop: '7vh', width: '100%', display: 'flex', flexDirection: "column" }}>
                   <h5>{doctor.doc_name}</h5>
                   <p>{doctor.doc_desc} </p>
+                  <p className="text-success"> ₹{doctor.fees}/Visit</p>
+
                   {/* <p>13 YEARS OF EXPERIENCE</p> */}
                   <div className='location px-2 mx-2' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill mx-3" viewBox="0 0 16 16">

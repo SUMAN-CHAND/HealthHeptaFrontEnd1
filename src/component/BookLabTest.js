@@ -100,7 +100,9 @@ export default function BookLabTest() {
                                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                                     </svg>
                                     <p className=''>{LabTest.Landmark}</p>
+
                                 </div>
+                                <p className="card-text text-success">Price:- <span className='text-success'>₹{LabTest.Price}</span></p>
                             </div>
 
                         </div>
@@ -129,7 +131,7 @@ export default function BookLabTest() {
                         </div>
                         <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="type_of_visite">Gender : </label><br></br>
-                            
+
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <select
                                     onChange={handleInput}

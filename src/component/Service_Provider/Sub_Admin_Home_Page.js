@@ -71,7 +71,7 @@ export default function Sub_Admin_Home_Page() {
       }
     });
   }, []);
-  
+
 
   useEffect(() => {
     axiosClient.get('/sub-admin/product')
@@ -385,7 +385,16 @@ export default function Sub_Admin_Home_Page() {
 
               {
                 userRole.toLowerCase() === 'medicine shop' ? <>
-                  <Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
+                  <div class="dropdown">
+                    <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-serviceprovider-list" data-bs-toggle="dropdown" aria-expanded="false">
+                      Products
+                    </button>
+                    <ul class="dropdown-menu " style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
+                      <li><Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Products</Link></li>
+                      <li><Link to='addproduct' className="list-group-item  list-group-item-info" id="list-serviceprovider-list">Add New Product</Link></li>
+                     </ul>
+                  </div>
+
                   <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Order from HealthHepta</Link>
                   <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
                 </> : <></>
@@ -414,7 +423,7 @@ export default function Sub_Admin_Home_Page() {
               <Link to="/b2b-home" className="list-group-item list-group-item-action list-group-item-info">Shop Now</Link>
               <Link to="/b2b-home/lotproduct" className="list-group-item list-group-item-action    list-group-item-info" >Shop By lot Scheme</Link>
               <Link to="/b2b-home/margin" className="list-group-item list-group-item-action    list-group-item-info" >Shop By Margin</Link>
-              <Link to="#offered_product" className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Offered Product</Link>
+              <Link to="/b2b-home/margin" className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Offered Product</Link>
               <Link to="#your_order" className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Your Orders</Link>
               <Link to="#cradit_system" className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Cradit System</Link>
               <Link to="#pay_bill" className="list-group-item list-group-item-action  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Pay & Bills</Link>
@@ -461,7 +470,7 @@ export default function Sub_Admin_Home_Page() {
                       <li className="list-group-item " style={listStyle}>
                         <>
                           <p>
-                            Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.Pin}
+                            Address :- {user.name}, {user.Village},{user.P_O},{user.City},{user.district},{user.State},{user.pin_code}
                           </p>
                         </>
                       </li>
@@ -485,7 +494,7 @@ export default function Sub_Admin_Home_Page() {
             </div>
 
             <div className="tab-pane fade " id="list-products" role="tabpanel" aria-labelledby="list-products-list">
-              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New</button></Link></span>
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New Product</button></Link></span>
 
               <div className="search  me-2 search-location" >
                 <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
@@ -633,7 +642,7 @@ export default function Sub_Admin_Home_Page() {
             <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
               <h2 className='p-2'>|| Payments ||</h2>
               <div className="container text-dark" style={renDataStyle}>
-              <table className="table table-striped">
+                <table className="table table-striped">
                   <thead className='thead-dark'>
                     <tr>
                       <th scope="col">Payments Id</th>
@@ -642,7 +651,7 @@ export default function Sub_Admin_Home_Page() {
                       <th scope="col">Total Amount</th>
                       <th scope="col">Payment Status</th>
                       <th scope="col">Payment Type</th>
-                      <th scope="col">Payment Accepted</th>
+                      <th scope="col">Payment Accept</th>
                       <th scope="col">Complete Payment</th>
                       <th scope="col">Payment Accepted User Id</th>
                       <th scope="col">Action</th>
@@ -857,7 +866,9 @@ export default function Sub_Admin_Home_Page() {
                       <th scope="col">appoint_time</th>
                       <th scope="col">Test Name</th>
                       <th scope="col">Sample Collection</th>
-                      <th scope="col">Clinic</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Payment Accept</th>
                       {/* <th scope="col">Clinic Description</th> */}
                       <th scope="col">Appoiment Status</th>
                       {/* <th scope="col">Appoiment Type</th> */}
@@ -869,14 +880,17 @@ export default function Sub_Admin_Home_Page() {
 
                       {laboratorysBookings.map((labBooking, index) => (
                         <tr key={index}>
-                          <th scope="row">{labBooking.Test_id}</th>
+                          <th scope="row">{labBooking.id}</th>
                           <td>{labBooking.name}</td>
                           <td>{labBooking.ph_number}</td>
                           <td>{labBooking.appoint_date}</td>
                           <td>{labBooking.appoint_time}</td>
                           <td>{labBooking.Test_Name}</td>
                           <td>{labBooking.sample_collection}</td>
-                          <td>{labBooking.sub_name}</td>
+                          <td>{labBooking.price}</td>
+                          <td>{labBooking.payment_status}</td>
+                          <td><Link to={`/sub-admin/payment/labbooking/complete/action/${labBooking.id}/${labBooking.user_id}`}>Complete Payment</Link></td>
+
                           {/* <td>{appoiment.clinic_desc}</td> */}
                           {/* <td>{labBooking.LabTestStatus}</td> */}
                           <td>
@@ -923,6 +937,9 @@ export default function Sub_Admin_Home_Page() {
                       <th scope="col">Doctor Name</th>
                       <th scope="col">Clinic</th>
                       {/* <th scope="col">Clinic Description</th> */}
+                      <th scope="col">Price</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Payment Accept</th>
                       <th scope="col">Appointment Status</th>
                       <th scope="col">Appoiment Type</th>
                       <th scope="col">Action</th>
@@ -939,6 +956,9 @@ export default function Sub_Admin_Home_Page() {
                         <td>{appoiment.doc_name}</td>
                         <td>{appoiment.clinic}</td>
                         {/* <td>{appoiment.clinic_desc}</td> */}
+                        <td>{appoiment.fees}</td>
+                          <td>{appoiment.payment_status}</td>
+                          <td><Link to={`/sub-admin/payment/appoiment/complete/action/${appoiment.id}/${appoiment.user_id}`}>Complete Payment</Link></td>
 
                         <td>
 

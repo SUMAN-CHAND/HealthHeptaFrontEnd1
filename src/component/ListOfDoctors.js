@@ -29,9 +29,9 @@ export default function ListOfDoctors() {
 
   }, [])
   return (
-    <div style={{ display: 'flex', width: '100vw' }}>
+    <div className='list-doc-container' style={{ display: 'flex', width: '100vw' }}>
       {doctors !== undefined ? <>
-        <div className='listof-doctors' style={{ margin: '3rem', width: '60vw' }}>
+        <div className='listof-doctors' style={{ margin: '3rem' }}>
           {doctors.map(doctor => (
             <div key={doctor.id}>
               {image.map((img) => (
@@ -71,9 +71,9 @@ export default function ListOfDoctors() {
         </div>
       </>
       }
-      <div style={{ width: '40vw' }}>
-        <h3 className='py-2'>|| Suggested Doctors ||</h3>
-        <div className="container" style={{ marginTop: '5vh', width: '14vw' }}>
+      <div className='listof-doctors-sug-container' style={{  }}>
+        <h5 className='py-2'>|| Suggested Doctors ||</h5>
+        <div className="container list-doctor-suggested" style={{ marginTop: '5vh' }}>
           {doctorsss.map(doctor => (
             <div key={doctor.id}>
               {imagess.map((img) => (

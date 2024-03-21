@@ -53,8 +53,8 @@ export default function AllMadicineByMargin() {
     
     return (
         <div>
-            <AllB2BBanner />
-            <OfferDeals />
+            {/* <AllB2BBanner />
+            <OfferDeals /> */}
             <AllMadicineCard headline='50% Off :-' products={off50products} image={off50image} />
             <AllMadicineCard headline='20% off :-' products={offproducts} image={offimage} />
             <AllMadicineCard headline='New Arrivals :-' products={newAddedproducts} image={newAddedimage} />

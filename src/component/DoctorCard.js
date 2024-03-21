@@ -12,6 +12,7 @@ export default function Doctors(props) {
             <div className="card-body">
               <h6 className="card-title" style={{fontSize:'0.9rem'}}>{props.name}</h6>
               <p className="card-text"  style={{fontSize:'0.6rem' , marginBottom:'2px'}}>{props.description}</p>
+              <p className="card-text text-success"  style={{fontSize:'0.6rem' , marginBottom:'2px'}}> ₹{props.fees}/Visit</p>
               <p className="card-text"  style={{fontSize:'0.6rem' , marginBottom:'2px'}}>{props.clnics}</p>
               <p className="card-text"  style={{fontSize:'0.6rem' , marginBottom:'2px'}}>{props.clinic_descs}</p>
               <p className="card-text"  style={{fontSize:'0.6rem' , marginBottom:'2px'}}>{props.location}</p>

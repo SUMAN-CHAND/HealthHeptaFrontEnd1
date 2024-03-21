@@ -87,7 +87,6 @@ export default function SignUp() {
                             required
                             pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
                         <span className="validity"></span>
-                        <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                     </div>
                     <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700',position:'relative' }} >
                         <label className='p-1' htmlFor="password">Create Password : </label>

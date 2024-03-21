@@ -17,8 +17,9 @@ export default function Header() {
     const [loggedIn, setLoggedIn] = useState([])
     const [locations, setLocation] = useState([])
     const [products, setProducts] = useState([])
-    const [chooseLocation, setChooseLocation] = useState([])
+    // const [chooseLocation, setChooseLocation] = useState([])
     const [chooseProduct, setChooseProduct] = useState([])
+    const [chooseLocation, setChooseLocation] = useState([])
     const [selectLocation, setSelectLocation] = useState()
     const [userLocation, setUserLocation] = useState()
     const [active, setActive] = useState(false);
@@ -98,6 +99,60 @@ export default function Header() {
 
         })
     }
+    // const [locationvalue, setLocationValues] = useState({
+    //     input: '',
+    //     from: 'header'
+    // })
+    // const handleLocationFilter = (event) => {
+    //     setLocationValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    //     const searchword = event.target.value.toLowerCase();
+    //     console.log("searchword" +  searchword)
+    //     const newFilter = locations.filter((value) => {
+    //         console.log(value)
+    //         return value.includes(searchword);
+    //     });
+    //     if (searchword === "") {
+    //         setChooseLocation([]);
+    //     } else {
+    //         setChooseLocation(newFilter);
+    //     }
+    // };
+    // const setValueLocationTOFilter = async (pin_code) => {
+    //     setValues({
+    //         input: pin_code,
+
+    //     })
+    // }
+
+    const [searchLocation, setSearchLocation] = useState([]);
+    
+    const [searchValue, setSearchValue] = useState({
+        input: ''
+      })
+      const handleLocationFilter = (event) => {
+        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+        const searchword = event.target.value.toLowerCase();
+    
+        const filtered = locations.filter((item) => {
+          const pin_code = item.pin_code.toString().toLowerCase();
+          const search = searchword.toLowerCase();
+          return pin_code.includes(search);
+        });
+        if (searchword === "") {
+            setSearchLocation([]);
+        } else {
+            setSearchLocation(filtered);
+        }
+      };
+
+      const setLocationValueTOFilter = async (pin_code) => {
+        setSearchValue({
+            input: pin_code,
+        });
+        setChooseLocation(pin_code);
+        setSearchLocation([]);
+    }
+
     const searchMedicne = async () => {
         try {
             const response = await axiosClient.post(`/search`, values);
@@ -182,13 +237,25 @@ export default function Header() {
                     </div>
                     <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'space-evenly' }} >
                         <div className="dropdown me-2 dropdown-location "  >
-                            <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
+                            {/* <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
                                 <option defaultValue={'choose your location..'} >choose your Pin Code..</option>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.pin_code}>{location.pin_code}</option>
                                 )
                                 )}
-                            </select>
+                            </select> */}
+                            {/* onClick={() => setLocationValueTOFilter(location.pin_code)} */}
+                            {/* <input className="form-control header-location-1 header-location-mobile" name='input' onChange={handleLocationFilter} placeholder="Search your pin code here" value={locationvalue.input}  /> */}
+                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Search Your Pin Code Here" value={searchValue.input}  />
+
+                            {searchLocation.length !== 0 && (
+                                <div className="inputResult" >
+                                    {searchLocation.map((location, index) => {
+                                        return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px'}} key={index}  >{location.pin_code}</div></span>
+                                    }
+                                    )}
+                                </div>
+                            )}
 
                         </div>
                         <div className="search  me-2 search-location" >

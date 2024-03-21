@@ -18,7 +18,7 @@ export default function AdminHomePage() {
   const [orders, setOrders] = useState([]);
   const [user, setUser] = useState([]);
   const [appoiments, setAppoiments] = useState([]);
-  const [labbokking, setLabbokking] = useState([]);
+  const [labbooking, setLabbokking] = useState([]);
   const [payments, setPayments] = useState([]);
   const [subAdmins, setSubAdmin] = useState([]);
   const [partners, setPartner] = useState([]);
@@ -32,6 +32,15 @@ export default function AdminHomePage() {
   const [searchOrder, setSearchOrder] = useState([])
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [searchLabBooking, setSearchlabBooking] = useState([])
+  const [searchProduct, setSearchProduct] = useState([])
+  const [searchPayment, setSearchPayment] = useState([])
+  const [searchPartner, setSearchPartner] = useState([])
+  const [searchEmployee, setSearchEmployee] = useState([])
+  const [searchDeliveryPartner, setSearchDeliveryPartner] = useState([])
+
+
   const LogedIn = sessionStorage.getItem('LogedIn');
   const userId = sessionStorage.getItem('user_id');
 
@@ -394,6 +403,21 @@ export default function AdminHomePage() {
       setSearchPatient(filtered);
     }
   };
+  const handleLabBookingFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
+
+    const filtered = labbooking.filter((item) => {
+      const phoneNumber = item.ph_number.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchlabBooking([]);
+    } else {
+      setSearchlabBooking(filtered);
+    }
+  };
 
   const handleOrderFilter = (event) => {
     setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
@@ -410,7 +434,83 @@ export default function AdminHomePage() {
       setSearchOrder(filtered);
     }
   };
+  const handleProductFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    const searchword = event.target.value.toLowerCase();
 
+    const filtered = products.filter((item) => {
+      const productName = item.product_name.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return productName.includes(search);
+    });
+    if (searchword === "") {
+      setSearchProduct([]);
+    } else {
+      setSearchProduct(filtered);
+    }
+  };
+
+  const handlePaymentFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+
+    const searchword = event.target.value.toLowerCase();
+    const filtered = payments.filter((item) => {
+      const phoneNumber = item.phone.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchPayment([]);
+    } else {
+      setSearchPayment(filtered);
+    }
+  };
+
+  const handlePartnerFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+
+    const searchword = event.target.value.toLowerCase();
+    const filtered = partners.filter((item) => {
+      const phoneNumber = item.ph_num.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchPartner([]);
+    } else {
+      setSearchPartner(filtered);
+    }
+  };
+  const handleEmployeeFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+
+    const searchword = event.target.value.toLowerCase();
+    const filtered = employees.filter((item) => {
+      const phoneNumber = item.ph_num.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchEmployee([]);
+    } else {
+      setSearchEmployee(filtered);
+    }
+  };
+  const handleDeliveryPartnerFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+
+    const searchword = event.target.value.toLowerCase();
+    const filtered = deliveryPartners.filter((item) => {
+      const phoneNumber = item.ph_num.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchDeliveryPartner([]);
+    } else {
+      setSearchDeliveryPartner(filtered);
+    }
+  };
 
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
@@ -467,12 +567,30 @@ export default function AdminHomePage() {
               <Link to="#appoiments" onClick={showAppoiments} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Appoiments</Link>
               <Link to="#labbokking" onClick={showLabbokking} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Lab Bookings</Link>
               <Link to="#list-users" onClick={showUser} className="list-group-item list-group-item-action  list-group-item-info" id="list-users-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Users</Link>
-              <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
-              <Link to="#serviceprovider" onClick={showServiceProvider} className="list-group-item list-group-item-action list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Service Provider</Link>
-              <Link to="#partner" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner</Link>
+              {/* <Link to="#payment" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link> */}
+              <div class="dropdown">
+                <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
+                  Payments
+                </button>
+                <ul class="dropdown-menu info" style={{backgroundColor:'#9eeaf9'}} aria-labelledby="dropdownMenuButton1">
+                  <li><Link to="#paymentcomplete" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Completed Payment</Link></li>
+                  <li><Link to="#paymentpending" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Payment</Link></li>
+                </ul>
+              </div>
+              {/* <Link to="#serviceprovider" onClick={showServiceProvider} className="list-group-item list-group-item-action list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Service Provider</Link> */}
+              {/* <Link to="#partner" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner</Link> */}
+              <div class="dropdown">
+                <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
+                  Partner
+                </button>
+                <ul class="dropdown-menu"style={{backgroundColor:'#9eeaf9'}} aria-labelledby="dropdownMenuButton1">
+                  <li><Link to="#partnerapproved" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Approved Partner</Link></li>
+                  <li><Link to="#partnerpending" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Partner</Link></li>
+                  <li><Link to="#partner-commission" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner Commission</Link></li>
+                </ul>
+              </div>
               <Link to="#b2bemployee" onClick={showB2BEmployee} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Employee</Link>
               <Link to="#delivery-partner" onClick={showDeliveryPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Delivery Partner</Link>
-              <Link to="#partner-commission" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-commission-list" data-bs-toggle="list" role="tab" aria-controls="list-partner-commission">Partner Commission</Link>
               <Link to="#delivery-partner-commission" onClick={showDeliveryPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-delivery-partner-commission-list" data-bs-toggle="list" role="tab" aria-controls="list-partner-commission">Delivery Partner Commission</Link>
               <Link to="#notification" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Order</Link>
               <Link to="#commission" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Commission</Link>
@@ -492,6 +610,10 @@ export default function AdminHomePage() {
             </div>
             <div className="tab-pane fade text-light" id="list-products" role="tabpanel" aria-labelledby="list-products-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Product by Product Name Here</p>
+                <input className="form-control" name='input' onChange={handleProductFilter} placeholder="Search Product Name Here" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
               <div className="container text-dark " style={renDataStyle}>
                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                   <p style={{ marginLeft: '10px' }}>Select Drug or Otc :</p>
@@ -523,7 +645,7 @@ export default function AdminHomePage() {
                   </thead>
                   <tbody style={{ verticalAlign: 'middle' }}>
                     {medicineType.type[0] === 'select' ? <>
-                      {products.map((product, index) => (
+                      {searchProduct.map((product, index) => (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
@@ -565,7 +687,7 @@ export default function AdminHomePage() {
                     </>
                     }
                     {medicineType.type === 'select' ? <>
-                      {products.map((product, index) => (
+                      {searchProduct.map((product, index) => (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
@@ -607,7 +729,7 @@ export default function AdminHomePage() {
                     </>
                     }
                     {medicineType.type[0] === 'drug' ? <>
-                      {products.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
+                      {searchProduct.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
@@ -649,7 +771,7 @@ export default function AdminHomePage() {
                     </>
                     }
                     {medicineType.type[0] === 'otc' ? <>
-                      {products.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
+                      {searchProduct.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <th scope="row">{product.product_id}</th>
@@ -703,7 +825,7 @@ export default function AdminHomePage() {
               <div className="container text-dark " style={renDataStyle}>
                 <table className="table table-striped">
                   <thead className='thead-dark'>
-                    {searchOrder &&
+                    {searchOrder.length > 0 &&
                       <tr>
                         <th scope="col">Count</th>
                         <th scope="col">OrderId</th>
@@ -798,54 +920,60 @@ export default function AdminHomePage() {
               )}
             </div>
             <div className="tab-pane fade text-light" id="labbokking" role="tabpanel" aria-labelledby="list-appoiments-list">
-              <h2 className='p-2'>|| Lab Bokking ||</h2>
-              <div className="container text-dark " style={renDataStyle}>
-                <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Count</th>
-                      <th scope="col">Lab Booking Id</th>
-                      <th scope="col">Test Name (Test Id)</th>
-                      <th scope="col">User Name (User Id) </th>
-                      <th scope="col">Clinic Name (Clinic Id)</th>
-                      <th scope="col">Patient Name</th>
-                      <th scope="col">Patient Ph No</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Time</th>
-                      <th scope="col">Sample Collection</th>
-                      <th scope="col">User Role</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Action</th>
-
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {labbokking.map((lab, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index}</th>
-                        <th scope="row">{lab.id}</th>
-                        <td>{lab.Test_name}({lab.Test_id})</td>
-                        <td>{lab.username}({lab.user_id})</td>
-                        <td>{lab.sname}({lab.clinic_id})</td>
-                        <td>{lab.name}</td>
-                        <td>{lab.ph_number}</td>
-                        <td>{lab.appoint_date}</td>
-                        <td>{lab.appoint_time}</td>
-                        <td>{lab.sample_collection}</td>
-                        <td>{lab.role}</td>
-                        <td onClick={() => updateStatus(lab.id)} style={{ cursor: 'pointer', color: 'blue' }} >{lab.LabTestStatus}</td>
-                        <td >
-
-                          <Link to={`/superadmin/labtest/action/${lab.id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
-
-                        </td>
-
+              <h2 className='p-2'>|| Lab Booking ||</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Patient by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleLabBookingFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchLabBooking.length > 0 &&
+                <div className="container text-dark " style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Count</th>
+                        <th scope="col">Lab Booking Id</th>
+                        <th scope="col">Test Name (Test Id)</th>
+                        <th scope="col">User Name (User Id) </th>
+                        <th scope="col">Clinic Name (Clinic Id)</th>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Patient Ph No</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Sample Collection</th>
+                        <th scope="col">User Role</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
 
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {searchLabBooking.map((lab, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index}</th>
+                          <th scope="row">{lab.id}</th>
+                          <td>{lab.Test_name}({lab.Test_id})</td>
+                          <td>{lab.username}({lab.user_id})</td>
+                          <td>{lab.sname}({lab.clinic_id})</td>
+                          <td>{lab.name}</td>
+                          <td>{lab.ph_number}</td>
+                          <td>{lab.appoint_date}</td>
+                          <td>{lab.appoint_time}</td>
+                          <td>{lab.sample_collection}</td>
+                          <td>{lab.role}</td>
+                          <td onClick={() => updateStatus(lab.id)} style={{ cursor: 'pointer', color: 'blue' }} >{lab.LabTestStatus}</td>
+                          <td >
+
+                            <Link to={`/superadmin/labtest/action/${lab.id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+
+                          </td>
+
+
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              }
             </div>
             <div className="tab-pane fade  text-light" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
               <h2 className='p-2'>|| Users ||</h2>
@@ -879,49 +1007,127 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               )}
-            </div>
-            <div className="tab-pane fade  text-light" id="payment" role="tabpanel" aria-labelledby="list-payments-list">
-              <h2 className='p-2'>|| Payments ||</h2>
-              <div className="container text-dark" style={renDataStyle}>
-                <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Payments Id</th>
-                      <th scope="col">User Name</th>
-                      <th scope="col">Order Id</th>
-                      <th scope="col">Total Amount</th>
-                      <th scope="col">Payment Status</th>
-                      <th scope="col">Payment Type</th>
-                      <th scope="col">Payment Accepted</th>
-                      <th scope="col">Complete Payment</th>
-                      <th scope="col">Payment Accepted User Id</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {payments.map((payment, index) => (
-                      <tr key={index}>
-                        <th scope="row">{payment.payment_id}</th>
-                        <td>{payment.name}({payment.user_id})</td>
-                        <td>{payment.order_id}</td>
-                        <td>{payment.total_amount}</td>
-                        <td>{payment.payment_status}</td>
-                        <td>{payment.payment_type}</td>
-                        <td>{payment.paymentacceptedby}</td>
-                        <td>{payment.paymentacceptedUserId}</td>
-                        <td><Link to={`/superadmin/payment/complete/action/${payment.order_id}/${payment.user_id}`}>Complete Payment</Link></td>
-                        <td>
-                          <Link to={`/superadmin/orders/${payment.order_id}/${payment.user_id}`}><button className="btn btn-info m-1">View Order</button></Link>
-                          {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
-                        </td>
+              {searchUser.length === 0 && (
+                <div className="container text-dark" style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {user.filter(userf => userf.OrderCount >= 5).map((user, index) => (
+                        <tr key={index}>
+                          <th scope="row">{user.id}</th>
+                          <td>{user.name}</td>
+                          <td>{user.phone}</td>
+                          <td>{user.role}</td>
+                          <td> <div className="btn btn-danger">Delete</div> <div className="btn btn-warning">Update</div> </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+            <div className="tab-pane fade  text-light" id="paymentcomplete" role="tabpanel" aria-labelledby="list-payments-list">
+              <h2 className='p-2'>||Completed Payments ||</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Payments by User Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
+              {searchPayment.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Payments Id</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Payment Type</th>
+                        <th scope="col">Payment Accepted</th>
+                        <th scope="col">Complete Payment</th>
+                        <th scope="col">Payment Accepted User Id</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchPayment.filter(paymentf => paymentf.payment_status === 'completed').map((payment, index) => (
+                        <tr key={index}>
+                          <th scope="row">{payment.payment_id}</th>
+                          <td>{payment.name}(id : {payment.user_id}) <br />(PH : {payment.phone})</td>
+                          <td>{payment.order_id}</td>
+                          <td>{payment.total_amount}</td>
+                          <td>{payment.payment_status}</td>
+                          <td>{payment.payment_type}</td>
+                          <td>{payment.paymentacceptedby}</td>
+                          <td>{payment.paymentacceptedUserId}</td>
+                          <td><Link to={`/superadmin/payment/complete/action/${payment.order_id}/${payment.user_id}`}>Complete Payment</Link></td>
+                          <td>
+                            <Link to={`/superadmin/orders/${payment.order_id}/${payment.user_id}`}><button className="btn btn-info m-1">View Order</button></Link>
+                            {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              }
+            </div>
+            <div className="tab-pane fade  text-light" id="paymentpending" role="tabpanel" aria-labelledby="list-payments-list">
+              <h2 className='p-2'>|| Pending Payments ||</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Payments by User Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchPayment.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Payments Id</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Order Id</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Payment Type</th>
+                        <th scope="col">Payment Accepted</th>
+                        <th scope="col">Complete Payment</th>
+                        <th scope="col">Payment Accepted User Id</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {searchPayment.filter(paymentf => paymentf.payment_status === 'pending').map((payment, index) => (
+                        <tr key={index}>
+                          <th scope="row">{payment.payment_id}</th>
+                          <td>{payment.name}(id : {payment.user_id}) <br />(PH : {payment.phone})</td>
+                          <td>{payment.order_id}</td>
+                          <td>{payment.total_amount}</td>
+                          <td>{payment.payment_status}</td>
+                          <td>{payment.payment_type}</td>
+                          <td>{payment.paymentacceptedby}</td>
+                          <td>{payment.paymentacceptedUserId}</td>
+                          <td><Link to={`/superadmin/payment/complete/action/${payment.order_id}/${payment.user_id}`}>Complete Payment</Link></td>
+                          <td>
+                            <Link to={`/superadmin/orders/${payment.order_id}/${payment.user_id}`}><button className="btn btn-info m-1">View Order</button></Link>
+                            {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              }
             </div>
 
-            <div className="tab-pane fade  text-light" id="serviceprovider" role="tabpanel" aria-labelledby="list-serviceprovider-list">
+            {/* <div className="tab-pane fade  text-light" id="serviceprovider" role="tabpanel" aria-labelledby="list-serviceprovider-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Service Provider ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
               <div className="container text-dark" style={renDataStyle}>
                 <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
@@ -967,132 +1173,236 @@ export default function AdminHomePage() {
                 </div>
 
               </div>
-            </div>
-            <div className="tab-pane fade  text-light" id="partner" role="tabpanel" aria-labelledby="list-partner-list">
-              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
-              <div className="container text-dark" style={renDataStyle}>
-                <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
-                  <Link to="#partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Partner </Link>
-                  <Link to="#newpartner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Partner</Link>
-                </div>
-                <div id='partner'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope="col"> Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Aadhaar Card</th>
-                        <th scope="col">Pan Card</th>
-                        <th scope="col">Permission</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {partners.map((partner, index) => (
-                        <tr key={index}>
-                          <th scope="row">{partner.id}</th>
-                          <td>{partner.name}</td>
-                          <td>{partner.ph_num}</td>
-                          <td>{partner.aadhaar}</td>
-                          <td>{partner.pan}</td>
-                          <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
-                          <td>
-                            <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
-                            <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
-
-                          </td>
-                        </tr>
-                      ))}
-
-
-                    </tbody>
-                  </table>
-                </div>
-
+            </div> */}
+            <div className="tab-pane fade  text-light" id="partnerpending" role="tabpanel" aria-labelledby="list-partner-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Pending  Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Partner by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
+              {searchPartner.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+                  {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
+                    <Link to="#partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Partner </Link>
+                    <Link to="#newpartner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Partner</Link>
+                  </div> */}
+                  <div id='partner'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {searchPartner.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{partner.id}</th>
+                            <td>{partner.name}</td>
+                            <td>{partner.ph_num}</td>
+                            <td>{partner.aadhaar}</td>
+                            <td>{partner.pan}</td>
+                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+
+                            </td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+            </div>
+            <div className="tab-pane fade  text-light" id="partnerapproved" role="tabpanel" aria-labelledby="list-partnerapproved-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Approved Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Partner by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchPartner.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+
+                  <div id='partner'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {searchPartner.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{partner.id}</th>
+                            <td>{partner.name}</td>
+                            <td>{partner.ph_num}</td>
+                            <td>{partner.aadhaar}</td>
+                            <td>{partner.pan}</td>
+                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+
+                            </td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              }
+              {/* <div className="container text-dark" style={renDataStyle}>
+                {searchPartner.length = 0 &&
+
+                  <div id='partnerpending'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {partners.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{partner.id}</th>
+                            <td>{partner.name}</td>
+                            <td>{partner.ph_num}</td>
+                            <td>{partner.aadhaar}</td>
+                            <td>{partner.pan}</td>
+                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+
+                            </td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                }
+              </div> */}
             </div>
             <div className="tab-pane fade  text-light" id="b2bemployee" role="tabpanel" aria-labelledby="list-partner-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  B2B Employee ||</h2> <Link to='addnew/b2bemployee'><button className='btn btn-primary mx-3 my-2' >Add New B2B Employee</button></Link></span>
-              <div className="container text-dark" style={renDataStyle}>
-                {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
+              {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
                   <Link to="#partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Partner </Link>
                   <Link to="#newpartner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Partner</Link>
                 </div> */}
-                <div id='b2bemployee'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope='col'>Index</th>
-                        <th scope="col">Employee Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Permission</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {employees.map((employee, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index}</th>
-                          <th scope="row">{employee.id}</th>
-                          <td>{employee.name}</td>
-                          <td>{employee.ph_num}</td>
-                          <td>{employee.email}</td>
-                          <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
-                        </tr>
-                      ))}
-
-
-                    </tbody>
-                  </table>
-                </div>
-
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Employee by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleEmployeeFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
+              {searchEmployee.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+                  <div id='b2bemployee'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope='col'>Index</th>
+                          <th scope="col">Employee Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Permission</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {searchEmployee.map((employee, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index}</th>
+                            <th scope="row">{employee.id}</th>
+                            <td>{employee.name}</td>
+                            <td>{employee.ph_num}</td>
+                            <td>{employee.email}</td>
+                            <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              }
             </div>
             <div className="tab-pane fade  text-light" id="delivery-partner" role="tabpanel" aria-labelledby="list-delivery-partner-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Delivery Partner ||</h2> <Link to='addnew/delivery-partner'><button className='btn btn-primary mx-3 my-2' >Add New Delivery Partner</button></Link></span>
-              <div className="container text-dark" style={renDataStyle}>
-                <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
+
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Employee by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleDeliveryPartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchDeliveryPartner.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+                  {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
                   <Link to="#delivery-partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Delivery Partner </Link>
                   <Link to="#newdelivery-partner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Delivery Partner</Link>
-                </div>
-                <div id='delivery-partner'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope="col"> Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Aadhaar Card</th>
-                        <th scope="col">Pan Card</th>
-                        <th scope="col">Permission</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {deliveryPartners.map((deliveryPartner, index) => (
-                        <tr key={index}>
-                          <th scope="row">{deliveryPartner.id}</th>
-                          <td>{deliveryPartner.name}</td>
-                          <td>{deliveryPartner.ph_num}</td>
-                          <td>{deliveryPartner.aadhaar}</td>
-                          <td>{deliveryPartner.pan}</td>
-                          <td onClick={() => updateDeliveryPartnerStatus(deliveryPartner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{deliveryPartner.permission}</td>
-                          <td>
-                            <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.AadhaarCardImageID)}>View Aadhaar Card</button>
-                            <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.PanCardImageID)}>View Pan Card</button>
+                </div> */}
 
-                          </td>
+                  <div id='delivery-partner'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
                         </tr>
-                      ))}
+                      </thead>
+                      <tbody>
+                        {searchDeliveryPartner.map((deliveryPartner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{deliveryPartner.id}</th>
+                            <td>{deliveryPartner.name}</td>
+                            <td>{deliveryPartner.ph_num}</td>
+                            <td>{deliveryPartner.aadhaar}</td>
+                            <td>{deliveryPartner.pan}</td>
+                            <td onClick={() => updateDeliveryPartnerStatus(deliveryPartner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{deliveryPartner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.PanCardImageID)}>View Pan Card</button>
+
+                            </td>
+                          </tr>
+                        ))}
 
 
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  </div>
+
                 </div>
-
-              </div>
+              }
             </div>
             <div className="tab-pane fade  text-light" id="partner-commission" role="tabpanel" aria-labelledby="list-partner-commission-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Partner Commission ||</h2> <Link to='addnew/partner-commission'><button className='btn btn-primary mx-3 my-2' >Add New Partner Commission</button></Link></span>

@@ -22,6 +22,7 @@ export default function B2BHome() {
   const [coupons, setCoupons] = useState([]);
   const location = useLocation();
   const [searchOrder, setSearchOrder] = useState([])
+  const [searchSubAdmin, setSearchSubAdmin] = useState([])
 
   const [ind_product_Images, setInd_product_Images] = useState([]);
   const [searchValue, setSearchValue] = useState({
@@ -160,6 +161,22 @@ export default function B2BHome() {
     }
   };
 
+  const handleServiceProviderFilter = (event) => {
+    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+
+    const searchword = event.target.value.toLowerCase();
+    const filtered = subAdmins.filter((item) => {
+      const phoneNumber = item.phone.toString().toLowerCase();
+      const search = searchword.toLowerCase();
+      return phoneNumber.includes(search);
+    });
+    if (searchword === "") {
+      setSearchSubAdmin([]);
+    } else {
+      setSearchSubAdmin(filtered);
+    }
+  };
+
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
@@ -206,7 +223,18 @@ export default function B2BHome() {
               <Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
               <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Orders</Link>
               <Link to="#payment" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Payments</Link>
-              <Link to="#service-provider" className="list-group-item list-group-item-action  list-group-item-info" id="list-service-provider-list" data-bs-toggle="list" role="tab" aria-controls="list-service-provider">Service Provider</Link>
+              <div class="dropdown">
+                <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-serviceprovider-list" data-bs-toggle="dropdown" aria-expanded="false">
+                  Service Provider
+                </button>
+                <ul class="dropdown-menu " style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
+                  <li><Link to="#doctors" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Doctors</Link></li>
+                  <li><Link to="#pharmeasy" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Pharmeasy Shops</Link></li>
+                  <li><Link to="#laboratory" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Laboratory</Link></li>
+                  <li><Link to="#clinic" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Clinics</Link></li>
+                  <li><Link to="#pendingserviceproviders" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Pending Service Provider</Link></li>
+                </ul>
+              </div>
               <Link to="#notification" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Order</Link>
               <Link to="#commission" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Commission</Link>
               <Link to="#banner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">Add Banner</Link>
@@ -508,28 +536,22 @@ export default function B2BHome() {
                         <td><Link to={`/superadmin/b2b/payment/complete/action/${payment.order_id}/${payment.sub_admin_id}`}>Complete Payment</Link></td>
                         <td> <Link to={`/superadmin/b2b/orders/${payment.order_id}/${payment.sub_admin_id}/${payment.product_id}`}><button className="btn btn-info m-1">View Order</button></Link>
                           {/* <Link to={`/superadmin/orders/customer/${payment.user_id}`}> <div className="btn btn-info m-1">View User</div></Link> */}
-                           </td>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
-            {/* <div className="tab-pane fade  text-light" id="service-provider" role="tabpanel" aria-labelledby="list-service-provider-list"> */}
-            <div className="tab-pane fade  text-light" id="service-provider" role="tabpanel" aria-labelledby="list-service-provider-list">
-              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Service Provider ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+
+            <div className="tab-pane fade  text-light" id="doctors" role="tabpanel" aria-labelledby="list-service-provider-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Doctors ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Service Provider by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleServiceProviderFilter} placeholder="Search Service Provider Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
               <div className="container text-dark" style={renDataStyle}>
-                <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
-                  <Link to="#service-provider" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">New Service Provider </Link>
-                  <Link to="#service-provider" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">All Service Provider</Link>
-                </div>
-                <div className="list-group shadow m-3" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
-                  <Link to="#medicineshop" className="list-group-item list-group-item-action active  list-group-item-info" id="list-medicineshop-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Medicine Shop</Link>
-                  <Link to="#doctors" className="list-group-item list-group-item-action   list-group-item-info" id="list-doctors-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Doctors</Link>
-                  <Link to="#clinics" className="list-group-item list-group-item-action   list-group-item-info" id="list-clinics-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Clinics</Link>
-                  <Link to="#labs" className="list-group-item list-group-item-action   list-group-item-info" id="list-labs-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Labs</Link>
-                </div>
-                <div id='medicineshop'>
+                <div id='doctors'>
                   <table className="table table-striped">
                     <thead className='thead-dark'>
                       <tr>
@@ -541,8 +563,70 @@ export default function B2BHome() {
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
+                    {searchSubAdmin.length > 0 &&
                     <tbody>
-                      {subAdmins.map((subadmin, index) => (
+                      {searchSubAdmin.filter(subadmin => subadmin.role === 'doctor').map((subadmin, index) => (
+                        <tr key={index}>
+                          <th scope="row">{subadmin.id}</th>
+                          <td>{subadmin.name}</td>
+                          <td>{subadmin.phone}</td>
+                          <td>{subadmin.role}</td>
+                          <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                          <td> <button className="btn btn-info m-1">View Licence</button>
+                            <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                            <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                            <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>}
+                    {searchSubAdmin.length === 0 &&
+                    <tbody>
+                      {subAdmins.filter(subadmin => subadmin.role === 'doctor').map((subadmin, index) => (
+                        <tr key={index}>
+                          <th scope="row">{subadmin.id}</th>
+                          <td>{subadmin.name}</td>
+                          <td>{subadmin.phone}</td>
+                          <td>{subadmin.role}</td>
+                          <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                          <td> <button className="btn btn-info m-1">View Licence</button>
+                            <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                            <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                            <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>}
+                  </table>
+                </div>
+
+              </div>
+            </div>
+            <div className="tab-pane fade  text-light" id="pharmeasy" role="tabpanel" aria-labelledby="list-service-provider-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Pharmeasy Shops ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Service Provider by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleServiceProviderFilter} placeholder="Search Service Provider Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              <div className="container text-dark" style={renDataStyle}>
+
+                <div id='pharmeasy'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {searchSubAdmin.length > 0 &&
+                    <tbody>
+                      {searchSubAdmin.filter(subadmin => subadmin.role === 'Medicine Shop').map((subadmin, index) => (
                         <tr key={index}>
                           <th scope="row">{subadmin.id}</th>
                           <td>{subadmin.name}</td>
@@ -558,10 +642,236 @@ export default function B2BHome() {
                         </tr>
                       ))}
                     </tbody>
+                    }
+                    {searchSubAdmin.length === 0 &&
+                    <tbody>
+                      {subAdmins.filter(subadmin => subadmin.role === 'Medicine Shop').map((subadmin, index) => (
+                        <tr key={index}>
+                          <th scope="row">{subadmin.id}</th>
+                          <td>{subadmin.name}</td>
+                          <td>{subadmin.phone}</td>
+                          <td>{subadmin.role}</td>
+                          <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                          <td> <button className="btn btn-info m-1">View Licence</button>
+                            <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                            <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                            <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    }
                   </table>
                 </div>
 
               </div>
+            </div>
+            <div className="tab-pane fade  text-light" id="laboratory" role="tabpanel" aria-labelledby="list-service-provider-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| laboratory ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Service Provider by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleServiceProviderFilter} placeholder="Search Service Provider Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              <div className="container text-dark" style={renDataStyle}>
+
+                <div id='pharmeasy'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {searchSubAdmin.length > 0 &&
+                    <tbody>
+                      {searchSubAdmin.filter(subadmin => subadmin.role === 'Laboratory').map((subadmin, index) => (
+                        <tr key={index}>
+                          <th scope="row">{subadmin.id}</th>
+                          <td>{subadmin.name}</td>
+                          <td>{subadmin.phone}</td>
+                          <td>{subadmin.role}</td>
+                          <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                          <td> <button className="btn btn-info m-1">View Licence</button>
+                            <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                            <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                            <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    }
+                    {searchSubAdmin.length === 0 &&
+                    <tbody>
+                      {subAdmins.filter(subadmin => subadmin.role === 'Laboratory').map((subadmin, index) => (
+                        <tr key={index}>
+                          <th scope="row">{subadmin.id}</th>
+                          <td>{subadmin.name}</td>
+                          <td>{subadmin.phone}</td>
+                          <td>{subadmin.role}</td>
+                          <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                          <td> <button className="btn btn-info m-1">View Licence</button>
+                            <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                            <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                            <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    }
+                  </table>
+                </div>
+
+              </div>
+            </div>
+            <div className="tab-pane fade  text-light" id="clinic" role="tabpanel" aria-labelledby="list-service-provider-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Clinics ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Service Provider by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleServiceProviderFilter} placeholder="Search Service Provider Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              <div className="container text-dark" style={renDataStyle}>
+
+                <div id='clinic'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {searchSubAdmin.length > 0 &&
+                      <tbody>
+                        {searchSubAdmin.filter(subadmin => subadmin.role === 'Clinic').map((subadmin, index) => (
+                          <tr key={index}>
+                            <th scope="row">{subadmin.id}</th>
+                            <td>{subadmin.name}</td>
+                            <td>{subadmin.phone}</td>
+                            <td>{subadmin.role}</td>
+                            <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                            <td> <button className="btn btn-info m-1">View Licence</button>
+                              <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                              <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                              <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    }
+                    {searchSubAdmin.length === 0 &&
+                      <tbody>
+                        {subAdmins.filter(subadmin => subadmin.role === 'Clinic').map((subadmin, index) => (
+                          <tr key={index}>
+                            <th scope="row">{subadmin.id}</th>
+                            <td>{subadmin.name}</td>
+                            <td>{subadmin.phone}</td>
+                            <td>{subadmin.role}</td>
+                            <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                            <td> <button className="btn btn-info m-1">View Licence</button>
+                              <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                              <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                              <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    }
+                  </table>
+                </div>
+
+              </div>
+            </div>
+            <div className="tab-pane fade  text-light" id="pendingserviceproviders" role="tabpanel" aria-labelledby="list-service-provider-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Clinics ||</h2> <Link to='addnew/service-provider'><button className='btn btn-primary mx-3 my-2' >Add New Service Provider</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Service Provider by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleServiceProviderFilter} placeholder="Search Service Provider Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              {searchSubAdmin.length > 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+
+                  <div id='clinic'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {searchSubAdmin.filter(subadmin => subadmin.permission === 'Not_Approve').map((subadmin, index) => (
+                          <tr key={index}>
+                            <th scope="row">{subadmin.id}</th>
+                            <td>{subadmin.name}</td>
+                            <td>{subadmin.phone}</td>
+                            <td>{subadmin.role}</td>
+                            <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                            <td> <button className="btn btn-info m-1">View Licence</button>
+                              <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                              <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                              <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>}
+              {searchSubAdmin.length === 0 &&
+                <div className="container text-dark" style={renDataStyle}>
+
+                  <div id='clinic'>
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {subAdmins.filter(subadmin => subadmin.permission === 'Not_Approve').map((subadmin, index) => (
+                          <tr key={index}>
+                            <th scope="row">{subadmin.id}</th>
+                            <td>{subadmin.name}</td>
+                            <td>{subadmin.phone}</td>
+                            <td>{subadmin.role}</td>
+                            <td onClick={() => updateSubAdminStatus(subadmin.id)} style={{ cursor: 'pointer', color: 'blue' }} >{subadmin.permission}</td>
+                            <td> <button className="btn btn-info m-1">View Licence</button>
+                              <Link to={`/superadmin/subadmin/profile/${subadmin.id}`}> <div className="btn btn-info m-1">View Profile</div></Link>
+                              <Link to={`/superadmin/subadmin/products/${subadmin.id}`}> <div className="btn btn-info m-1">View Products</div></Link>
+                              <Link to={`/superadmin/subadmin/orders/${subadmin.id}`}> <div className="btn btn-info m-1">View Orders</div></Link>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>}
+
             </div>
             <div className="tab-pane fade  text-light" id="notification" role="tabpanel" aria-labelledby="list-notification-list">
               <h2 className='p-2'>|| Notification ||</h2>

@@ -52,6 +52,7 @@ export default function BookAppointmentFrom() {
         clinic_id: clinic_id,
         user_id: userId,
         type_of_visite: '',
+        payment:''
     });
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
@@ -125,6 +126,7 @@ export default function BookAppointmentFrom() {
                                                     <div className="deccription doctor_deccription" style={{ margin: '0 2vw', padding: '0 2vw', display: 'flex', flexDirection: "column", alignItems: 'self-start' }}>
                                                         <h5>Doctor Name :- {doctor.doc_name}</h5>
                                                         <p>Doctor Description :- {doctor.doc_desc} </p>
+                                                        <p>Doctor Fees :- ₹{doctor.fees}/Visit </p>
                                                         <p className=''>Location :- {doctor.location}</p>
                                                         <p>Doctor Clinic :- {doctor.clinic}</p>
                                                         <p>Clinic Description :- {doctor.clinic_desc}</p>
@@ -198,6 +200,21 @@ export default function BookAppointmentFrom() {
                                         </select> <br />
                                     </div>
                                 </div>
+                                <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            <label className='p-1' htmlFor="type_of_visite">Payment Mood : </label><br></br>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <select
+                                    onChange={handleInput}
+                                    required className=' p-1' type="text" style={{ width: '85%', border: '2px solid black', marginLeft: '5%', borderRadius: '5px' }}
+                                    placeholder='Enter  Your Type Of Visite'
+                                    name='payment'
+                                >
+                                    <option value="select" selected>Select</option>
+                                    <option value="online_banking">Online Banking</option>
+                                    <option value="cod">COD</option>
+                                </select> <br />
+                            </div>
+                        </div>
                                 <button type="submit" className="btn btn-primary mx-3">Submit</button>
                                 <button type="reset" className="btn btn-warning mx-3">Clear</button>
                             </form>

@@ -25,6 +25,9 @@
 .card-service{
   height: 45vh !important
 }
+.dashboard-main-container .card{
+  background-color: #dcffff;
+}
 
 h1{
   color:#000 !important;
@@ -374,10 +377,27 @@ table td button{
 .banner-container{
   margin: 0px !important;
 }
+.list-doctor-suggested{
+  width: 45% !important;
+}
+.listof-doctors{
+  width: 89% !important;
+}
+.listof-doctors-sug-container{
+  width: 40% !important;
+}
+
+.doctor-card-button{
+  width: 50% !important;
+
+}
 
 @media screen and (max-width: 1050px) {
   .banner-container{
     margin: 0px !important;
+  }
+  .list-doctor-suggested{
+    width: 70% !important;
   }
   .container{
     margin: 0px !important;
@@ -520,6 +540,9 @@ table td button{
   } */
   .ourserviceCarousel{
     height: 30vh !important;
+  }
+  .list-doctor-suggested{
+    width: 85% !important;
   }
   .header-location-mobile{
     color: rgb(0, 0, 0) !important;
@@ -891,6 +914,21 @@ display: none !important;
 }
 
 @media screen and (max-width: 550px) {
+  .list-doc-container{
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .doctor-card-button{
+    width: 100% !important;
+  
+  }
+  .listof-doctors{
+    width: 90% !important;
+  }
+  .listof-doctors-sug-container{
+    width: 90% !important;
+  }
   .login-text {
     margin: 8px !important;
   }

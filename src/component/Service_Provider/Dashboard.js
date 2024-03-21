@@ -167,7 +167,7 @@ function Dashboard() {
 
 
   return (
-    <main className='main-container' style={{fontSize:'13px'}}>
+    <main className='main-container dashboard-main-container' style={{fontSize:'13px'}}>
       <div className='main-title'>
         <h3 className='text-dark'>DASHBOARD</h3>
       </div>

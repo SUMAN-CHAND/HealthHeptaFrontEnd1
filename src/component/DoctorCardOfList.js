@@ -14,7 +14,7 @@ const customStyles = {
         transform: 'translate(-50%, -50%)',
     },
 };
-export default function DoctorCardOfList(props) {  
+export default function DoctorCardOfList(props) {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
@@ -34,7 +34,7 @@ export default function DoctorCardOfList(props) {
                     <div className="doctor  container shadow" style={{ display: 'flex', margin: '1rem', backgroundColor: '#dffffb', padding: '1rem' }}>
 
                         <div className="deccription" style={{ display: 'flex' }} >
-                            <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxWidth:'12vw' }} />
+                            <img src={`http://${process.env.REACT_APP_HOST}:8081/${props.imgpath}`} className="card-img-top" alt="..." style={{ maxWidth: '12vw' }} />
                             <div>
                                 <p className='fs-5'>{props.name} </p>
                                 <p className='fs-8'>{
@@ -42,7 +42,7 @@ export default function DoctorCardOfList(props) {
                                 }
                                 </p>
                                 {/* <p>13 YEARS OF EXPERIENCE</p> */}
-                                <div className='location px-5 mx-5' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <div className='location doctor-location' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-geo-alt-fill mx-3" viewBox="0 0 16 16">
                                         <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
                                     </svg>
@@ -54,20 +54,22 @@ export default function DoctorCardOfList(props) {
                                 <p>{props.clinic_desc}
                                 </p>
                                 {/* <Link to={`/doctor/${props.id}`} className="btn m-1 text-light" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: 'blue' }}>View Details</Link> */}
-                                <div className="btn m-1 text-light" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: 'blue' }} onClick={openModal}>
-                                    View Details
-                                    <Modal
-                                        isOpen={modalIsOpen}
-                                        onAfterOpen={afterOpenModal}
-                                        onRequestClose={closeModal}
-                                        style={customStyles}
-                                        contentLabel="Example Modal"
-                                    >
+                                <div className="btn m-1 text-light doctor-card-button" style={{ fontSize: '0.9rem', backgroundColor: 'blue' }} onClick={openModal}>
 
-                                        <ViewDoctorDetailsModal closeTheModal={closeModal} doctor_id = {props.id} />
-                                    </Modal>
+                                    <p>View Details</p>
                                 </div>
-                                <Link to={`/doctor/${props.id}`} className="btn m-1" style={{ fontSize: '0.9rem', width: '100%', backgroundColor: '#07dbc1' }}>Book Now</Link>
+
+                                <Modal
+                                    isOpen={modalIsOpen}
+                                    onAfterOpen={afterOpenModal}
+                                    onRequestClose={closeModal}
+                                    style={customStyles}
+                                    contentLabel="Example Modal"
+                                >
+
+                                    <ViewDoctorDetailsModal closeTheModal={closeModal} doctor_id={props.id} />
+                                </Modal>
+                                <Link to={`/doctor/${props.id}`} className="btn m-1  doctor-card-button" style={{ fontSize: '0.9rem', backgroundColor: '#07dbc1' }}> <p>Book Now</p></Link>
                             </div>
                         </div>
                     </div>

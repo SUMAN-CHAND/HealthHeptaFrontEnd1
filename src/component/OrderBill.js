@@ -27,7 +27,7 @@ export default function OrderBill() {
       .then(res => {
         if (res.data !== null) {
           setOrders(res.data[0]);
-          setorderDetail(res.data[0])
+          setorderDetail(res.data[0][0])
         }
       })
       .catch(err => {

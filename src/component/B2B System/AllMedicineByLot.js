@@ -70,8 +70,8 @@ export default function AllMadicineByLot() {
     
     return (
         <div>
-            <AllB2BBanner />
-            <OfferDeals />
+            {/* <AllB2BBanner />
+            <OfferDeals /> */}
             <AllMadicineCard headline='Lot Product :-' products={lotproducts} image={lotimage} />
             <AllMadicineCard headline='Single Product :-' products={singleProduct} image={singleImage} />
             <AllMadicineCard headline='50% Off :-' products={off50products} image={off50image} />

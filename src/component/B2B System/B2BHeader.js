@@ -24,13 +24,13 @@ export default function B2BHeader() {
     useEffect(() => {
         axiosClient.get(`/sub_admin/profile-details`)
             .then(res => {
-                if(res.data.length>3){
+                if (res.data.length > 3) {
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
                     // console.log(loggedIn);
                     setUserLocation(res.data[2]);
                     setUserRole(res.data[3]);
-                }else if(res.data.length===3 ){
+                } else if (res.data.length === 3) {
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
                     setUserRole(res.data[2]);
@@ -107,6 +107,36 @@ export default function B2BHeader() {
             setChooseProduct(newFilter);
         }
     };
+
+    const [searchLocation, setSearchLocation] = useState([]);
+    
+    const [searchValue, setSearchValue] = useState({
+        input: ''
+      })
+      const handleLocationFilter = (event) => {
+        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+        const searchword = event.target.value.toLowerCase();
+    
+        const filtered = locations.filter((item) => {
+          const pin_code = item.pin_code.toString().toLowerCase();
+          const search = searchword.toLowerCase();
+          return pin_code.includes(search);
+        });
+        if (searchword === "") {
+            setSearchLocation([]);
+        } else {
+            setSearchLocation(filtered);
+        }
+      };
+
+      const setLocationValueTOFilter = async (pin_code) => {
+        setSearchValue({
+            input: pin_code,
+        });
+        setChooseLocation(pin_code);
+        setSearchLocation([]);
+    }
+
     const searchMedicine = async () => {
         try {
             const response = await axiosClient.post(`/b2b/search`, values);
@@ -136,9 +166,9 @@ export default function B2BHeader() {
         setChooseProduct([]);
     };
     const handleClickProfile = () => {
-        if(userRole == 'b2b_employee') {
+        if (userRole == 'b2b_employee') {
             navigate('/b2b/emp/home', { state: { loggedIn: true } });
-        }else{
+        } else {
             navigate('/sub-admin/home', { state: { loggedIn: true } });
         }
     };
@@ -188,13 +218,24 @@ export default function B2BHeader() {
                     </div>
                     <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'space-evenly' }} >
                         <div className="dropdown me-2 dropdown-location "  >
-                            <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
+                            {/* <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
                                 <option defaultValue={'choose your location..'} >choose your Pin Code..</option>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.pin_code}>{location.pin_code}</option>
                                 )
                                 )}
-                            </select>
+                            </select> */}
+                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Search Your Pin Code Here" value={searchValue.input} />
+
+                            {searchLocation.length !== 0 && (
+                                <div className="inputResult" >
+                                    {searchLocation.map((location, index) => {
+                                        return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px' }} key={index}  >{location.pin_code}</div></span>
+                                    }
+                                    )}
+                                </div>
+                            )}
+
 
                         </div>
                         <div className="search  me-2 search-location" >

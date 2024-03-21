@@ -69,7 +69,7 @@ export default function AllDoctors(props) {
                     <div key={img.id}>
                       {parseInt(doctor.doctor_imageId) === img.id ?
                         <>
-                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} fees={doctor.fees}  />
                         </>
                         : <>
                         </>}
@@ -97,7 +97,7 @@ export default function AllDoctors(props) {
                     <div key={img.id}>
                       {parseInt(doctor.doctor_imageId) === img.id ?
                         <>
-                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} />
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc}  fees={doctor.fees}   />
                         </>
                         : <>
                         </>}

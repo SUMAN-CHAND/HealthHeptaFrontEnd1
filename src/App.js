@@ -120,6 +120,8 @@ const B2BPaymentCompleteAction = lazy(() => import('./component/AdminPanel/B2BPa
 const LabStatusUpdate = lazy(() => import('./component/AdminPanel/LabStatusUpdate'));
 const PaymentCompleteAction = lazy(() => import('./component/AdminPanel/PaymentCompleteAction'));
 const PaymentCompleteActionBySub_Admin = lazy(() => import('./component/Service_Provider/PaymentCompleteActionBySub_Admin'));
+const LabPaymentCompleteActionBySub_Admin = lazy(() => import('./component/Service_Provider/LabPaymentCompleteActionBySub_Admin'));
+const AppoitmentPaymentCompleteActionBySub_Admin = lazy(() => import('./component/Service_Provider/AppoitmentPaymentCompleteActionBySub_Admin'));
 
 
 
@@ -286,6 +288,8 @@ function App() {
               <Route path='/sub-admin/home/timetable/doctor/:doctor_id' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><DoctorTimeTable /></Suspense></>} exact />
               <Route path='/sub-admin/orders/action/:id/:user_id/:product_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><OrderActionBySubAdmin /></Suspense></>} exact />
               <Route path='/sub-admin/payment/complete/action/:id/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><PaymentCompleteActionBySub_Admin /></Suspense></>} exact />
+              <Route path='/sub-admin/payment/labbooking/complete/action/:id/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><LabPaymentCompleteActionBySub_Admin /></Suspense></>} exact />
+              <Route path='/sub-admin/payment/appoiment/complete/action/:id/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AppoitmentPaymentCompleteActionBySub_Admin /></Suspense></>} exact />
 
             </Routes>
           </div>

@@ -557,6 +557,7 @@ export default function UserProfile() {
                                                 <th scope="col">Clinic</th>
                                                 {/* <th scope="col">Clinic Description</th> */}
                                                 <th scope="col">Appoiment Status</th>
+                                                <th scope="col">Appoiment Fees</th>
                                                 {/* <th scope="col">Appoiment Type</th> */}
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -576,6 +577,7 @@ export default function UserProfile() {
                                                         <td>{labBooking.sub_name}</td>
                                                         {/* <td>{appoiment.clinic_desc}</td> */}
                                                         <td>{labBooking.LabTestStatus}</td>
+                                                        <td>{labBooking.Price}</td>
                                                         {/* {labBooking.type_of_visite === 'online' ? <>
                                                             <td>{appoiment.type_of_visite}
                                                             console.log({appoiment.Phone_number})

@@ -81,7 +81,6 @@ export default function B2BEmployee_Login() {
                             type="tel"
                             required  placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
                         {/* <span className="validity"></span> */}
-                        {/* <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p> */}
                     </div>
                     <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700', position: 'relative' }} >
                         <label className='p-2' htmlFor="email">Email : </label>
