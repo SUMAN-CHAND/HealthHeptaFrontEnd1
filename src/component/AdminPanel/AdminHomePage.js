@@ -512,6 +512,12 @@ export default function AdminHomePage() {
     }
   };
 
+  // const [showBanner, setShowbanner] = useState(false);
+
+  const setAssignPinCode = (id) => {
+    navigate(`/superadmin/assign/pincode/${id}`)
+  }
+
   const renDataStyle = {
     backgroundColor: 'rgb(237 237 237)',
     display: 'flex',
@@ -572,7 +578,7 @@ export default function AdminHomePage() {
                 <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
                   Payments
                 </button>
-                <ul class="dropdown-menu info" style={{backgroundColor:'#9eeaf9'}} aria-labelledby="dropdownMenuButton1">
+                <ul class="dropdown-menu info" style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
                   <li><Link to="#paymentcomplete" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Completed Payment</Link></li>
                   <li><Link to="#paymentpending" onClick={showPayments} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Payment</Link></li>
                 </ul>
@@ -583,7 +589,7 @@ export default function AdminHomePage() {
                 <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
                   Partner
                 </button>
-                <ul class="dropdown-menu"style={{backgroundColor:'#9eeaf9'}} aria-labelledby="dropdownMenuButton1">
+                <ul class="dropdown-menu" style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
                   <li><Link to="#partnerapproved" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Approved Partner</Link></li>
                   <li><Link to="#partnerpending" onClick={showPartner} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Partner</Link></li>
                   <li><Link to="#partner-commission" onClick={showPartnerCommission} className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Partner Commission</Link></li>
@@ -1180,25 +1186,21 @@ export default function AdminHomePage() {
                 <p className='p-1 m-1'>Search Partner by Phone Number here</p>
                 <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
-              {searchPartner.length > 0 &&
-                <div className="container text-dark" style={renDataStyle}>
-                  {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
-                    <Link to="#partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Partner </Link>
-                    <Link to="#newpartner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Partner</Link>
-                  </div> */}
-                  <div id='partner'>
-                    <table className="table table-striped">
-                      <thead className='thead-dark'>
-                        <tr>
-                          <th scope="col"> Id</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Phone No</th>
-                          <th scope="col">Aadhaar Card</th>
-                          <th scope="col">Pan Card</th>
-                          <th scope="col">Permission</th>
-                          <th scope="col">Action</th>
-                        </tr>
-                      </thead>
+              <div className="container text-dark" style={renDataStyle}>
+                <div id='partner'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Aadhaar Card</th>
+                        <th scope="col">Pan Card</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {searchPartner.length > 0 &&
                       <tbody>
                         {searchPartner.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
                           <tr key={index}>
@@ -1218,35 +1220,10 @@ export default function AdminHomePage() {
 
 
                       </tbody>
-                    </table>
-                  </div>
-                </div>
-              }
-            </div>
-            <div className="tab-pane fade  text-light" id="partnerapproved" role="tabpanel" aria-labelledby="list-partnerapproved-list">
-              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Approved Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
-              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <p className='p-1 m-1'>Search Partner by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
-              </div>
-              {searchPartner.length > 0 &&
-                <div className="container text-dark" style={renDataStyle}>
-
-                  <div id='partner'>
-                    <table className="table table-striped">
-                      <thead className='thead-dark'>
-                        <tr>
-                          <th scope="col"> Id</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Phone No</th>
-                          <th scope="col">Aadhaar Card</th>
-                          <th scope="col">Pan Card</th>
-                          <th scope="col">Permission</th>
-                          <th scope="col">Action</th>
-                        </tr>
-                      </thead>
+                    }
+                    {searchPartner.length === 0 &&
                       <tbody>
-                        {searchPartner.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                        {partners.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
                           <tr key={index}>
                             <th scope="row">{partner.id}</th>
                             <td>{partner.name}</td>
@@ -1264,10 +1241,78 @@ export default function AdminHomePage() {
 
 
                       </tbody>
-                    </table>
-                  </div>
+                    }
+                  </table>
                 </div>
-              }
+              </div>
+
+            </div>
+            <div className="tab-pane fade  text-light" id="partnerapproved" role="tabpanel" aria-labelledby="list-partnerapproved-list">
+              <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Approved Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Partner by Phone Number here</p>
+                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              <div className="container text-dark" style={renDataStyle}>
+
+                <div id='partner'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col"> Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Aadhaar Card</th>
+                        <th scope="col">Pan Card</th>
+                        <th scope="col">Permission</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    {searchPartner.length > 0 &&
+                      <tbody>
+                        {searchPartner.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{partner.id}</th>
+                            <td>{partner.name}</td>
+                            <td>{partner.ph_num}</td>
+                            <td>{partner.aadhaar}</td>
+                            <td>{partner.pan}</td>
+                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    }
+                    {searchPartner.length === 0 &&
+                      <tbody>
+                        {partners.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                          <tr key={index}>
+                            <th scope="row">{partner.id}</th>
+                            <td>{partner.name}</td>
+                            <td>{partner.ph_num}</td>
+                            <td>{partner.aadhaar}</td>
+                            <td>{partner.pan}</td>
+                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                            <td>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+
+                              <button className='btn btn-info m-1' onClick={() => setAssignPinCode(partner.id)}>Assign PinCode</button>
+                            </td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    }
+                  </table>
+                </div>
+              </div>
+
               {/* <div className="container text-dark" style={renDataStyle}>
                 {searchPartner.length = 0 &&
 
@@ -1318,20 +1363,21 @@ export default function AdminHomePage() {
                 <p className='p-1 m-1'>Search Employee by Phone Number here</p>
                 <input className="form-control" name='input' onChange={handleEmployeeFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
-              {searchEmployee.length > 0 &&
-                <div className="container text-dark" style={renDataStyle}>
-                  <div id='b2bemployee'>
-                    <table className="table table-striped">
-                      <thead className='thead-dark'>
-                        <tr>
-                          <th scope='col'>Index</th>
-                          <th scope="col">Employee Id</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Phone No</th>
-                          <th scope="col">Email</th>
-                          <th scope="col">Permission</th>
-                        </tr>
-                      </thead>
+              <div className="container text-dark" style={renDataStyle}>
+                <div id='b2bemployee'>
+                  <table className="table table-striped">
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope='col'>Index</th>
+                        <th scope="col">Employee Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone No</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Permission</th>
+                      </tr>
+                    </thead>
+                    {searchEmployee.length > 0 &&
+
                       <tbody>
                         {searchEmployee.map((employee, index) => (
                           <tr key={index}>
@@ -1346,11 +1392,29 @@ export default function AdminHomePage() {
 
 
                       </tbody>
-                    </table>
-                  </div>
+                    }
+                    {searchEmployee.length === 0 &&
 
+                      <tbody>
+                        {employees.map((employee, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index}</th>
+                            <th scope="row">{employee.id}</th>
+                            <td>{employee.name}</td>
+                            <td>{employee.ph_num}</td>
+                            <td>{employee.email}</td>
+                            <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
+                          </tr>
+                        ))}
+
+
+                      </tbody>
+                    }
+                  </table>
                 </div>
-              }
+
+              </div>
+              
             </div>
             <div className="tab-pane fade  text-light" id="delivery-partner" role="tabpanel" aria-labelledby="list-delivery-partner-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Delivery Partner ||</h2> <Link to='addnew/delivery-partner'><button className='btn btn-primary mx-3 my-2' >Add New Delivery Partner</button></Link></span>

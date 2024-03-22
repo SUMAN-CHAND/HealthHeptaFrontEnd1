@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
 
+let nextId = 0;
+
 export default function CompelteProfileFrom() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
@@ -33,7 +35,12 @@ export default function CompelteProfileFrom() {
         pin: '',
         SubAdminImageId: null,
         LicenceImageId: null,
+        allPinCodes:[],
     })
+
+    // const [pinCodes, setPinCodes] = useState({
+    //     pin_codes:'',
+    // })
 
     // const [values, setValues] = useState({
     //     // ...other product data fields
@@ -52,13 +59,26 @@ export default function CompelteProfileFrom() {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         // setRole(event.target.value)
     }
+  
+
+
+    const [pin_code, setPinCode] = useState('');
+    const [allPinCodes, setAllPinCodes] = useState([]);
+    // console.log(allPinCodes)
+
+    // const handlePinCodeInput = (event) => {
+    //     setPinCodes(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    //     // setRole(event.target.value)
+    // }
+
+
     const navigate = useNavigate();
     const handleSubmit = async (event) => {
         if (values.OpeningTime[0] === values.CloseingTime[0]) {
             alert("Opening Time and Closeing Time Can not be same!!!");
         } else {
             event.preventDefault();
-            axiosClient.post(`/sub_admin/complete_profile`, values)
+            axiosClient.post(`/sub_admin/complete_profile`, [values,allPinCodes])
                 .then(res => {
                     if (res.data === 'success') {
                         alert('Sign up  Successfully!!');
@@ -169,13 +189,12 @@ export default function CompelteProfileFrom() {
                                     id="phone"
                                     type="tel"
                                     required
-                                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Enter  Owner phone number" style={{ width: '33vw', border: '1px solid gray', borderRadius: '4px' }} />
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Enter  Owner phone number" style={{ width: '33vw', border: '1px solid gray', borderRadius: '1px' }} />
                                 <span className="validity"></span>
-                                <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                             </div>
                         </div>
 
-                        <div style={{ textAlign: 'left' }}>
+                        <div style={{ textAlign: 'left', fontWeight: '700' }}>
                             <label className='m-2 p-3'>Add {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>} Full Address :- </label>
                             <div className='complete_profile_divs'>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
@@ -214,6 +233,50 @@ export default function CompelteProfileFrom() {
                                 </div>
                             </div>
                         </div>
+                        <div className='complete_profile_divs'>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="owner_name"> {role === "Medicine Shop" ? <>Enter Served PinCodes</> : <></>}  <span className='text-danger'>*</span>: </label><br></br>
+                                {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Owner Name'
+                                    name='pin_codes' onChange={handlePinCodeInput} /><br /> */}
+                                {/* <h1>Inspiring sculptors:</h1> */}
+
+                                <input
+                                    value={pin_code}
+                                    onChange={e => setPinCode(e.target.value)}
+                                    className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Served PinCodes'
+                                    pattern="[0-9]{3}[0-9]{3}"
+                                />
+                                {/* <span className="validity"></span> */}
+
+                                <button type='button' onClick={() => {
+                                    allPinCodes.push({
+                                        id: nextId++,
+                                        pin_code: pin_code,
+                                    });
+                                    setPinCode('')
+                                }} className='btn btn-primary'>Add</button>
+                                <ul>
+                                    {allPinCodes.map(pin_codes => (
+                                        <li key={pin_codes.id}>Pin Code: {pin_codes.pin_code}</li>
+                                    ))}
+                                </ul>
+                                {/* <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="owner_phonenumber">{role === "Medicine Shop" ? <>Pharmacy Shop Owner</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory Owner</> : <></>}{role === 'clinic' ? <>Clinic Owner</> : <></>}  Phone Number <span className='text-danger'>*</span>: </label><br></br>
+                              
+                                <input
+                                    className='m-2 p-1'
+                                    onChange={handleInput}
+                                    name='owner_phonenumber'
+                                    id="phone"
+                                    type="tel"
+                                    required
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="Enter  Owner phone number" style={{ width: '33vw', border: '1px solid gray', borderRadius: '4px' }} />
+                                <span className="validity"></span>
+                                <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
+                            </div> */}
+                            </div>
+                        </div>
+
                         <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >
                             <label className='p-1' htmlFor="image">Add {role === "Medicine Shop" ? <>Pharmacy Shop</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory</> : <></>}{role === 'clinic' ? <>Clinic</> : <></>}  Image </label>
                             {/* <input className='m-2  p-1' type="file" style={{ width: '90%' }} placeholder='Enter Product image'

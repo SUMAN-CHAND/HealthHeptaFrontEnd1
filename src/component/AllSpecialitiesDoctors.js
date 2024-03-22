@@ -5,7 +5,7 @@ import SpecialitiesDoctorsCard from './SpecialitiesDoctorsCard';
 import axiosClient from './axiosClient';
 import ClipLoader from "react-spinners/ClipLoader";
 import { Helmet } from 'react-helmet';
-export default function AllSpecialitiesDoctors(props) {
+export default function AllSpecialitiesDoctors() {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -28,23 +28,56 @@ export default function AllSpecialitiesDoctors(props) {
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-  if (props.location === undefined) {
-    useEffect(() => {
-      axiosClient.get(`/specializes-doctors`).then((res) => {
-        // Handle response
-        if (res.data !== null) {
-          setDoctors(res.data[0]);
-          setLoading(true);
-        }
-      })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
 
-    }, [])
+  const current_pin_code = sessionStorage.getItem('current_pin_code');
+  console.log(current_pin_code)
 
-  }
+  
+  // const fetchLocations = async () => {
+    // useEffect(() => {
+    if (current_pin_code === null) {
+      useEffect(() => {
+        axiosClient.get(`/specializes-doctors`).then((res) => {
+          // Handle response
+          if (res.data !== null) {
+            setDoctors(res.data[0]);
+            setLoading(true);
+          }
+        })
+          .catch(err => {
+            // Handle errors
+            console.error(err);
+          });
+
+      }, [])
+
+    }
+    if (current_pin_code !== null) {
+      useEffect(() => {
+        axiosClient.get(`/specializes-doctors/${current_pin_code}`).then((res) => {
+          // Handle response
+          console.log(current_pin_code)
+          if (res.data !== null) {
+            setDoctors(res.data[0]);
+            setLoading(true);
+          }
+        })
+          .catch(err => {
+            // Handle errors
+            console.error(err);
+          });
+
+      }, []);
+
+    }
+
+  // };
+
+
+    // fetchLocations();
+  // }, [current_pin_code]); // Re-fetch data on pincode change
+
+
   return (
     <>
       <Helmet>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill }
   from 'react-icons/bs'
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
+  import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line }
   from 'recharts';
 import { useEffect, useState } from 'react'
 import axiosClient from '../axiosClient';
@@ -34,7 +34,7 @@ function Dashboard() {
 
 
 
-  useEffect(() =>  {
+  useEffect(() => {
     axiosClient.get(`/sub-admin/dashboard/details`)
       .then(response => {
         // Handle response
@@ -164,10 +164,11 @@ function Dashboard() {
     },
   ];
 
+  // console.log(data,salesReport)
 
 
   return (
-    <main className='main-container dashboard-main-container' style={{fontSize:'13px'}}>
+    <main className='main-container dashboard-main-container' style={{ fontSize: '13px' }}>
       <div className='main-title'>
         <h3 className='text-dark'>DASHBOARD</h3>
       </div>
@@ -182,7 +183,7 @@ function Dashboard() {
                     <div className="h6 mb-0 font-weight-bold text-gray-800"><button type="button" class="btn btn-outline-info">Shop Now</button></div>
                   </div>
                   <div className="col-auto">
-                    
+
                     <div className="text-xs font-weight-bold text-primary text-uppercase mb-1 text-right"></div>
                     <div className="h6 mb-0 font-weight-bold text-gray-800 text-right"></div>
                   </div>
@@ -400,7 +401,7 @@ function Dashboard() {
       </div>
 
 
-      <div className='charts'>
+      {/* <div className='charts'>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             width={500}
@@ -424,6 +425,53 @@ function Dashboard() {
         </ResponsiveContainer>
 
         <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            width={500}
+            height={300}
+            data={salesReport}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="purchase" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+
+      </div> */}
+
+      <div className='charts' style={{display:'flex',height:'40vh'}}>
+        <ResponsiveContainer width="50%" height="100%">
+          <BarChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="user" fill="#8884d8" />
+            <Bar dataKey="order" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
+
+        <ResponsiveContainer width="50%" height="100%">
           <LineChart
             width={500}
             height={300}

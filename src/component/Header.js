@@ -1,15 +1,56 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense, lazy } from 'react'
 import logo from '../img/logo.jpeg';
 import {
     Link, useParams
 } from "react-router-dom";
 import './style.css'
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from './axiosClient';
 import { Helmet } from 'react-helmet';
+import HashLoader from 'react-spinners/HashLoader';
+import Modal from 'react-modal';
+const ChoosePinCodeModal = lazy(() => import('./ChoosePinCodeModal'));
+
+
 // import { Helmet, HelmetProvider } from 'react-helmet-async';
 require('dotenv').config();
 export default function Header() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const customStyles = {
+        content: {
+            overflowY: 'hidden',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    };
+
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function afterOpenModal() {
+        document.body.style.backgroundColor = 'rgb(171 165 165 / 15%)';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.body.style.overflow = 'unset';
+        setIsOpen(false);
+    }
+
+
     const navigate = useNavigate();
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
@@ -40,7 +81,7 @@ export default function Header() {
         if (userLocation !== 0 || userLocation !== undefined) {
             setSelectLocation(userLocation)
         }
-    },[userLocation])
+    }, [userLocation])
     useEffect(() => {
         axiosClient.get(`/locations`)
             .then(res => {
@@ -125,33 +166,33 @@ export default function Header() {
     // }
 
     const [searchLocation, setSearchLocation] = useState([]);
-    
+
     const [searchValue, setSearchValue] = useState({
         input: ''
-      })
-      const handleLocationFilter = (event) => {
-        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        const searchword = event.target.value.toLowerCase();
-    
-        const filtered = locations.filter((item) => {
-          const pin_code = item.pin_code.toString().toLowerCase();
-          const search = searchword.toLowerCase();
-          return pin_code.includes(search);
-        });
-        if (searchword === "") {
-            setSearchLocation([]);
-        } else {
-            setSearchLocation(filtered);
-        }
-      };
+    })
+    // const handleLocationFilter = (event) => {
+    //     setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    //     const searchword = event.target.value.toLowerCase();
 
-      const setLocationValueTOFilter = async (pin_code) => {
-        setSearchValue({
-            input: pin_code,
-        });
-        setChooseLocation(pin_code);
-        setSearchLocation([]);
-    }
+    //     const filtered = locations.filter((item) => {
+    //         const pin_code = item.pin_code.toString().toLowerCase();
+    //         const search = searchword.toLowerCase();
+    //         return pin_code.includes(search);
+    //     });
+    //     if (searchword === "") {
+    //         setSearchLocation([]);
+    //     } else {
+    //         setSearchLocation(filtered);
+    //     }
+    // };
+
+    // const setLocationValueTOFilter = async (pin_code) => {
+    //     setSearchValue({
+    //         input: pin_code,
+    //     });
+    //     setChooseLocation(pin_code);
+    //     setSearchLocation([]);
+    // }
 
     const searchMedicne = async () => {
         try {
@@ -185,6 +226,15 @@ export default function Header() {
     const handleClick = event => {
         setChooseProduct([]);
     };
+    let current_pin_code;
+    current_pin_code = sessionStorage.getItem('current_pin_code');
+    useEffect(() => {
+        setSearchValue({
+            input: current_pin_code,
+        });
+
+    }, [current_pin_code])
+    // console.log(searchValue)
     return (
         // <HelmetProvider>
         <>
@@ -246,16 +296,42 @@ export default function Header() {
                             </select> */}
                             {/* onClick={() => setLocationValueTOFilter(location.pin_code)} */}
                             {/* <input className="form-control header-location-1 header-location-mobile" name='input' onChange={handleLocationFilter} placeholder="Search your pin code here" value={locationvalue.input}  /> */}
-                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Search Your Pin Code Here" value={searchValue.input}  />
+                            {/* <input className="form-control" name='input' placeholder="Pin Code" value={searchValue.input} onClick={handleShow} /> */}
+                            {/* <button className="btn btn-light dropdown-toggle header-location-1 header-location-mobile" name='input' type="button" placeholder="Pin Code" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" value={searchValue.input} onClick={handleShow} >
+                                Pin Code
+                            </button> */}
+                            <select className="btn btn-light dropdown-toggle header-location-1 header-location-mobile" name='input' type="button" placeholder="Pin Code" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"  onClick={handleShow} >
+                                <option value={searchValue.input}>{searchValue.input !== null ? <>{searchValue.input}</> : <>Pin Code..</>}</option>
+                            </select>
 
-                            {searchLocation.length !== 0 && (
+                            <Offcanvas show={show} onHide={handleClose}>
+                                <Offcanvas.Header closeButton>
+                                    <Offcanvas.Title>
+                                        <h5>Find Nearby Services</h5>
+                                    </Offcanvas.Title>
+                                </Offcanvas.Header>
+                                <Offcanvas.Body>
+                                    <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChoosePinCodeModal onHide={handleClose} /></Suspense> </div>
+                                </Offcanvas.Body>
+                            </Offcanvas>
+                            {/* <Modal
+                            isOpen={modalIsOpen}
+                            onAfterOpen={afterOpenModal}
+                            onRequestClose={closeModal}
+                            style={customStyles}
+                            contentLabel="Example Modal"
+                        >
+                            <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChoosePinCodeModal closeTheModal={closeModal} /></Suspense> </div>
+                        </Modal> */}
+
+                            {/* {searchLocation.length !== 0 && (
                                 <div className="inputResult" >
                                     {searchLocation.map((location, index) => {
-                                        return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px'}} key={index}  >{location.pin_code}</div></span>
+                                        return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px' }} key={index}  >{location.pin_code}</div></span>
                                     }
                                     )}
                                 </div>
-                            )}
+                            )} */}
 
                         </div>
                         <div className="search  me-2 search-location" >
@@ -307,8 +383,8 @@ export default function Header() {
                                         }
                                         {
                                             loggedIn.role === 'admin' ? <>
-                                                 <ul className="dropdown-menu">
-                                                    <li><Link to='/profile' className="dropdown-item">Profile</Link></li> 
+                                                <ul className="dropdown-menu">
+                                                    <li><Link to='/profile' className="dropdown-item">Profile</Link></li>
                                                     <li><Link className="dropdown-item" onClick={handleLogout} >Log out</Link></li>
                                                 </ul>
                                             </> : <>
@@ -343,20 +419,48 @@ export default function Header() {
 
                 </nav>
 
-                <div style={{display:'flex',justifyContent:'center',backgroundColor:"rgb(7, 219, 193)" , padding:'2px 0px'}}>
+                <div style={{ display: 'flex', justifyContent: 'center', backgroundColor: "rgb(7, 219, 193)", padding: '2px 0px' }}>
                     <div className="dropdown-location-under "  >
-                        <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className=" header-location-mobile" aria-expanded="false" >
+                        {/* <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className=" header-location-mobile" aria-expanded="false" >
                             <option defaultValue={'choose your location..'} ><p>choose your Pin Code..</p></option>
                             {locations.map((location, index) => (
                                 <option key={index} value={location.pin_code}><p>{location.pin_code}</p></option>
                             )
                             )}
-                        </select>
+                        </select> */}
+                        {/* <input className="form-control" name='input' placeholder="Pin Code" value={searchValue.input} onClick={handleShow} /> */}
+                        <select className="btn btn-light dropdown-toggle header-location-1 header-location-mobile" name='input' type="button" placeholder="Pin Code" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"  onClick={handleShow} >
+                                <option value={searchValue.input}>{searchValue.input !== null ? <>{searchValue.input}</> : <>Pin Code..</>}</option>
+                            </select>
+
+                            <Offcanvas show={show} onHide={handleClose}>
+                                <Offcanvas.Header closeButton>
+                                    <Offcanvas.Title>
+                                        <h5>Find Nearby Services</h5>
+                                    </Offcanvas.Title>
+                                </Offcanvas.Header>
+                                <Offcanvas.Body>
+                                    <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChoosePinCodeModal onHide={handleClose} /></Suspense> </div>
+                                </Offcanvas.Body>
+                            </Offcanvas>
+                            
+                        {/* <input className="form-control  header-location-mobile" name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
+
+
+                        {searchLocation.length !== 0 && (
+                            <div className="inputResult " >
+                                {searchLocation.map((location, index) => {
+                                    return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px' }} key={index}  >{location.pin_code}</div></span>
+                                }
+                                )}
+                            </div>
+                        )} */}
+
 
                     </div>
                     <div className="search  me-2 mx-2 location-search-under" >
-                        <div style={{ display: 'flex',width:'60vw' }}>
-                            <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                        <div style={{ display: 'flex', width: '60vw' }}>
+                            <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{ fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                             <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>

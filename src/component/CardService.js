@@ -51,7 +51,7 @@ export default function CardService(props) {
                         <div className="card-body pt-1" style={cardText}>
                             <p className="card-text">{props.text}</p>
 
-                            <Link className="btn btn-primary btn-text" onClick={openModal}><p>{props.btnText}</p></Link>
+                            {/* <Link className="btn btn-primary btn-text" onClick={openModal}><p>{props.btnText}</p></Link>
                             <Modal
                                 isOpen={modalIsOpen}
                                 onAfterOpen={afterOpenModal}
@@ -60,7 +60,7 @@ export default function CardService(props) {
                                 contentLabel="Example Modal"
                             >
                                 <props.component closeTheModal={closeModal} />
-                            </Modal>
+                            </Modal> */}
                         </div>
                     </div>
                 </div>
