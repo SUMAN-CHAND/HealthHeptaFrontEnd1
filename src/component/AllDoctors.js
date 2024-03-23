@@ -30,23 +30,69 @@ export default function AllDoctors(props) {
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-  if (props.location === undefined) {
-    useEffect(() => {
-      axiosClient.get(`/doctors`).then((res) => {
-        // Handle response
-        if (res.data !== null) {
-          setDoctors(res.data[0]);
-          setImages(res.data[1]);
-          setLoading(true);
-        }
-      })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
+  let [noTestPresent, setNoTestPresent] = useState(false);
 
-    }, [])
-  }
+  // if (props.location === undefined) {
+  //   useEffect(() => {
+  //     axiosClient.get(`/doctors`).then((res) => {
+  //       // Handle response
+  //       if (res.data !== null) {
+  //         setDoctors(res.data[0]);
+  //         setImages(res.data[1]);
+  //         setLoading(true);
+  //       }
+  //     })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+
+  //   }, [])
+  // }
+
+  let current_pin_code;
+  current_pin_code = sessionStorage.getItem('current_pin_code');
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        if (current_pin_code === null) {
+          axiosClient.get(`/doctors`).then((res) => {
+            // Handle response
+            if (res.data !== null) {
+              setDoctors(res.data[0]);
+              setImages(res.data[1]);
+              setLoading(true);
+            }
+          })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
+        } else {
+          axiosClient.get(`/doctors/${current_pin_code}`).then((res) => {
+            // Handle response
+            if (res.data !== null) {
+              setDoctors(res.data[0]);
+              setImages(res.data[1]);
+              setLoading(true);
+              setNoTestPresent(false);
+            } else {
+              setNoTestPresent(true);
+            }
+          })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDoctors();
+  }, [current_pin_code]);
 
 
 
@@ -63,13 +109,13 @@ export default function AllDoctors(props) {
           {/* {doctors!== undefined ? <> */}
           {loading ?
             <Carousel responsive={responsive} className='allDoctorsCarousel'>
-              {doctors.map(doctor => (
+              {doctors && doctors.map(doctor => (
                 <div key={doctor.id}>
                   {image.map((img) => (
                     <div key={img.id}>
                       {parseInt(doctor.doctor_imageId) === img.id ?
                         <>
-                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} fees={doctor.fees}  />
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} fees={doctor.fees} />
                         </>
                         : <>
                         </>}
@@ -80,6 +126,9 @@ export default function AllDoctors(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           {/* </> : <>
 
         </>} */}
@@ -91,13 +140,13 @@ export default function AllDoctors(props) {
           {/* {doctors!== undefined ? <> */}
           {loading ?
             <Carousel responsive={responsive} className='allDoctorsCarousel'>
-              {doctors.filter(doctor => doctor.type_of_visite.toLowerCase() === 'online').map(doctor => (
+              {doctors && doctors.filter(doctor => doctor.type_of_visite.toLowerCase() === 'online').map(doctor => (
                 <div key={doctor.id}>
                   {image.map((img) => (
                     <div key={img.id}>
                       {parseInt(doctor.doctor_imageId) === img.id ?
                         <>
-                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc}  fees={doctor.fees}   />
+                          <Doctors imgpath={img.path} name={doctor.doc_name} description={doctor.doc_desc} location={doctor.location} clnics={doctor.clnic} id={doctor.id} clinic_descs={doctor.clinic_desc} fees={doctor.fees} />
                         </>
                         : <>
                         </>}
@@ -108,6 +157,9 @@ export default function AllDoctors(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           {/* </> : <>
 
         </>} */}

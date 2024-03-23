@@ -40,13 +40,21 @@ export default function AllServices() {
       </Helmet>
       <div>
         <motion.div
+           className="box container"
            animate={{
-            x: 0,
+            x: [500,0],
             y: 0,
             scale: 1,
             rotate: 0,
-          }}
-          className="container">
+           }}
+           transition={{
+             duration: 1,
+             ease: "easeInOut",
+            //  times: [0, 0.2, 0.5, 0.8, 1],
+            //  repeat: onemptied,
+            //  repeatDelay: 1
+           }}
+          >
           <h3 className=''>|| Affordable Healthcare Services For You ||</h3>
           <Carousel className='ourserviceCarousel' responsive={responsive} style={{ height: '53vh' }}>
             <div><CardService img={doctor} title="Visit a Doctor" text="Search the best doctors, specialities, clinic & hospital nearest to you." /></div>

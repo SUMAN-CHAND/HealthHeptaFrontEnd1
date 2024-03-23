@@ -85,12 +85,14 @@ export default function ChoosePinCodeModal({ onHide }) {
     }, [])
 
     const [searchLocation, setSearchLocation] = useState([]);
+    const [Loading, setLoading] = useState(false);
 
     const [searchValue, setSearchValue] = useState({
         input: ''
     })
     const handleLocationFilter = (event) => {
-        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }));
+        setLoading(true)
         const searchword = event.target.value.toLowerCase();
         // console.log(searchword)
         // console.log(locations)
@@ -100,11 +102,13 @@ export default function ChoosePinCodeModal({ onHide }) {
             return pin_code.includes(search);
         });
         if (searchword === "") {
+            setLoading(false)
             setSearchLocation([]);
         } else {
             // console.log(filtered)
             setSearchLocation(filtered);
         }
+        
     };
 
     const setLocationValueTOFilter = async (pin_code) => {
@@ -115,12 +119,13 @@ export default function ChoosePinCodeModal({ onHide }) {
         sessionStorage.setItem("current_pin_code", pin_code);
         onHide();
         setSearchLocation([]);
+        // window.location.reload();
     }
 
 
     return (
         <div className="" style={{ width: '90%' }}>
-            <input className="form-control" style={{height:'50px'}} name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
+            <input className="form-control" style={{ height: '50px' }} name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
 
             {searchLocation.length !== 0 ? <>
                 <div className="inputResult" >
@@ -131,7 +136,16 @@ export default function ChoosePinCodeModal({ onHide }) {
                     }
                     )}
                 </div>
-            </> : <><p style={{ padding: '15px'}}>No data found for this pincode!!</p></>}
+            </> : <>
+                {/* <p style={{ padding: '15px' }}>No data found for this pincode!!</p> */}
+            </>}
+            {Loading ? <>
+                <p style={{ padding: '15px' }}>No data found for this pincode!!</p>
+            </>:<>
+            <p style={{ padding: '15px' }}>Search Your pincode Here!!</p>
+
+            </> 
+            }
 
 
             {/* <h1>Find Nearby Services</h1> */}

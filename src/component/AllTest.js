@@ -29,40 +29,94 @@ export default function AllTest(props) {
   const [labTests, setLabTests] = useState([]);
   const [image, setImages] = useState([]);
   let [loading, setLoading] = useState(false);
+  let [noTestPresent, setNoTestPresent] = useState(false);
 
-  if (props.location === undefined) {
-    useEffect(() => {
-      axiosClient.get(`/laboratory/lab_tests`)
+  // if (props.location === undefined) {
+  //   useEffect(() => {
+  //     axiosClient.get(`/laboratory/lab_tests`)
+  //       .then(response => {
+  //         // Handle response
+  //         if (response.data !== null) {
+  //           setLabTests(response.data[0]);
+  //           setImages(response.data[1])
+  //           setLoading(true);
+  //         }
+  //       })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+  //   }, [])
+  // } else {
+  //   useEffect(() => {
+  //     axiosClient.get(`/madicine/medicineshops/${props.location}`)
+  //       .then(response => {
+  //         // Handle response
+  //         if (response.data !== null) {
+  //           setLabTests(response.data)
+  //           setImages(response.data[1])
+  //           setLoading(true);
+  //         }
+  //       })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+  //   }, [])
+  // }
+
+
+  let current_pin_code;
+  current_pin_code = sessionStorage.getItem('current_pin_code');
+
+  useEffect(() => {
+    const fetchLabs = async () => {
+      try {
+        if (current_pin_code === null) {
+          axiosClient.get(`/laboratory/lab_tests`)
+            .then(response => {
+              // Handle response
+              console.log(response.data)
+              if (response.data !== null) {
+                setLabTests(response.data[0]);
+                setImages(response.data[1])
+                setLoading(true);
+              }
+            })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
+        } else {
+          axiosClient.get(`/laboratory/lab_tests/${current_pin_code}`)
         .then(response => {
           // Handle response
-          if (response.data !== null) {
-            setLabTests(response.data[0]);
+          // console.log(response.data[0])
+          if (response.data[0] !== undefined) {
+            setLabTests(response.data[0])
             setImages(response.data[1])
             setLoading(true);
+            setNoTestPresent(false);
+          }else{
+            setNoTestPresent(true);
           }
         })
         .catch(err => {
           // Handle errors
           console.error(err);
         });
-    }, [])
-  } else {
-    useEffect(() => {
-      axiosClient.get(`/madicine/medicineshops/${props.location}`)
-        .then(response => {
-          // Handle response
-          if (response.data !== null) {
-            setLabTests(response.data)
-            setImages(response.data[1])
-            setLoading(true);
-          }
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
-    }, [])
-  }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLabs();
+  }, [current_pin_code]);
+
+
+
+
   return (
     <>
       <Helmet>
@@ -74,7 +128,7 @@ export default function AllTest(props) {
           <h3 className='py-1'>||Browse All Type Of Tests||</h3>
           {loading ?
             <Carousel responsive={responsive} className='allLabTestCarousel'>
-              {labTests.map(labTest => (
+              {labTests && labTests.map(labTest => (
                 <div key={labTest.Test_id}>
                   {image.map((img) => (
                     <div key={img.id}>
@@ -91,6 +145,10 @@ export default function AllTest(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+
+            {noTestPresent?<>
+              <p>No  Lab Test Present in this location</p>
+            </>:<></>}
         </div>
 
       </div>

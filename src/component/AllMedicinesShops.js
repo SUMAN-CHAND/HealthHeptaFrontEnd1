@@ -10,40 +10,43 @@ export default function AllMedicinesShops(props) {
   const [madicalPage, setMadicalPage] = useState([])
   const [image, setImages] = useState([]);
   let [loading, setLoading] = useState(false);
-  if (props.location === undefined) {
-    useEffect(() => {
-      axiosClient.get(`/madicine/medicineshops`)
-        .then(response => {
-          // Handle response
-          if (response.data !== null) {
-            setMadicalPage(response.data[0]);
-            setImages(response.data[1]);
-            setLoading(true);
-          }
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
-    }, [])
-  } else {
-    useEffect(() => {
-      axiosClient.get(`/madicine/medicineshops/${props.location}`)
-        .then(response => {
-          // Handle response
-          if (response.data !== null) {
-            setMadicalPage(response.data)
-            setLoading(true);
+  let [noTestPresent, setNoTestPresent] = useState(false);
 
-          }
-          // console.log(response.data);
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
-    }, [])
-  }
+  // if (props.location === undefined) {
+  //   useEffect(() => {
+  // axiosClient.get(`/madicine/medicineshops`)
+  //   .then(response => {
+  //     // Handle response
+  //     if (response.data !== null) {
+  //       setMadicalPage(response.data[0]);
+  //       setImages(response.data[1]);
+  //       setLoading(true);
+  //     }
+  //   })
+  //   .catch(err => {
+  //     // Handle errors
+  //     console.error(err);
+  //   });
+  //   }, [])
+  // } else {
+  //   useEffect(() => {
+  //     axiosClient.get(`/madicine/medicineshops/${props.location}`)
+  //       .then(response => {
+  //         // Handle response
+  //         if (response.data !== null) {
+  //           setMadicalPage(response.data[0]);
+  //           setImages(response.data[1]);
+  //           setLoading(true);
+
+  //         }
+  //         // console.log(response.data);
+  //       })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+  //   }, [])
+  // }
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -63,6 +66,58 @@ export default function AllMedicinesShops(props) {
       items: 2
     }
   };
+
+
+  let current_pin_code;
+  current_pin_code = sessionStorage.getItem('current_pin_code');
+
+  useEffect(() => {
+    const fetchLabs = async () => {
+      try {
+        if (current_pin_code === null) {
+          axiosClient.get(`/madicine/medicineshops`)
+            .then(response => {
+              // Handle response
+              if (response.data !== null) {
+                setMadicalPage(response.data[0]);
+                setImages(response.data[1]);
+                setLoading(true);
+              }
+            })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
+        } else {
+          axiosClient.get(`/madicine/medicineshops/${current_pin_code}`)
+        .then(response => {
+          // Handle response
+          // console.log(response.data)
+          if (response.data !== null ) {
+            setMadicalPage(response.data[0]);
+            setImages(response.data[1]);
+            setLoading(true);
+            setNoTestPresent(false);
+          }else{
+            setNoTestPresent(true);
+          }
+        })
+        .catch(err => {
+          // Handle errors
+          console.error(err);
+        });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchLabs();
+  }, [current_pin_code]);
+
+
+
+
   return (
     <>
       <Helmet>
@@ -74,7 +129,7 @@ export default function AllMedicinesShops(props) {
           <h3 className='py-1'>||Best Medicines Seller In Your Location ||</h3>
           {loading ?
             <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
-              {madicalPage.map(madical => (
+              {madicalPage && madicalPage.map(madical => (
                 <div key={madical.id}>
                   {image.map((img) => (
                     <div key={img.id}>
@@ -91,6 +146,9 @@ export default function AllMedicinesShops(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+            {noTestPresent?<>
+              <p>No  Pharmacy Shop  present  in this location</p>
+            </>:<></>}
         </div>
       </div>
     </>

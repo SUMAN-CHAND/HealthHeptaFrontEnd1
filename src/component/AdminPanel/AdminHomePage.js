@@ -373,8 +373,48 @@ export default function AdminHomePage() {
   const [searchValue, setSearchValue] = useState({
     input: ''
   })
+  const [searchProductValue, setSearchProductValue] = useState({
+    input: ''
+  })
+  const [searchOrderValue, setSearchOrderValue] = useState({
+    input: ''
+  })
+  const [searchAppoimentValue, setSearchAppoimentValue] = useState({
+    input: ''
+  })
+  const [searchLabBookingValue, setSearchLabBookingValue] = useState({
+    input: ''
+  })
+  const [searchUserValue, setSearchUserValue] = useState({
+    input: ''
+  })
+  const [searchPaymentValue, setSearchPaymentValue] = useState({
+    input: ''
+  })
+  const [searchPartnerValue, setSearchPartnerValue] = useState({
+    input: ''
+  })
+  const [searchEmployeeValue, setSearchEmployeeValue] = useState({
+    input: ''
+  })
+  const [searchDPartnerValue, setSearchDPartnerValue] = useState({
+    input: ''
+  })
+
+  const [Loading, setLoading] = useState(false);
+  const [productLoading, setProductLoading] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [appoimentLoading, setAppoimentLoading] = useState(false);
+  const [labBookingLoading, setLabBookingLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [partnerLoading, setPartnerLoading] = useState(false);
+  const [employeeLoading, setEmployeeLoading] = useState(false);
+  const [dPartnerLoading, setDPartnerLoading] = useState(false);
+
+
   const handleUserFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchUserValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
 
     const filtered = user.filter((item) => {
@@ -384,12 +424,14 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchUser([]);
+      setUserLoading(false);
     } else {
       setSearchUser(filtered);
+      setUserLoading(true);
     }
   };
   const handlePatientFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchAppoimentValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
 
     const filtered = appoiments.filter((item) => {
@@ -399,12 +441,14 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchPatient([]);
+      setAppoimentLoading(false);
     } else {
       setSearchPatient(filtered);
+      setAppoimentLoading(true);
     }
   };
   const handleLabBookingFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchLabBookingValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
 
     const filtered = labbooking.filter((item) => {
@@ -414,15 +458,16 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchlabBooking([]);
+      setLabBookingLoading(false)
     } else {
       setSearchlabBooking(filtered);
+      setLabBookingLoading(true)
     }
   };
 
   const handleOrderFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchOrderValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
-
     const filtered = orders.filter((item) => {
       const phoneNumber = item.phone.toString().toLowerCase();
       const search = searchword.toLowerCase();
@@ -430,14 +475,15 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchOrder([]);
+      setOrderLoading(false)
     } else {
       setSearchOrder(filtered);
+      setOrderLoading(true)
     }
   };
   const handleProductFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchProductValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
-
     const filtered = products.filter((item) => {
       const productName = item.product_name.toString().toLowerCase();
       const search = searchword.toLowerCase();
@@ -445,14 +491,16 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchProduct([]);
+      setProductLoading(false)
     } else {
       setSearchProduct(filtered);
+      setProductLoading(true)
+
     }
   };
 
   const handlePaymentFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-
+    setSearchPaymentValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
     const searchword = event.target.value.toLowerCase();
     const filtered = payments.filter((item) => {
       const phoneNumber = item.phone.toString().toLowerCase();
@@ -461,13 +509,15 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchPayment([]);
+      setPaymentLoading(false);
     } else {
       setSearchPayment(filtered);
+      setPaymentLoading(true);
     }
   };
 
   const handlePartnerFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchPartnerValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
 
     const searchword = event.target.value.toLowerCase();
     const filtered = partners.filter((item) => {
@@ -477,12 +527,14 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchPartner([]);
+      setPartnerLoading(false);
     } else {
       setSearchPartner(filtered);
+      setPartnerLoading(true);
     }
   };
   const handleEmployeeFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchEmployeeValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
 
     const searchword = event.target.value.toLowerCase();
     const filtered = employees.filter((item) => {
@@ -492,12 +544,15 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchEmployee([]);
+      setEmployeeLoading(false);
     } else {
       setSearchEmployee(filtered);
+      setEmployeeLoading(true);
+
     }
   };
   const handleDeliveryPartnerFilter = (event) => {
-    setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+    setSearchDPartnerValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
 
     const searchword = event.target.value.toLowerCase();
     const filtered = deliveryPartners.filter((item) => {
@@ -507,8 +562,10 @@ export default function AdminHomePage() {
     });
     if (searchword === "") {
       setSearchDeliveryPartner([]);
+      setDPartnerLoading(false);
     } else {
       setSearchDeliveryPartner(filtered);
+      setDPartnerLoading(true);
     }
   };
 
@@ -568,7 +625,16 @@ export default function AdminHomePage() {
 
             <div className="list-group shadow" id="list-tab" role="tablist">
               <Link to="#summary" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">Summary</Link>
-              <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Orders</Link>
+              {/* <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Orders</Link> */}
+              <div class="dropdown">
+                <button class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
+                  Orders
+                </button>
+                <ul class="dropdown-menu info" style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
+                  <li><Link to="#orderspending" className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Orders</Link></li>
+                  <li><Link to="#orderscomplete" className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Completed Orders</Link></li>
+                </ul>
+              </div>
               <Link to="#list-products" onClick={ShowProduct()} className="list-group-item list-group-item-action  list-group-item-info" id="list-products-list" data-bs-toggle="list" role="tab" aria-controls="list-products">Products</Link>
               <Link to="#appoiments" onClick={showAppoiments} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Appoiments</Link>
               <Link to="#labbokking" onClick={showLabbokking} className="list-group-item list-group-item-action  list-group-item-info" id="list-appoiments-list" data-bs-toggle="list" role="tab" aria-controls="list-appoiments">Lab Bookings</Link>
@@ -618,220 +684,234 @@ export default function AdminHomePage() {
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Products ||</h2> <Link to='addproduct'><button className='btn btn-primary mx-3 my-2' >Add New</button></Link></span>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Product by Product Name Here</p>
-                <input className="form-control" name='input' onChange={handleProductFilter} placeholder="Search Product Name Here" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleProductFilter} placeholder="Search Product Name Here" value={searchProductValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
-              <div className="container text-dark " style={renDataStyle}>
-                <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                  <p style={{ marginLeft: '10px' }}>Select Drug or Otc :</p>
-                  <select
-                    onChange={handleMedicineType} name='type'
-                    style={{ width: '25%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
-                    <option defaultValue="select">Select One</option>
-                    <option value="drug">Drug</option>
-                    <option value="otc">otc</option>
-                  </select>
+              {searchProduct.length > 0 &&
+                <div className="container text-dark " style={renDataStyle}>
+                  <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <p style={{ marginLeft: '10px' }}>Select Drug or Otc :</p>
+                    <select
+                      onChange={handleMedicineType} name='type'
+                      style={{ width: '25%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>
+                      <option defaultValue="select">Select One</option>
+                      <option value="drug">Drug</option>
+                      <option value="otc">otc</option>
+                    </select>
+                  </div>
+                  <table className="table table-striped">
+
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Count</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">MRP</th>
+                        <th scope="col">Whose Product </th>
+                        <th scope="col">Product Quantity</th>
+                        <th scope="col">Manufacturing Date</th>
+                        <th scope="col">Expiry Date</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Drag/Otc</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ verticalAlign: 'middle' }}>
+                      {medicineType.type[0] === 'select' ? <>
+                        {searchProduct.map((product, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{product.product_id}</th>
+                            <td>{ind_product_Images.map((img) => (
+                              <div key={img.id}>
+                                {parseInt(product.productImageId) === img.id ?
+                                  <>
+                                    <img
+                                      src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
+                                      alt={img.name}
+                                      width="50"
+                                    />
+                                  </>
+                                  : <></>}
+                              </div>
+                            ))}
+                            </td>
+                            <td>{product.product_name}</td>
+                            <td>{product.description}</td>
+                            <td>{product.product_price}</td>
+                            <td>{product.productOf}</td>
+                            <td>{product.product_quantity}</td>
+                            <td>{product.manufacturing.slice(0, 10)}</td>
+                            <td>{product.expiry.slice(0, 10)}</td>
+                            <td>{product.discount} %</td>
+                            <td>{product.DrugOrNot} </td>
+                            <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                              <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg></div></Link>
+                              <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg></div>
+                            </div></td>
+                          </tr>
+                        ))}
+                      </> : <>
+
+                      </>
+                      }
+                      {medicineType.type === 'select' ? <>
+                        {searchProduct.map((product, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{product.product_id}</th>
+                            <td>{ind_product_Images.map((img) => (
+                              <div key={img.id}>
+                                {parseInt(product.productImageId) === img.id ?
+                                  <>
+                                    <img
+                                      src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
+                                      alt={img.name}
+                                      width="50"
+                                    />
+                                  </>
+                                  : <></>}
+                              </div>
+                            ))}
+                            </td>
+                            <td>{product.product_name}</td>
+                            <td>{product.description}</td>
+                            <td>{product.product_price}</td>
+                            <td>{product.productOf}</td>
+                            <td>{product.product_quantity}</td>
+                            <td>{product.manufacturing.slice(0, 10)}</td>
+                            <td>{product.expiry.slice(0, 10)}</td>
+                            <td>{product.discount} %</td>
+                            <td>{product.DrugOrNot} </td>
+                            <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                              <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg></div></Link>
+                              <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg></div>
+                            </div></td>
+                          </tr>
+                        ))}
+                      </> : <>
+
+                      </>
+                      }
+                      {medicineType.type[0] === 'drug' ? <>
+                        {searchProduct.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{product.product_id}</th>
+                            <td>{ind_product_Images.map((img) => (
+                              <div key={img.id}>
+                                {parseInt(product.productImageId) === img.id ?
+                                  <>
+                                    <img
+                                      src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
+                                      alt={img.name}
+                                      width="50"
+                                    />
+                                  </>
+                                  : <></>}
+                              </div>
+                            ))}
+                            </td>
+                            <td>{product.product_name}</td>
+                            <td>{product.description}</td>
+                            <td>{product.product_price}</td>
+                            <td>{product.productOf}</td>
+                            <td>{product.product_quantity}</td>
+                            <td>{product.manufacturing.slice(0, 10)}</td>
+                            <td>{product.expiry.slice(0, 10)}</td>
+                            <td>{product.discount} %</td>
+                            <td>{product.DrugOrNot} </td>
+                            <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                              <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg></div></Link>
+                              <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg></div>
+                            </div></td>
+                          </tr>
+                        ))}
+                      </> : <>
+
+                      </>
+                      }
+                      {medicineType.type[0] === 'otc' ? <>
+                        {searchProduct.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
+                          <tr key={index}>
+                            <th scope="row">{index + 1}</th>
+                            <th scope="row">{product.product_id}</th>
+                            <td>{ind_product_Images.map((img) => (
+                              <div key={img.id}>
+                                {parseInt(product.productImageId) === img.id ?
+                                  <>
+                                    <img
+                                      src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
+                                      alt={img.name}
+                                      width="50"
+                                    />
+                                  </>
+                                  : <></>}
+                              </div>
+                            ))}
+                            </td>
+                            <td>{product.product_name}</td>
+                            <td>{product.description}</td>
+                            <td>{product.product_price}</td>
+                            <td>{product.productOf}</td>
+                            <td>{product.product_quantity}</td>
+                            <td>{product.manufacturing.slice(0, 10)}</td>
+                            <td>{product.expiry.slice(0, 10)}</td>
+                            <td>{product.discount} %</td>
+                            <td>{product.DrugOrNot} </td>
+                            <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                              <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg></div></Link>
+                              <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg></div>
+                            </div></td>
+                          </tr>
+                        ))}
+                      </> : <>
+
+                      </>
+                      }
+                    </tbody>
+                  </table>
                 </div>
-                <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    <tr>
-                      <th scope="col">Count</th>
-                      <th scope="col">Id</th>
-                      <th scope="col">image</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">MRP</th>
-                      <th scope="col">Whose Product </th>
-                      <th scope="col">Product Quantity</th>
-                      <th scope="col">Manufacturing Date</th>
-                      <th scope="col">Expiry Date</th>
-                      <th scope="col">Discount</th>
-                      <th scope="col">Drag/Otc</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody style={{ verticalAlign: 'middle' }}>
-                    {medicineType.type[0] === 'select' ? <>
-                      {searchProduct.map((product, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <th scope="row">{product.product_id}</th>
-                          <td>{ind_product_Images.map((img) => (
-                            <div key={img.id}>
-                              {parseInt(product.productImageId) === img.id ?
-                                <>
-                                  <img
-                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                    alt={img.name}
-                                    width="50"
-                                  />
-                                </>
-                                : <></>}
-                            </div>
-                          ))}
-                          </td>
-                          <td>{product.product_name}</td>
-                          <td>{product.description}</td>
-                          <td>{product.product_price}</td>
-                          <td>{product.productOf}</td>
-                          <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing.slice(0, 10)}</td>
-                          <td>{product.expiry.slice(0, 10)}</td>
-                          <td>{product.discount} %</td>
-                          <td>{product.DrugOrNot} </td>
-                          <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                          </svg></div></Link>
-                            <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
-                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg></div>
-                          </div></td>
-                        </tr>
-                      ))}
-                    </> : <>
+              }
+              {
+                searchProduct.length === 0 && <>
+                  {productLoading ? <>
+                    <p style={{ padding: '15px' }}>No data found for this product name!!</p>
+                  </> : <>
+                    <p style={{ padding: '15px' }}>Search Product Details through Product name!!</p>
 
-                    </>
-                    }
-                    {medicineType.type === 'select' ? <>
-                      {searchProduct.map((product, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <th scope="row">{product.product_id}</th>
-                          <td>{ind_product_Images.map((img) => (
-                            <div key={img.id}>
-                              {parseInt(product.productImageId) === img.id ?
-                                <>
-                                  <img
-                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                    alt={img.name}
-                                    width="50"
-                                  />
-                                </>
-                                : <></>}
-                            </div>
-                          ))}
-                          </td>
-                          <td>{product.product_name}</td>
-                          <td>{product.description}</td>
-                          <td>{product.product_price}</td>
-                          <td>{product.productOf}</td>
-                          <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing.slice(0, 10)}</td>
-                          <td>{product.expiry.slice(0, 10)}</td>
-                          <td>{product.discount} %</td>
-                          <td>{product.DrugOrNot} </td>
-                          <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                          </svg></div></Link>
-                            <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
-                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg></div>
-                          </div></td>
-                        </tr>
-                      ))}
-                    </> : <>
-
-                    </>
-                    }
-                    {medicineType.type[0] === 'drug' ? <>
-                      {searchProduct.filter(productf => productf.DrugOrNot === 'drug').map((product, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <th scope="row">{product.product_id}</th>
-                          <td>{ind_product_Images.map((img) => (
-                            <div key={img.id}>
-                              {parseInt(product.productImageId) === img.id ?
-                                <>
-                                  <img
-                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                    alt={img.name}
-                                    width="50"
-                                  />
-                                </>
-                                : <></>}
-                            </div>
-                          ))}
-                          </td>
-                          <td>{product.product_name}</td>
-                          <td>{product.description}</td>
-                          <td>{product.product_price}</td>
-                          <td>{product.productOf}</td>
-                          <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing.slice(0, 10)}</td>
-                          <td>{product.expiry.slice(0, 10)}</td>
-                          <td>{product.discount} %</td>
-                          <td>{product.DrugOrNot} </td>
-                          <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                          </svg></div></Link>
-                            <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
-                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg></div>
-                          </div></td>
-                        </tr>
-                      ))}
-                    </> : <>
-
-                    </>
-                    }
-                    {medicineType.type[0] === 'otc' ? <>
-                      {searchProduct.filter(productf => productf.DrugOrNot === 'otc').map((product, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <th scope="row">{product.product_id}</th>
-                          <td>{ind_product_Images.map((img) => (
-                            <div key={img.id}>
-                              {parseInt(product.productImageId) === img.id ?
-                                <>
-                                  <img
-                                    src={`http://${process.env.REACT_APP_HOST}:8081/${img.path}`}
-                                    alt={img.name}
-                                    width="50"
-                                  />
-                                </>
-                                : <></>}
-                            </div>
-                          ))}
-                          </td>
-                          <td>{product.product_name}</td>
-                          <td>{product.description}</td>
-                          <td>{product.product_price}</td>
-                          <td>{product.productOf}</td>
-                          <td>{product.product_quantity}</td>
-                          <td>{product.manufacturing.slice(0, 10)}</td>
-                          <td>{product.expiry.slice(0, 10)}</td>
-                          <td>{product.discount} %</td>
-                          <td>{product.DrugOrNot} </td>
-                          <td > <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <Link to={`updateproduct/${product.product_id}`} > <div style={{ cursor: 'pointer' }} type='' className=" m-1"><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                          </svg></div></Link>
-                            <div className=" m-1 " onClick={() => deleteProduct(product.product_id)} style={{ color: 'red' }} ><svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="3vh" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
-                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                            </svg></div>
-                          </div></td>
-                        </tr>
-                      ))}
-                    </> : <>
-
-                    </>
-                    }
-                  </tbody>
-                </table>
-              </div>
+                  </>
+                  }
+                </>
+              }
             </div>
-            <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-orders-list">
-              <h2 className='p-2'>|| Orders ||</h2>
+            <div className="tab-pane fade text-light" id="orderspending" role="tabpanel" aria-labelledby="list-orders-list">
+              <h2 className='p-2'>|| Pending Orders ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Order by User Phone Number here</p>
-                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchOrderValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               <div className="container text-dark " style={renDataStyle}>
                 <table className="table table-striped">
-                  <thead className='thead-dark'>
-                    {searchOrder.length > 0 &&
+                  {searchOrder.length > 0 &&
+                    <thead className='thead-dark'>
                       <tr>
                         <th scope="col">Count</th>
                         <th scope="col">OrderId</th>
@@ -847,46 +927,161 @@ export default function AdminHomePage() {
                         <th scope="col">Complete Payment</th>
                         <th scope="col">Action</th>
                       </tr>
-                    }
-                  </thead>
-                  <tbody>
-                    {searchOrder && searchOrder.map((order, index) => (
-                      <tr key={index}>
-                        <th scope="row">{index + 1}</th>
-                        <th scope="row">{order.id}</th>
-                        <td>{order.product_name}</td>
-                        <td>{order.name}({order.phone})</td>
-                        <td>{order.role}</td>
-                        {/* <td>{order.order_date}</td> */}
-                        <td>{order.subadmin_name}</td>
-                        <td>{order.order_date.slice(0, 10)}</td>
-                        <td>{order.payment_type}</td>
-                        <td>{order.payment_status}</td>
-                        <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
-                        <td>
-                          <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                            {order.expected_delivery_date.slice(0, 10)}
-                            <br />
-                          </div>
-                        </td>
-                        <td>
-                          <Link to={`/superadmin/payment/complete/action/${order.id}/${order.user_id}`}>Complete Payment</Link>
-                        </td>
-                        <td className='flex items-center justify-center'>
-                          <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
-                          <Link to={`/superadmin/orders/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+                    </thead>}
+                  {searchOrder.length > 0 &&
+                    <tbody>
+                      {searchOrder.filter(order => order.status === 'pending').map((order, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <th scope="row">{order.id}</th>
+                          <td>{order.product_name}</td>
+                          <td>{order.name}({order.phone})</td>
+                          <td>{order.role}</td>
+                          <td>{order.order_date}</td>
+                          <td>{order.subadmin_name}</td>
+                          <td>{order.order_date.slice(0, 10)}</td>
+                          <td>{order.payment_type}</td>
+                          <td>{order.payment_status}</td>
+                          <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
+                          <td>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                              {order.expected_delivery_date.slice(0, 10)}
+                              <br />
+                            </div>
+                          </td>
+                          <td>
+                            <Link to={`/superadmin/payment/complete/action/${order.id}/${order.user_id}`}>Complete Payment</Link>
+                          </td>
+                          <td className='flex items-center justify-center'>
+                            <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+                            <Link to={`/superadmin/orders/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  }
+                  {/* {searchOrder.length === 0 &&
+                    <tbody>
+                      {orders.filter(order => order.status === 'pending').map((order, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <th scope="row">{order.id}</th>
+                          <td>{order.product_name}</td>
+                          <td>{order.name}({order.phone})</td>
+                          <td>{order.role}</td>
+                          <td>{order.order_date}</td>
+                          <td>{order.subadmin_name}</td>
+                          <td>{order.order_date.slice(0, 10)}</td>
+                          <td>{order.payment_type}</td>
+                          <td>{order.payment_status}</td>
+                          <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
+                          <td>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                              {order.expected_delivery_date.slice(0, 10)}
+                              <br />
+                            </div>
+                          </td>
+                          <td>
+                            <Link to={`/superadmin/payment/complete/action/${order.id}/${order.user_id}`}>Complete Payment</Link>
+                          </td>
+                          <td className='flex items-center justify-center'>
+                            <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+                            <Link to={`/superadmin/orders/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  } */}
+
                 </table>
+                {searchOrder.length === 0 && <>
+                  {orderLoading ? <>
+                    <p style={{ padding: '15px' }}>No data found for Phone Number!!</p>
+                  </> : <>
+                    <p style={{ padding: '15px' }}>Search Order Details through User Phone Number!!</p>
+
+                  </>
+                  }
+                </>}
+              </div>
+            </div>
+            <div className="tab-pane fade text-light" id="orderscomplete" role="tabpanel" aria-labelledby="list-orders-list">
+              <h2 className='p-2'>|| Accepted Orders ||</h2>
+              <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                <p className='p-1 m-1'>Search Order by User Phone Number here</p>
+                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchOrderValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+              </div>
+              <div className="container text-dark " style={renDataStyle}>
+                <table className="table table-striped">
+                  {searchOrder.length > 0 &&
+                    <thead className='thead-dark'>
+                      <tr>
+                        <th scope="col">Count</th>
+                        <th scope="col">OrderId</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Coustomer Name(Phone Number)</th>
+                        <th scope="col">User Role</th>
+                        <th scope="col">Order From</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Payment Mood</th>
+                        <th scope="col">Payment Status</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Expected delivery date</th>
+                        <th scope="col">Complete Payment</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>}
+                  {searchOrder.length > 0 &&
+                    <tbody>
+                      {searchOrder && searchOrder.filter(order => order.status === 'accepted').map((order, index) => (
+                        <tr key={index}>
+                          <th scope="row">{index + 1}</th>
+                          <th scope="row">{order.id}</th>
+                          <td>{order.product_name}</td>
+                          <td>{order.name}({order.phone})</td>
+                          <td>{order.role}</td>
+                          {/* <td>{order.order_date}</td> */}
+                          <td>{order.subadmin_name}</td>
+                          <td>{order.order_date.slice(0, 10)}</td>
+                          <td>{order.payment_type}</td>
+                          <td>{order.payment_status}</td>
+                          <td onClick={() => updateStatus(order.id)} style={{ cursor: 'pointer', color: 'blue' }} >{order.status} <br />{order.orderAcceptedBy}</td>
+                          <td>
+                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                              {order.expected_delivery_date.slice(0, 10)}
+                              <br />
+                            </div>
+                          </td>
+                          <td>
+                            <Link to={`/superadmin/payment/complete/action/${order.id}/${order.user_id}`}>Complete Payment</Link>
+                          </td>
+                          <td className='flex items-center justify-center'>
+                            <Link to={`/superadmin/orders/action/${order.id}/${order.user_id}/${order.product_id}`}><FaRegEdit style={{ width: '2vw', height: '2vh', fill: '#ffc107' }} /></Link>
+                            <Link to={`/superadmin/orders/${order.id}/${order.user_id}`}><GrView className='text-primary' style={{ width: '2vw', height: '2vh', fill: 'blue' }} /></Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  }
+
+
+                </table>
+                {searchOrder.length === 0 && <>
+                  {orderLoading ? <>
+                    <p style={{ padding: '15px' }}>No data found for Phone Number!!</p>
+                  </> : <>
+                    <p style={{ padding: '15px' }}>Search Order Details through User Phone Number!!</p>
+
+                  </>
+                  }
+                </>}
               </div>
             </div>
             <div className="tab-pane fade text-light" id="appoiments" role="tabpanel" aria-labelledby="list-appoiments-list">
               <h2 className='p-2'>|| Appoiments ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Patient by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePatientFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handlePatientFilter} placeholder="Search User Phone number" value={searchAppoimentValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               {searchPatient.length !== 0 && (
                 <div className="container text-dark " style={renDataStyle}>
@@ -924,12 +1119,21 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               )}
+              {searchPatient.length === 0 && <>
+                {appoimentLoading ? <>
+                  <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                </> : <>
+                  <p style={{ padding: '15px' }}>Search Appoiment Details through User Phone Number!!</p>
+
+                </>
+                }
+              </>}
             </div>
             <div className="tab-pane fade text-light" id="labbokking" role="tabpanel" aria-labelledby="list-appoiments-list">
               <h2 className='p-2'>|| Lab Booking ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Patient by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handleLabBookingFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleLabBookingFilter} placeholder="Search User Phone number" value={searchLabBookingValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               {searchLabBooking.length > 0 &&
                 <div className="container text-dark " style={renDataStyle}>
@@ -980,12 +1184,20 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               }
+              {searchLabBooking.length === 0 && <>
+                {labBookingLoading ? <>
+                  <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                </> : <>
+                  <p style={{ padding: '15px' }}>Search Appoiment Details through User Phone Number!!</p>
+                </>
+                }
+              </>}
             </div>
             <div className="tab-pane fade  text-light" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
               <h2 className='p-2'>|| Users ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search User by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handleUserFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleUserFilter} placeholder="Search User Phone number" value={searchUserValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               {searchUser.length !== 0 && (
                 <div className="container text-dark" style={renDataStyle}>
@@ -1013,38 +1225,55 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               )}
-              {searchUser.length === 0 && (
-                <div className="container text-dark" style={renDataStyle}>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {user.filter(userf => userf.OrderCount >= 5).map((user, index) => (
-                        <tr key={index}>
-                          <th scope="row">{user.id}</th>
-                          <td>{user.name}</td>
-                          <td>{user.phone}</td>
-                          <td>{user.role}</td>
-                          <td> <div className="btn btn-danger">Delete</div> <div className="btn btn-warning">Update</div> </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+              {searchUser.length === 0 && <>
+                {userLoading ? <>
+                  <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                </> : <>
+                  <p style={{ padding: '15px' }}>Search User Details through User Phone Number!!</p>
+                </>
+                }
+              </>}
+              {searchUser.length === 0 &&
+                <>
+                  {!userLoading ? <>
+                    <div className="container text-dark" style={renDataStyle}>
+                      <div>
+                        <p>Here Some User whose Orders  more then 5 times </p>
+
+                      </div>
+                      <table className="table table-striped">
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {user.filter(userf => userf.OrderCount >= 5).map((user, index) => (
+                            <tr key={index}>
+                              <th scope="row">{user.id}</th>
+                              <td>{user.name}</td>
+                              <td>{user.phone}</td>
+                              <td>{user.role}</td>
+                              <td> <div className="btn btn-danger">Delete</div> <div className="btn btn-warning">Update</div> </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </> : <></>}
+                </>
+              }
+
             </div>
             <div className="tab-pane fade  text-light" id="paymentcomplete" role="tabpanel" aria-labelledby="list-payments-list">
               <h2 className='p-2'>||Completed Payments ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Payments by User Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchPaymentValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               {searchPayment.length > 0 &&
                 <div className="container text-dark" style={renDataStyle}>
@@ -1085,12 +1314,20 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               }
+              {searchPayment.length === 0 && <>
+                {paymentLoading ? <>
+                  <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                </> : <>
+                  <p style={{ padding: '15px' }}>Search Payment Details through User Phone Number!!</p>
+                </>
+                }
+              </>}
             </div>
             <div className="tab-pane fade  text-light" id="paymentpending" role="tabpanel" aria-labelledby="list-payments-list">
               <h2 className='p-2'>|| Pending Payments ||</h2>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Payments by User Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handlePaymentFilter} placeholder="Search User Phone number" value={searchPaymentValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               {searchPayment.length > 0 &&
                 <div className="container text-dark" style={renDataStyle}>
@@ -1131,6 +1368,14 @@ export default function AdminHomePage() {
                   </table>
                 </div>
               }
+              {searchPayment.length === 0 && <>
+                {paymentLoading ? <>
+                  <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                </> : <>
+                  <p style={{ padding: '15px' }}>Search Payment Details through User Phone Number!!</p>
+                </>
+                }
+              </>}
             </div>
 
             {/* <div className="tab-pane fade  text-light" id="serviceprovider" role="tabpanel" aria-labelledby="list-serviceprovider-list">
@@ -1184,23 +1429,25 @@ export default function AdminHomePage() {
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Pending  Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Partner by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchPartnerValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               <div className="container text-dark" style={renDataStyle}>
                 <div id='partner'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope="col"> Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Aadhaar Card</th>
-                        <th scope="col">Pan Card</th>
-                        <th scope="col">Permission</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    {searchPartner.length > 0 &&
+                  {searchPartner.length > 0 &&
+                    <table className="table table-striped">
+
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+
                       <tbody>
                         {searchPartner.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
                           <tr key={index}>
@@ -1217,32 +1464,54 @@ export default function AdminHomePage() {
                             </td>
                           </tr>
                         ))}
-
-
                       </tbody>
+                    </table>
+                  }
+                  {searchPartner.length === 0 && <>
+                    {partnerLoading ? <>
+                      <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                    </> : <>
+                      {/* <p style={{ padding: '15px' }}>Search User Details through User Phone Number!!</p> */}
+                    </>
                     }
-                    {searchPartner.length === 0 &&
-                      <tbody>
-                        {partners.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
-                          <tr key={index}>
-                            <th scope="row">{partner.id}</th>
-                            <td>{partner.name}</td>
-                            <td>{partner.ph_num}</td>
-                            <td>{partner.aadhaar}</td>
-                            <td>{partner.pan}</td>
-                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
-                            <td>
-                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
-                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+                  </>}
+                  {searchPartner.length === 0 && <>
+                    {!partnerLoading ? <>
+                      <table className="table table-striped">
 
-                            </td>
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope="col"> Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Aadhaar Card</th>
+                            <th scope="col">Pan Card</th>
+                            <th scope="col">Permission</th>
+                            <th scope="col">Action</th>
                           </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                          {partners.filter(partnerf => partnerf.permission === 'Pending').map((partner, index) => (
+                            <tr key={index}>
+                              <th scope="row">{partner.id}</th>
+                              <td>{partner.name}</td>
+                              <td>{partner.ph_num}</td>
+                              <td>{partner.aadhaar}</td>
+                              <td>{partner.pan}</td>
+                              <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                              <td>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
 
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </> : <></>}
+                  </>
+                  }
 
-                      </tbody>
-                    }
-                  </table>
                 </div>
               </div>
 
@@ -1251,24 +1520,26 @@ export default function AdminHomePage() {
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>|| Approved Partner ||</h2> <Link to='addnew/partner'><button className='btn btn-primary mx-3 my-2' >Add New Partner</button></Link></span>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Partner by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handlePartnerFilter} placeholder="Search Partner Phone number" value={searchPartnerValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               <div className="container text-dark" style={renDataStyle}>
 
                 <div id='partner'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope="col"> Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Aadhaar Card</th>
-                        <th scope="col">Pan Card</th>
-                        <th scope="col">Permission</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    {searchPartner.length > 0 &&
+                  {searchPartner.length > 0 &&
+                    <table className="table table-striped">
+
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope="col"> Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Aadhaar Card</th>
+                          <th scope="col">Pan Card</th>
+                          <th scope="col">Permission</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+
                       <tbody>
                         {searchPartner.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
                           <tr key={index}>
@@ -1286,30 +1557,53 @@ export default function AdminHomePage() {
                           </tr>
                         ))}
                       </tbody>
+                    </table>
+                  }
+                  {searchPartner.length === 0 && <>
+                    {partnerLoading ? <>
+                      <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                    </> : <>
+                      {/* <p style={{ padding: '15px' }}>Search User Details through User Phone Number!!</p> */}
+                    </>
                     }
-                    {searchPartner.length === 0 &&
-                      <tbody>
-                        {partners.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
-                          <tr key={index}>
-                            <th scope="row">{partner.id}</th>
-                            <td>{partner.name}</td>
-                            <td>{partner.ph_num}</td>
-                            <td>{partner.aadhaar}</td>
-                            <td>{partner.pan}</td>
-                            <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
-                            <td>
-                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
-                              <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
+                  </>}
+                  {searchPartner.length === 0 && <>
+                    {!partnerLoading ? <>
+                      <table className="table table-striped">
 
-                              <button className='btn btn-info m-1' onClick={() => setAssignPinCode(partner.id)}>Assign PinCode</button>
-                            </td>
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope="col"> Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Aadhaar Card</th>
+                            <th scope="col">Pan Card</th>
+                            <th scope="col">Permission</th>
+                            <th scope="col">Action</th>
                           </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                          {partners.filter(partnerf => partnerf.permission === 'Approved').map((partner, index) => (
+                            <tr key={index}>
+                              <th scope="row">{partner.id}</th>
+                              <td>{partner.name}</td>
+                              <td>{partner.ph_num}</td>
+                              <td>{partner.aadhaar}</td>
+                              <td>{partner.pan}</td>
+                              <td onClick={() => updatePartnerStatus(partner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{partner.permission}</td>
+                              <td>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(partner.PanCardImageID)}>View Pan Card</button>
 
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </> : <></>}
+                  </>
+                  }
 
-                      </tbody>
-                    }
-                  </table>
                 </div>
               </div>
 
@@ -1361,22 +1655,22 @@ export default function AdminHomePage() {
                 </div> */}
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Employee by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handleEmployeeFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleEmployeeFilter} placeholder="Search Partner Phone number" value={searchEmployeeValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
               <div className="container text-dark" style={renDataStyle}>
                 <div id='b2bemployee'>
-                  <table className="table table-striped">
-                    <thead className='thead-dark'>
-                      <tr>
-                        <th scope='col'>Index</th>
-                        <th scope="col">Employee Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone No</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Permission</th>
-                      </tr>
-                    </thead>
-                    {searchEmployee.length > 0 &&
+                  {searchEmployee.length > 0 &&
+                    <table className="table table-striped">
+                      <thead className='thead-dark'>
+                        <tr>
+                          <th scope='col'>Index</th>
+                          <th scope="col">Employee Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Phone No</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Permission</th>
+                        </tr>
+                      </thead>
 
                       <tbody>
                         {searchEmployee.map((employee, index) => (
@@ -1389,48 +1683,68 @@ export default function AdminHomePage() {
                             <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
                           </tr>
                         ))}
-
-
                       </tbody>
-                    }
-                    {searchEmployee.length === 0 &&
+                    </table>
+                  }
 
-                      <tbody>
-                        {employees.map((employee, index) => (
-                          <tr key={index}>
-                            <th scope="row">{index}</th>
-                            <th scope="row">{employee.id}</th>
-                            <td>{employee.name}</td>
-                            <td>{employee.ph_num}</td>
-                            <td>{employee.email}</td>
-                            <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
+                  {searchEmployee.length === 0 && <>
+                    {employeeLoading ? <>
+                      <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                    </> : <>
+                      {/* <p style={{ padding: '15px' }}>Search User Details through User Phone Number!!</p> */}
+                    </>
+                    }
+                  </>}
+                  {searchEmployee.length === 0 && <>
+                    {!employeeLoading ? <>
+                      <table className="table table-striped">
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope='col'>Index</th>
+                            <th scope="col">Employee Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Permission</th>
                           </tr>
-                        ))}
+                        </thead>
+                        <tbody>
+                          {employees.map((employee, index) => (
+                            <tr key={index}>
+                              <th scope="row">{index}</th>
+                              <th scope="row">{employee.id}</th>
+                              <td>{employee.name}</td>
+                              <td>{employee.ph_num}</td>
+                              <td>{employee.email}</td>
+                              <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </> : <></>}
+                  </>
+                  }
 
-
-                      </tbody>
-                    }
-                  </table>
                 </div>
 
               </div>
-              
+
             </div>
             <div className="tab-pane fade  text-light" id="delivery-partner" role="tabpanel" aria-labelledby="list-delivery-partner-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Delivery Partner ||</h2> <Link to='addnew/delivery-partner'><button className='btn btn-primary mx-3 my-2' >Add New Delivery Partner</button></Link></span>
 
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <p className='p-1 m-1'>Search Employee by Phone Number here</p>
-                <input className="form-control" name='input' onChange={handleDeliveryPartnerFilter} placeholder="Search Partner Phone number" value={searchValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                <input className="form-control" name='input' onChange={handleDeliveryPartnerFilter} placeholder="Search Partner Phone number" value={searchDPartnerValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
               </div>
-              {searchDeliveryPartner.length > 0 &&
-                <div className="container text-dark" style={renDataStyle}>
-                  {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
+              <div className="container text-dark" style={renDataStyle}>
+                {/* <div className="list-group shadow" style={{ display: 'flex', flexDirection: 'row' }} id="list-tab" role="tablist">
                   <Link to="#delivery-partner" className="list-group-item list-group-item-action active  list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-summary">All Delivery Partner </Link>
                   <Link to="#newdelivery-partner" className="list-group-item list-group-item-action  list-group-item-info" id="list-payment-list" data-bs-toggle="list" role="tab" aria-controls="list-users">New Delivery Partner</Link>
                 </div> */}
 
-                  <div id='delivery-partner'>
+                <div id='delivery-partner'>
+                  {searchDeliveryPartner.length > 0 &&
                     <table className="table table-striped">
                       <thead className='thead-dark'>
                         <tr>
@@ -1459,14 +1773,56 @@ export default function AdminHomePage() {
                             </td>
                           </tr>
                         ))}
-
-
                       </tbody>
                     </table>
-                  </div>
+                  }
+                  {searchDeliveryPartner.length === 0 && <>
+                    {dPartnerLoading ? <>
+                      <p style={{ padding: '15px' }}>No data found for this Phone Number!!</p>
+                    </> : <>
+                      {/* <p style={{ padding: '15px' }}>Search User Details through User Phone Number!!</p> */}
+                    </>
+                    }
+                  </>}
+                  {searchDeliveryPartner.length === 0 && <>
+                    {!dPartnerLoading ? <>
 
+                      <table className="table table-striped">
+                        <thead className='thead-dark'>
+                          <tr>
+                            <th scope="col"> Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Aadhaar Card</th>
+                            <th scope="col">Pan Card</th>
+                            <th scope="col">Permission</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {deliveryPartners.map((deliveryPartner, index) => (
+                            <tr key={index}>
+                              <th scope="row">{deliveryPartner.id}</th>
+                              <td>{deliveryPartner.name}</td>
+                              <td>{deliveryPartner.ph_num}</td>
+                              <td>{deliveryPartner.aadhaar}</td>
+                              <td>{deliveryPartner.pan}</td>
+                              <td onClick={() => updateDeliveryPartnerStatus(deliveryPartner.id)} style={{ cursor: 'pointer', color: 'blue' }} >{deliveryPartner.permission}</td>
+                              <td>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.AadhaarCardImageID)}>View Aadhaar Card</button>
+                                <button className="btn btn-info m-1 " onClick={() => ViewAadhaar(deliveryPartner.PanCardImageID)}>View Pan Card</button>
+
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </> : <></>}
+                  </>
+                  }
                 </div>
-              }
+
+              </div>
             </div>
             <div className="tab-pane fade  text-light" id="partner-commission" role="tabpanel" aria-labelledby="list-partner-commission-list">
               <span style={{ display: 'flex', justifyContent: 'space-between' }}><h2 className='p-2 mx-3'>||  Partner Commission ||</h2> <Link to='addnew/partner-commission'><button className='btn btn-primary mx-3 my-2' >Add New Partner Commission</button></Link></span>

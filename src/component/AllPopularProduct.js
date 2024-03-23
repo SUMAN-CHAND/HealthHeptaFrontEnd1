@@ -30,40 +30,92 @@ export default function AllPopularProduct(props) {
   const [products, setProducts] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-  if (props.location === undefined) {
-    useEffect(() => {
-      axiosClient.get(`/product`).then((res) => {
-        // Handle response
-        if (res.data !== null) {
-          setProducts(res.data[0])
-          setImages(res.data[1])
-          setLoading(true);
+  let [noTestPresent, setNoTestPresent] = useState(false);
+
+  let current_pin_code;
+  current_pin_code = sessionStorage.getItem('current_pin_code');
+
+  useEffect(() => {
+    const fetchLabs = async () => {
+      try {
+        if (current_pin_code === null) {
+          axiosClient.get(`/product`).then((res) => {
+            // Handle response
+            if (res.data !== null) {
+              setProducts(res.data[0])
+              setImages(res.data[1])
+              setLoading(true);
+
+            }
+          })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
+
+        } else {
+          axiosClient.get(`/product/${current_pin_code}`).then((res) => {
+            // Handle response
+            console.log(res.data)
+            if (res.data !== null) {
+              setProducts(res.data[0])
+              setImages(res.data[1])
+              setLoading(true);
+              setNoTestPresent(false);
+            } else {
+              setNoTestPresent(true);
+            }
+          })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
 
         }
-      })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-    }, [])
-  } else {
-    useEffect(() => {
-      axiosClient.get(`/product/${props.location}`).then((res) => {
-        // Handle response
-        if (res.data !== null) {
-          setProducts(res.data)
-          setLoading(true);
+    fetchLabs();
+  }, [current_pin_code]);
 
-        }
-      })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
 
-    }, [])
-  }
+
+  // if (props.location === undefined) {
+  //   useEffect(() => {
+  //     axiosClient.get(`/product`).then((res) => {
+  //       // Handle response
+  //       if (res.data !== null) {
+  //         setProducts(res.data[0])
+  //         setImages(res.data[1])
+  //         setLoading(true);
+
+  //       }
+  //     })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+
+  //   }, [])
+  // } else {
+  //   useEffect(() => {
+  //     axiosClient.get(`/product/${props.location}`).then((res) => {
+  //       // Handle response
+  //       if (res.data !== null) {
+  //         setProducts(res.data)
+  //         setLoading(true);
+
+  //       }
+  //     })
+  //       .catch(err => {
+  //         // Handle errors
+  //         console.error(err);
+  //       });
+
+  //   }, [])
+  // }
   return (
     <>
       <Helmet>
@@ -75,7 +127,7 @@ export default function AllPopularProduct(props) {
           <h3 className='py-1'>|| Popular Products ||</h3>
           {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
-              {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+              {products && products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
                 <div key={fproduct.product_id}>
                   {image.map((img) => (
                     <div key={img.id}>
@@ -92,6 +144,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
@@ -112,6 +167,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           {/* <div><PopularProductCard/> </div> */}
         </div>
         <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
@@ -133,8 +191,11 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           <p style={{ margin: '5px' }}></p>
-         </div>
+        </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Allopathy Products ||</h5>
           {loading ?
@@ -154,6 +215,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
@@ -172,6 +236,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
         </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Homeopathy Products ||</h5>
@@ -192,6 +259,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
@@ -210,6 +280,9 @@ export default function AllPopularProduct(props) {
               ))}
             </Carousel>
             : <ClipLoader color="blue" />}
+          {noTestPresent ? <>
+            <p>No  Doctor present  in this location</p>
+          </> : <></>}
         </div>
       </div>
     </>

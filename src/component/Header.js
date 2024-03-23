@@ -71,6 +71,8 @@ export default function Header() {
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
                     setUserLocation(res.data[2]);
+                    sessionStorage.setItem("current_pin_code", res.data[2]);
+
                 } else {
                     setnumOfItem(res.data[0]);
                     setLoggedIn(res.data[1]);
@@ -228,6 +230,7 @@ export default function Header() {
     };
     let current_pin_code;
     current_pin_code = sessionStorage.getItem('current_pin_code');
+    // console.log(current_pin_code)
     useEffect(() => {
         setSearchValue({
             input: current_pin_code,
