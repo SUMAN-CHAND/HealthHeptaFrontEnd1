@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[74],{929:function(e,n,t){"use strict";t.r(n),t.d(n,"default",function(){return i});var a=t(1),u=t.n(a),r=t(11),c=t(7);function i(){c.a.defaults.withCredentials=!0;Object(r.m)().state;return u.a.createElement("div",null,u.a.createElement("h1",null,"PaymentPage"))}}}]);
+//# sourceMappingURL=74.7604fd5a.chunk.js.map

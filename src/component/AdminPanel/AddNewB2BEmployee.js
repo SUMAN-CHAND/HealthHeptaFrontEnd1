@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
 import Modal from 'react-modal';
+import UploadImage from '../UploadImage';
 
 const customStyles = {
     content: {
@@ -59,6 +60,10 @@ export default function AddNewB2BEmployee() {
         name: '',
         ph_num: '',
         email: '',
+        aadhaar: '',
+        pan: '',
+        AadhaarCardImageID: null,
+        PanCardImageID: null
 
     })
     const [check, setCheck] = useState(false);
@@ -69,6 +74,15 @@ export default function AddNewB2BEmployee() {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         // setRole(event.target.value)
     }
+
+    // Callback function to set the productImageId when an image is uploaded
+    const handleAadhaarImageUpload = (imageId) => {
+        setValues({ ...values, AadhaarCardImageID: imageId });
+    };
+    const handlePanCardImageUpload = (imageId) => {
+        setValues({ ...values, PanCardImageID: imageId });
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axiosClient.post(`/add/b2b-employee`, values)
@@ -89,6 +103,8 @@ export default function AddNewB2BEmployee() {
             })
             .catch(err => console.log(err));
     }
+
+
     return (
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
             <div className="img  login-img" >
@@ -108,9 +124,19 @@ export default function AddNewB2BEmployee() {
                     </div>
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="phonenumber">Phone Number<span className='text-danger'>*</span> : </label>
-                        <input required className='m-2  p-1' type="phonenumber" style={{ width: '90%' }} placeholder='Enter Phone Number'
+                        {/* <input required className='m-2  p-1' type="phonenumber" style={{ width: '90%' }} placeholder='Enter Phone Number'
                             name='ph_num' onChange={handleInput} /><br />
-                        {errors.ph_num && <span className='text-danger'>{errors.ph_num}</span>}
+                        {errors.ph_num && <span className='text-danger'>{errors.ph_num}</span>} */}
+                        <input
+                                className='m-2 p-1'
+                                onChange={handleInput}
+                                name='ph_num'
+                                id="ph_num"
+                                type="tel"
+                                required
+                                pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
+                            <span className="validity"></span>
+                        
                     </div>
                     <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="email">Enter your Email<span className='text-danger'>*</span> : </label>
@@ -118,6 +144,30 @@ export default function AddNewB2BEmployee() {
                         {/* {errors.password && <span className='text-danger'>{errors.password}</span>} */}
                     </div>
 
+
+                    {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> */}
+                    <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                        <label className='p-1' htmlFor="aadhaar">Aadhaar No <span className='text-danger'>*</span>: </label>
+                        <input required className='m-2  p-1' type="number" style={{ width: '90%' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br />
+                    </div>
+                    <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                        <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
+                        <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br />
+                    </div>
+                    {/* </div> */}
+                    <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                        <label className='p-1' htmlFor="image">Add Your Aadhaar Card Image </label>
+                        {/* <input className='m-2  p-1' type="file" style={{ width: '90%' }} placeholder='Enter Product image'
+                                name='img' onChange={handleInput} /><br /> */}
+                        <UploadImage onImageUpload={handleAadhaarImageUpload} />
+                    </div>
+                    <div className="form-check licence-add" style={{ textAlign: 'initial', fontWeight: '700' }}>
+                        <label className='p-1' htmlFor="image">Add Your Pan Card Image</label>
+                        {/* <span className='mx-3'><input type="file" name="licence" id="licence" /></span> */}
+                        {/* <UploadImage/> */}
+                        <UploadImage onImageUpload={handlePanCardImageUpload} />
+
+                    </div>
                     <div className="form-check ">
                         <input required className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} onChange={() => { setCheck(true) }} />
                         <label className="form-check-label" htmlFor="flexCheckChecked">
@@ -125,7 +175,7 @@ export default function AddNewB2BEmployee() {
                             {errors.check && <span className='text-danger'>{errors.check}</span>}
                         </label>
                     </div>
-                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Add Now</button>
+                    <button type='submit' className='btn  btn-default border p-2 mb-3 btn-info' style={{ width: '90%', color: 'white', cursor: 'pointer' }}>Submit</button>
                 </form>
             </div>
             <Modal

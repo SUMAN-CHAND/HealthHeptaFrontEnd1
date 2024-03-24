@@ -109,6 +109,7 @@ const AddNewDeliveryPartnerCommission = lazy(() => import('./component/AdminPane
 const OrderAction = lazy(() => import('./component/AdminPanel/OrderAction'));
 
 const B2BEmployee_Login = lazy(() => import('./component/B2BEmployee/B2BEmployee_Login'));
+const B2BEmployeeSignUp = lazy(() => import('./component/B2BEmployee/B2BEmployeeSignUp'));
 const B2BEmployee_Home = lazy(() => import('./component/B2BEmployee/B2BEmployee_Home'));
 const B2BOrderbill = lazy(() => import('./component/B2B System/B2BOrderbill'));
 const AddProductWhichIsNotPresent = lazy(() => import('./component/B2BEmployee/AddProductWhichIsNotPresent'));
@@ -241,6 +242,7 @@ function App() {
             <Routes>
               {/* Partner Routes */}
               <Route path='/b2b/emp/login' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Login /></Suspense></>} exact />
+              <Route path='/b2b/emp/signup' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployeeSignUp /></Suspense></>} exact />
               <Route path='/b2b/emp/home' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Home /></Suspense></>} exact />
               <Route path='/b2b/emp/addnew/service-provider' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewServiceProvider /></Suspense></>} exact />
               <Route path='/b2b/emp/addnew/customer' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewCustomer /></Suspense></>} exact />

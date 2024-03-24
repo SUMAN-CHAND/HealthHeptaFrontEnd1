@@ -92,10 +92,10 @@ export default function B2BEmployee_Login() {
                     </div>
                     <button type='submit' className='btn' style={{ width: '90%', color: 'white', backgroundColor: '#6775ec' }}>Log In</button>
                     <p >You are agree to our <span className='text-primary'>terms & policies</span> </p>
-                    {/* <p className='px-2'>Do not have any account please  <span className='text-primary'>create an Account</span> </p> */}
-                    {/* <>
-                        <Link to='/partner/signup'> <button className='  btn-default border p-2 mb-3 btnonhover' style={{ borderRadius: '5px', width: '90%' }}>Create Account</button></Link>
-                    </> */}
+                    <p className='px-2'>Do not have any account please  <span className='text-primary'>create an Account</span> </p>
+                    <>
+                        <Link to='/b2b/emp/signup'> <button className='  btn-default border p-2 mb-3 btnonhover' style={{ borderRadius: '5px', width: '90%' }}>Create Account</button></Link>
+                    </>
                 </form>
             </div>
             <ToastContainer />
