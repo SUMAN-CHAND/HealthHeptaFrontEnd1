@@ -52,7 +52,7 @@ export default function AllProductOfAMedicineShop() {
         <div style={{ width: '100%', display: 'flex',flexDirection:'column',alignItems:'center',justifyContent:'center' }}>
             <div style={{ display: 'flex', alignItems: "center", justifyContent: 'center' }}>
                 <div className=''>
-                    {medicineShop.map(madical => (
+                    {medicineShop && medicineShop.map(madical => (
                         <div key={madical.id}>
                             {medicineShopimage.map((img) => (
                                 <div key={img.id} style={{width:'15vw'}}>
@@ -92,8 +92,10 @@ export default function AllProductOfAMedicineShop() {
             {!products && <>
                 <div>
                     <p>Data not found</p>
+                    <p> !! No Product Present in This Medicine Shop !! </p>
                 </div>
             </>}
+            
         </div>
     )
 }

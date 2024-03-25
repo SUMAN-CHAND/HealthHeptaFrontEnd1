@@ -36,7 +36,7 @@ export default function AllPopularProduct(props) {
   current_pin_code = sessionStorage.getItem('current_pin_code');
 
   useEffect(() => {
-    const fetchLabs = async () => {
+    const fetchProuct = async () => {
       try {
         if (current_pin_code === null) {
           axiosClient.get(`/product`).then((res) => {
@@ -56,7 +56,6 @@ export default function AllPopularProduct(props) {
         } else {
           axiosClient.get(`/product/${current_pin_code}`).then((res) => {
             // Handle response
-            console.log(res.data)
             if (res.data !== null) {
               setProducts(res.data[0])
               setImages(res.data[1])
@@ -77,7 +76,7 @@ export default function AllPopularProduct(props) {
       }
     };
 
-    fetchLabs();
+    fetchProuct();
   }, [current_pin_code]);
 
 
@@ -148,7 +147,7 @@ export default function AllPopularProduct(props) {
             <p>No  Doctor present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
-          {loading ?
+          {/* {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
               {products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
                 <div key={fproduct.product_id}>
@@ -156,17 +155,15 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
                         </>
                         : <></>}
-
-                      {/* <p>{img.name}</p> */}
                     </div>
                   ))}
                 </div>
               ))}
             </Carousel>
-            : <ClipLoader color="blue" />}
+            : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
             <p>No  Doctor present  in this location</p>
           </> : <></>}
@@ -182,7 +179,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
                         </>
                         : <></>}
                     </div>
@@ -206,7 +203,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
                         </>
                         : <></>}
                     </div>
@@ -219,7 +216,7 @@ export default function AllPopularProduct(props) {
             <p>No  Doctor present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
-          {loading ?
+          {/* {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
               {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
                 <div key={fproduct.product_id}>
@@ -227,7 +224,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
                         </>
                         : <></>}
                     </div>
@@ -235,7 +232,7 @@ export default function AllPopularProduct(props) {
                 </div>
               ))}
             </Carousel>
-            : <ClipLoader color="blue" />}
+            : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
             <p>No  Doctor present  in this location</p>
           </> : <></>}
@@ -250,7 +247,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
                         </>
                         : <></>}
                     </div>
@@ -263,7 +260,7 @@ export default function AllPopularProduct(props) {
             <p>No  Doctor present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
-          {loading ?
+          {/* {loading ?
             <Carousel responsive={responsive} className='productCarousel'>
               {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
                 <div key={fproduct.product_id}>
@@ -271,7 +268,7 @@ export default function AllPopularProduct(props) {
                     <div key={img.id}>
                       {parseInt(fproduct.productImageId) === img.id ?
                         <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} />
+                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
                         </>
                         : <></>}
                     </div>
@@ -279,7 +276,7 @@ export default function AllPopularProduct(props) {
                 </div>
               ))}
             </Carousel>
-            : <ClipLoader color="blue" />}
+            : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
             <p>No  Doctor present  in this location</p>
           </> : <></>}

@@ -24,7 +24,8 @@ export default function MedicineShopCard(props) {
             <div className="card-body">
               <p className="card-title" style={{ fontWeight: '800' }}>{props.title}</p>
               <p className="card-text">{props.phone}</p>
-              <p className="card-text">{props.location}</p>
+              {/* <p className="card-text">{props.location}</p> */}
+              <p className="card-text">PinCode :- {props.pin_code}</p>
               <Link to={`/medicineshop/products/${id}`} className="btn btn-primary" style={{ fontSize: '0.7rem' }} >{props.btntext}</Link>
               
             </div>

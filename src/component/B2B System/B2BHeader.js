@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,Suspense, lazy } from 'react'
 import logo from '../../img/logo.jpeg';
 import {
     Link, useParams
@@ -6,10 +6,21 @@ import {
 import '../style.css'
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import HashLoader from 'react-spinners/HashLoader';
+const ChoosePinCodeModal = lazy(() => import('../ChoosePinCodeModal'));
+
+
 export default function B2BHeader() {
     const navigate = useNavigate();
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     const [numOfItem, setnumOfItem] = useState(0)
     const [loggedIn, setLoggedIn] = useState(0);
@@ -225,7 +236,7 @@ export default function B2BHeader() {
                                 )
                                 )}
                             </select> */}
-                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Search Your Pin Code Here" value={searchValue.input} />
+                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
 
                             {searchLocation.length !== 0 && (
                                 <div className="inputResult" >
@@ -235,6 +246,20 @@ export default function B2BHeader() {
                                     )}
                                 </div>
                             )}
+                            {/* <select className="btn btn-light dropdown-toggle header-location-1 header-location-mobile" name='input' type="button" placeholder="Pin Code" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"  onClick={handleShow} >
+                                <option value={searchValue.input}>{searchValue.input !== null ? <>{searchValue.input}</> : <>Pin Code..</>}</option>
+                            </select>
+
+                            <Offcanvas show={show} onHide={handleClose}>
+                                <Offcanvas.Header closeButton>
+                                    <Offcanvas.Title>
+                                        <h5>Find Nearby Services</h5>
+                                    </Offcanvas.Title>
+                                </Offcanvas.Header>
+                                <Offcanvas.Body>
+                                    <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChoosePinCodeModal onHide={handleClose} /></Suspense> </div>
+                                </Offcanvas.Body>
+                            </Offcanvas> */}
 
 
                         </div>

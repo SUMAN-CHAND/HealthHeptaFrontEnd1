@@ -73,10 +73,10 @@ export default function ProductCard(props) {
             </Link>
             <div className="card-body product-card-div">
               <Link to={value} style={{ textDecoration: 'none', color: 'black',width:'100%' }}>
-                <h5 className="card-title">{props.name}</h5>
+                <h5 className="card-title text-truncate">{props.name}</h5>
                 <div>
-                  <p style={{ marginBottom: '1px' }}>{props.productOf}</p>
-                  <p style={{ marginBottom: '1px' }}>{props.description}</p>
+                  <p style={{ marginBottom: '1px' }} className='text-truncate mx-1'>{props.productOf}</p>
+                  <p style={{ marginBottom: '1px' }} className='text-truncate'>{props.description}</p>
                   {/* <div style={{display:'flex',width:'100%',justifyContent:'space-around'}}> */}
                     <p className="text-success" style={{ marginBottom: '1px' }}>Price:- ₹{discountPrice}</p>
                     <p >MRP:- <span style={{ textDecoration: 'line-through', color: '#878787' }}>₹{props.price}</span></p>

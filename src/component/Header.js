@@ -64,6 +64,11 @@ export default function Header() {
     const [selectLocation, setSelectLocation] = useState()
     const [userLocation, setUserLocation] = useState()
     const [active, setActive] = useState(false);
+
+
+    let current_pin_code;
+    current_pin_code = sessionStorage.getItem('current_pin_code');
+
     useEffect(() => {
         axiosClient.get(`/profile-details`)
             .then(res => {
@@ -172,64 +177,105 @@ export default function Header() {
     const [searchValue, setSearchValue] = useState({
         input: ''
     })
-    // const handleLocationFilter = (event) => {
-    //     setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-    //     const searchword = event.target.value.toLowerCase();
 
-    //     const filtered = locations.filter((item) => {
-    //         const pin_code = item.pin_code.toString().toLowerCase();
-    //         const search = searchword.toLowerCase();
-    //         return pin_code.includes(search);
-    //     });
-    //     if (searchword === "") {
-    //         setSearchLocation([]);
-    //     } else {
-    //         setSearchLocation(filtered);
-    //     }
-    // };
 
-    // const setLocationValueTOFilter = async (pin_code) => {
-    //     setSearchValue({
-    //         input: pin_code,
-    //     });
-    //     setChooseLocation(pin_code);
-    //     setSearchLocation([]);
-    // }
-
-    const searchMedicne = async () => {
-        try {
-            const response = await axiosClient.post(`/search`, values);
-            if (response.data !== null) {
-                navigate(`/medicines/${values.input}`,
-                    {
-                        state: {
-                            product: response.data[0],
-                            image: response.data[1],
-                            lab: response.data[2],
-                            labImage: response.data[3],
-                            doctor: response.data[4],
-                            doctorImage: response.data[5],
-                            medicineShop: response.data[6],
-                            medicineShopImage: response.data[7],
-                            location: selectLocation
-                        }
-                    })
-                setValues({
-                    input: ''
-                });
-                setChooseProduct([]);
-            } else {
-                console.error(response.data.message);
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
+ 
+  const searchMedicne = async () => {
+    if (current_pin_code === null) {
+      try {
+        const response = await axiosClient.post(`/search`, values);
+        if (response.data !== null) {
+          navigate(`/medicines/${values.input}`,
+            {
+              state: {
+                product: response.data[0],
+                image: response.data[1],
+                lab: response.data[2],
+                labImage: response.data[3],
+                doctor: response.data[4],
+                doctorImage: response.data[5],
+                medicineShop: response.data[6],
+                medicineShopImage: response.data[7],
+                location: selectLocation
+              }
+            })
+          setValues({
+            input: ''
+          });
+          setChooseProduct([]);
+        } else {
+          console.error(response.data.message);
         }
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+
+    } else {
+      try {
+        const response = await axiosClient.post(`/search/${current_pin_code}`, values);
+        if (response.data !== null) {
+          navigate(`/medicines/${values.input}`,
+            {
+              state: {
+                product: response.data[0],
+                image: response.data[1],
+                lab: response.data[2],
+                labImage: response.data[3],
+                doctor: response.data[4],
+                doctorImage: response.data[5],
+                medicineShop: response.data[6],
+                medicineShopImage: response.data[7],
+                location: selectLocation
+              }
+            })
+          setValues({
+            input: ''
+          });
+          setChooseProduct([]);
+        } else {
+          console.error(response.data.message);
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+
     }
+  }
+    
+
+    // const searchMedicne = async () => {
+    //     try {
+    //         const response = await axiosClient.post(`/search`, values);
+    //         if (response.data !== null) {
+    //             navigate(`/medicines/${values.input}`,
+    //                 {
+    //                     state: {
+    //                         product: response.data[0],
+    //                         image: response.data[1],
+    //                         lab: response.data[2],
+    //                         labImage: response.data[3],
+    //                         doctor: response.data[4],
+    //                         doctorImage: response.data[5],
+    //                         medicineShop: response.data[6],
+    //                         medicineShopImage: response.data[7],
+    //                         location: selectLocation
+    //                     }
+    //                 })
+    //             setValues({
+    //                 input: ''
+    //             });
+    //             setChooseProduct([]);
+    //         } else {
+    //             console.error(response.data.message);
+    //         }
+    //     } catch (error) {
+    //         console.error('An error occurred:', error);
+    //     }
+    // }
     const handleClick = event => {
         setChooseProduct([]);
     };
-    let current_pin_code;
-    current_pin_code = sessionStorage.getItem('current_pin_code');
+
     // console.log(current_pin_code)
     useEffect(() => {
         setSearchValue({
@@ -463,7 +509,7 @@ export default function Header() {
                     </div>
                     <div className="search  me-2 mx-2 location-search-under" >
                         <div style={{ display: 'flex', width: '60vw' }}>
-                            <input className="form-control" name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" style={{ fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
+                            <input className="form-control " name='input' onChange={handleFilter} placeholder="Search Doctors, Clinics, Hospitals, Diseases Etc" value={values.input} style={{ fontSize: '0.9em', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px' }} />
                             <button type="button" onClick={searchMedicne} className="btn" style={{ backgroundColor: '#febd69', color: 'black', borderTopLeftRadius: '0px', borderTopRightRadius: '6px', borderBottomLeftRadius: '0px', borderBottomRightRadius: '6px' }}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>

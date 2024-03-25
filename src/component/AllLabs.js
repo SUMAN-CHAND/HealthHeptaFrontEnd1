@@ -96,19 +96,22 @@ export default function AllLabs(props) {
         } else {
           axiosClient.get(`/laboratory/laboratorys/${current_pin_code}`).then((res) => {
             // Handle response
-            if (res.data !== null) {
+            if (res.data.length > 0) {
               setLabs(res.data[0]);
               setImages(res.data[1])
               setLoading(true);
               setNoTestPresent(false);
             } else {
               setNoTestPresent(true);
+              setLoading(true);
+
             }
           })
             .catch(err => {
               // Handle errors
               console.error(err);
             });
+            
         }
       } catch (error) {
         console.error(error);
@@ -117,7 +120,6 @@ export default function AllLabs(props) {
 
     fetchLabs();
   }, [current_pin_code]);
-
 
 
 
@@ -132,7 +134,7 @@ export default function AllLabs(props) {
         <div className="container" style={{ marginTop: '1vh' }}>
           <h3 className='py-1'>||Best Pathological Laboratory In Your Location ||</h3>
           {loading ? <>
-            {labs &&
+            {labs.length>0 &&
               <Carousel responsive={responsive} className='allLabsCarousel'>
 
                 {labs && labs.map(lab => (
@@ -157,7 +159,7 @@ export default function AllLabs(props) {
           </> : <><ClipLoader color="blue" /></>}
 
           {noTestPresent ? <>
-            <p>No  lab  present in this Location</p>
+            <p>Opps !!! No  lab  present in this Location</p>
           </> : <></>}
         </div>
       </div>

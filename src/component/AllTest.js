@@ -76,7 +76,7 @@ export default function AllTest(props) {
           axiosClient.get(`/laboratory/lab_tests`)
             .then(response => {
               // Handle response
-              console.log(response.data)
+              // console.log(response.data)
               if (response.data !== null) {
                 setLabTests(response.data[0]);
                 setImages(response.data[1])
@@ -89,22 +89,22 @@ export default function AllTest(props) {
             });
         } else {
           axiosClient.get(`/laboratory/lab_tests/${current_pin_code}`)
-        .then(response => {
-          // Handle response
-          // console.log(response.data[0])
-          if (response.data[0] !== undefined) {
-            setLabTests(response.data[0])
-            setImages(response.data[1])
-            setLoading(true);
-            setNoTestPresent(false);
-          }else{
-            setNoTestPresent(true);
-          }
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
+            .then(response => {
+              // Handle response
+              if (response.data[0] !== undefined) {
+                setLabTests(response.data[0])
+                setImages(response.data[1])
+                setLoading(true);
+                setNoTestPresent(false);
+              } else {
+                setLoading(true);
+                setNoTestPresent(true);
+              }
+            })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
         }
       } catch (error) {
         console.error(error);
@@ -127,28 +127,33 @@ export default function AllTest(props) {
         <div className="container" style={{ marginTop: '1vh' }}>
           <h3 className='py-1'>||Browse All Type Of Tests||</h3>
           {loading ?
-            <Carousel responsive={responsive} className='allLabTestCarousel'>
-              {labTests && labTests.map(labTest => (
-                <div key={labTest.Test_id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(labTest.test_imageId) === img.id ?
-                        <>
-                          <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} price={labTest.Price} btntext="Book Now" /> </div>
-                        </>
-                        : <>
-                        </>}
+            <>
+              {labTests.length > 0 &&
+                <Carousel responsive={responsive} className='allLabTestCarousel'>
+                  {labTests && labTests.map(labTest => (
+                    <div key={labTest.Test_id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(labTest.test_imageId) === img.id ?
+                            <>
+                              <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} price={labTest.Price} btntext="Book Now" /> </div>
+                            </>
+                            : <>
+                            </>}
 
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+              }
+
+            </>
             : <ClipLoader color="blue" />}
 
-            {noTestPresent?<>
-              <p>No  Lab Test Present in this location</p>
-            </>:<></>}
+          {noTestPresent ? <>
+            <p>Opps!! No  Lab Test Present in this location</p>
+          </> : <></>}
         </div>
 
       </div>

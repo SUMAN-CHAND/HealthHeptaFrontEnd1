@@ -110,7 +110,7 @@ export default function Doctor() {
       <div className="row particular-doctor-page" style={{ margin: '0px', backgroundColor: 'rgb(193 193 206 / 36%)', overflow: 'scroll' }}>
         <div className="col-8 particular-doctor" style={{ position: 'sticky', top: '0' }} >
           <div className="doctor container  shadow" style={{ margin: '3rem 2rem', backgroundColor: 'white', width: '90%', padding: '5px', borderRadius: '5px' }}>
-            {doctors.map(doctor => (
+            {doctors && doctors.map(doctor => (
               <div className="doctor-profile" style={{ display: 'flex', alignItems: 'center' }}>
                 <img src={`http://${process.env.REACT_APP_HOST}:8081/${image[0].path}`} className="card-img-top" alt="..." style={{ width: '25%' }} />
 

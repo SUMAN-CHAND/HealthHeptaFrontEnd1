@@ -28,9 +28,13 @@ export default function AllSpecialitiesDoctors() {
   const [doctors, setDoctors] = useState([])
   const [image, setImages] = useState([])
   let [loading, setLoading] = useState(false);
-  let current_pin_code;
-  current_pin_code = sessionStorage.getItem('current_pin_code');
+  let pin_code;
+  pin_code = sessionStorage.getItem('current_pin_code');
   // console.log(current_pin_code)
+  let current_pin_code;
+  useEffect(() => {
+    current_pin_code = pin_code;
+  }, [pin_code])
 
   useEffect(() => {
     const fetchSpecializesDoctors = async () => {
@@ -53,46 +57,46 @@ export default function AllSpecialitiesDoctors() {
         console.error(error);
       }
     };
-  
+
     fetchSpecializesDoctors();
   }, [current_pin_code]);
-  
-// const fetchLocations = async () => {
-//   useEffect(() => {
-//     if (current_pin_code === null) {
-//       axiosClient.get('/specializes-doctors')
-//         .then((res) => {
-//           // Handle response
-//           if (res.data !== null) {
-//             setDoctors(res.data[0]);
-//             setLoading(true);
-//           }
-//         })
-//         .catch(err => {
-//           // Handle errors
-//           console.error(err);
-//         });
-//     } else {
-//       axiosClient.get(`/specializes-doctors/${current_pin_code}`)
-//         .then((res) => {
-//           // Handle response
-//           console.log(current_pin_code)
-//           if (res.data !== null) {
-//             setDoctors(res.data[0]);
-//             setLoading(true);
-//           }
-//         })
-//         .catch(err => {
-//           // Handle errors
-//           console.error(err);
-//         });
-//     }
-//   }, [current_pin_code]);
-// };
 
-// useEffect(() => {
-//   fetchLocations();
-// }, [current_pin_code]);
+  // const fetchLocations = async () => {
+  //   useEffect(() => {
+  //     if (current_pin_code === null) {
+  //       axiosClient.get('/specializes-doctors')
+  //         .then((res) => {
+  //           // Handle response
+  //           if (res.data !== null) {
+  //             setDoctors(res.data[0]);
+  //             setLoading(true);
+  //           }
+  //         })
+  //         .catch(err => {
+  //           // Handle errors
+  //           console.error(err);
+  //         });
+  //     } else {
+  //       axiosClient.get(`/specializes-doctors/${current_pin_code}`)
+  //         .then((res) => {
+  //           // Handle response
+  //           console.log(current_pin_code)
+  //           if (res.data !== null) {
+  //             setDoctors(res.data[0]);
+  //             setLoading(true);
+  //           }
+  //         })
+  //         .catch(err => {
+  //           // Handle errors
+  //           console.error(err);
+  //         });
+  //     }
+  //   }, [current_pin_code]);
+  // };
+
+  // useEffect(() => {
+  //   fetchLocations();
+  // }, [current_pin_code]);
 
   // const fetchLocations = async () => {
   //   // useEffect(() => {

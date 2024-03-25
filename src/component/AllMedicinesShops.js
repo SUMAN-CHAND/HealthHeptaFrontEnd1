@@ -90,22 +90,22 @@ export default function AllMedicinesShops(props) {
             });
         } else {
           axiosClient.get(`/madicine/medicineshops/${current_pin_code}`)
-        .then(response => {
-          // Handle response
-          // console.log(response.data)
-          if (response.data !== null ) {
-            setMadicalPage(response.data[0]);
-            setImages(response.data[1]);
-            setLoading(true);
-            setNoTestPresent(false);
-          }else{
-            setNoTestPresent(true);
-          }
-        })
-        .catch(err => {
-          // Handle errors
-          console.error(err);
-        });
+            .then(response => {
+              // Handle response
+              if (response.data !== null) {
+                setMadicalPage(response.data[0]);
+                setImages(response.data[1]);
+                setLoading(true);
+                setNoTestPresent(false);
+              } else {
+                setLoading(true);
+                setNoTestPresent(true);
+              }
+            })
+            .catch(err => {
+              // Handle errors
+              console.error(err);
+            });
         }
       } catch (error) {
         console.error(error);
@@ -128,27 +128,31 @@ export default function AllMedicinesShops(props) {
         <div className="container" >
           <h3 className='py-1'>||Best Medicines Seller In Your Location ||</h3>
           {loading ?
-            <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
-              {madicalPage && madicalPage.map(madical => (
-                <div key={madical.id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(madical.SubAdminImageId) === img.id ?
-                        <>
-                          <MedicineShopCard id={madical.id} img={img.path} title={madical.name} phone={madical.phone} location={madical.City} btntext="View Products" />
-                        </>
-                        : <>
-                        </>}
+            <>
+              {madicalPage.length > 0 &&
+                <Carousel responsive={responsive} className='allMedicinesShopsCarousel'>
+                  {madicalPage && madicalPage.map(madical => (
+                    <div key={madical.id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(madical.SubAdminImageId) === img.id ?
+                            <>
+                              <MedicineShopCard id={madical.id} img={img.path} pin_code = {madical.pin_code} title={madical.name} phone={madical.phone} location={madical.City} btntext="View Products" />
+                            </>
+                            : <>
+                            </>}
 
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+              }
+            </>
             : <ClipLoader color="blue" />}
-            {noTestPresent?<>
-              <p>No  Pharmacy Shop  present  in this location</p>
-            </>:<></>}
+          {noTestPresent ? <>
+            <p>No  Pharmacy Shop  present  in this location</p>
+          </> : <></>}
         </div>
       </div>
     </>

@@ -137,7 +137,7 @@ export default function ChoosePinCodeModal({ onHide }) {
             //     setloading(false)
 
             // } else {
-                console.log(filtered)
+                // console.log(filtered)
                 // console.log(searchValue.input)
                 setloading(true)
                 if (filtered.length>0) {
@@ -149,7 +149,7 @@ export default function ChoosePinCodeModal({ onHide }) {
                         if(res.data[0].PostOffice !== null){
                             setSearchLocation(res.data[0].PostOffice)
                             setloading(false)
-                            console.log(res.data[0].PostOffice)
+                            // console.log(res.data[0].PostOffice)
                         }else{
                             setSearchLocation([]);
                             setLoading(true)
@@ -189,16 +189,16 @@ export default function ChoosePinCodeModal({ onHide }) {
         sessionStorage.setItem("current_pin_code", pin_code);
         onHide();
         setSearchLocation([]);
-        // window.location.reload();
+        window.location.reload();
     }
 
 
     return (
-        <div className="" style={{ width: '90%' }}>
+        <div id='pincode_choose' className="" style={{ width: '90%' }}>
             <input className="form-control" style={{ height: '50px' }} name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
 
             {searchLocation.length !== 0 ? <>
-                <div className="inputResult" >
+                <div className="inputResultofmodal" >
                     {searchLocation.map((location, index) => {
                         return <span onClick={() => setLocationValueTOFilter(location.Pincode)} style={{ textDecoration: 'none', color: 'black' }}  >
                             <div style={{ cursor: 'pointer', padding: '15px', margin: '5px', color: 'black', border: '2px solid #fff0d7', display: 'flex', alignItems: 'center' }} key={index}  ><FaLocationDot /> {location.Pincode},{location.Name},{location.State}</div>
