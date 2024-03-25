@@ -136,7 +136,7 @@ export default function AllTest(props) {
                         <div key={img.id}>
                           {parseInt(labTest.test_imageId) === img.id ?
                             <>
-                              <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} price={labTest.Price} btntext="Book Now" /> </div>
+                              <div><LabTestCard img={img.path} title={labTest.Test_Name} desc={labTest.Test_Desc} id={labTest.Test_id} location={labTest.Landmark} pin_code={labTest.pin_code} price={labTest.Price} btntext="Book Now" /> </div>
                             </>
                             : <>
                             </>}
