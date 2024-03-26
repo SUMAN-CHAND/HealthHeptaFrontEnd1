@@ -104,6 +104,11 @@ export default function B2BEmployeeSignUp() {
             .catch(err => console.log(err));
     }
 
+    const [panNo, setPanNo] = useState('');
+
+  const handleChange = (event) => {
+    setPanNo(event.target.value.toUpperCase());
+  };
 
     return (
         <div className='d-flex justify-content-center align-item-center p-3 m-3'>
@@ -128,15 +133,15 @@ export default function B2BEmployeeSignUp() {
                             name='ph_num' onChange={handleInput} /><br />
                         {errors.ph_num && <span className='text-danger'>{errors.ph_num}</span>} */}
                         <input
-                                className='m-2 p-1'
-                                onChange={handleInput}
-                                name='ph_num'
-                                id="ph_num"
-                                type="tel"
-                                required
-                                pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
-                            <span className="validity"></span>
-                        
+                            className='m-2 p-1'
+                            onChange={handleInput}
+                            name='ph_num'
+                            id="ph_num"
+                            type="tel"
+                            required
+                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
+                        <span className="validity"></span>
+
                     </div>
                     <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="email">Enter your Email<span className='text-danger'>*</span> : </label>
@@ -148,11 +153,27 @@ export default function B2BEmployeeSignUp() {
                     {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> */}
                     <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="aadhaar">Aadhaar No <span className='text-danger'>*</span>: </label>
-                        <input required className='m-2  p-1' type="number" style={{ width: '90%' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br />
+                        {/* <input required className='m-2  p-1' type="number" style={{ width: '90%' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br /> */}
+
+                        <input
+                            className='m-2 p-1'
+                            onChange={handleInput}
+                            id="aadhaar"
+                            placeholder='Write Aadhaar No'
+                            name='aadhaar'
+                            type="tel"
+                            required
+                            maxLength="12"
+                            pattern="[0-9]{4}[0-9]{4}[0-9]{4}" style={{ width: '90%', border: '1px solid black' }} />
+                        <span className="validity"></span>
+
                     </div>
                     <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
-                        <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br />
+                        {/* <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br /> */}
+                        <input type="text" className='m-2  p-1'  value={values.pan} style={{ width: '90%' }} id="pan" name="pan" onChange={handleInput}  maxLength="10" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" placeholder="Please enter valid PAN number. E.g. AAAAA9999A" required />
+                        <span className="validity"></span>
+
                     </div>
                     {/* </div> */}
                     <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >

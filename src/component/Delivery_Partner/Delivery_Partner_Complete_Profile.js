@@ -44,7 +44,7 @@ export default function Delivery_Partner_Complete_Profile() {
                     alert('Sign up  Successfully!!')
                     navigate('/delivery-partner/login');
                 }
-                else if(res.status === 200 && res.data !== null){
+                else if (res.status === 200 && res.data !== null) {
                     alert('Partner Added Successfully')
                     navigate('/superadmin', { state: { loggedIn: true } });
                 }
@@ -92,13 +92,37 @@ export default function Delivery_Partner_Complete_Profile() {
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                            {/* <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="aadhaar">Aadhaar No <span className='text-danger'>*</span>: </label>
                                 <input required className='m-2  p-1' type="number" style={{ width: '33vw' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br />
                             </div>
                             <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
                                 <input required className='m-2  p-1' type="text" style={{ width: '33vw' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br />
+                            </div> */}
+                            <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="aadhaar">Aadhaar No <span className='text-danger'>*</span>: </label>
+                                {/* <input required className='m-2  p-1' type="number" style={{ width: '90%' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br /> */}
+
+                                <input
+                                    className='m-2 p-1'
+                                    onChange={handleInput}
+                                    id="aadhaar"
+                                    placeholder='Write Aadhaar No'
+                                    name='aadhaar'
+                                    type="tel"
+                                    required
+                                    maxLength="12"
+                                    pattern="[0-9]{4}[0-9]{4}[0-9]{4}" style={{ width: '90%', border: '1px solid black' }} />
+                                <span className="validity"></span>
+
+                            </div>
+                            <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
+                                {/* <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br /> */}
+                                <input type="text" className='m-2  p-1' value={values.pan} style={{ width: '90%' }} id="pan" name="pan" onChange={handleInput} maxLength="10" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" placeholder="Please enter valid PAN number. E.g. AAAAA9999A" required />
+                                <span className="validity"></span>
+
                             </div>
                         </div>
                         <div style={{ textAlign: 'left' }}>

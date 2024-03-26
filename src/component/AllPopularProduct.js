@@ -39,7 +39,7 @@ export default function AllPopularProduct(props) {
     const fetchProuct = async () => {
       try {
         if (current_pin_code === null) {
-          axiosClient.get(`/product`).then((res) => {
+          axiosClient.get(`/popular/product`).then((res) => {
             // Handle response
             if (res.data !== null) {
               setProducts(res.data[0])
@@ -54,7 +54,7 @@ export default function AllPopularProduct(props) {
             });
 
         } else {
-          axiosClient.get(`/product/${current_pin_code}`).then((res) => {
+          axiosClient.get(`/popular/product/${current_pin_code}`).then((res) => {
             // Handle response
             if (res.data !== null) {
               setProducts(res.data[0])
@@ -115,6 +115,13 @@ export default function AllPopularProduct(props) {
 
   //   }, [])
   // }
+
+  const OtcProduct = products.filter(product => product.DrugOrNot.toLowerCase() === 'otc');
+  const AllopathyProduct = products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy');
+  const HomeopathyProduct = products.filter(product =>  product.typeOfMedicine.toLowerCase() === 'homeopathy');
+  
+
+
   return (
     <>
       <Helmet>
@@ -125,26 +132,30 @@ export default function AllPopularProduct(props) {
         <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
           <h3 className='py-1'>|| Popular Products ||</h3>
           {loading ?
-            <Carousel responsive={responsive} className='productCarousel'>
-              {products && products.filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
-                <div key={fproduct.product_id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(fproduct.productImageId) === img.id ?
-                        <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
-                        </>
-                        : <></>}
+            <>
+              {products.length > 0 &&
+                <Carousel responsive={responsive} className='productCarousel'>
+                  {products && products.slice(0, 20).filter(product => product.category.toLowerCase() === 'madicine').map(fproduct => (
+                    <div key={fproduct.product_id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(fproduct.productImageId) === img.id ?
+                            <>
+                              <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
+                            </>
+                            : <></>}
 
-                      {/* <p>{img.name}</p> */}
+                          {/* <p>{img.name}</p> */}
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+              }
+            </>
             : <ClipLoader color="blue" />}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {/* {loading ?
@@ -165,55 +176,69 @@ export default function AllPopularProduct(props) {
             </Carousel>
             : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
           {/* <div><PopularProductCard/> </div> */}
         </div>
         <div className="container" style={{ marginTop: '3vh', marginBottom: '1vh' }}>
           <h3 className='py-1'>|| Otc Products ||</h3>
           {loading ?
-            <Carousel responsive={responsive} className='productCarousel'>
-              {products.filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
-                <div key={fproduct.product_id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(fproduct.productImageId) === img.id ?
-                        <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
-                        </>
-                        : <></>}
+            <>
+              {OtcProduct.length > 0 ? <>
+                <Carousel responsive={responsive} className='productCarousel'>
+                  {products.slice(0, 20).filter(product => product.DrugOrNot.toLowerCase() === 'otc').map(fproduct => (
+                    <div key={fproduct.product_id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(fproduct.productImageId) === img.id ?
+                            <>
+                              <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
+                            </>
+                            : <></>}
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+              </> : <>
+                <p>!! Opps No  Product present  in this location</p>
+              </>}
+            
+            </>
             : <ClipLoader color="blue" />}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
         </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Allopathy Products ||</h5>
           {loading ?
-            <Carousel responsive={responsive} className='productCarousel'>
-              {products.filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
-                <div key={fproduct.product_id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(fproduct.productImageId) === img.id ?
-                        <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
-                        </>
-                        : <></>}
+            <>
+              {AllopathyProduct.length > 0 ? <>
+                <Carousel responsive={responsive} className='productCarousel'>
+                  {products.slice(0, 20).filter(product => product.typeOfMedicine.toLowerCase() === 'allopathy').map(fproduct => (
+                    <div key={fproduct.product_id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(fproduct.productImageId) === img.id ?
+                            <>
+                              <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
+                            </>
+                            : <></>}
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+                </> : <>
+                <p> !! OppsNo  Product present  in this location</p>
+              </>}
+              
+            </>
             : <ClipLoader color="blue" />}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {/* {loading ?
@@ -234,30 +259,37 @@ export default function AllPopularProduct(props) {
             </Carousel>
             : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
         </div>
         <div className="container" style={{ marginTop: '1vh', marginBottom: '1vh' }}>
           <h5 className='py-1'>|| Homeopathy Products ||</h5>
           {loading ?
-            <Carousel responsive={responsive} className='productCarousel'>
-              {products.filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
-                <div key={fproduct.product_id}>
-                  {image.map((img) => (
-                    <div key={img.id}>
-                      {parseInt(fproduct.productImageId) === img.id ?
-                        <>
-                          <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf}/>
-                        </>
-                        : <></>}
+            <>
+              {HomeopathyProduct.length > 0 ? <>
+                <Carousel responsive={responsive} className='productCarousel'>
+                  {products.slice(0, 20).filter(product => product.typeOfMedicine.toLowerCase() === 'homeopathy').map(fproduct => (
+                    <div key={fproduct.product_id}>
+                      {image.map((img) => (
+                        <div key={img.id}>
+                          {parseInt(fproduct.productImageId) === img.id ?
+                            <>
+                              <ProductCard imgpath={img.path} name={fproduct.product_name} price={fproduct.product_price} product_id={fproduct.product_id} discount={fproduct.discount} description={fproduct.description} productOf={fproduct.productOf} />
+                            </>
+                            : <></>}
+                        </div>
+                      ))}
                     </div>
                   ))}
-                </div>
-              ))}
-            </Carousel>
+                </Carousel>
+                </> : <>
+                <p> !! OppsNo  Product present  in this location</p>
+              </>
+              }
+            </>
             : <ClipLoader color="blue" />}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
           <p style={{ margin: '5px' }}></p>
           {/* {loading ?
@@ -278,7 +310,7 @@ export default function AllPopularProduct(props) {
             </Carousel>
             : <ClipLoader color="blue" />} */}
           {noTestPresent ? <>
-            <p>No  Doctor present  in this location</p>
+            <p>No  Product present  in this location</p>
           </> : <></>}
         </div>
       </div>

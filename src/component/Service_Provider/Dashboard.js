@@ -463,7 +463,7 @@ function Dashboard() {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis  type="number" domain={[0, 'dataMax + 100']}/>
             <Tooltip />
             <Legend />
             <Bar dataKey="user" fill="#8884d8" />
@@ -485,7 +485,7 @@ function Dashboard() {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis  type="number" domain={[0, 'dataMax + 100']}/>
             <Tooltip />
             <Legend />
             <Line type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} />

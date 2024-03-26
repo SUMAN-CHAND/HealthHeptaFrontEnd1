@@ -292,7 +292,7 @@ const Dashboard = () => {
       name: '1',
       user: userCountonWeek[0],
       order: userOrderonWeek[0],
-      amt: 2400,
+      amt: 50000,
     },
     {
       name: '2',
@@ -812,7 +812,7 @@ const Dashboard = () => {
                     <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Supplier</div>
                     <div className="h6 mb-0 font-weight-bold text-gray-800">{serviceProviderCount}</div>
                   </div>
-                  
+
                   <div className="col-auto">
                     <i className="fas fa-people-arrows fa-2x text-gray-300" aria-hidden="true"></i>
                   </div>
@@ -892,13 +892,25 @@ const Dashboard = () => {
         </div>
       </div>
 
-  
+
       <div className='charts' style={{ height: '300px', width: '70vw' }}>
 
         {flag1Chart ? <>
 
           <ResponsiveContainer width="100%" height="100%" >
             <BarChart
+              width={500}
+              height={300}
+              data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis type="number" domain={[0, 'dataMax + 100']}/>
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="user" fill="#8884d8" />
+              <Bar dataKey="order" fill="#82ca9d" />
+            </BarChart>
+            {/* <BarChart
               width={500}
               height={300}
               data={data}
@@ -912,12 +924,12 @@ const Dashboard = () => {
 
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis tickLine={false}/>
               <Tooltip />
               <Legend />
               <Bar dataKey="user" fill="#8884d8" />
               <Bar dataKey="order" fill="#82ca9d" />
-            </BarChart>
+            </BarChart> */}
           </ResponsiveContainer>
 
         </> : <>
@@ -940,7 +952,7 @@ const Dashboard = () => {
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
+              <YAxis  type="number" domain={[0, 'dataMax + 100']}/>
               <Tooltip />
               <Legend />
               <Line type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} />
@@ -954,7 +966,7 @@ const Dashboard = () => {
 
         }
 
-      </div> 
+      </div>
 
       {/* //new One */}
       {/* <div className='charts'>

@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import UploadImage from '../UploadImage';
 import axiosClient from '../axiosClient';
+import axios from 'axios';
+import { FaLocationDot } from 'react-icons/fa6';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 let nextId = 0;
 
@@ -35,7 +38,7 @@ export default function CompelteProfileFrom() {
         pin: '',
         SubAdminImageId: null,
         LicenceImageId: null,
-        allPinCodes:[],
+        allPinCodes: [],
     })
 
     // const [pinCodes, setPinCodes] = useState({
@@ -59,7 +62,7 @@ export default function CompelteProfileFrom() {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
         // setRole(event.target.value)
     }
-  
+
 
 
     const [pin_code, setPinCode] = useState('');
@@ -78,7 +81,7 @@ export default function CompelteProfileFrom() {
             alert("Opening Time and Closeing Time Can not be same!!!");
         } else {
             event.preventDefault();
-            axiosClient.post(`/sub_admin/complete_profile`, [values,allPinCodes])
+            axiosClient.post(`/sub_admin/complete_profile`, [values, allPinCodes])
                 .then(res => {
                     if (res.data === 'success') {
                         alert('Sign up  Successfully!!');
@@ -110,6 +113,74 @@ export default function CompelteProfileFrom() {
         width: '90%'
     };
 
+    const [chooseLocation, setChooseLocation] = useState([])
+    const [selectLocation, setSelectLocation] = useState()
+    const [locations, setLocation] = useState([])
+
+
+
+    const [searchLocation, setSearchLocation] = useState([]);
+    const [Loading, setLoading] = useState(false);
+
+    const [searchValue, setSearchValue] = useState({
+        input: ''
+    })
+
+    const [pin, setPin] = useState('');
+    const [city, setCity] = useState('');
+    // const [state, setState] = useState('');
+    const [res, setRes] = useState('');
+
+    const [loading, setloading] = useState(false);
+
+    const handleLocationFilter = (event) => {
+        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }));
+        const searchword = event.target.value.toLowerCase();
+        if (searchword.length === 6) {
+            setloading(true)
+            axios.get(`https://api.postalpincode.in/pincode/${searchword}`).then((res) => {
+                setRes(res.data);
+                // setState(res.data[0].PostOffice[0].State);
+                // setCity(res.data[0].PostOffice[0].Name);
+                if (res.data[0].PostOffice !== null) {
+                    setSearchLocation(res.data[0].PostOffice)
+                    setloading(false)
+                    // console.log(res.data[0].PostOffice)
+                } else {
+                    setSearchLocation([]);
+                    setLoading(true)
+                    setloading(false)
+                }
+            }).catch((e) => {
+                console.log(e);
+                setLoading(true)
+                setSearchLocation([]);
+
+            })
+        } else {
+            setLoading(false)
+            setSearchLocation([]);
+            setloading(false)
+        }
+
+    };
+
+    const setLocationValueTOFilter = async (location) => {
+        setValues({
+            P_O: location.Name,
+            district: location.District,
+            state: location.Pincode,
+            pin: location.Pincode,
+        });
+        setSearchValue({
+            input: location.PinCode,
+        });
+        setChooseLocation(location.PinCode);
+        setSearchLocation([]);
+        console.log(location);
+        console.log(values)
+    }
+
 
     return (
         <div>
@@ -120,7 +191,7 @@ export default function CompelteProfileFrom() {
                         {/* <h5> <span className='text-info'>Healthhepta</span></h5> */}
 
                         <div className='mb-3'>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" className='person'>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className='bi bi-person person'>
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                             </svg>
                         </div>
@@ -204,7 +275,7 @@ export default function CompelteProfileFrom() {
                                 </div>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="P_O">Post Office : </label><br></br>
-                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  Post office'
+                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} value={location.Name} placeholder='Enter  Post office'
                                         name='P_O' onChange={handleInput} /><br />
                                 </div>
                             </div>
@@ -216,14 +287,14 @@ export default function CompelteProfileFrom() {
                                 </div>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="district">District : </label><br></br>
-                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter  District'
+                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} value={location.District} placeholder='Enter  District'
                                         name='district' onChange={handleInput} /><br />
                                 </div>
                             </div>
                             <div className='complete_profile_divs'>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="state">State: </label><br></br>
-                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter State'
+                                    <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} value={location.State} placeholder='Enter State'
                                         name='state' onChange={handleInput} /><br />
                                 </div>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
@@ -231,6 +302,31 @@ export default function CompelteProfileFrom() {
                                     <input required className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter  Pin code'
                                         name='pin' onChange={handleInput} /><br />
                                 </div>
+
+                                {/* <div id='pincode_choose' className="" style={{ width: '90%' }}>
+                                    <input className="form-control" style={{ height: '50px' }} name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
+
+                                    {searchLocation.length !== 0 ? <>
+                                        <div className="inputResultofmodal" >
+                                            {searchLocation.map((location, index) => {
+                                                return <span onClick={() => setLocationValueTOFilter(location)} style={{ textDecoration: 'none', color: 'black' }}  >
+                                                    <div style={{ cursor: 'pointer', padding: '15px', margin: '5px', color: 'black', border: '2px solid #fff0d7', display: 'flex', alignItems: 'center' }} key={index}  ><FaLocationDot /> {location.Pincode},{location.Name},{location.State}</div>
+                                                </span>
+                                            }
+                                            )}
+                                        </div>
+                                    </> : <>
+                                    </>}
+                                    {loading && <ClipLoader color="blue" />}
+                                    {Loading ? <>
+                                        <p style={{ padding: '15px' }}>No data found for this pincode!!</p>
+                                    </> : <>
+                                        <p style={{ padding: '15px' }}>Please type your full Pin Code(6 digit) here!!</p>
+
+                                    </>
+                                    }
+                                </div> */}
+
                             </div>
                         </div>
                         <div className='complete_profile_divs'>
