@@ -56,6 +56,8 @@ export default function B2BEmployee_Login() {
                 else if (res.data[0] !== null) {
                     success();
                     navigate('/b2b/emp/home', { state: { loggedIn: res.data[1] } });
+                    sessionStorage.setItem("user_id", res.data[0].id);
+                    sessionStorage.setItem("LogedIn", res.data[1]);
                 }
             })
             .catch(err => console.log(err));
@@ -68,7 +70,7 @@ export default function B2BEmployee_Login() {
             <div className="img login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />
             </div>
-            <div className='bg-white m-3  pl-2 rounded w-30 shadow' style={{ height: '120%',padding:'5vh 0' }}>
+            <div className='bg-white m-3  pl-2 rounded w-30 shadow' style={{ height: '120%', padding: '5vh 0' }}>
                 <form action='submit' onSubmit={handleSubmit}>
                     <h5>Log in to <span className='text-info'>Healthhepta</span></h5>
                     <div className='p-2' style={{ textAlign: 'initial', fontWeight: '700' }} >
@@ -79,7 +81,7 @@ export default function B2BEmployee_Login() {
                             name='id'
                             id="id"
                             type="tel"
-                            required  placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
+                            required placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
                         {/* <span className="validity"></span> */}
                     </div>
                     <div className='mb-3 p-2' style={{ textAlign: 'initial', fontWeight: '700', position: 'relative' }} >

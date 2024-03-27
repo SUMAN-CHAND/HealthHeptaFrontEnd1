@@ -236,7 +236,7 @@ export default function B2BHeader() {
                                 )
                                 )}
                             </select> */}
-                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
+                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={userLocation} />
 
                             {searchLocation.length !== 0 && (
                                 <div className="inputResult" >

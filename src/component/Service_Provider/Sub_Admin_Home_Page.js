@@ -127,6 +127,21 @@ export default function Sub_Admin_Home_Page() {
 
 
 
+  const showBill = (order_id,product_id,sub_admin_id) => {
+    // event.preventDefault();
+    navigate('/b2b/order/bill',
+        {
+            state: {
+                orderId: order_id,
+                productIds: product_id,
+                sub_admin_id: sub_admin_id
+            }
+        });
+
+    success();
+}
+
+
 
   const deleteProduct = (product_id) => {
     const response = window.confirm("Are you sure to delete the Product?");
@@ -392,7 +407,7 @@ export default function Sub_Admin_Home_Page() {
                     <ul class="dropdown-menu " style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
                       <li><Link to="#list-products" className="list-group-item list-group-item-action  list-group-item-info" id="list-serviceprovider-list" data-bs-toggle="list" role="tab" aria-controls="list-serviceprovider">Products</Link></li>
                       <li><Link to='addproduct' className="list-group-item  list-group-item-info" id="list-serviceprovider-list">Add New Product</Link></li>
-                     </ul>
+                    </ul>
                   </div>
 
                   <Link to="#orders" className="list-group-item list-group-item-action  list-group-item-info" id="list-orders-list" data-bs-toggle="list" role="tab" aria-controls="list-orders">Order from HealthHepta</Link>
@@ -957,8 +972,8 @@ export default function Sub_Admin_Home_Page() {
                         <td>{appoiment.clinic}</td>
                         {/* <td>{appoiment.clinic_desc}</td> */}
                         <td>{appoiment.fees}</td>
-                          <td>{appoiment.payment_status}</td>
-                          <td><Link to={`/sub-admin/payment/appoiment/complete/action/${appoiment.id}/${appoiment.user_id}`}>Complete Payment</Link></td>
+                        <td>{appoiment.payment_status}</td>
+                        <td><Link to={`/sub-admin/payment/appoiment/complete/action/${appoiment.id}/${appoiment.user_id}`}>Complete Payment</Link></td>
 
                         <td>
 
@@ -1017,12 +1032,13 @@ export default function Sub_Admin_Home_Page() {
                     {your_orders.map((order, index) => (
                       <tr key={index}>
                         <th scope="row">{order.id}</th>
-                        <td>{order.product_id}</td>
-                        <td>{order.sub_admin_id}</td>
+                        <td>{order.product_name}({order.product_id})</td>
+                        <td>{order.name}({order.sub_admin_id})</td>
                         <td>{order.order_date}</td>
                         <td>{order.payment_type}</td>
                         <td>{order.payment_status}</td>
-                        <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td>
+                        {/* <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td> */}
+                        <td> <button className="btn btn-info m-1"onClick={() => showBill(order.id,order.product_id,order.sub_admin_id)}> <p>View Order</p></button></td>
                         <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}>Cancle Order</button></td>
                       </tr>
                     ))}

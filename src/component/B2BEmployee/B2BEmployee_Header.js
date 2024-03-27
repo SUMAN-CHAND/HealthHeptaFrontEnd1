@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,Suspense, lazy } from 'react'
 import logo from '../../img/logo.jpeg';
 import {
     Link, useParams
@@ -6,13 +6,25 @@ import {
 import '../style.css'
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../axiosClient';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import HashLoader from 'react-spinners/HashLoader';
+const ChoosePinCodeModal = lazy(() => import('../ChoosePinCodeModal'));
+
+
 export default function B2BEmployee_Header() {
     const navigate = useNavigate();
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
     const [numOfItem, setnumOfItem] = useState(0)
-    const [loggedIn, setLoggedIn] = useState(0)
+    const [loggedIn, setLoggedIn] = useState(0);
+    const [userRole, setUserRole] = useState();
     const [locations, setLocation] = useState([])
     const [products, setProducts] = useState([])
     const [chooseLocation, setChooseLocation] = useState([])
@@ -21,13 +33,21 @@ export default function B2BEmployee_Header() {
     const [userLocation, setUserLocation] = useState()
     const [active, setActive] = useState(false);
     useEffect(() => {
-        axiosClient.get(`/b2b-employee/profile-details`)
+        axiosClient.get(`/sub_admin/profile-details`)
             .then(res => {
-                // console.log(res.data)
-                setnumOfItem(res.data[0]);
-                setLoggedIn(res.data[1]);
-                // console.log(loggedIn);
-                // setUserLocation(res.data[2]);
+                if (res.data.length > 3) {
+                    setnumOfItem(res.data[0]);
+                    setLoggedIn(res.data[1]);
+                    // console.log(loggedIn);
+                    setUserLocation(res.data[2]);
+                    setUserRole(res.data[3]);
+                } else if (res.data.length === 3) {
+                    setnumOfItem(res.data[0]);
+                    setLoggedIn(res.data[1]);
+                    setUserRole(res.data[2]);
+
+                }
+
             })
     }, []);
     useEffect(() => {
@@ -35,7 +55,7 @@ export default function B2BEmployee_Header() {
             setSelectLocation(userLocation)
         }
 
-    }, [])
+    }, [userLocation])
     useEffect(() => {
         axiosClient.get(`/locations`)
             .then(res => {
@@ -61,7 +81,9 @@ export default function B2BEmployee_Header() {
             const response = await axiosClient.post(`/profile`);
             if (response.data.success) {
                 setLoggedIn(0);
-                navigate('/')
+                sessionStorage.removeItem('LogedIn');
+                sessionStorage.removeItem('user_id');
+                navigate('/b2b/emp/login');
             } else {
                 // Handle logout failure
                 console.error(response.data.message);
@@ -96,6 +118,36 @@ export default function B2BEmployee_Header() {
             setChooseProduct(newFilter);
         }
     };
+
+    const [searchLocation, setSearchLocation] = useState([]);
+    
+    const [searchValue, setSearchValue] = useState({
+        input: ''
+      })
+      const handleLocationFilter = (event) => {
+        setSearchValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+        const searchword = event.target.value.toLowerCase();
+    
+        const filtered = locations.filter((item) => {
+          const pin_code = item.pin_code.toString().toLowerCase();
+          const search = searchword.toLowerCase();
+          return pin_code.includes(search);
+        });
+        if (searchword === "") {
+            setSearchLocation([]);
+        } else {
+            setSearchLocation(filtered);
+        }
+      };
+
+      const setLocationValueTOFilter = async (pin_code) => {
+        setSearchValue({
+            input: pin_code,
+        });
+        setChooseLocation(pin_code);
+        setSearchLocation([]);
+    }
+
     const searchMedicine = async () => {
         try {
             const response = await axiosClient.post(`/b2b/search`, values);
@@ -125,8 +177,11 @@ export default function B2BEmployee_Header() {
         setChooseProduct([]);
     };
     const handleClickProfile = () => {
-        // console.log("object")
-        navigate('/b2b/emp/home', { state: { loggedIn: true } });
+        if (userRole == 'b2b_employee') {
+            navigate('/b2b/emp/home', { state: { loggedIn: true } });
+        } else {
+            navigate('/sub-admin/home', { state: { loggedIn: true } });
+        }
     };
     return (
         <>
@@ -174,13 +229,38 @@ export default function B2BEmployee_Header() {
                     </div>
                     <div className="container-fluid left header-left" style={{ display: 'flex', justifyContent: 'space-evenly' }} >
                         <div className="dropdown me-2 dropdown-location "  >
-                            <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
+                            {/* <select value={selectLocation} onChange={e => setSelectLocation(e.target.value)} className="btn btn-secondary header-location-1 header-location-mobile" aria-expanded="false" >
                                 <option defaultValue={'choose your location..'} >choose your Pin Code..</option>
                                 {locations.map((location, index) => (
                                     <option key={index} value={location.pin_code}>{location.pin_code}</option>
                                 )
                                 )}
+                            </select> */}
+                            <input className="form-control" name='input' onChange={handleLocationFilter} placeholder="Pin Code" value={searchValue.input} />
+
+                            {searchLocation.length !== 0 && (
+                                <div className="inputResult" >
+                                    {searchLocation.map((location, index) => {
+                                        return <span onClick={() => setLocationValueTOFilter(location.pin_code)} style={{ textDecoration: 'none', color: 'black' }}  ><div style={{ cursor: 'pointer', padding: '0px' }} key={index}  >{location.pin_code}</div></span>
+                                    }
+                                    )}
+                                </div>
+                            )}
+                            {/* <select className="btn btn-light dropdown-toggle header-location-1 header-location-mobile" name='input' type="button" placeholder="Pin Code" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"  onClick={handleShow} >
+                                <option value={searchValue.input}>{searchValue.input !== null ? <>{searchValue.input}</> : <>Pin Code..</>}</option>
                             </select>
+
+                            <Offcanvas show={show} onHide={handleClose}>
+                                <Offcanvas.Header closeButton>
+                                    <Offcanvas.Title>
+                                        <h5>Find Nearby Services</h5>
+                                    </Offcanvas.Title>
+                                </Offcanvas.Header>
+                                <Offcanvas.Body>
+                                    <div className='dis-flex'> <Suspense fallback={<HashLoader color="#36d7b7" />}> <ChoosePinCodeModal onHide={handleClose} /></Suspense> </div>
+                                </Offcanvas.Body>
+                            </Offcanvas> */}
+
 
                         </div>
                         <div className="search  me-2 search-location" >
@@ -227,7 +307,7 @@ export default function B2BEmployee_Header() {
                                 </div>
                                 :
                                 <div>
-                                    <Link to='/b2b-emp/login'>
+                                    <Link to='/b2b/emp/login'>
                                         <div className="buttom mx-3 login-text">
                                             <p style={{ margin: '0px' }} className="btn btn-primary"> <p style={{ margin: '0px' }}>Login</p> </p>
                                         </div>

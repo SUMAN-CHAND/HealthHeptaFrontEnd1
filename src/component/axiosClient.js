@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: 'https://api.healthhepta.com',
+    baseURL: 'http://localhost:8081',
     timeout: 80000,
     withCredentials: true,
     credentials: 'include'

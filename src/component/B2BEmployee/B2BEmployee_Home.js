@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 // import ViewCommissionModal from './ViewCommissionModal.js';
 import Modal from 'react-modal';
@@ -13,6 +13,14 @@ import { FaPlus } from 'react-icons/fa6';
 export default function B2BEmployee_Home() {
     //main for connecting backend with Session
     axiosClient.defaults.withCredentials = true;
+
+    const b2bLogedIn = sessionStorage.getItem('LogedIn');
+    const userId = sessionStorage.getItem('user_id');
+  
+    if (b2bLogedIn === undefined || b2bLogedIn === null) {
+      return <Navigate to='/b2b/emp/login' />;
+    }
+  
 
     const success = () => toast.success('Success', {
         position: "top-right",
@@ -274,6 +282,21 @@ export default function B2BEmployee_Home() {
             .catch(err => console.log(err));
     }
 
+    const showBill = (order_id,product_id,sub_admin_id) => {
+        // event.preventDefault();
+        navigate('/b2b/order/bill',
+            {
+                state: {
+                    orderId: order_id,
+                    productIds: product_id,
+                    sub_admin_id: sub_admin_id
+                }
+            });
+
+        success();
+    }
+
+
     return (
         <div>
             <div className=" partner-profile-full-class row" style={{ height: '70vh', overflowX: 'hidden' }}>
@@ -345,6 +368,7 @@ export default function B2BEmployee_Home() {
                                                         <th scope="col">Product Id</th>
                                                         <th scope="col">User ID</th>
                                                         <th scope="col">Date</th>
+                                                        <th scope="col">Total Bill</th>
                                                         <th scope="col">Payment Mood</th>
                                                         <th scope="col">Payment Status</th>
                                                         <th scope="col">Complete Payment</th>
@@ -356,14 +380,16 @@ export default function B2BEmployee_Home() {
                                                     {your_orders.map((order, index) => (
                                                         <tr key={index}>
                                                             <th scope="row">{order.id}</th>
-                                                            <td>{order.product_id}</td>
-                                                            <td>{order.sub_admin_id}</td>
+                                                            <td>{order.product_name}({order.product_id})</td>
+                                                            <td>{order.name}({order.sub_admin_id})</td>
                                                             <td>{order.order_date}</td>
+                                                            <td>₹ {order.total_amount}</td>
                                                             <td>{order.payment_type}</td>
                                                             <td>{order.payment_status}</td>
                                                             <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
-                                                            <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td>
-                                                            <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}>Cancle Order</button></td>
+                                                            {/* <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td> */}
+                                                            <td> <button className="btn btn-info m-1"onClick={() => showBill(order.id,order.product_id,order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                            <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
                                                         </tr>
                                                     ))}
                                                 </tbody>

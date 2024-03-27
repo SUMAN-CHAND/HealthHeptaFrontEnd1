@@ -173,7 +173,8 @@ export default function B2bOrderPage() {
                     {
                         state: {
                             orderId: res.data[0],
-                            productIds: res.data[1]
+                            productIds: res.data[1],
+                            sub_admin_id: res.data[2]
                         }
                     });
                 }

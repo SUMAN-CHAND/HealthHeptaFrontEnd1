@@ -18,6 +18,7 @@ export default function CompelteProfileFrom() {
     const data = location.state.data;
     const value = location.state.value;
     const role = value.role;
+    console.log(data,value)
     const [values, setValues] = useState({
         subadmin_id: data.insertId,
         fullname: value.name,

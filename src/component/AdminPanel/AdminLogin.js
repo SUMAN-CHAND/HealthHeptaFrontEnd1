@@ -66,7 +66,7 @@ export default function AdminLogin() {
     const [PasswordInputType, ToggleIcon] = usePasswordToggle();
 
     return (
-        <div className='d-flex justify-content-center align-item-center p-3 m-3'>
+        <div className='d-flex justify-content-center align-items-center p-3 m-3'>
 
             <div className="img login-img" >
                 <img src={img} style={{ width: '38vw' }} alt="...." />

@@ -32,6 +32,7 @@ export default function AddNewServiceProvider() {
         name: '',
         phone: '',
         password: '',
+        role:'',
 
     })
     const [check, setCheck] = useState(false);
@@ -75,7 +76,7 @@ export default function AddNewServiceProvider() {
                     <h5>Join <span className='text-info'>Healthhepta</span></h5>
                     <h5>Adding New Service Provider </h5>
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                        <p style={{ marginLeft: '10px' }}>Select Your Role :</p>
+                        <p style={{ marginLeft: '10px' }}>Select Service Provider Role :</p>
                         <select
                             onChange={handleInput} name='role'
                             style={{ width: '80%', padding: '4px', marginLeft: '10px', cursor: 'pointer' }}>

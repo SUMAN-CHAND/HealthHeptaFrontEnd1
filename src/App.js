@@ -57,6 +57,7 @@ const MedicinePageSearchResult = lazy(() => import('./component/MedicinePageSear
 const AddNewServiceProvider = lazy(() => import('./component/B2BEmployee/AddNewServiceProvider'));
 const ViewSubAdminOrders = lazy(() => import('./component/AdminPanel/ViewSubAdminOrders'));
 const CompelteProfileFrom = lazy(() => import('./component/Service_Provider/CompelteProfileFrom'));
+const CompleteProfileSubAdminByB2BEmployee = lazy(() => import('./component/B2BEmployee/CompleteProfileSubAdminByB2BEmployee'));
 const AddNewDoctor = lazy(() => import('./component/Service_Provider/AddNewDoctor'));
 const RescheduleAppoiment = lazy(() => import('./component/RescheduleAppoiment'));
 const SeeRequestReschedule = lazy(() => import('./component/Service_Provider/SeeRequestReschedule'));
@@ -241,13 +242,13 @@ function App() {
           <div>
             <Routes>
               {/* Partner Routes */}
-              <Route path='/b2b/emp/login' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Login /></Suspense></>} exact />
-              <Route path='/b2b/emp/signup' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployeeSignUp /></Suspense></>} exact />
-              <Route path='/b2b/emp/home' element={<><B2BHeader /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Home /></Suspense></>} exact />
+              <Route path='/b2b/emp/login' element={<><B2BEmployee_Header /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Login /></Suspense></>} exact />
+              <Route path='/b2b/emp/signup' element={<><B2BEmployee_Header /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployeeSignUp /></Suspense></>} exact />
+              <Route path='/b2b/emp/home' element={<><B2BEmployee_Header /><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BEmployee_Home /></Suspense></>} exact />
               <Route path='/b2b/emp/addnew/service-provider' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewServiceProvider /></Suspense></>} exact />
               <Route path='/b2b/emp/addnew/customer' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddNewCustomer /></Suspense></>} exact />
               <Route path='/b2b/emp/addnew/query/product' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><AddProductWhichIsNotPresent /></Suspense></>} exact />
-              <Route path='/b2b/emp/addnew/complete-profile' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><CompelteProfileFrom /></Suspense></>} exact />
+              <Route path='/b2b/emp/addnew/complete-profile' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><CompleteProfileSubAdminByB2BEmployee /></Suspense></>} exact />
 
             </Routes>
           </div>
@@ -308,7 +309,7 @@ function App() {
               <Route path='/b2b/addtocart/:product_id' element={<><B2BHeader /><B2BHeader2 /><Suspense fallback={<HashLoader color="#36d7b7" />}> <ParticularProduct /></Suspense></>} exact />
               <Route path='/b2b/cart' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2BCartPage /></Suspense></>} exact />
               <Route path='/b2b/order' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2bOrderPage /></Suspense></>} exact />
-              <Route path='b2b/order/bill' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2BOrderbill /></Suspense></>} exact />
+              <Route path='/b2b/order/bill' element={<><B2BHeader /><B2BHeader2 /> <Suspense fallback={<HashLoader color="#36d7b7" />}><B2BOrderbill /></Suspense></>} exact />
               <Route path='/b2b/medicines/:selectLocation' element={<><B2BHeader /><B2BHeader2 /><Suspense fallback={<HashLoader color="#36d7b7" />}>< AllProductPage /></Suspense></>} exact />
               <Route path='/b2b/emp/payment/complete/action/:id/:user_id' element={<><Suspense fallback={<HashLoader color="#36d7b7" />}><B2BPaymentCompleteAction /></Suspense></>} exact />
 
