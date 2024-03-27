@@ -104,10 +104,10 @@ export default function AddNewServiceProvider() {
                         <input className='m-2  p-1' type="password" style={{ width: '90%' }} placeholder='Create Password' name='password' onChange={handleInput} />
                         {errors.password && <span className='text-danger'>{errors.password}</span>}
                     </div>
-                    <div className="form-check " style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    {/* <div className="form-check " style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p className='text-warning'>Add Your Licence</p>
                         <span className='mx-3'><input type="file" name="licence" id="licence" /></span>
-                    </div>
+                    </div> */}
                     <div className="form-check ">
                         <input className="form-check-input" type="checkbox" value="check" id="flexCheckChecked" style={{ marginLeft: '1vw' }} onChange={() => { setCheck(true) }} />
                         <label className="form-check-label" htmlFor="flexCheckChecked">
