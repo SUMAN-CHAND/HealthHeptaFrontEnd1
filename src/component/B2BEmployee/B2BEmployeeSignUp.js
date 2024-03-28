@@ -88,21 +88,37 @@ export default function B2BEmployeeSignUp() {
         event.preventDefault();
         axiosClient.post(`/add/b2b-employee`, values)
             .then(res => {
-                // console.log(res)
-                if (res.data === null) {
-                    danger();
+                console.log(res)
+                if(res.status === 400){
+                    alert('All fields are required');
                 }
+                if(res.status === 500){
+                    alert('Error checking Employee existence');
+                }
+                if(res.status === 409){
+                    alert(res.error);
+                }
+                
                 else if (res.data !== null) {
                     // console.log(res.data)
                     success();
                     alert('Sign Up  Successfully!!');
                     navigate('/b2b/emp/login');
                 }
-                else {
-                    danger();
-                }
+                
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+                if(err.response.status === 400){
+                    alert('All fields are required');
+                }
+                if(err.response.status === 500){
+                    alert('Error checking Employee existence');
+                }
+                if(err.response.status === 409){
+                    alert(err.response.data.error);
+                }
+            });
     }
 
     const [panNo, setPanNo] = useState('');
