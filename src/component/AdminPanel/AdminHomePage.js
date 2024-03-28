@@ -1033,7 +1033,7 @@ export default function AdminHomePage() {
                     </thead>}
                   {searchOrder.length > 0 &&
                     <tbody>
-                      {searchOrder && searchOrder.filter(order => order.status === 'accepted').map((order, index) => (
+                      {searchOrder && searchOrder.filter(order => order.status === 'completed').map((order, index) => (
                         <tr key={index}>
                           <th scope="row">{index + 1}</th>
                           <th scope="row">{order.id}</th>
@@ -1668,6 +1668,7 @@ export default function AdminHomePage() {
                           <th scope="col">Name</th>
                           <th scope="col">Phone No</th>
                           <th scope="col">Email</th>
+                          <th scope="col">Added By</th>
                           <th scope="col">Permission</th>
                         </tr>
                       </thead>
@@ -1680,6 +1681,7 @@ export default function AdminHomePage() {
                             <td>{employee.name}</td>
                             <td>{employee.ph_num}</td>
                             <td>{employee.email}</td>
+                            <td>{employee.addedby}</td>
                             <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
                           </tr>
                         ))}
@@ -1705,6 +1707,7 @@ export default function AdminHomePage() {
                             <th scope="col">Name</th>
                             <th scope="col">Phone No</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Added By</th>
                             <th scope="col">Permission</th>
                           </tr>
                         </thead>
@@ -1716,6 +1719,7 @@ export default function AdminHomePage() {
                               <td>{employee.name}</td>
                               <td>{employee.ph_num}</td>
                               <td>{employee.email}</td>
+                              <td>{employee.addedby}</td>
                               <td onClick={() => updateEmployeeStatus(employee.id)} style={{ cursor: 'pointer', color: 'blue' }} >{employee.permission}</td>
                             </tr>
                           ))}

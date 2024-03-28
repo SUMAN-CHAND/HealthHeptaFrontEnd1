@@ -95,9 +95,18 @@ export default function AddNewServiceProvider() {
                     </div>
                     <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="phonenumber">Phone Number : </label>
-                        <input className='m-2  p-1' type="phonenumber" style={{ width: '90%' }} placeholder='Enter Phone Number'
+                        {/* <input className='m-2  p-1' type="phonenumber" style={{ width: '90%' }} placeholder='Enter Phone Number'
                             name='phone' onChange={handleInput} /><br />
-                        {errors.phone && <span className='text-danger'>{errors.phone}</span>}
+                        {errors.phone && <span className='text-danger'>{errors.phone}</span>} */}
+                        <input
+                            className='m-2 p-1'
+                            onChange={handleInput}
+                            name='phone'
+                            id="phone"
+                            type="tel"
+                            required
+                            pattern="[0-9]{3}[0-9]{3}[0-9]{4}" placeholder="xxxxxxxxxx" style={{ width: '90%', border: '1px solid black' }} />
+                        <span className="validity"></span>
                     </div>
                     <div className='mb-3 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="password">Create Password : </label>

@@ -62,7 +62,7 @@ export default function AddNewB2BEmployee() {
         email: '',
         aadhaar: '',
         pan: '',
-        employee_type:'',
+        employee_type: '',
         AadhaarCardImageID: null,
         PanCardImageID: null
 
@@ -89,20 +89,27 @@ export default function AddNewB2BEmployee() {
         axiosClient.post(`/add/b2b-employee`, values)
             .then(res => {
                 // console.log(res)
-                if (res.data === null) {
-                    danger();
-                }
-                else if (res.data !== null) {
+                if (res.data !== null) {
                     // console.log(res.data)
                     success();
                     alert('Employee Added Successfully!!');
                     navigate('/superadmin', { state: { loggedIn: true } });
                 }
-                else {
-                    danger();
-                }
+                
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+
+                if (err.response.status === 400) {
+                    alert('All fields are required');
+                }
+                if (err.response.status === 500) {
+                    alert('Error checking Employee existence');
+                }
+                if (err.response.status === 409) {
+                    alert(err.response.data.error);
+                }
+            });
     }
 
 
@@ -155,7 +162,7 @@ export default function AddNewB2BEmployee() {
                         <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
                         <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br />
                     </div> */}
-                     <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                    <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="aadhaar">Aadhaar No <span className='text-danger'>*</span>: </label>
                         {/* <input required className='m-2  p-1' type="number" style={{ width: '90%' }} placeholder='Write Aadhaar No' name='aadhaar' onChange={handleInput} /> <br /> */}
 
@@ -174,7 +181,7 @@ export default function AddNewB2BEmployee() {
                     <div className='mb-2 p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                         <label className='p-1' htmlFor="pan">Pan No <span className='text-danger'>*</span>: </label>
                         {/* <input required className='m-2  p-1' type="text" style={{ width: '90%' }} placeholder='Write Pan No ' name='pan' onChange={handleInput} /> <br /> */}
-                        <input type="text" className='m-2  p-1'  value={values.pan} style={{ width: '90%' }} id="pan" name="pan" onChange={handleInput}   pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" placeholder="Please enter valid PAN number. E.g. AAAAA9999A" required />
+                        <input type="text" className='m-2  p-1' value={values.pan} style={{ width: '90%' }} id="pan" name="pan" onChange={handleInput} pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" placeholder="Please enter valid PAN number. E.g. AAAAA9999A" required />
                         <span className="validity"></span>
                     </div>
 

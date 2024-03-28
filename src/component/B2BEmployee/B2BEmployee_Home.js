@@ -16,11 +16,11 @@ export default function B2BEmployee_Home() {
 
     const b2bLogedIn = sessionStorage.getItem('LogedIn');
     const userId = sessionStorage.getItem('user_id');
-  
+
     if (b2bLogedIn === undefined || b2bLogedIn === null) {
-      return <Navigate to='/b2b/emp/login' />;
+        return <Navigate to='/b2b/emp/login' />;
     }
-  
+
 
     const success = () => toast.success('Success', {
         position: "top-right",
@@ -156,6 +156,8 @@ export default function B2BEmployee_Home() {
     const [subadmin, setSubAdmin] = useState([])
     const [searchMedicine, setSearchMedicine] = useState([])
     const [medicine, setMedicine] = useState([])
+    const [searchOrder, setSearchOrder] = useState([])
+    const [orderLoading, setOrderLoading] = useState(false);
 
 
 
@@ -176,10 +178,10 @@ export default function B2BEmployee_Home() {
     };
     const renDataStyle = {
         backgroundColor: 'rgb(237 237 237)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingTop: '1vh'
+        // display: 'flex',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // paddingTop: '1vh'
     }
 
     const quiceLink = {
@@ -282,7 +284,7 @@ export default function B2BEmployee_Home() {
             .catch(err => console.log(err));
     }
 
-    const showBill = (order_id,product_id,sub_admin_id) => {
+    const showBill = (order_id, product_id, sub_admin_id) => {
         // event.preventDefault();
         navigate('/b2b/order/bill',
             {
@@ -295,6 +297,28 @@ export default function B2BEmployee_Home() {
 
         success();
     }
+    const [searchOrderValue, setSearchOrderValue] = useState({
+        input: ''
+    })
+
+    console.log(your_orders)
+    const handleOrderFilter = (event) => {
+        setSearchOrderValue(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
+        const searchword = event.target.value.toLowerCase();
+        const filtered = your_orders.filter((item) => {
+            const phoneNumber = item.phone.toString().toLowerCase();
+            const search = searchword.toLowerCase();
+            return phoneNumber.includes(search);
+        });
+        if (searchword === "") {
+            setSearchOrder([]);
+            setOrderLoading(false)
+        } else {
+            console.log(filtered)
+            setSearchOrder(filtered);
+            setOrderLoading(true)
+        }
+    };
 
 
     return (
@@ -307,9 +331,18 @@ export default function B2BEmployee_Home() {
                         <div className="list-group shadow" id="list-tab" role="tablist">
                             <Link to="#profile" className="list-group-item list-group-item-action active list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Profile</Link>
                             <Link to="/b2b-home" className="list-group-item list-group-item-action list-group-item-info">Shop Now</Link>
-                            <Link to="#orders" onClick={showOrders} className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Your Orders</Link>
+                            {/* <Link to="#orders" onClick={showOrders} className="list-group-item list-group-item-action    list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-order">Your Orders</Link> */}
+                            <div class="dropdown">
+                                <button onClick={showOrders()} class="list-group-item list-group-item-action  list-group-item-info dropdown-toggle" id="list-partner-list" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Orders
+                                </button>
+                                <ul class="dropdown-menu info" style={{ backgroundColor: '#9eeaf9' }} aria-labelledby="dropdownMenuButton1">
+                                    <li><Link to="#orderspending" className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Pending Orders</Link></li>
+                                    <li><Link to="#orderscomplete" className="list-group-item list-group-item-action  list-group-item-info" id="list-partner-list" data-bs-toggle="list" role="tab" aria-controls="list-partner">Completed Orders</Link></li>
+                                </ul>
+                            </div>
                             <Link to="#order_now" className="list-group-item list-group-item-action list-group-item-info" id="list-summary-list" data-bs-toggle="list" role="tab" aria-controls="list-profile">Order Now</Link>
-                            <Link to="/b2b/emp/addnew/service-provider" className="list-group-item list-group-item-action list-group-item-info">Add Sub Admin</Link>
+                            <Link to="/b2b/emp/addnew/service-provider" className="list-group-item list-group-item-action list-group-item-info">Add New Service Provider</Link>
                             <Link to="/b2b/emp/addnew/customer" className="list-group-item list-group-item-action list-group-item-info">Add Customer</Link>
                             <Link to="/b2b/emp/addnew/query/product" className="list-group-item list-group-item-action list-group-item-info">Add Quary product</Link>
                         </div>
@@ -354,7 +387,7 @@ export default function B2BEmployee_Home() {
                         </div>
 
 
-                        <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-Medicine-list">
+                        {/* <div className="tab-pane fade text-light" id="orders" role="tabpanel" aria-labelledby="list-Medicine-list">
                             <h2 className='p-2 text-dark'> Your Orders</h2>
                             <div className="container text-dark" style={renDataStyle}>
                                 {flag ?
@@ -387,8 +420,7 @@ export default function B2BEmployee_Home() {
                                                             <td>{order.payment_type}</td>
                                                             <td>{order.payment_status}</td>
                                                             <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
-                                                            {/* <td> <Link to={`/sub-admin/orders/${order.id}/${order.sub_admin_id}/${order.product_id}`}><button className="btn btn-info m-1">View Order</button></Link></td> */}
-                                                            <td> <button className="btn btn-info m-1"onClick={() => showBill(order.id,order.product_id,order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                            <td> <button className="btn btn-info m-1" onClick={() => showBill(order.id, order.product_id, order.sub_admin_id)}> <p>View Order</p></button></td>
                                                             <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
                                                         </tr>
                                                     ))}
@@ -401,7 +433,205 @@ export default function B2BEmployee_Home() {
                                     <p>no record found!!</p>
                                 }
                             </div>
+                        </div> */}
+
+                        <div className="tab-pane fade text-light" id="orderspending" role="tabpanel" aria-labelledby="list-orders-list">
+                            <h2 className='p-2'>|| Pending Orders ||</h2>
+                            <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                                <p className='p-1 m-1'>Search Order by User Phone Number here</p>
+                                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchOrderValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                            </div>
+                            <div className="container text-dark " style={renDataStyle}>
+                                <table className="table table-striped">
+                                    {searchOrder.length > 0 &&
+                                        <thead className='thead-dark'>
+                                            <tr>
+                                                <th scope="col">Count</th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Product Id</th>
+                                                <th scope="col">User ID</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Total Bill</th>
+                                                <th scope="col">Payment Mood</th>
+                                                <th scope="col">Payment Status</th>
+                                                <th scope="col">Complete Payment</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>}
+                                    {searchOrder.length > 0 &&
+                                        <tbody>
+                                            {searchOrder.filter(order => order.status === 'pending').map((order, index) => (
+                                                <tr key={index+1}>
+                                                    <th scope="row">{index}</th>
+                                                    <th scope="row">{order.id}</th>
+                                                    <td>{order.product_name}({order.product_id})</td>
+                                                    <td>{order.name}({order.sub_admin_id})</td>
+                                                    <td>{order.order_date}</td>
+                                                    <td>₹ {order.total_amount}</td>
+                                                    <td>{order.payment_type}</td>
+                                                    <td>{order.payment_status}</td>
+                                                    <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
+                                                    <td> <button className="btn btn-info m-1" onClick={() => showBill(order.id, order.product_id, order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                    <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    }
+                                </table>
+                                {searchOrder.length === 0 &&
+                                    <>
+                                        {!orderLoading ? <>
+                                            <table className="table table-striped">
+                                                <thead className='thead-dark'>
+                                                    <tr>
+                                                        <th scope="col">Count</th>
+                                                        <th scope="col">Id</th>
+                                                        <th scope="col">Product Id</th>
+                                                        <th scope="col">User ID</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Total Bill</th>
+                                                        <th scope="col">Payment Mood</th>
+                                                        <th scope="col">Payment Status</th>
+                                                        <th scope="col">Complete Payment</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {your_orders.filter(order => order.status === 'pending').map((order, index) => (
+                                                        <tr key={index+1}>
+                                                            <th scope="row">{index}</th>
+                                                            <th scope="row">{order.id}</th>
+                                                            <td>{order.product_name}({order.product_id})</td>
+                                                            <td>{order.name}({order.sub_admin_id})</td>
+                                                            <td>{order.order_date}</td>
+                                                            <td>₹ {order.total_amount}</td>
+                                                            <td>{order.payment_type}</td>
+                                                            <td>{order.payment_status}</td>
+                                                            <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
+                                                            <td> <button className="btn btn-info m-1" onClick={() => showBill(order.id, order.product_id, order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                            <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+
+                                            </table>
+                                        </> : <></>}
+                                    </>
+                                }
+
+                                {searchOrder.length === 0 && <>
+                                    {orderLoading ? <>
+                                        <p style={{ padding: '15px' }}>No data found for Phone Number!!</p>
+                                    </> : <>
+                                        <p style={{ padding: '15px' }}>Search Order Details through User Phone Number!!</p>
+
+                                    </>
+                                    }
+                                </>}
+                            </div>
                         </div>
+                        <div className="tab-pane fade text-light" id="orderscomplete" role="tabpanel" aria-labelledby="list-orders-list">
+                            <h2 className='p-2'>|| Completed Orders ||</h2>
+                            <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+                                <p className='p-1 m-1'>Search Order by User Phone Number here</p>
+                                <input className="form-control" name='input' onChange={handleOrderFilter} placeholder="Search User Phone number" value={searchOrderValue.input} style={{ fontSize: '0.9em', width: '95%', borderTopLeftRadius: '6px', borderTopRightRadius: '0px', borderBottomLeftRadius: '6px', borderBottomRightRadius: '0px', margin: '8px 12px 17px 12px' }} />
+                            </div>
+                            <div className="container text-dark " style={renDataStyle}>
+                                <table className="table table-striped">
+                                    {searchOrder.length > 0 &&
+                                        <thead className='thead-dark'>
+                                            <tr>
+                                                <th scope="col">Count</th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Product Id</th>
+                                                <th scope="col">User ID</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Total Bill</th>
+                                                <th scope="col">Payment Mood</th>
+                                                <th scope="col">Payment Status</th>
+                                                <th scope="col">Complete Payment</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>}
+                                    {searchOrder.length > 0 &&
+                                        <tbody>
+                                            {searchOrder && searchOrder.filter(order => order.status === 'completed').map((order, index) => (
+                                                <tr key={index}>
+                                                    <th scope="row">{index}</th>
+                                                    <th scope="row">{order.id}</th>
+                                                    <td>{order.product_name}({order.product_id})</td>
+                                                    <td>{order.name}({order.sub_admin_id})</td>
+                                                    <td>{order.order_date}</td>
+                                                    <td>₹ {order.total_amount}</td>
+                                                    <td>{order.payment_type}</td>
+                                                    <td>{order.payment_status}</td>
+                                                    <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
+                                                    <td> <button className="btn btn-info m-1" onClick={() => showBill(order.id, order.product_id, order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                    <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
+
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    }
+
+
+                                </table>{searchOrder.length === 0 &&
+                                    <>
+                                        {!orderLoading ? <>
+                                            <table className="table table-striped">
+                                                <thead className='thead-dark'>
+                                                    <tr>
+                                                        <th scope="col">Count</th>
+                                                        <th scope="col">Id</th>
+                                                        <th scope="col">Product Id</th>
+                                                        <th scope="col">User ID</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Total Bill</th>
+                                                        <th scope="col">Payment Mood</th>
+                                                        <th scope="col">Payment Status</th>
+                                                        <th scope="col">Complete Payment</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {your_orders.filter(order => order.status === 'completed').map((order, index) => (
+                                                        <tr key={index+1}>
+                                                            <th scope="row">{index}</th>
+                                                            <th scope="row">{order.id}</th>
+                                                            <td>{order.product_name}({order.product_id})</td>
+                                                            <td>{order.name}({order.sub_admin_id})</td>
+                                                            <td>{order.order_date}</td>
+                                                            <td>₹ {order.total_amount}</td>
+                                                            <td>{order.payment_type}</td>
+                                                            <td>{order.payment_status}</td>
+                                                            <td><Link to={`/b2b/emp/payment/complete/action/${order.id}/${order.sub_admin_id}`}>Complete Payment</Link></td>
+                                                            <td> <button className="btn btn-info m-1" onClick={() => showBill(order.id, order.product_id, order.sub_admin_id)}> <p>View Order</p></button></td>
+                                                            <td> <button className='btn btn-danger m-1' onClick={() => deleteOrder(order.id)}> <p>Cancle Order</p> </button></td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+
+                                            </table>
+                                        </> : <></>}
+                                    </>
+                                }
+                                {searchOrder.length === 0 && <>
+                                    {orderLoading ? <>
+                                        <p style={{ padding: '15px' }}>No data found for Phone Number!!</p>
+                                    </> : <>
+                                        <p style={{ padding: '15px' }}>Search Order Details through User Phone Number!!</p>
+
+                                    </>
+                                    }
+                                </>}
+                            </div>
+                        </div>
+
+
                         <div className="tab-pane fade text-light" id="order_now" role="tabpanel" aria-labelledby="list-Medicine-list">
                             <h2 className='p-2 text-dark'> Order Now</h2>
                             {/* <div className="container text-dark" style={renDataStyle}>

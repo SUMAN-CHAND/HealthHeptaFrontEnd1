@@ -88,18 +88,8 @@ export default function B2BEmployeeSignUp() {
         event.preventDefault();
         axiosClient.post(`/add/b2b-employee`, values)
             .then(res => {
-                console.log(res)
-                if(res.status === 400){
-                    alert('All fields are required');
-                }
-                if(res.status === 500){
-                    alert('Error checking Employee existence');
-                }
-                if(res.status === 409){
-                    alert(res.error);
-                }
-                
-                else if (res.data !== null) {
+               
+                if (res.data !== null) {
                     // console.log(res.data)
                     success();
                     alert('Sign Up  Successfully!!');

@@ -18,7 +18,7 @@ export default function CompleteProfileSubAdminByB2BEmployee() {
     const data = location.state.data;
     const value = location.state.value;
     const role = value.role[0];
-    console.log(data,value)
+    console.log(data, value)
     const [values, setValues] = useState({
         subadmin_id: data.insertId,
         fullname: value.name,
@@ -300,8 +300,15 @@ export default function CompleteProfileSubAdminByB2BEmployee() {
                                 </div>
                                 <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                     <label className='p-1' htmlFor="pin">Pin Code : </label><br></br>
-                                    <input required className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter  Pin code'
-                                        name='pin' onChange={handleInput} /><br />
+                                    {/* <input required className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter  Pin code'
+                                        name='pin' onChange={handleInput} /><br /> */}
+                                    <input
+                                        onChange={handleInput} 
+                                        className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter  Pin Your code'
+                                        pattern="[0-9]{3}[0-9]{3}"
+                                        name='pin'
+                                        required
+                                    />
                                 </div>
 
                                 {/* <div id='pincode_choose' className="" style={{ width: '90%' }}>
@@ -331,33 +338,34 @@ export default function CompleteProfileSubAdminByB2BEmployee() {
                             </div>
                         </div>
                         <div className='complete_profile_divs'>
-                            <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
-                                <label className='p-1' htmlFor="owner_name"> {role === "Medicine Shop" ? <>Enter Served PinCodes</> : <></>}  <span className='text-danger'>*</span>: </label><br></br>
-                                {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Owner Name'
+                            {role === "Medicine Shop" &&
+                                <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                    <label className='p-1' htmlFor="owner_name"> {role === "Medicine Shop" ? <>Enter Served PinCodes</> : <></>}  <span className='text-danger'>*</span>: </label><br></br>
+                                    {/* <input required className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Owner Name'
                                     name='pin_codes' onChange={handlePinCodeInput} /><br /> */}
-                                {/* <h1>Inspiring sculptors:</h1> */}
+                                    {/* <h1>Inspiring sculptors:</h1> */}
 
-                                <input
-                                    value={pin_code}
-                                    onChange={e => setPinCode(e.target.value)}
-                                    className='m-2 p-1' type="text" style={{ width: '33vw' }} placeholder='Enter Served PinCodes'
-                                    pattern="[0-9]{3}[0-9]{3}"
-                                />
-                                {/* <span className="validity"></span> */}
+                                    <input
+                                        value={pin_code}
+                                        onChange={e => setPinCode(e.target.value)}
+                                        className='m-2 p-1' type="number" style={{ width: '33vw' }} placeholder='Enter Served PinCodes'
+                                        pattern="[0-9]{3}[0-9]{3}"
+                                    />
+                                    {/* <span className="validity"></span> */}
 
-                                <button type='button' onClick={() => {
-                                    allPinCodes.push({
-                                        id: nextId++,
-                                        pin_code: pin_code,
-                                    });
-                                    setPinCode('')
-                                }} className='btn btn-primary'>Add</button>
-                                <ul>
-                                    {allPinCodes.map(pin_codes => (
-                                        <li key={pin_codes.id}>Pin Code: {pin_codes.pin_code}</li>
-                                    ))}
-                                </ul>
-                                {/* <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
+                                    <button type='button' onClick={() => {
+                                        allPinCodes.push({
+                                            id: nextId++,
+                                            pin_code: pin_code,
+                                        });
+                                        setPinCode('')
+                                    }} className='btn btn-primary'>Add</button>
+                                    <ul>
+                                        {allPinCodes.map(pin_codes => (
+                                            <li key={pin_codes.id}>Pin Code: {pin_codes.pin_code}</li>
+                                        ))}
+                                    </ul>
+                                    {/* <div className=' p-1' style={{ textAlign: 'initial', fontWeight: '700' }} >
                                 <label className='p-1' htmlFor="owner_phonenumber">{role === "Medicine Shop" ? <>Pharmacy Shop Owner</> : <></>} {role === 'doctor' ? <>Doctor</> : <></>}{role === "Laboratory" ? <>Laboratory Owner</> : <></>}{role === 'clinic' ? <>Clinic Owner</> : <></>}  Phone Number <span className='text-danger'>*</span>: </label><br></br>
                               
                                 <input
@@ -371,7 +379,7 @@ export default function CompleteProfileSubAdminByB2BEmployee() {
                                 <span className="validity"></span>
                                 <p style={{ fontWeight: '400', marginLeft: '2vw' }}>Format: 1234567890</p>
                             </div> */}
-                            </div>
+                                </div>}
                         </div>
 
                         <div className='form-check ' style={{ textAlign: 'initial', fontWeight: '700' }} >
